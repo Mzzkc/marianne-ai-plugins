@@ -305,14 +305,36 @@ For full multi-perspective review, the `scores/prep/thinking-lab.yaml` score fan
 - `mzt doctor` shows what is actually installed on this conductor. A score referencing an uninstalled instrument fails at runtime, not at `mzt validate`. Prefer instruments verified over instruments remembered.
 - The catalog is refreshed by `scores/instrument-catalog-refresh.yaml`. If a musician's `last_verified` is more than 90 days old, treat its ratings with appropriate skepticism.
 
+### Map the Context Flow (load-bearing)
+
+Patterns are the **scaffolding** of a score. Context flow is the **muscle**. Pattern selection gets the structure right; context flow determines whether the right model receives the right inputs to do good work. A score with correct patterns and wrong context flow produces structurally-clean output that misses the point.
+
+Before designing injections, map every load-bearing piece of context the work depends on. For each, answer four questions:
+
+| Context | Source | Lands at | Mechanism |
+|---|---|---|---|
+
+- **Context** — the thing the work needs (channel voice, full transcript, prior-stage output, etc.)
+- **Source** — where it comes from (corpus directory, upstream stage's artifact, score variable, score variable composed with stage data)
+- **Lands at** — which sheet(s) need it (every sheet via prelude, one specific stage via cadenza, just the stage that produces the next artifact via cross_sheet)
+- **Mechanism** — `prelude` (every sheet), `cadenza` per-stage (specific sheet), file path the agent loads via Read (when content is large or per-instance unique), template variable from `prompt.variables` (small static values)
+
+If a load-bearing context piece has no row, that's the structural gap that produces bad output. If two pieces share a row, you have a choice to make about how they combine.
+
+**Match instrument capacity to what the context enables.** A 7B local model cannot carry distinctive brand voice from a corpus, however well that corpus is injected. The instrument must be capable of USING the context you route to it. Pattern selection often has to revise after this step: a stage that needs full-document context for high-stakes synthesis routes to a frontier model, not a `quick`-tier one — even when the catalog's default chain for that task tier suggested otherwise.
+
+This is especially important for **brand-stake / livelihood-stake** work. For high-stakes synthesis stages, spend disproportionately on context-flow design and model capability. Defaults that are sensible for "ship fast, iterate" are wrong for "this can't fail." Cross-vendor verification, deterministic post-checks (red-line linters), and corpus-richness gates earn their keep here.
+
 ### Design Injections
 
-Every score should use preludes and cadenzas. If an agent needs content to do its work, inject it — don't tell agents to "read this file." Telling is unreliable; injection is not.
+Injections are the implementation of the context-flow map. If an agent needs content to do its work, inject it — don't tell agents to "read this file." Telling is unreliable; injection is not.
 
-- **Preludes** — shared context for every sheet. Conventions, standards, the spec passage, the glossary. A score without preludes leaves each agent to find context independently; they will find it differently, or not at all.
-- **Cadenzas** — per-sheet context for specific sheets. The pattern file for this stage, the upstream output to review, the per-instance data for fan-out specialization.
+- **Preludes** — shared context for every sheet. Conventions, standards, the spec passage, the glossary, the channel voice corpus. A score without preludes leaves each agent to find context independently; they will find it differently, or not at all.
+- **Cadenzas** — per-sheet context for specific sheets. The pattern file for this stage, the upstream output to review, the per-instance data for fan-out specialization. Both `file:` and `directory:` modes are supported; directory mode globs all files in the directory and is ideal for evolving corpora the composer maintains by hand.
+- **Read tool** — when context is per-instance and large enough that injection would balloon every fan-out instance's prompt, instruct the agent to read specific files directly. Trade-off: less reliable than injection (agent may forget); more flexible.
+- **Template variables** — `prompt.variables` for small static values (paths, thresholds, names) referenced via Jinja in templates AND via Python format in validation paths/commands.
 
-Preludes establish the substrate. Cadenzas specialize each stage.
+Preludes establish the substrate. Cadenzas specialize each stage. Together they implement the rows of your context-flow map.
 
 ### Design Validations
 
