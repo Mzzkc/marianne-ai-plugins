@@ -64,7 +64,7 @@ prompt:
     Write to {{ workspace }}/output.md
 ```
 
-**Rule**: Jinja `{{ }}` in the **prompt pipeline** (templates, prelude/cadenza paths, capture_files). Format `{}` in the **validation engine** (validation paths, commands, working_directory, skip_when_command).
+**Rule**: Jinja `{{ }}` in the **prompt pipeline** (templates, prelude/cadenza paths, capture_files). Format `{}` in the **validation engine** (validation paths, commands, working_directory, skip_when).
 
 | Field | Syntax | Engine |
 |---|---|---|
@@ -75,7 +75,7 @@ prompt:
 | `validations[].path` | `{workspace}` | Python `.format()` |
 | `validations[].command` | `{workspace}` | Manual `{}` replacement (shell-quoted) |
 | `validations[].working_directory` | `{workspace}` | Python `.format()` |
-| `skip_when_command[N].command` | `{workspace}` | Manual `{}` replacement |
+| `skip_when[N].command` | `{workspace}` | Manual `{}` replacement |
 
 ---
 
@@ -490,7 +490,7 @@ mzt run my-score.yaml --dry-run
 1. **Config loaded** --- YAML parsed into Pydantic models; fan-out expanded
 2. **State loaded** --- resume from checkpoint or start fresh
 3. **For each sheet** (sequential or parallel via DAG):
-   a. **Skip check** --- evaluate skip_when / skip_when_command
+   a. **Skip check** --- evaluate skip_when (command predicates)
    b. **Context built** --- SheetContext with variables + cross-sheet data
    c. **Injections resolved** --- prelude/cadenza files read
    d. **Prompt rendered** --- Jinja2 processes template

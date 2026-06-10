@@ -502,9 +502,7 @@ parallel:
 
 ```yaml
 sheet:
-  skip_when:                    # Expression-based (against state)
-    5: "sheets.get(3) and sheets[3].validation_passed"
-  skip_when_command:            # Command-based (exit 0 = skip)
+  skip_when:                    # Command-based (exit 0 = skip); #119
     6:
       command: 'grep -q "COMPLETE" "{workspace}/output.md"'
       description: "Skip if already complete"

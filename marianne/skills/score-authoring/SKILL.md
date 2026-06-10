@@ -22,7 +22,7 @@ description: Use when writing, reviewing, or fixing Marianne score YAML configs.
 
 ## Quick Syntax Reference
 
-**The #1 rule**: Jinja `{{ }}` in the **prompt pipeline** (templates, prelude/cadenza paths, capture_files). Python format `{}` in the **validation engine** (validation paths, commands, working_directory, skip_when_command).
+**The #1 rule**: Jinja `{{ }}` in the **prompt pipeline** (templates, prelude/cadenza paths, capture_files). Python format `{}` in the **validation engine** (validation paths, commands, working_directory, skip_when).
 
 | Field | Syntax |
 |---|---|
