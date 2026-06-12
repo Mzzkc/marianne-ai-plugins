@@ -84,7 +84,7 @@ A **score** is a YAML configuration declaring what work to do, which instruments
 
 A **sheet** is one agent performing one task — the atomic unit of execution. A **stage** is a logical phase that may fan out into multiple sheets — parallel instances of the same work on different data with the same instrument. If instances need different instruments, they are separate stages, not fan-out. In YAML, stages are declared via `movements:` and `sheet.total_items`; the `stage` template variable gives each sheet its phase number.
 
-An **instrument** is an AI backend or CLI tool with specific capabilities and cost profile. `mzt instruments list` shows what's registered.
+An **instrument** is any CLI tool or API endpoint wrapped as a plugin profile, with specific capabilities and cost profile. `mzt instruments list` shows what's registered.
 
 **Preludes** inject shared context into every sheet. **Cadenzas** inject per-sheet context. Injection is how you give an agent what it needs. Telling an agent to "read a file" is unreliable; injecting the file is not.
 
@@ -268,7 +268,7 @@ Don't place a boundary where:
 
 Different instruments — and different models within them — were built for different work. The catalog at `plugins/marianne/docs/ref/instrument-catalog.{yaml,md}` is the source of truth. Marianne distinguishes:
 
-- **Instrument** — backend execution framework (capabilities: tool use, file edit, shell, vision, MCP). Examples: `claude-code`, `gemini-cli`, `opencode`, `ollama`, `cli`.
+- **Instrument** — the execution framework, a plugin profile (capabilities: tool use, file edit, shell, vision, MCP). Examples: `claude-code`, `gemini-cli`, `opencode`, `ollama`, `cli`.
 - **Musician** — the model played by the instrument (capacity: context, cost, speed, reasoning quality). Examples: `claude-opus-4-7`, `qwen2.5-coder:32b`, `openrouter/minimax/minimax-m2.5:free`.
 
 For each stage, compute its tag intersection along four dimensions:

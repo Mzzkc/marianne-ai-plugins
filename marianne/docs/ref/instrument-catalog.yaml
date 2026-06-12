@@ -113,7 +113,7 @@ dimensions:
     oss-default: "Marked as a default choice for open-source-first composition"
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# INSTRUMENTS — backend execution frameworks (capabilities, not models)
+# INSTRUMENTS — execution frameworks, plugin profiles (capabilities, not models)
 # Per Phase 6: instruments determine CAPABILITIES; models determine CAPACITY.
 # ═══════════════════════════════════════════════════════════════════════════════
 

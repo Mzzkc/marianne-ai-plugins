@@ -321,40 +321,43 @@ prompt:
     Your prompt here for sheet {{ sheet_num }}.
 ```
 
-### Instrument (Recommended)
+### Instrument
 
 ```yaml
 # Use a named instrument (run `mzt instruments list` to see available)
 instrument: claude-code
 instrument_config:
   timeout_seconds: 1800         # Per-sheet timeout (30 min default)
-  skip_permissions: true        # REQUIRED for unattended execution
-  disable_mcp: true             # ~2x speedup, prevents contention
-  cli_model: claude-sonnet-4-5-20250929  # Model override
-  allowed_tools: [Read, Grep, Glob, Write, Edit]  # Tool restrictions
+  model: claude-sonnet-4-6      # Model override (alias: cli_model)
 ```
 
-Built-in instruments: `claude-code`, `gemini-cli`, `codex-cli`, `cline-cli`, `aider`, `goose`. Plus any CLI tool via YAML profiles in `~/.marianne/instruments/`.
+Functional `instrument_config` keys: `model` (alias `cli_model`),
+`timeout_seconds`, `interactive`, `interactive_max_nudges`,
+`interactive_nudge_message`. **Unknown keys are silently ignored** — old
+`backend:`-era knobs like `skip_permissions`, `disable_mcp`, and
+`allowed_tools` do nothing here (the built-in profiles already pass
+auto-approve and MCP-disable flags; tool restrictions need a custom
+profile).
 
-### Backend (Legacy Syntax)
-
-The `backend:` syntax still works but `instrument:` is preferred for new scores.
+Per-sheet overrides:
 
 ```yaml
-backend:
-  type: claude_cli              # claude_cli | anthropic_api | ollama | recursive_light
-  skip_permissions: true        # REQUIRED for unattended execution
-  timeout_seconds: 1800         # Per-sheet timeout (30 min default)
-  disable_mcp: true             # ~2x speedup, prevents contention
-  output_format: json           # json | text | stream-json
-  cli_model: claude-sonnet-4-5-20250929  # Model override
-  allowed_tools: [Read, Grep, Glob, Write, Edit]  # Tool restrictions
-  system_prompt_file: ./system.md  # Custom system prompt
-  cli_extra_args: ["--verbose"]    # Escape hatch
-  max_output_capture_bytes: 51200  # stdout/stderr capture (50KB default)
-  timeout_overrides:
-    7: 28800                    # Per-sheet overrides (8 hours)
+sheet:
+  per_sheet_instrument_config:
+    7:
+      timeout_seconds: 28800    # sheet 7 gets 8 hours
 ```
+
+Built-in instruments: `claude-code`, `gemini-cli`, `codex-cli`, `opencode`, `goose`, `crush`, `cline-cli`, `aider`, `cli`. Plus any CLI tool via YAML profiles in `~/.marianne/instruments/`.
+
+### Legacy `backend:` Syntax — REMOVED
+
+The `backend:` block was removed (#347). A score containing one fails at
+parse time with `Unknown field 'backend'`. Convert: `type: claude_cli` →
+`instrument: claude-code`; `cli_model` → `instrument_config.model`;
+`timeout_seconds` → `instrument_config.timeout_seconds`;
+`timeout_overrides` → `sheet.per_sheet_instrument_config`; drop
+`skip_permissions`/`disable_mcp` (handled by the instrument profile).
 
 ---
 
@@ -426,15 +429,15 @@ pattern: '\d+\.\s+'
 | 3 | No validations | Sheet always "passes" | Always add meaningful validations |
 | 4 | `file_exists` only | File may exist from previous run | Combine with `file_modified` or content checks |
 | 5 | Prescriptive prompts | Agent can't adapt; brittle | Specify outcomes, not commands |
-| 6 | Missing `skip_permissions` | Claude prompts for permission, hangs | Always set `skip_permissions: true` |
-| 7 | Missing `disable_mcp` | MCP spawns children, deadlocks | Set `disable_mcp: true` unless needed |
+| 6 | Expecting `skip_permissions`/`disable_mcp` in `instrument_config` to do anything | Keys silently ignored | Built-in profiles already pass auto-approve + MCP-disable flags; delete the keys |
+| 7 | Expecting MCP tools in a sheet | Profiles disable MCP by default (child-process explosion) | Custom profile without `mcp_disable_args`, or conductor MCP pool |
 | 8 | `sheet_num` with fan-out | Changes after expansion | Use `stage` for conditionals |
 | 9 | `fan_out` without `dependencies` | Stages run out of order | Always declare dependencies |
 | 10 | `fan_out` without `parallel` | Sequential execution (slow) | Enable parallel for concurrency |
 | 11 | Variable shadows core name | `variables.workspace` overrides real | Don't reuse: workspace, sheet_num, stage, etc. |
 | 12 | `>` folded string for template | Newlines collapse | Always use `\|` literal block |
 | 13 | `job_name` in template | Not a variable --- UndefinedError | Put in `prompt.variables` if needed |
-| 14 | External `timeout` wrapper | SIGKILL corrupts state | Use `backend.timeout_seconds` |
+| 14 | External `timeout` wrapper | SIGKILL corrupts state | Use `instrument_config.timeout_seconds` |
 | 15 | No `fresh: true` in self-chain | Loads COMPLETED state, zero work | Always `fresh: true` for self-chaining |
 | 16 | Regex without double-escape | `\d` in YAML is just `d` | Use `\\d` or single-quoted strings |
 | 17 | Config changes after first run | Resume auto-reloads from YAML | Use `--no-reload` for cached snapshot |
@@ -464,7 +467,7 @@ mzt run my-score.yaml --dry-run
 #    - Every sheet has at least one applicable validation?
 #    - Validation paths use {workspace} not {{ workspace }}?
 #    - Prompt template uses {{ workspace }} not {workspace}?
-#    - backend.skip_permissions is true?
+#    - No backend:-era keys (skip_permissions, disable_mcp, allowed_tools)?
 #    - Dependencies declared for parallel/fan-out?
 #    - Timeouts appropriate for task complexity?
 #    - Stale detection timeout >= 1800s for verification/build stages?
@@ -494,7 +497,7 @@ mzt run my-score.yaml --dry-run
    b. **Context built** --- SheetContext with variables + cross-sheet data
    c. **Injections resolved** --- prelude/cadenza files read
    d. **Prompt rendered** --- Jinja2 processes template
-   e. **Backend executes** --- Claude CLI spawned with rendered prompt
+   e. **Instrument executes** --- headless CLI call, or a driven tmux session for interactive instruments (claude-code default)
    f. **Output captured** --- stdout/stderr (truncated to ~10KB)
    g. **Validations run** --- staged, conditional, with retries
    h. **On failure** --- completion mode (>50% pass) or full retry with backoff

@@ -518,10 +518,8 @@ sheet:
 ```yaml
 name: "batch-process"
 workspace: "./batch-workspace"
-backend:
-  type: claude_cli
-  skip_permissions: true
-  disable_mcp: true
+instrument: claude-code
+instrument_config:
   timeout_seconds: 1800
 sheet:
   size: 10

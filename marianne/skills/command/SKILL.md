@@ -230,7 +230,7 @@ mzt diagnose my-job --include-logs
 | Command fails | Wrong `working_directory` or shell assumptions | Check CWD, test command manually |
 | Sheet "passes" but work is bad | Validations too weak (file_exists only) | Add content checks or command validations |
 | Config changes ignored | `--no-reload` used or file deleted | Config auto-reloads by default; check YAML file exists |
-| Job hangs forever | Missing `skip_permissions: true` | Set in backend config |
+| Job hangs forever | Custom instrument profile lacks an auto-approve flag, or an interactive session is stuck on an unhandled dialog | Built-in profiles auto-approve; for custom profiles set `auto_approve_flag`; for interactive stalls check `tmux -L marianne attach -t <session>` and add a `startup_gates` entry |
 | Chained job does nothing | Missing `fresh: true` in hook | Add `fresh: true` to self-chain hooks |
 
 ---

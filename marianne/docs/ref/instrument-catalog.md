@@ -12,7 +12,7 @@
 
 Marianne distinguishes **instruments** from **musicians**:
 
-- **Instrument** = backend execution framework. Determines *capabilities* — tool use, file editing, shell access, vision, MCP.
+- **Instrument** = the execution framework (a plugin profile). Determines *capabilities* — tool use, file editing, shell access, vision, MCP.
 - **Musician** = the model played by the instrument. Determines *capacity* — context window, cost, speed, reasoning quality.
 
 Composers select tag intersections (`tier × task × modality × constraint`) and the catalog maps the intersection to ranked model chains. **Open-source-first by default**; subscription and premier as fallbacks where open models genuinely don't suffice. Frontier ≡ capability tier, not vendor origin: GLM 5.1 (Z.AI, MIT-licensed) sits at `max` tier alongside Opus, GPT-5.5, and Gemini Pro.

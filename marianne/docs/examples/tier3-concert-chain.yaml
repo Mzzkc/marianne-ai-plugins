@@ -30,11 +30,9 @@ description: "Design phase of a multi-score concert — plans the work, then cha
 
 workspace: "/absolute/path/to/workspaces/concert-design"
 
-backend:
-  type: claude_cli
-  skip_permissions: true
+instrument: claude-code
+instrument_config:
   timeout_seconds: 1800
-  disable_mcp: true
 
 # Concert mode: this score chains to the next on success
 concert:

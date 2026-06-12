@@ -35,11 +35,9 @@ description: "Multi-phase investigation with preprocessing, parallel analysis, s
 
 workspace: "/absolute/path/to/workspaces/investigation-workspace"
 
-backend:
-  type: claude_cli
-  skip_permissions: true
+instrument: claude-code
+instrument_config:
   timeout_seconds: 2400
-  disable_mcp: true
 
 sheet:
   size: 1
