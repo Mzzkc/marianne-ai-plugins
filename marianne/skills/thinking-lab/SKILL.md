@@ -1,11 +1,11 @@
 ---
 name: thinking-lab
-description: Use when you need independent expert reviews from multiple frontier models. Drop a prompt + context into the input directory, run the score, read five independent reviews, synthesize yourself.
+description: Use when you need independent expert reviews from multiple frontier models. Drop a prompt + context into the input directory, run the score, read the independent reviews, synthesize yourself.
 ---
 
 # Thinking Lab Skill
 
-> **Purpose**: 5 parallel independent reviews from different frontier model families. You synthesize with full context.
+> **Purpose**: several parallel independent reviews from different frontier model families. You synthesize with full context.
 
 ---
 
@@ -22,17 +22,9 @@ description: Use when you need independent expert reviews from multiple frontier
 
 ## The Score
 
-`scores/prep/thinking-lab.yaml` — five parallel reviewers with directory-cadenza injection of the input dir. Pattern: `cli` stage 1 stages a setup marker; stages 2–6 fan in parallel, each routed to a different vendor family.
+`scores/prep/thinking-lab.yaml` — several frontier reviewers from different vendor families run in parallel with directory-cadenza injection of the input dir. Pattern: `cli` stage 1 stages a setup marker; the review stages fan in parallel, each routed to a different vendor family.
 
-**Reviewers (current lineup):**
-
-| # | Model | Vendor | Instrument |
-|---|---|---|---|
-| 1 | Claude Opus 4.7 | Anthropic | `claude-code` |
-| 2 | Gemini 3.1 Pro | Google | `gemini-cli` |
-| 3 | Gemma 4 | Google (free OpenRouter) | `opencode` |
-| 4 | GLM 5.1 | Z.AI | `opencode` |
-| 5 | GPT-5.5 | OpenAI | `codex-cli` |
+**Reviewers (current lineup):** one reviewer per vendor family — a mix of paid frontier and free/open-weight models across independent labs. The concrete lineup (which models, how many) lives in the score's `instruments:` and `movements:` and is intentionally not duplicated here, so this skill doesn't rot when the lineup changes.
 
 To change the lineup, edit `instruments:` and `movements:` in the score.
 
@@ -59,22 +51,22 @@ mzt run scores/prep/thinking-lab.yaml --fresh
 ### 3. Read reviews
 
 ```
-workspaces/thinking-lab/review-1.md  # Opus 4.7
-workspaces/thinking-lab/review-2.md  # Gemini 3.1 Pro
-workspaces/thinking-lab/review-3.md  # Gemma 4
-workspaces/thinking-lab/review-4.md  # GLM 5.1
-workspaces/thinking-lab/review-5.md  # GPT-5.5
+workspaces/thinking-lab/review-1.md  # reviewer 1
+workspaces/thinking-lab/review-2.md  # reviewer 2
+workspaces/thinking-lab/review-3.md  # reviewer 3
+workspaces/thinking-lab/review-4.md  # reviewer 4
+...                                  # (one file per review stage in the score)
 ```
 
 ### 4. Synthesize yourself
 
-Look for consensus (all 5), strong majority (4/5), majority (3/5), unique insights (1 only), and conflicts. You have the full conversation context — external synthesis loses it. For automated synthesis (e.g., catalog refresh), call this from another score that reads the five reviews after the lab completes.
+Look for consensus (all reviewers), strong majority, majority, unique insights (one only), and conflicts. You have the full conversation context — external synthesis loses it. For automated synthesis (e.g., catalog refresh), call this from another score that reads the reviews after the lab completes.
 
 ---
 
 ## Collaborative Build Pattern
 
-After a review round, put all five reviews back into the input directory alongside the original prompt, and ask the next round to build the integrated solution. Each model sees everyone else's feedback and produces a complete implementation. The divergence becomes a forcing function for synthesis.
+After a review round, put all the reviews back into the input directory alongside the original prompt, and ask the next round to build the integrated solution. Each model sees everyone else's feedback and produces a complete implementation. The divergence becomes a forcing function for synthesis.
 
 ---
 
@@ -99,7 +91,7 @@ The calling score generates `prompt.md` and any context files into `scores/prep/
 - Always use `--fresh` for new questions (the score sets `archive_on_fresh: true` so previous outputs archive automatically).
 - Don't put secrets in the input dir — five providers see it.
 - Typical runtime: 5–15 minutes.
-- Cost: ~$0.20–0.80 per run (Opus + GPT-5.5 dominate; Gemma + GLM are free).
+- Cost: ~$0.20–0.80 per run (paid frontier reviewers dominate the cost; free/open-weight reviewers are ~$0).
 - Reviewer lineup is configurable in `scores/prep/thinking-lab.yaml` under `instruments:` and `movements:`.
 - Adding a 6th reviewer = add an instrument, add a movement, add a stage cadenza, add a stage validation.
 

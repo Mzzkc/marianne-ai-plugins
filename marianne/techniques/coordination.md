@@ -1,127 +1,122 @@
-# Coordination Protocol — Technique Module
+# Stigmergic Cadenza Coordination
 
 ## Purpose
 
-The coordination protocol teaches agents how to use the shared workspace
-for self-organization. Without explicit hierarchy, agents coordinate through
-artifacts — plans, findings, decisions, and status documents that live in
-shared directories. The coordination protocol makes this work smoothly.
+This technique teaches Marianne agents to coordinate through durable files in
+the shared workspace. The primary communication path is stigmergic: agents
+leave state, claims, findings, decisions, and handoffs where the next agent can
+read them. A2A can supplement this with live delegation when it is available,
+but A2A is not the authoritative coordination record.
 
-## Shared Workspace Structure
+## Shared Workspace
 
-```
+```text
 workspace/
   shared/
-    active/       <- Curated live context (token-budget managed)
-    specs/        <- Relevant specifications copied here by agents
-    plans/        <- Coordination plans, priorities, task claims
-    findings/     <- Shared finding registry (mateship protocol)
-    decisions/    <- Architectural decisions, trade-off records
-    directives/   <- Composer notes, human overrides
-    techniques/   <- Shared patterns, method documents
+    active/       <- flat live cadenza loaded into agent context
+    plans/        <- detailed plans and task breakdowns
+    findings/     <- durable fact registry and investigation reports
+    decisions/    <- architectural and operational decisions
+    directives/   <- composer or conductor directives
+    specs/        <- relevant copied or summarized specs
+    archive/      <- stale active files and historical detail
   agents/
-    {name}/
-      work/       <- Agent's private working directory
-      reports/    <- Per-cycle reports
-      cycle-state/<- Recon, plan, aar artifacts per cycle
+    {name}/       <- agent-local work, reports, and cycle state
   collective/
-    memory.md     <- Shared memory (append-only)
-    tasks.md      <- Task registry
-    status.md     <- Project status
+    tasks.md      <- durable backlog
+    status.md     <- cross-cycle status summary
 ```
 
-## The Active Folder
+Directory cadenzas are not recursive. Files that must be visible to all agents
+now must be direct children of `shared/active/`.
 
-The `shared/active/` directory is the live cadenza — a curated space that
-agents manage together. Its contents are loaded into every agent's context
-during applicable phases.
+## Active Cadenza Files
 
-### Token Budget
+Generated generic fleets seed these starter files in `shared/active/`:
 
-The active folder has a token budget (default: 8000 tokens). When contents
-exceed this budget, a size signal fires and agents should curate:
-- Archive stale artifacts to `shared/archive/`
-- Compress verbose documents
-- Remove duplicates
-- Keep only what's relevant to current cycle priorities
+- `00-cadenza-coordination.md` - the coordination contract.
+- `01-task-board.md` - current-cycle work claims.
+- `02-agent-status.md` - compact live status and handoffs.
+- `03-findings.md` - evidence-backed facts other agents can rely on.
+- `04-decision-log.md` - choices that affect other work.
+- `05-directives.md` - composer or conductor instructions.
+- `06-handoff-index.md` - pointers to detailed artifacts elsewhere.
 
-### Curation Rules
+Agents may add more active files, but they must keep the folder curated.
 
-1. **Put relevant artifacts here.** If other agents need to see it now,
-   put it in active.
-2. **Archive when done.** Completed work artifacts move out of active.
-3. **Don't dump everything.** Active is curated, not a file dump.
-4. **Size signal = action needed.** When the budget warning fires, curate.
+## Concurrent Write Safety
 
-## Claim-Before-Work Protocol
+The shared active files are hot files during parallel phases. A write conflict
+is normal coordination pressure, not a reason to stop.
 
-Before starting work that could overlap with other agents:
+- Read the latest file immediately before editing it.
+- Prefer adding your own owner-scoped row over rewriting another agent's row.
+- If the tool reports that the file changed since you read it, re-read the
+  file and retry the smallest row-level change once.
+- If the row already exists, update only your own row unless another agent
+  explicitly asked for a change.
+- If a second conflict blocks the update, write the detailed artifact under
+  `shared/plans/`, `shared/findings/`, `shared/decisions/`, or
+  `agents/{name}/cycle-state/`, then add a compact blocked note to your own
+  status/report. Do not spin on the same shared file.
 
-1. **Read shared/plans/** to see what others are working on.
-2. **Write your plan** to `agents/{name}/cycle-state/{name}-plan.md`.
-3. **If overlap detected**, check the other agent's plan for coordination
-   opportunities rather than duplicating work.
-4. **Update collective/tasks.md** with your claimed work items.
+## Required Loop
 
-This prevents two agents from independently fixing the same bug or
-implementing the same feature.
+When this technique is active:
 
-## Composer Directives
+1. Read every direct file in `shared/active/` before making a plan.
+2. Read `shared/directives/` if directive files exist.
+3. Claim overlapping work in `shared/active/01-task-board.md` before starting.
+4. Update `shared/active/02-agent-status.md` when starting, blocking, handing
+   off, reviewing, or completing material work.
+5. Record reusable facts in `shared/active/03-findings.md` or a detailed file
+   in `shared/findings/` with an active pointer.
+6. Record decisions in `shared/active/04-decision-log.md` or a detailed file in
+   `shared/decisions/` with an active pointer.
+7. Add handoff pointers to `shared/active/06-handoff-index.md`.
+8. Move stale detail out of `shared/active/` when it no longer needs to be in
+   every prompt.
 
-The human (or AI composer) writes to `shared/directives/`. All agents read
-this during recon. Directives take priority over self-organized plans.
+Use owner-scoped ids in shared active tables: `{agent}-T-001` for tasks,
+`{agent}-F-001` for findings, `{agent}-D-001` for decisions, and
+`{agent}-H-001` for handoffs. Do not allocate global numeric ids under
+parallel execution; another agent can choose the same number at the same time.
 
-Common directive types:
-- **Priority shift**: "Focus on security audit this cycle."
-- **Pairing instruction**: "Agent-A and Agent-B should coordinate on the API refactor."
-- **Scope change**: "Skip play phase until the P0 backlog is cleared."
-- **Architecture decision**: "Use Protocol-based abstractions for the new module."
-
-Agents must check directives before planning their cycle.
-
-## Glob Listing Strategy
-
-For token efficiency, agents get a lightweight glob listing of all shared
-directories in their prelude (what exists, not what it contains). This map
-costs ~2000 tokens and gives agents awareness of the full shared space.
-
-The full content of `shared/active/` is loaded as cadenza. Other directories
-are accessible via filesystem techniques when needed.
-
-## Task Registry (collective/tasks.md)
-
-The task registry is a shared document where agents track work items:
+## Claim Example
 
 ```markdown
-## Active Tasks
-
-- [ ] [agent-a] Refactor config loading — claimed cycle 12
-- [ ] [agent-b] Implement validation pipeline — claimed cycle 12
-- [x] [agent-c] Security audit of auth module — completed cycle 11
-
-## Unowned
-
-- [ ] Fix flaky test in test_daemon.py — P1, filed cycle 10
-- [ ] Update API documentation — P2, filed cycle 9
+| canyon-T-001 | canyon | claimed | Map workspace seeding compiler boundary. | `shared/plans/workspace-seed-plan.md` |
 ```
 
-Agents update this during plan and AAR phases.
+If another agent has already claimed overlapping work, update that row with a
+coordination note instead of starting a competing implementation.
 
-## Guidelines for Agents
+## Finding Example
 
-When this technique is active in your phase:
+```markdown
+| sentinel-F-001 | high | sentinel | Generated scores inject `shared/active`, but compile did not seed it. | `compiler/src/.../sheets.py`, temp compile output | confirmed |
+```
 
-1. **Read the landscape first.** During recon, read shared/plans/, the task
-   registry, and any directives. Understand the coordination state.
-2. **Claim before working.** Write your plan. Update the task registry.
-   Other agents will see it and avoid collision.
-3. **Use active/ judiciously.** Put things there that other agents need now.
-   Remove things that are done or stale.
-4. **Respect directives.** Composer overrides take priority. If a directive
-   changes your planned work, adapt.
-5. **Communicate through artifacts.** Your recon report, plan, and AAR are
-   how other agents know what you're doing. Write them well.
-6. **Coordinate, don't compete.** Two agents finding the same bug is waste.
-   Check shared/findings/ before investigating.
-7. **Update shared status.** If you complete work that affects others, update
-   collective/status.md and relevant plans.
+Findings require evidence: a file path, command output summary, test name, log
+line, or exact source. Unsupported claims do not belong in shared state.
+
+## Decision Example
+
+```markdown
+| north-D-001 | north | Treat cadenza coordination as primary and A2A as optional. | Disk artifacts survive job boundaries and can be rendered as cadenzas. | compiler, docs, tests | 2026-06-21 |
+```
+
+Decisions must include the reason and impacted surfaces.
+
+## A2A Boundary
+
+Use A2A only for live, best-effort delegation or inbox checks. Any result that
+must survive process boundaries, retries, conductor restarts, or later agent
+cycles must be written to the shared workspace. If A2A and cadenza artifacts
+disagree, treat the durable file record as authoritative until reconciled.
+
+## Curation Rule
+
+The active folder is not a dump. Keep detailed reports in `shared/plans/`,
+`shared/findings/`, `shared/decisions/`, or agent-local cycle state, and keep
+`shared/active/` as the compact coordination layer that every agent needs now.

@@ -4,6 +4,25 @@ Append-only log of changes to `instrument-catalog.yaml`.
 
 ---
 
+## 2026-06-14 — GLM 5.1 → 5.2 interim repoint (provisional)
+
+**Drove by:** the live opencode instrument moved from `zai-coding-plan/glm-5.1` to `zai-coding-plan/glm-5.2` (Z.AI Coding Plan). Composers following the catalog's chains must be guided to the current model.
+
+**Honesty caveat — this is a MANUAL interim edit, not a lab fact-fold.** GLM 5.2 is a *different release* from 5.1. Only existence + Z.AI Coding Plan availability were verified (by direct session use). All ratings, benchmarks, license, architecture, and context-window figures are **null/pending** — do NOT cite 5.1's verified numbers (e.g., SWE-Bench Pro 58.4, MIT license) for 5.2. A lab fact-fold pass (`scores/instrument-catalog-build-fold.yaml`) is needed to populate them.
+
+### Changes
+- **Added** `glm-5.2` model entry — PROVISIONAL. `verified_via: [user_session_observation_2026_06_14]`. `ratings: {}`, `benchmarks: {}`, `license: null`. Tags conservative (`heavy, subscription`) — `open-weights`/`oss-default` NOT claimed pending license verification. Chunking quirk carried over **defensively**, labelled "inherited from 5.1, unverified for 5.2."
+- **Repointed** all `use_case_chains` picks from `glm-5.1` → `glm-5.2`: `code_generation` (last_resort), `code_translation` (last_resort), `reasoning_verification` (fallback), `careful_long_running_analysis` (primary), `cross_vendor_review` (3 typical_pairs), `open_default_general` (primary).
+- **Neutralized** chain comments/rationales that asserted 5.1-specific verified facts (MIT license, SWE-Bench Pro 58.4). The careful_long_running_analysis rationale now attributes the "trusted over Gemini" testimony to the GLM family/lineage and marks 5.2 placement provisional.
+- **Retained** `glm-5.1` entry unchanged as the documented prior release; updated only its `notes` to record the succession.
+- **Updated** `generated_at` → 2026-06-14; appended the interim-edit provenance to `generated_by`.
+
+### Items deferred
+- glm-5.2 ratings, benchmarks, license, architecture, context window → next lab fact-fold pass.
+- Whether the chunking-tool-call quirk persists in 5.2 → re-test in the next thinking-lab run (chunking guidance is now baked in, so the sheet should complete this time).
+
+---
+
 ## 2026-04-30 — Move to plugins/marianne/docs/ref/
 
 **Drove by:** plugin-distribution coherence — the composing skill's preflight reads the catalog, the skill ships in `plugins/marianne/`, and the catalog should travel with it.
@@ -96,7 +115,6 @@ Append-only log of changes to `instrument-catalog.yaml`.
 - `minicpm-v-2.6` (Apache-2.0, edge multimodal).
 
 **Regional / specialized:**
-- `kimi-k2.5` (Moonshot, 1M context, Agent Swarm).
 - `jais-30b-chat` (Arabic).
 - `tiny-aya` (Cohere, 70+ languages).
 - `yi-large` — added but immediately marked `status: deprecated` (Yi-Lightning replaced as flagship 2024-10-16).
@@ -111,8 +129,8 @@ Added to `task` dimension: `math`, `careful-long-running`, `multilingual`, `regi
 - **`code_generation`** — `qwen3-coder-480b-a35b-instruct` is new primary; `glm-5.1` added to last_resort.
 - **`code_translation`** — `qwen3-coder-480b-a35b-instruct` is new primary; `deepseek-v4-pro` displaces `deepseek-v3`.
 - **`reasoning_verification`** — Added `qwq-32b`, `phi-4-reasoning`. Removed `o4-mini` (deprecated). Added `glm-5.1` to fallback.
-- **`careful_long_running_analysis`** — **NEW chain.** Primary: `glm-5.1`. Fallback: `claude-opus-4-7`, `kimi-k2.5`. Per user direct testimony.
-- **`long_document_synthesis`** — Added `claude-opus-4-7` (now 1M context), `deepseek-v4-pro`, `kimi-k2.5`.
+- **`careful_long_running_analysis`** — **NEW chain.** Primary: `glm-5.1`. Fallback: `claude-opus-4-7`. Per user direct testimony.
+- **`long_document_synthesis`** — Added `claude-opus-4-7` (now 1M context) and `deepseek-v4-pro`.
 - **`cross_vendor_review`** — Added GLM 5.1 as a peer reviewer in 3 of the typical pairs. `qwen3-coder-480b-a35b-instruct` paired with claude-sonnet-4-6.
 - **`open_default_general`** — Promoted Qwen3 family + GLM 5.1 to primary. Llama 3.3:70b moved to fallback.
 - **`speech_synthesis`** — F5-TTS, Sesame CSM, OpenVoice v2, XTTS-v2, Bark added; primary is now `kokoro-tts, f5-tts, sesame-csm`.

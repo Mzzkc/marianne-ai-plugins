@@ -21,8 +21,8 @@
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 
 schema_version: 1
-generated_at: "2026-04-29"
-generated_by: "v1.1 — fact-fold from version-research agent (2026-04-29) + gap-research agent (2026-04-29) + 3-of-5 lab cross-rating reviews (Opus 4.7, Gemini 3.1 Pro, GPT-5.5) + user direct testimony on GLM 5.1. Lab pass for Gemma 4 / GLM 5.1 ratings deferred to next refresh (GLM lab failure was chunked-tool-call issue, now documented as a quirk and remediated for future runs)."
+generated_at: "2026-06-14"
+generated_by: "v1.1 — fact-fold from version-research agent (2026-04-29) + gap-research agent (2026-04-29) + 3-of-5 lab cross-rating reviews (Opus 4.7, Gemini 3.1 Pro, GPT-5.5) + user direct testimony on GLM 5.1. Lab pass for Gemma 4 / GLM 5.1 ratings deferred to next refresh (GLM lab failure was chunked-tool-call issue, now documented as a quirk and remediated for future runs). | 2026-06-14 interim edit: live instrument moved glm-5.1 → glm-5.2; provisional glm-5.2 entry added (existence + Coding-Plan availability session-verified; ratings/benchmarks/license PENDING lab fact-fold); use-case chains repointed to glm-5.2; glm-5.1 retained as documented prior release."
 
 sources:
   - path: "docs/plans/features/2026-04-08-auto-routing-design.md"
@@ -191,7 +191,6 @@ instruments:
       - openrouter/google/gemma-4-31b-it:free
       - openrouter/nvidia/nemotron-3-super-120b-a12b:free
       - openrouter/z-ai/glm-4.5-air:free
-      - openrouter/meta-llama/llama-4-maverick:free
     fallback_instruments: [aider, goose]
     notes: "Best instrument for accessing free-tier OpenRouter models. The Z.AI Coding Plan provides unlimited GLM via opencode — rate-limit-proof."
 
@@ -753,34 +752,6 @@ musicians:
     last_verified: "2026-04-13"
     verified_via: [internal_research_2026_04_13_free_model_code_generation]
 
-  openrouter/meta-llama/llama-4-maverick:free:
-    provider: meta
-    family: "Llama 4"
-    context_window: 1000000
-    max_output_tokens: 16384
-    cost_per_1m_input: 0
-    cost_per_1m_output: 0
-    available_via: [opencode]
-    tags: [standard, free, open-weights]
-    task_tags: [research, writing, transform]
-    modality_tags: [text]
-    ratings:
-      reasoning: 3
-      code_gen: 3
-      code_read: 3
-      long_context: 5    # 1M
-      instruction_following: 3
-      format_adherence: 3
-      tool_use: 2
-      speed_tokens_per_sec: 4
-      cost_efficiency: 5
-    weaknesses:
-      - "Code generation reliability medium-low despite parameter count"
-      - "Tool use unreliable per internal research"
-    last_verified: "2026-04-13"
-    verified_via: [internal_research_2026_04_13_free_model_code_generation]
-    notes: "1M-context but weak tool use limits production use. Better for long-doc summarization than agentic work."
-
   # ── Open-weights / local via Ollama ──────────────────────────────────────────
 
   qwen2.5-coder:32b:
@@ -1176,6 +1147,32 @@ musicians:
 
   # ── Z.AI / GLM frontier additions ───────────────────────────────────────────
 
+  glm-5.2:
+    provider: z-ai
+    family: "GLM 5"
+    released: null                                     # unverified — pending lab fact-fold
+    context_window: null                               # unverified (Coding-Plan tier serves ≥200K)
+    max_output_tokens: null                            # unverified
+    cost_per_1m_input: 0                               # Z.AI Coding Plan: flat subscription
+    cost_per_1m_output: 0
+    license: null                                      # unverified whether open-weight (5.1 was MIT)
+    architecture: null                                 # unverified
+    available_via: [opencode, z-ai-coding-plan]        # session-verified 2026-06-14
+    tags: [heavy, subscription]                        # conservative; max/open-weights pending verification
+    task_tags: [code, code-review, review, reasoning, tool-use, agent, careful-long-running]   # observed in session
+    modality_tags: [text]
+    ratings: {}                                        # PROVISIONAL — pending lab cross-rating
+    strengths:
+      - "Successor to glm-5.1 in the GLM 5 family; the current frontier GLM served via the Z.AI Coding Plan."
+      - "Different training lineage from US labs — valuable cross-vendor reviewer pairing (rationale inherited from 5.1)."
+    weaknesses: []                                     # pending verification
+    quirks:
+      - "INHERITED from glm-5.1, unverified for 5.2: may fail on too-large tool calls. Until disproven, prompt for chunked writes (~50-100 lines per Write/Edit). Kept defensively — the 5.1 quirk was painful."
+    benchmarks: {}                                     # do NOT carry over 5.1's SWE-Bench Pro 58.4 — different release
+    last_verified: "2026-06-14"
+    verified_via: [user_session_observation_2026_06_14]   # observed running via opencode on Z.AI Coding Plan
+    notes: "PROVISIONAL ENTRY — added manually when the live instrument moved from glm-5.1 to glm-5.2. Existence and Coding-Plan availability verified by direct session use; all ratings, benchmarks, license, and architecture PENDING a lab fact-fold pass (run scores/instrument-catalog-build-fold.yaml). The use-case chains below point here as the current GLM; glm-5.1 is retained as the documented prior release. Do NOT cite 5.1's SWE-Bench Pro 58.4 for 5.2."
+
   glm-5.1:
     provider: z-ai
     family: "GLM 5"
@@ -1215,7 +1212,7 @@ musicians:
       swe_bench_pro: 0.584
     last_verified: "2026-04-29"
     verified_via: [vendor_docs, public_benchmarks, version_research_2026_04_29, user_direct_testimony]
-    notes: "User trusts GLM 5.1 over Gemini for complex long-running analysis. Catalog primary for the 'careful-long-running' use-case chain."
+    notes: "User trusts GLM 5.1 over Gemini for complex long-running analysis. Prior catalog primary for the 'careful-long-running' use-case chain; succeeded by glm-5.2 (which the chains now point to). Retained as the documented prior release."
 
   glm-5:
     provider: z-ai
@@ -1735,21 +1732,6 @@ musicians:
 
   # ── Other regional / specialized ────────────────────────────────────────────
 
-  kimi-k2.5:
-    provider: moonshot
-    family: "Kimi"
-    released: "2026-01-27"
-    context_window: 1000000
-    max_output_tokens: 65536
-    license: proprietary
-    available_via: [moonshot-api]
-    tags: [heavy, premier]
-    task_tags: [reasoning, agent, code]
-    modality_tags: [text]
-    notes: "1M context. Agent Swarm feature (100 sub-agents). Strong Chinese-lab entry."
-    last_verified: "2026-04-29"
-    verified_via: [vendor_docs]
-
   jais-30b-chat:
     provider: core42-mbzuai
     family: "Jais"
@@ -1923,7 +1905,7 @@ use_case_chains:
     last_resort:
       - claude-opus-4-7
       - gpt-5.5
-      - glm-5.1                                  # frontier-class with different blind spots
+      - glm-5.2                                  # different training lineage → different blind spots (provisional)
     rationale: "Qwen3-Coder-480B is the new strongest open code model — primary for serious work. MiniMax M2.5 still leads SWE-Bench Verified at 80.2%. Reserve premium for genuinely hard code."
 
   code_translation:
@@ -1938,7 +1920,7 @@ use_case_chains:
       - mistral-small-4
     last_resort:
       - claude-opus-4-7                          # 1M context as of 2026-04-16
-      - glm-5.1
+      - glm-5.2                                  # provisional — see model entry
     rationale: "Code translation rewards long-context retrieval and code specialization. Qwen3-Coder native 256K context wins. DeepSeek V4 displaces V3 (V3 sunsets 2026-07-24)."
 
   reasoning_verification:
@@ -1950,22 +1932,21 @@ use_case_chains:
     fallback:
       - claude-opus-4-7
       - gemini-3.1-pro-preview
-      - glm-5.1                              # frontier reasoning, MIT
+      - glm-5.2                              # cross-vendor reasoning (successor to 5.1; ratings pending)
     last_resort: []
     note: "o4-mini deprecated as of 2026-04-29 — removed from chain."
-    rationale: "Reasoning models pay off here. Open-weight options are class-competitive. GLM 5.1 strong as cross-vendor verifier."
+    rationale: "Reasoning models pay off here. Open-weight options are class-competitive. GLM (5.2; lab ratings pending) strong as a cross-vendor verifier — different lineage."
 
   careful_long_running_analysis:
     description: "Complex sustained work that requires careful, complete analysis. Multi-stage refactors, deep code review, long-form research synthesis where premature compression is the failure mode."
     primary:
-      - glm-5.1                              # MIT, frontier; trusted by user over Gemini for this exact pattern
+      - glm-5.2                              # GLM lineage trusted by user over Gemini for this pattern (testimony on 5.1; 5.2 successor — ratings pending)
     fallback:
       - claude-opus-4-7                      # 1M context, adaptive thinking
-      - kimi-k2.5                            # 1M context, agent-swarm capable
     last_resort:
       - gpt-5.5                              # 1M context, expensive
-    rationale: "Per user direct testimony: GLM 5.1 outperforms Gemini for this pattern. Catalog primary even though it's an open-weight model — frontier ≡ capability tier, not vendor origin. Cite SWE-Bench Pro 58.4."
-    notes: "GLM 5.1 needs chunked-write prompt guidance — see its quirks: field. Without that the prompt fails on large outputs."
+    rationale: "Per user direct testimony, the GLM family outperforms Gemini for this pattern — frontier ≡ capability tier, not vendor origin. The chain now points to glm-5.2 (5.1's successor); 5.2's ratings are pending lab verification, so treat the primary placement as provisional until a fact-fold pass confirms."
+    notes: "GLM may need chunked-write prompt guidance (quirk documented on glm-5.1, unverified whether 5.2 retains it — include the guidance defensively until disproven)."
 
   classification_at_scale:
     description: "Batch classification of many items where rate limits matter"
@@ -1981,14 +1962,12 @@ use_case_chains:
     description: "Synthesis over very long inputs (>200K tokens)"
     primary:
       - gemini-3-flash-preview                  # 1M context, cheap
-      - openrouter/meta-llama/llama-4-maverick:free   # 1M context
       - claude-opus-4-7                          # 1M context as of 2026-04-16, no premium
       - deepseek-v4-pro                          # 1M context
     fallback:
       - gemini-3.1-pro-preview                   # 2M context, premium
-      - kimi-k2.5                                # 1M context, agent-swarm
     last_resort: []
-    rationale: "Context window is the constraint. Gemini/Meta still lead at 2M; Anthropic now in the 1M club; DeepSeek V4 added the 1M open-weight."
+    rationale: "Context window is the constraint. Gemini remains the broad-context default; Anthropic and DeepSeek V4 provide additional 1M-context options without reintroducing disallowed providers."
 
   cross_vendor_review:
     description: "Adversarial verification — review primary work with a different vendor's eyes"
@@ -1996,14 +1975,14 @@ use_case_chains:
     typical_pairs:
       - { primary: claude-opus-4-7,        reviewer: gpt-5.5 }
       - { primary: claude-opus-4-7,        reviewer: gemini-3.1-pro-preview }
-      - { primary: claude-opus-4-7,        reviewer: glm-5.1 }
+      - { primary: claude-opus-4-7,        reviewer: glm-5.2 }
       - { primary: gpt-5.5,                reviewer: claude-opus-4-7 }
-      - { primary: gpt-5.5,                reviewer: glm-5.1 }
-      - { primary: glm-5.1,                reviewer: claude-opus-4-7 }
+      - { primary: gpt-5.5,                reviewer: glm-5.2 }
+      - { primary: glm-5.2,                reviewer: claude-opus-4-7 }
       - { primary: qwen3-coder-480b-a35b-instruct, reviewer: claude-sonnet-4-6 }
       - { primary: openrouter/minimax/minimax-m2.5:free, reviewer: claude-sonnet-4-6 }
-    rationale: "Different training lineages have different blind spots. GLM 5.1 added as a peer reviewer (frontier-class per SWE-Bench Pro 58.4). Subtle use only — when verification matters."
-    notes: "Don't dilute by overusing. Only deploy on stages where review value beats coordination cost. GLM-as-reviewer needs chunking guidance in the prompt."
+    rationale: "Different training lineages have different blind spots. GLM retained as a peer reviewer (successor 5.2; frontier-class ratings pending lab verification). Subtle use only — when verification matters."
+    notes: "Don't dilute by overusing. Only deploy on stages where review value beats coordination cost. GLM-as-reviewer may need chunking guidance in the prompt (quirk documented on glm-5.1, unverified for 5.2)."
 
   agent_loops:
     description: "Multi-step agentic workflows with tool use and self-correction"
@@ -2033,7 +2012,7 @@ use_case_chains:
       - qwen3-235b-a22b                      # general work, Apache-2.0
       - qwen3.6-27b                          # local dense, Apache-2.0
       - qwen3-coder-480b-a35b-instruct       # code-leaning
-      - glm-5.1                              # frontier, MIT
+      - glm-5.2                              # frontier GLM successor (license pending verification)
     fallback:
       - openrouter/minimax/minimax-m2.5:free
       - openrouter/google/gemma-4-31b-it:free
@@ -2041,8 +2020,8 @@ use_case_chains:
       - llama3.3:70b                         # legacy fallback
     last_resort:
       - claude-sonnet-4-6                    # paid fallback
-    rationale: "Open-source-first. The 2026 open-weight ecosystem (Qwen3, GLM 5.1, DeepSeek V4, Mistral Small 4) is competitive with frontier proprietary models. Reach for paid only when no open option fits."
-    notes: "Llama 3.3:70b is increasingly legacy as Llama 4 Maverick + Qwen3 + Mistral Small 4 take its slot. Demote on next refresh."
+    rationale: "Open-source-first. The 2026 open-weight ecosystem (Qwen3, GLM, DeepSeek V4, Mistral Small 4) is competitive with frontier proprietary models. Reach for paid only when no open option fits. (GLM 5.2's open-weight status is pending verification; glm-5.1 was MIT.)"
+    notes: "Llama 3.3:70b is increasingly legacy as Qwen3, GLM, and Mistral Small 4 take its slot. Demote on next refresh."
 
   # ── Specialization chains (capability shopping) ──────────────────────────────
 

@@ -269,7 +269,7 @@ Don't place a boundary where:
 Different instruments — and different models within them — were built for different work. The catalog at `plugins/marianne/docs/ref/instrument-catalog.{yaml,md}` is the source of truth. Marianne distinguishes:
 
 - **Instrument** — the execution framework, a plugin profile (capabilities: tool use, file edit, shell, vision, MCP). Examples: `claude-code`, `gemini-cli`, `opencode`, `ollama`, `cli`.
-- **Musician** — the model played by the instrument (capacity: context, cost, speed, reasoning quality). Examples: `claude-opus-4-7`, `qwen2.5-coder:32b`, `openrouter/minimax/minimax-m2.5:free`.
+- **Musician** — the model played by the instrument (capacity: context, cost, speed, reasoning quality). Identified by a model id; common shapes include `vendor/model`, `local-model:size`, and `openrouter/vendor/model:free`.
 
 For each stage, compute its tag intersection along four dimensions:
 
@@ -284,9 +284,9 @@ Then look up the matching use-case chain in the catalog. The chain gives ranked 
 
 The catalog's chains are designed around Marianne's open-source-first vision:
 
-1. **Primary picks favor open weights and free tier.** Local Qwen2.5-Coder for code translation, GLM 5 Turbo (Z.AI Coding Plan, unlimited) for runners, MiniMax M2.5 (free OpenRouter, SWE-Bench 80.2%) for code generation.
-2. **Fallback is opencode-routed free or low-cost subscription** — Gemini Flash for cheap classification, Claude Sonnet 4.6 for code work that genuinely needs frontier capability.
-3. **Premier (Opus, GPT-5.5, Gemini Pro) is the last resort** — reserved for stages where the catalog ratings genuinely warrant the cost (deep synthesis, frontier reasoning, adversarial review).
+1. **Primary picks favor open weights and free tier** — a local/open code model for translation, an unlimited-plan open model for runners, a free-tier open model for code generation. The catalog's chains name the current best picks.
+2. **Fallback is opencode-routed free or low-cost subscription** — a cheap fast model for classification, a mid-tier frontier model for code work that genuinely needs more capability.
+3. **Premier frontier models are the last resort** — reserved for stages where the catalog ratings genuinely warrant the cost (deep synthesis, frontier reasoning, adversarial review).
 
 Reaching for premier when the chain says open weights would suffice needs justification. Open-default reaching for premier doesn't.
 
@@ -296,7 +296,7 @@ When a stage produces work that downstream stages will trust as ground truth, co
 
 Use sparingly. Cross-vendor diversity is leverage when verification matters. Overusing it dilutes the signal and slows iteration.
 
-For full multi-perspective review, the `scores/prep/thinking-lab.yaml` score fans out to five reviewers in parallel — Claude Opus 4.7 (Anthropic), Gemini 3.1 Pro (Google), Gemma 4 (Google free), GLM 5.1 (Z.AI), and GPT-5.5 (OpenAI) — producing independent reviews. The lab uses directory-cadenza injection of `scores/prep/thinking-lab-input/` so reviewers see the prompt and context without orchestration overhead. A calling score can chain to it via `on_success` and read the five reviews to synthesize.
+For full multi-perspective review, the `scores/prep/thinking-lab.yaml` score fans out to several frontier reviewers in parallel — one per vendor family, a mix of paid and free/open-weight — producing independent reviews. The lab uses directory-cadenza injection of `scores/prep/thinking-lab-input/` so reviewers see the prompt and context without orchestration overhead. A calling score can chain to it via `on_success` and read the reviews to synthesize.
 
 #### Practical reminders
 
