@@ -122,6 +122,7 @@ Pseudo-code:
 validate(score)
 status = daemon_status()
 if !status.connected: return 409
+check required read-only external credentials/account safety gates
 if score_is_inline: config_path = persist_durable_yaml(score)
 audit("submit_requested", payload_without_secrets)
 response = submit_job(payload)
@@ -160,8 +161,21 @@ Use source artifacts as the authority for dashboards and wrapper reports:
 - Logs can come from file logs, observer events, snapshots, interactive
   transcripts, or conductor events. Show explicit unavailable/no-lines states
   when none exist.
+- For `job_status` views, do not infer active work from every non-terminal
+  sheet. Prefer `job.current_sheet` when present; otherwise choose sheets whose
+  status is actively executing or blocked in place, such as `dispatched`,
+  `running`, `waiting`, `rate_limited`, or `retry_scheduled`. Treat `pending`
+  as queued future work, not the active sheet, and render the actual sheet
+  status verbatim.
 - Reports that include counts should be generated from JSON artifacts or checked
   against them before display. Do not let model prose become the source of truth.
+- Do not present a report file as the result of the current run merely because
+  the expected path exists. Verify freshness with a job id, run id, timestamp,
+  or artifact metadata; otherwise label the file as stale/previous.
+- If an embedded action depends on external account-safety gates, preflight
+  them with the same read-only account query the score depends on. Do not treat
+  an exported token or configured CLI as authorization proof; invalid scopes,
+  expired OAuth grants, and wrong organizations should stop before submit.
 - External rate limits should produce a deferred state with retry metadata when
   no side effects happened. Continue downstream only through explicit skipped
   artifacts so dashboards can show "nothing was attempted" accurately.
