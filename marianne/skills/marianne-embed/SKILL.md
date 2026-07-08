@@ -1,6 +1,6 @@
 ---
 name: marianne-embed
-description: Use when embedding Marianne behind another app, local dashboard, web service, automation wrapper, or agent-facing tool. Covers daemon IPC bridges, hidden job submission/monitoring, score validation, runtime variables, conductor lifecycle guardrails, and building a product-facing abstraction over Marianne without exposing Marianne internals. Do not use for authoring score YAML from scratch or ordinary CLI job debugging unless the task is specifically about wrapping those operations.
+description: Use when embedding Marianne behind another app, local dashboard, web service, automation wrapper, or agent-facing tool. Covers daemon IPC bridges, hidden score submission and runtime job_id monitoring, score validation, runtime variables, conductor lifecycle guardrails, and building a product-facing abstraction over Marianne without exposing Marianne internals. Do not use for authoring score YAML from scratch or ordinary CLI run debugging unless the task is specifically about wrapping those operations.
 ---
 
 # Marianne Embed
@@ -15,8 +15,8 @@ Use a thin backend adapter:
 
 1. Validate score content or config path before every submit.
 2. Check conductor status.
-3. Submit jobs through daemon IPC, not a long-running `mzt run` process.
-4. Poll/list jobs through daemon IPC.
+3. Submit scores through daemon IPC, not a long-running `mzt run` process.
+4. Poll/list submitted scores through daemon IPC; preserve `job_id` as the conductor's runtime handle.
 5. Keep an app-local audit log for every submit, cancel, resume, and settings write.
 6. Expose product verbs in the UI: `Generate clips`, `Schedule approved clips`,
    `Verify posts`, not `run scores/post-mill.yaml --fresh`.
@@ -36,13 +36,13 @@ For payload schemas and examples, read `references/integration-contract.md`.
 
 ## Guardrails
 
-- Never stop or restart the conductor from an app while jobs are active.
+- Never stop or restart the conductor from an app while submitted scores are active.
 - Treat `fresh` as destructive: require explicit user confirmation.
 - Do not assume Marianne's dashboard HTTP API exposes all daemon fields. Audit it
   first; daemon `JobRequest` has historically been broader than dashboard submit.
 - Do not treat a submit RPC as successful just because IPC returned. Check the
   daemon response status; only `accepted` and `pending` mean the conductor took
-  the job.
+  the score.
 - Do not parse human CLI output when a typed daemon method or JSON command exists.
 - Redirect or isolate Marianne logs so machine JSON channels stay parseable.
 - Use `client_cwd` when submitting relative score paths from an app.
@@ -62,7 +62,7 @@ For payload schemas and examples, read `references/integration-contract.md`.
 ## When To Use Other Marianne Skills
 
 - Writing or fixing score YAML: use the Marianne score-authoring skill.
-- Operating a job directly as a human or debugging a failed run: use the Marianne
+- Operating a score directly as a composer or debugging a failed run: use the Marianne
   command skill.
 - Embedding Marianne behind another tool or service: use this skill.
 
@@ -71,7 +71,7 @@ For payload schemas and examples, read `references/integration-contract.md`.
 Keep three layers separate:
 
 - **Adapter**: imports Marianne APIs or invokes the bundled bridge.
-- **Domain service**: maps app verbs to score ids, config paths, runtime vars,
+- **Domain service**: maps app verbs to score IDs, runtime `job_id`s, config paths, runtime vars,
   validation policy, and audit records.
 - **UI/API**: renders domain controls and refuses unsafe transitions.
 

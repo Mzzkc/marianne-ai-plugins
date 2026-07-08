@@ -26,7 +26,7 @@
 name: "continuous-improvement"
 description: "Iteratively improve a codebase — assess, fix, verify, repeat"
 
-workspace: "/absolute/path/to/workspaces/improvement-workspace"
+workspace: "./improvement-workspace"
 
 instrument: claude-code
 instrument_config:
@@ -127,9 +127,12 @@ prompt:
     4. Confirm no regressions were introduced
 
     Write to {{ workspace }}/03-verify.md:
-    - **Test Results**: Pass/fail with output
-    - **Lint Results**: Clean or issues
-    - **Verdict**: Fixed correctly / Needs more work
+    ## Test Results
+    Pass/fail with output.
+    ## Lint Results
+    Clean or issues.
+    ## Verdict
+    Fixed correctly / Needs more work.
 
     {% endif %}
 

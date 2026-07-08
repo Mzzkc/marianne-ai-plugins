@@ -1,4 +1,4 @@
 interface:
   display_name: "Marianne Embed"
   short_description: "Embed Marianne behind apps and agents"
-  default_prompt: "Use $marianne-embed to build a small service that submits and monitors Marianne jobs without exposing Marianne internals."
+  default_prompt: "Use $marianne-embed to build a small service that submits scores to the Marianne conductor and monitors their runtime job_ids without exposing Marianne internals."

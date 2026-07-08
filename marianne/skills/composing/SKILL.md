@@ -82,7 +82,7 @@ Over-composition is a failure mode of this skill. Under-composition is a failure
 
 A **score** is a YAML configuration declaring what work to do, which instruments to use, how to validate, and how to recover.
 
-A **sheet** is one agent performing one task — the atomic unit of execution. A **stage** is a logical phase that may fan out into multiple sheets — parallel instances of the same work on different data with the same instrument. If instances need different instruments, they are separate stages, not fan-out. In YAML, stages are declared via `movements:` and `sheet.total_items`; the `stage` template variable gives each sheet its phase number.
+A **sheet** is one agent performing one task — the atomic unit of execution. A **stage** is a logical phase that may fan out into multiple sheets — parallel instances of related work over different data. A fan-out can use one movement-level instrument, a complete `instrument_map`, or deliberate `per_sheet_instruments`; mixed-instrument fan-out is valid when the architecture needs it, but partial concrete coverage should be fixed or documented because validation will warn on ambiguity. In YAML, stages are declared via `movements:` and `sheet.total_items`; the `stage` template variable gives each sheet its phase number.
 
 An **instrument** is any CLI tool or API endpoint wrapped as a plugin profile, with specific capabilities and cost profile. `mzt instruments list` shows what's registered.
 

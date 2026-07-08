@@ -1,7 +1,7 @@
 {
   "name": "marianne",
   "version": "0.3.0",
-  "description": "Marianne AI Compose plugin for composing scores, authoring configs, running jobs, debugging failures, and embedding Marianne behind apps.",
+  "description": "Marianne AI Compose plugin for composing scores, authoring configs, submitting scores to the conductor, debugging failed runs, and embedding Marianne behind apps.",
   "author": {
     "name": "Emzi",
     "url": "https://github.com/Mzzkc"
@@ -13,13 +13,13 @@
   "interface": {
     "displayName": "Marianne",
     "shortDescription": "Compose, run, debug, and embed Marianne scores",
-    "longDescription": "Tools and skills for building with Marianne AI Compose, including score authoring, job operations, thinking-lab workflows, and embedding Marianne behind local apps or agent-facing services.",
+    "longDescription": "Tools and skills for building with Marianne AI Compose, including score authoring, conductor operations for submitted scores, thinking-lab workflows, and embedding Marianne behind local apps or agent-facing services.",
     "developerName": "Emzi",
     "category": "Productivity",
     "capabilities": ["Write", "Interactive"],
     "defaultPrompt": [
       "Use Marianne to author and validate a score.",
-      "Debug a failed Marianne job.",
+      "Debug a failed Marianne score run.",
       "Embed Marianne behind a local app."
     ]
   }

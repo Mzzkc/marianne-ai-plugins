@@ -25,7 +25,7 @@
 name: "multi-perspective-analysis"
 description: "Analyze a question from 4 independent perspectives, then synthesize"
 
-workspace: "/absolute/path/to/workspaces/analysis-workspace"
+workspace: "./analysis-workspace"
 
 instrument: claude-code
 instrument_config:

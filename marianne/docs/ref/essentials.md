@@ -122,7 +122,7 @@ Validations run **after each sheet execution**, not at the end of the job. Each 
 5. **Command timeout**: `command_succeeds` has a 3600-second (1 hour) default limit
 6. **Command safety**: `{workspace}` values are shell-quoted via `shlex.quote()`
 
-### The 5 Validation Types
+### The 9 Runtime Validation Types
 
 | Type | Checks | Path Expansion | Good For |
 |---|---|---|---|
@@ -131,21 +131,92 @@ Validations run **after each sheet execution**, not at the end of the job. Each 
 | `content_contains` | Literal substring in file | `{workspace}`, `{sheet_num}` | Structural markers (headings, tags) |
 | `content_regex` | Python regex match in file | `{workspace}`, `{sheet_num}` | Flexible pattern matching |
 | `command_succeeds` | Shell command exits 0 | `{workspace}`, `{sheet_num}` | Tests, linting, builds, complex checks |
+| `path_in_scope` | Resolved path stays inside an allowed scope | `{workspace}`, `{sheet_num}` | Guarding generated paths and traversal-sensitive artifacts |
+| `field_match` | JSON/YAML field equals a literal or another file field | `{workspace}`, `{sheet_num}` | Cross-artifact facts, exact status values, report facts |
+| `file_sha256` | File digest matches expected SHA-256 | `{workspace}`, `{sheet_num}` | Integrity checks for inputs and generated artifacts |
+| `csv_unique_key` | CSV key column has no duplicate values | `{workspace}`, `{sheet_num}` | Cumulative logs, manifests, ledgers |
 
 ### Validation Fields
 
 | Field | Type | Default | Description |
 |---|---|---|---|
-| `type` | required | --- | One of the 5 types |
+| `type` | required | --- | One of the runtime validation types |
 | `path` | str | None | File path with `{workspace}`, `{sheet_num}` expansion |
 | `pattern` | str | None | Literal string or regex pattern |
 | `command` | str | None | Shell command (for command_succeeds) |
 | `working_directory` | str | None | CWD for command (default: workspace) |
+| `path_scope` | str | `{workspace}` | Allowed root for `path_in_scope` |
+| `field_path` | str | None | Dot/bracket path for `field_match` |
+| `expected_value` | any | None | Literal comparison value for `field_match` |
+| `source_path` | str | None | Reference file for `field_match` comparisons |
+| `source_field_path` | str | `field_path` | Reference field path for `field_match` |
+| `sha256` | str | None | Expected digest for `file_sha256` |
+| `key_field` | str | None | Unique CSV column for `csv_unique_key` |
 | `description` | str | None | Human-readable name (shown in status and completion prompts) |
 | `stage` | int (1-10) | 1 | Execution order; fail-fast between stages |
 | `condition` | str | None | When this validation applies |
 | `retry_count` | int (0-10) | 3 | Retries for race conditions |
 | `retry_delay_ms` | int (0-5000) | 200 | Delay between retries |
+
+### Static Score Checks
+
+`mzt validate` also runs launch-time checks before a score reaches the
+conductor. Current high-signal checks include:
+
+| Code | Severity | Meaning |
+|---|---|---|
+| V001 | ERROR | Jinja syntax error in a prompt template |
+| V002 | ERROR | Workspace parent directory missing |
+| V003 | ERROR | Template file missing |
+| V007 | ERROR | Invalid regex in a validation pattern |
+| V008 | ERROR | Validation rule is missing required fields for its type |
+| V009 | ERROR | Evolved score references stale previous-version paths |
+| V305 | ERROR | Bash `${#...}` length syntax collides with Jinja comments |
+| V306 | ERROR | Static `path_in_scope` check resolves outside allowed scope |
+| V307 | ERROR/WARNING | Raw `cli` sheet renders invalid bash/markdown, or can fall back to non-raw instruments |
+| V308 | WARNING | Fan-out movement has partial concrete instrument assignment coverage |
+| V309 | WARNING | Exact section-label validation is absent from the prompt |
+
+For raw `cli` sheets, the rendered prompt is executed as shell. Write shell,
+not markdown:
+
+```yaml
+instrument: cli
+prompt:
+  template: |
+    set -euo pipefail
+    python scripts/build_report.py "{{ workspace }}/report.md"
+instrument_fallbacks: []
+```
+
+If a validation requires an exact label, put that literal label in the prompt:
+
+```yaml
+prompt:
+  template: |
+    Write {{ workspace }}/review.md with:
+    ## Verdict
+    Explain whether the score is ready.
+validations:
+  - type: content_contains
+    path: "{workspace}/review.md"
+    pattern: "## Verdict"
+```
+
+For fan-out instruments, map concrete expanded sheets or use movement-level
+instrument assignment when you mean the whole movement:
+
+```yaml
+movements:
+  2:
+    name: Review
+    instrument: codex-cli
+sheet:
+  fan_out:
+    2: 3
+  dependencies:
+    2: [1]
+```
 
 ### Writing Good Validations
 
@@ -450,7 +521,7 @@ pattern: '\d+\.\s+'
 | 24 | Stale detection kills verification stages | Agent runs pytest/mypy/ruff as child processes; no stdout → killed at idle_timeout | Use `idle_timeout_seconds: 1800`+, or fan-out verification into parallel instances |
 | 25 | Process-only validations | Validations check file exists + tests pass + imports work, but never verify stated goals. Agent passes everything without fixing the actual problem. | For every goal in the prompt, ask: "Can the agent pass all validations without achieving this?" If yes, add one that can't. |
 | 26 | Workspace = project root | `workspace_lifecycle.archive_on_fresh` archives or wipes the workspace directory. If workspace = project root, the entire project is destroyed. | NEVER set workspace to the project root. Use `./workspaces/{name}-workspace` or a dedicated absolute path. Check for `.git/`, `package.json`, `pyproject.toml` at workspace path. |
-| 27 | `--fresh` when `resume` was intended | `--fresh` wipes ALL completed work and starts over. If you cancelled a job to fix config, using `--fresh` destroys all progress. | Use `mzt resume <job> --reload-config -c fixed.yaml` to continue from where you stopped. Only use `--fresh` for intentionally new runs. |
+| 27 | `--fresh` when `resume` was intended | `--fresh` wipes ALL completed work and starts over. If you cancelled a score to fix config, using `--fresh` destroys all progress. | Use `mzt resume <score-id> -c fixed.yaml` to reload the YAML and continue from where you stopped. Use `--no-reload` only when you deliberately want the cached config snapshot. Only use `--fresh` for intentionally new runs. |
 
 ---
 
@@ -482,9 +553,16 @@ mzt run my-score.yaml --dry-run
 | V002 | ERROR | Workspace parent missing (auto-fixable) |
 | V003 | ERROR | Template file not found |
 | V007 | ERROR | Invalid regex in validation pattern |
+| V008 | ERROR | Validation rule is missing required fields |
+| V009 | ERROR | Evolved score references stale previous-version paths |
 | V101 | WARNING | Undefined template variables (false positives for `{% set %}`) |
 | V103 | WARNING | Very short timeout |
 | V108 | WARNING | Missing prelude/cadenza files (skips templated paths) |
+| V305 | ERROR | Bash `${#...}` length syntax collides with Jinja comments |
+| V306 | ERROR | `path_in_scope` resolves outside allowed scope |
+| V307 | ERROR/WARNING | Raw `cli` bash is invalid/markdown, or can fall back to non-raw instruments |
+| V308 | WARNING | Fan-out instrument assignment covers only part of expanded movement |
+| V309 | WARNING | Prompt omits an exact section label required by validation |
 
 ---
 

@@ -1,11 +1,11 @@
 ---
 name: command
-description: Use when the user is running, monitoring, debugging, or recovering Marianne jobs. Covers the conductor, job lifecycle, diagnostics, config reload, recovery, self-healing, concert operations, and anti-patterns that lose work. Do NOT use for writing score configs (use score-authoring instead).
+description: Use when the user is submitting, monitoring, debugging, or recovering Marianne score runs. Covers the conductor, runtime job_id handles, diagnostics, config reload, recovery, self-healing, concert operations, and anti-patterns that lose work. Do NOT use for writing score configs (use score-authoring instead).
 ---
 
 # Marianne Command Skill
 
-> **Purpose**: Run, monitor, debug, and recover Marianne jobs. Covers the conductor, job lifecycle, diagnostics, config reload, recovery, and the anti-patterns that lose work.
+> **Purpose**: Submit, monitor, debug, and recover Marianne score runs. Covers the conductor, runtime job_id handles, diagnostics, config reload, recovery, and the anti-patterns that lose work.
 
 ---
 
@@ -13,9 +13,9 @@ description: Use when the user is running, monitoring, debugging, or recovering 
 
 | Use This Skill | Skip This Skill |
 |---|---|
-| Running/monitoring Marianne jobs | Writing new score configs (use marianne-score-authoring) |
-| Debugging failed or stuck jobs | |
-| Resuming interrupted jobs | |
+| Running/monitoring Marianne scores | Writing new score configs (use marianne-score-authoring) |
+| Debugging failed or stuck score runs | |
+| Resuming interrupted score runs | |
 | Understanding validation failures | |
 | Conductor operations | |
 
@@ -47,32 +47,31 @@ setsid mzt start &
 | `mzt start --profile dev` | Start with dev profile (debug logging, strace on) |
 | `mzt start --profile intensive` | Start with intensive profile (48h timeout, high limits) |
 | `mzt start --profile minimal` | Start with minimal profile (profiler + learning off) |
-| `mzt stop` | Stop the conductor (**only when no jobs are running**) |
-| `mzt stop --force` | Force-kill the conductor --- **NEVER with active jobs** |
+| `mzt stop` | Stop the conductor (**only when no scores are running**) |
+| `mzt stop --force` | Force-kill the conductor --- **NEVER with active scores** |
 | `mzt restart` | Stop and restart |
 | `mzt restart --profile dev` | Restart with a profile |
 | `mzt conductor-status` | Check if conductor is running |
 
-### How Jobs Route Through the Conductor
+### How Scores Route Through the Conductor
 
-When you run `mzt run config.yaml`, the CLI checks for a running conductor via Unix socket. If found, the job is submitted through IPC and the CLI returns. The conductor manages job lifecycle, rate limit coordination across concurrent jobs, and event routing. If no conductor is found, the command exits with an error.
+When you run `mzt run config.yaml`, the CLI checks for a running conductor via Unix socket. If found, the score is submitted through IPC and the CLI returns a runtime `job_id`. The conductor manages score execution, rate limit coordination across concurrent runs, and event routing. If no conductor is found, the command exits with an error.
 
-**The conductor runs your jobs.** `mzt run` is a client that submits work and returns. The job continues in the daemon regardless of whether your terminal stays open.
+**The conductor runs submitted scores.** `mzt run` is a client that submits a score and returns. The conductor keeps executing the score regardless of whether your terminal stays open. `job_id` is the runtime identifier the conductor returns for that submitted score.
 
-**NEVER stop the conductor while jobs are actively running.** Killing the daemon orphans all in-flight Claude agent processes and corrupts job state --- sheets get stuck as `in_progress` with no validation or cleanup. To reload config on a running job, use `mzt modify -c new.yaml --resume --wait`. To safely stop: pause all jobs first, wait for pauses to take effect, then `mzt stop`.
+**NEVER stop the conductor while scores are actively running.** Killing the daemon can orphan in-flight musician processes and corrupt score state --- sheets can get stuck as `in_progress` with no validation or cleanup. To reload config on a running score, use `mzt modify -c new.yaml --resume --wait`. To safely stop: pause all active scores first, wait for pauses to take effect, then `mzt stop`.
 
 ---
 
-## Job Lifecycle
+## Score Lifecycle
 
-### Submitting a Job
+### Submitting a Score
 
 ```bash
 mzt run config.yaml              # Submit (routes through conductor)
 mzt run config.yaml --dry-run    # Preview without running (no conductor needed)
 mzt run config.yaml --fresh      # Fresh start (clears previous state)
 mzt run config.yaml -s 5         # Start from sheet 5
-mzt run config.yaml -w /path     # Override workspace directory
 mzt run config.yaml --self-healing      # Auto-diagnose + fix on retry exhaustion
 mzt run config.yaml --self-healing --yes  # Auto-confirm suggested fixes
 mzt run config.yaml -j           # JSON output
@@ -82,26 +81,28 @@ mzt run config.yaml -j           # JSON output
 |---|---|---|
 | `--dry-run` | `-n` | Preview execution (no conductor needed) |
 | `--start-sheet` | `-s` | Override starting sheet |
-| `--workspace` | `-w` | Override workspace directory |
 | `--fresh` | | Clear previous state and start over |
 | `--self-healing` | | Auto-diagnose and remediate on failure |
 | `--yes` | | Auto-confirm self-healing fixes |
 | `--json` | `-j` | Machine-readable output |
 
-`mzt run` is the only command that accepts `-w`/`--workspace`. All other commands resolve job context from the conductor's registry using the job ID.
+Workspace overrides are an expert/debug path, not ordinary composer guidance. In normal use, the score's `workspace:` field and the conductor registry determine where state and artifacts live.
 
 ### Monitoring
+
+Use the runtime `job_id` returned by `mzt run` for these commands. Examples
+below use `my-job` as that handle.
 
 ```bash
 mzt status my-job                # Check status
 mzt status my-job --watch        # Live monitoring (refreshes every 5s)
 mzt status my-job -W -i 10       # Watch with 10s interval
 mzt status my-job -j             # JSON output
-mzt list                         # List active jobs
-mzt list --all                   # All jobs including completed/failed
+mzt list                         # List active score runs
+mzt list --all                   # All score runs including completed/failed
 mzt list --status running        # Filter by status
-mzt logs my-job                  # View log entries
-mzt logs my-job --follow         # Tail logs
+mzt logs my-job                  # View conductor-owned log sources
+mzt logs my-job --follow         # Tail score-specific logs
 mzt logs my-job --lines 200      # Last 200 lines
 mzt logs my-job --level ERROR    # ERROR and above
 mzt history my-job               # Execution history
@@ -128,7 +129,7 @@ mzt pause my-job --wait -t 30    # Wait with 30s timeout
 | `--timeout` | `-t` | Wait timeout seconds (default: 60) |
 | `--json` | `-j` | JSON output |
 
-**How it works:** Creates a pause signal file in the workspace. The running job checks for this file between sheets, saves state, and transitions to PAUSED. Signal file is removed after acknowledgment.
+**How it works:** Creates a pause signal file in the workspace. The running score checks for this file between sheets, saves state, and transitions to PAUSED. Signal file is removed after acknowledgment.
 
 ### Resuming
 
@@ -136,7 +137,7 @@ mzt pause my-job --wait -t 30    # Wait with 30s timeout
 mzt resume my-job                # Resume (auto-reloads config from YAML)
 mzt resume my-job -c fixed.yaml  # Resume with a different config file
 mzt resume my-job --no-reload    # Resume using cached snapshot
-mzt resume my-job --force        # Force resume a completed job
+mzt resume my-job --force        # Force resume a completed score run
 mzt resume my-job --self-healing # Resume with self-healing
 ```
 
@@ -147,7 +148,7 @@ mzt resume my-job --self-healing # Resume with self-healing
 | `--force` | `-f` | Resume even if completed |
 | `--self-healing` | | Enable auto-diagnosis on failure |
 
-### Modifying Running Jobs
+### Modifying Running Scores
 
 `mzt modify` requires a new config file (`-c` is mandatory).
 
@@ -167,10 +168,10 @@ mzt modify my-job -c updated.yaml --resume --wait  # Wait for pause before resum
 ### Registry Cleanup
 
 ```bash
-mzt clear                        # Clear completed/failed/cancelled jobs
-mzt clear --job my-job           # Clear specific job
-mzt clear --status failed        # Clear only failed jobs
-mzt clear --older-than 3600      # Clear jobs older than 1 hour
+mzt clear                        # Clear completed/failed/cancelled score runs
+mzt clear --job my-job           # Clear a specific runtime job_id
+mzt clear --status failed        # Clear only failed score runs
+mzt clear --older-than 3600      # Clear score runs older than 1 hour
 mzt clear --yes                  # Skip confirmation
 ```
 
@@ -181,7 +182,7 @@ mzt validate config.yaml         # Pre-flight check (no conductor needed)
 mzt diagnose my-job              # Full diagnostic report
 mzt errors my-job --verbose      # Error details with stdout/stderr
 mzt dashboard                    # Start web dashboard (default port 8000)
-mzt patterns                     # View global learning patterns
+mzt help                         # List commands, including patterns-list
 ```
 
 ---
@@ -230,8 +231,8 @@ mzt diagnose my-job --include-logs
 | Command fails | Wrong `working_directory` or shell assumptions | Check CWD, test command manually |
 | Sheet "passes" but work is bad | Validations too weak (file_exists only) | Add content checks or command validations |
 | Config changes ignored | `--no-reload` used or file deleted | Config auto-reloads by default; check YAML file exists |
-| Job hangs forever | Custom instrument profile lacks an auto-approve flag, or an interactive session is stuck on an unhandled dialog | Built-in profiles auto-approve; for custom profiles set `auto_approve_flag`; for interactive stalls check `tmux -L marianne attach -t <session>` and add a `startup_gates` entry |
-| Chained job does nothing | Missing `fresh: true` in hook | Add `fresh: true` to self-chain hooks |
+| Score run hangs forever | Custom instrument profile lacks an auto-approve flag, or an interactive session is stuck on an unhandled dialog | Built-in profiles auto-approve; for custom profiles set `auto_approve_flag`; for interactive stalls check `tmux -L marianne attach -t <session>` and add a `startup_gates` entry |
+| Chained score does nothing | Missing `fresh: true` in hook | Add `fresh: true` to self-chain hooks |
 
 ---
 
@@ -264,7 +265,7 @@ mzt resume my-job -c fixed.yaml
 mzt resume my-job --no-reload
 ```
 
-**Modify a running job's config:**
+**Modify a running score's config:**
 ```bash
 mzt modify my-job -c updated.yaml --resume --wait
 ```
@@ -297,7 +298,7 @@ mzt resume my-job    # auto-reloads fixed config
 mzt resume my-job
 ```
 
-### Interrupted Job Recovery
+### Interrupted Score Recovery
 
 ```bash
 # First: always try resume
@@ -306,7 +307,7 @@ mzt resume my-job
 # If resume fails with stale PID --- auto-clears since fix b474d45
 mzt resume my-job    # Retrying usually works
 
-# If job is truly stuck, force resume
+# If the score run is truly stuck, force resume
 mzt resume my-job --force
 ```
 
@@ -314,29 +315,29 @@ mzt resume my-job --force
 
 ```bash
 # Start fresh from specific sheet
-rm workspace/.marianne-state.db    # SQLite backend
-mzt run job.yaml --start-sheet N
+rm workspace/.marianne-state.db    # SQLite state backend
+mzt run score.yaml --start-sheet N
 ```
 
 ### `--fresh` vs `resume`
 
 | Situation | Use |
 |---|---|
-| Job interrupted mid-progress | `mzt resume my-job` |
-| Job failed, config needs fixing | `mzt resume my-job` (auto-reloads fixed YAML) |
+| Score run interrupted mid-progress | `mzt resume my-job` |
+| Score run failed, config needs fixing | `mzt resume my-job` (auto-reloads fixed YAML) |
 | Self-chaining: completed an iteration | `--fresh` (via hook config) |
 | User explicitly wants to start over | `mzt run my-score.yaml --fresh` |
-| Job was cancelled or partially failed | `mzt resume my-job` (try first) |
+| Score run was cancelled or partially failed | `mzt resume my-job` (try first) |
 
-**`--fresh` deletes checkpoint state and archives workspace artifacts.** It wipes hours of work if used on an interrupted job. When in doubt, try `resume` first.
+**`--fresh` deletes checkpoint state and archives workspace artifacts.** It wipes hours of work if used on an interrupted score. When in doubt, try `resume` first.
 
 ---
 
 ## Self-Healing
 
 ```bash
-mzt run job.yaml --self-healing
-mzt run job.yaml --self-healing --yes    # Auto-confirm fixes
+mzt run score.yaml --self-healing
+mzt run score.yaml --self-healing --yes    # Auto-confirm fixes
 mzt resume my-job --self-healing
 ```
 
@@ -360,7 +361,7 @@ mzt start --foreground
 
 **Why setsid for the conductor?** Creates an independent session group. The conductor survives terminal close, context compaction, and session end.
 
-**Jobs don't need setsid.** `mzt run` submits work to the conductor and returns. The job runs in the daemon regardless of your terminal session. Only the conductor itself needs to be detached.
+**Score runs don't need setsid.** `mzt run` submits work to the conductor and returns. The score runs in the daemon regardless of your terminal session. Only the conductor itself needs to be detached.
 
 ---
 
@@ -381,14 +382,14 @@ concert:
   max_chain_depth: 10        # Safety limit
 ```
 
-**`fresh: true` is mandatory.** Without it, the chained job loads COMPLETED state and does zero work.
+**`fresh: true` is mandatory.** Without it, the chained score loads COMPLETED state and does zero work.
 
 ### Monitoring Chains
 
 ```bash
-mzt list --all                       # See all jobs (current and chained)
-mzt status quality-continuous-3      # Check specific job in chain
-mzt history quality-continuous-3     # View history of a chained job
+mzt list --all                       # See all score runs (current and chained)
+mzt status quality-continuous-3      # Check specific runtime job_id in chain
+mzt history quality-continuous-3     # View history of a chained score run
 ```
 
 ---
@@ -455,8 +456,8 @@ E3xx Config       E9xx Network
 
 | Code | Retry? | Meaning |
 |---|---|---|
-| E501 | Yes | Connection failed / Job not found |
-| E502 | No | Auth/authorization failed / Job not in valid state |
+| E501 | Yes | Connection failed / runtime job_id not found |
+| E502 | No | Auth/authorization failed / score run not in valid state |
 | E503 | Yes | Invalid response / Cannot create signal |
 | E504 | Yes | Backend timeout / Pause not acknowledged |
 | E505 | No | Backend not found (ENOENT) / Invalid config |
@@ -489,10 +490,10 @@ E3xx Config       E9xx Network
 | `timeout 600 mzt run ...` | SIGKILL corrupts state | Let Marianne handle timeouts internally |
 | Assume exit_code=0 is success | Validations may have failed | Check `validation_details` |
 | Debug manually first | Marianne tools provide context | `status` -> `diagnose` -> `errors` |
-| Kill running job (SIGKILL) | Orphans agents, corrupts state | `mzt pause` for graceful stop |
+| Kill running score (SIGKILL) | Orphans musicians, corrupts state | `mzt pause` for graceful stop |
 | Edit config during run | Changes ignored until reload | Pause first, then `mzt modify` |
-| Use `--fresh` on interrupted jobs | Destroys checkpoint state | Try `resume` first |
-| Stop conductor with active jobs | Orphans all in-flight agents | Pause all jobs first |
+| Use `--fresh` on interrupted scores | Destroys checkpoint state | Try `resume` first |
+| Stop conductor with active scores | Orphans all in-flight musicians | Pause all scores first |
 
 ---
 
@@ -506,8 +507,8 @@ All commands support:
 | `--verbose` | `-v` | Detailed output |
 | `--quiet` | `-q` | Errors only |
 | `--log-level` | `-L` | DEBUG, INFO, WARNING, ERROR |
-| `--log-file` | | Path for log output |
-| `--log-format` | | json, console, or both |
+| `--log-file` | | CLI-process diagnostic log path |
+| `--log-format` | | CLI-process log format: json, console, or both |
 
 ---
 
@@ -521,8 +522,8 @@ stop [--force]                    2. mzt diagnose ...
 restart [--profile]               3. mzt errors --verbose
 conductor-status                  4. Manual investigation
 
-JOBS                              ERROR CATEGORIES
-----                              ----------------
+SCORE RUNS                        ERROR CATEGORIES
+----------                        ----------------
 run <config> [--dry-run|--fresh]  E0xx Execution
 status <job> [--watch]            E1xx Rate limit
 pause <job> [--wait]              E2xx Validation
@@ -543,4 +544,4 @@ dashboard [--port]                -q, --quiet
 
 ---
 
-*Marianne Command Skill --- operational guide for running, monitoring, and debugging Marianne AI Compose jobs.*
+*Marianne Command Skill --- operational guide for running, monitoring, and debugging Marianne AI Compose score runs.*

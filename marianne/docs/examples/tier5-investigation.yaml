@@ -33,7 +33,7 @@
 name: "deep-investigation"
 description: "Multi-phase investigation with preprocessing, parallel analysis, synthesis, and adversarial review"
 
-workspace: "/absolute/path/to/workspaces/investigation-workspace"
+workspace: "./investigation-workspace"
 
 instrument: claude-code
 instrument_config:
@@ -273,10 +273,14 @@ prompt:
     ## Your Task
     Review the draft adversarially from your perspective:
 
-    - **Problems Found**: Specific issues with evidence
-    - **Missing Elements**: What should be there but isn't
-    - **Strongest Parts**: What's genuinely good (be honest, not generous)
-    - **Verdict**: Acceptable / Needs revision / Fundamentally flawed
+    ## Problems Found
+    Specific issues with evidence.
+    ## Missing Elements
+    What should be there but isn't.
+    ## Strongest Parts
+    What's genuinely good (be honest, not generous).
+    ## Verdict
+    Acceptable / Needs revision / Fundamentally flawed.
 
     {{ output_spec("06-review-" ~ instance ~ ".md") }}
 

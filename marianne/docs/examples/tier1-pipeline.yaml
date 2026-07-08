@@ -21,7 +21,7 @@
 name: "pipeline-example"
 description: "Research, implement, and verify a focused change"
 
-workspace: "/absolute/path/to/workspaces/pipeline-workspace"
+workspace: "./pipeline-workspace"
 
 instrument: claude-code
 instrument_config:
@@ -69,11 +69,15 @@ prompt:
     3. What the test coverage looks like
     4. What patterns the codebase uses for validation elsewhere
 
-    Write your findings to {{ workspace }}/01-research.md with these sections:
-    - **Current State**: How it works now
-    - **Gaps**: What's missing
-    - **Patterns**: How the codebase handles this elsewhere
-    - **Approach**: Recommended implementation approach
+    Write your findings to {{ workspace }}/01-research.md with these exact sections:
+    ## Current State
+    How it works now.
+    ## Gaps
+    What's missing.
+    ## Patterns
+    How the codebase handles this elsewhere.
+    ## Approach
+    Recommended implementation approach.
 
     {% elif stage == 2 %}
     # Implementation
@@ -111,10 +115,14 @@ prompt:
     4. Verify no regressions were introduced
 
     Write a verification report to {{ workspace }}/03-verification.md with:
-    - **Test Results**: Full test output and pass/fail status
-    - **Code Quality**: Any issues found
-    - **Completeness**: Does the implementation match the goal?
-    - **Verdict**: Ready to merge or needs work
+    ## Test Results
+    Full test output and pass/fail status.
+    ## Code Quality
+    Any issues found.
+    ## Completeness
+    Does the implementation match the goal?
+    ## Verdict
+    Ready to merge or needs work.
 
     {% endif %}
 

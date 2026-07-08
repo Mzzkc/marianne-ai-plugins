@@ -109,8 +109,9 @@ For each goal stated in the prompts, verify at least one validation directly che
 ### First-Run Safety
 - [ ] No cost limits or circuit breakers (these trip up first runs)
 - [ ] Timeouts are generous (not tight)
-- [ ] `skip_permissions: true` is set
-- [ ] `disable_mcp: true` is set (unless MCP is explicitly needed)
+- [ ] Built-in instruments rely on their current profiles; no ignored backend-era keys are used as safety controls
+- [ ] MCP use is explicit: either the selected instrument profile disables MCP by default, or a custom profile documents why MCP is required
+- [ ] No legacy `backend:` block or ignored `instrument_config` keys such as `skip_permissions`, `disable_mcp`, or `allowed_tools`
 - [ ] Stale detection timeout >= 1800s for verification/build stages
 - [ ] No `skip_when` expressions that could incorrectly skip stages
 

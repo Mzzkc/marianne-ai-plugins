@@ -1,7 +1,7 @@
 {
   "name": "marianne",
   "version": "0.3.0",
-  "description": "Marianne AI Compose plugin — compose scores, author configs, run and debug jobs. Turns ideas into executable orchestration configs.",
+  "description": "Marianne AI Compose plugin — compose scores, author configs, submit scores to the conductor, and debug failed runs.",
   "author": {
     "name": "Emzi",
     "url": "https://github.com/Mzzkc"
