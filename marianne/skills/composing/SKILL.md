@@ -36,6 +36,10 @@ Before YAML, write `composition-design.yaml` with these required sections:
 - `context_flow`: source, destination, and mechanism for every load-bearing input;
 - `injections`: paths, destinations, and whether required;
 - `proof_obligations`: behavioral checks per artifact;
+- `compatibility`: explicit `preserve`, `intentional_break`, or
+  `not_applicable` policy, rationale, and every migration target;
+- `test_disposition`: each removed test classified as a retired contract,
+  migrated contract with replacement, or redundant contract with replacement;
 - `repair_loop`: repair stage, reevaluation stage, and maximum iterations;
 - `release`: release stage, reevaluation dependency, and candidate-hash policy.
 
@@ -65,6 +69,11 @@ YAML in one unreviewed stage is not a gate.
   fallback would destroy independence.
 - Validate outcomes, not file existence. Negative-test empty, stale, malformed,
   and placeholder artifacts.
+- Do not assume compatibility. The caller decides whether a contract survives;
+  update every named consumer when an intentional break is authorized.
+- Test disposition follows contract disposition: delete retired-contract tests,
+  migrate retained behavior, and identify the existing replacement for
+  redundant tests. Raw line counts are diagnostic, not a release rule.
 - Keep private evaluator answers outside worker-readable workspaces.
 - Route repair back through reevaluation. Any post-evaluation change invalidates
   the prior pass.
@@ -83,5 +92,7 @@ python scripts/check_score_release.py score.yaml \
 
 The candidate digest joins evaluation to release. A digest mismatch requires a
 fresh evaluation; never release a repaired-but-unrerun candidate.
+Before release, compare the exact diff to the scope and to every report claim;
+an unreported source edit is a failed gate even when tests pass.
 
 For runtime work, use the command skill. For YAML details, use score-authoring.

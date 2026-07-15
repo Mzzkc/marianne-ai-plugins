@@ -22,6 +22,12 @@ def valid_design() -> dict[str, object]:
         "context_flow": [{"context": "source", "source": "project_root", "lands_at": ["recon"], "mechanism": "prompt variable"}],
         "injections": [{"path": "/tmp/input.md", "lands_at": ["recon"], "required": True}],
         "proof_obligations": [{"artifact": "verification.json", "checks": ["full suite"]}],
+        "compatibility": {
+            "policy": "not_applicable",
+            "rationale": "No public contract changes",
+            "migration_targets": [],
+        },
+        "test_disposition": {"removed": []},
         "repair_loop": {"repair_stage": "recon", "reevaluate_stage": "verify", "max_iterations": 2},
         "release": {"stage": "release", "candidate_hash_required": True, "requires": ["verify"]},
     }
@@ -59,6 +65,41 @@ class CompositionDesignGateTests(unittest.TestCase):
         data["release"]["requires"] = ["recon"]
         self.assertTrue(any("reevalu" in item.lower() for item in self._check(data)))
 
+    def test_intentional_break_requires_migration_targets(self) -> None:
+        data = valid_design()
+        data["compatibility"] = {
+            "policy": "intentional_break",
+            "rationale": "Only the composer uses this surface",
+            "migration_targets": [],
+        }
+        self.assertTrue(any("migration" in item.lower() for item in self._check(data)))
+
+    def test_migrated_test_requires_replacement(self) -> None:
+        data = valid_design()
+        data["test_disposition"] = {
+            "removed": [
+                {
+                    "path": "tests/test_old_backend.py",
+                    "contract": "migrated",
+                    "reason": "Provider class removed",
+                }
+            ]
+        }
+        self.assertTrue(any("replacement" in item.lower() for item in self._check(data)))
+
+    def test_retired_test_does_not_require_replacement(self) -> None:
+        data = valid_design()
+        data["test_disposition"] = {
+            "removed": [
+                {
+                    "path": "tests/test_old_alias.py",
+                    "contract": "retired",
+                    "reason": "The alias is intentionally removed",
+                }
+            ]
+        }
+        self.assertEqual(self._check(data), [])
+
     def test_composing_skill_requires_executable_release_gates(self) -> None:
         skill = (
             Path(__file__).resolve().parents[1]
@@ -71,6 +112,8 @@ class CompositionDesignGateTests(unittest.TestCase):
         self.assertIn("scripts/check_score_release.py", skill)
         self.assertIn("candidate digest", skill.lower())
         self.assertIn("per_sheet_fallbacks", skill)
+        self.assertIn("compatibility", skill.lower())
+        self.assertIn("test disposition", skill.lower())
         self.assertNotIn("Every assignment needs a fallback chain", skill)
 
     def test_score_authoring_routes_release_scores_to_composition_gate(self) -> None:

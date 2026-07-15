@@ -17,6 +17,8 @@ REQUIRED = {
     "context_flow",
     "injections",
     "proof_obligations",
+    "compatibility",
+    "test_disposition",
     "repair_loop",
     "release",
 }
@@ -72,6 +74,57 @@ def check_design(path: Path) -> list[str]:
             findings.append("design.release.stage: known stage required")
         if not release.get("candidate_hash_required"):
             findings.append("design.release.candidate_hash_required: must be true")
+
+    compatibility = data.get("compatibility")
+    if not isinstance(compatibility, dict):
+        findings.append("design.compatibility: mapping required")
+    else:
+        policy = compatibility.get("policy")
+        allowed = {"preserve", "intentional_break", "not_applicable"}
+        if policy not in allowed:
+            findings.append(
+                "design.compatibility.policy: preserve, intentional_break, "
+                "or not_applicable required"
+            )
+        if not compatibility.get("rationale"):
+            findings.append("design.compatibility.rationale: required")
+        migrations = compatibility.get("migration_targets")
+        if not isinstance(migrations, list):
+            findings.append("design.compatibility.migration_targets: list required")
+        elif policy == "intentional_break" and not migrations:
+            findings.append(
+                "design.compatibility.migration_targets: intentional break must "
+                "name every consumer/example to update"
+            )
+
+    disposition = data.get("test_disposition")
+    if not isinstance(disposition, dict):
+        findings.append("design.test_disposition: mapping required")
+    else:
+        removed = disposition.get("removed")
+        if not isinstance(removed, list):
+            findings.append("design.test_disposition.removed: list required")
+        else:
+            for index, entry in enumerate(removed):
+                prefix = f"design.test_disposition.removed[{index}]"
+                if not isinstance(entry, dict):
+                    findings.append(f"{prefix}: mapping required")
+                    continue
+                if not entry.get("path"):
+                    findings.append(f"{prefix}.path: required")
+                if not entry.get("reason"):
+                    findings.append(f"{prefix}.reason: required")
+                contract = entry.get("contract")
+                if contract not in {"retired", "migrated", "redundant"}:
+                    findings.append(
+                        f"{prefix}.contract: retired, migrated, or redundant required"
+                    )
+                if contract in {"migrated", "redundant"} and not entry.get(
+                    "replacement"
+                ):
+                    findings.append(
+                        f"{prefix}.replacement: required for {contract} contract"
+                    )
     return findings
 
 

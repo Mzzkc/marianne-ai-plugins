@@ -65,6 +65,14 @@ class MarianneExpertPackageTests(unittest.TestCase):
         self.assertIn("scripts/preflight.py", manifest)
         self.assertIn("scripts/release_manifest.py", manifest)
 
+    def test_development_playbook_requires_explicit_contract_disposition(self) -> None:
+        text = (EXPERT_ROOT / "playbooks" / "develop.md").read_text(encoding="utf-8")
+        self.assertIn("compatibility authority", text.lower())
+        self.assertIn("retired", text.lower())
+        self.assertIn("migrated", text.lower())
+        self.assertIn("replacement", text.lower())
+        self.assertIn("capability", text.lower())
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -16,6 +16,34 @@ Test patterns should follow the layer being changed. For scheduling and concurre
 
 At the pinned SHA, `AnthropicApiBackend` and `OllamaBackend` are the remaining specialized native clients [C020, C022, C023, C024, C025]. That is a snapshot fact, not a permanent exception registry. Before removal or retention, enumerate every current importer, registration caller, provider-specific wire behavior, and behavioral test. Migrate behavior before deleting implementation-specific tests. New provider integrations should start profile-driven, but a profile name alone does not prove a generic executor preserves endpoint, authentication, response, error, usage, streaming, or tool-loop semantics.
 
+Compatibility is an authority decision, not a default. Record compatibility authority
+before a refactor: `preserve`, `intentional_break`, or
+`not_applicable`, plus the consumers/examples that must change. An unpublished
+single-user surface may be intentionally broken when the composer says so;
+do not manufacture legacy aliases for hypothetical users.
+
+Classify every removed test by contract disposition:
+
+1. **Retired** — the product behavior is intentionally removed. Delete the test
+   and update profiles, capabilities, docs, defaults, and consumers so none
+   still claim it.
+2. **Migrated** — the behavior remains behind a new boundary. Write and observe
+   the replacement test before deleting the implementation-coupled one.
+3. **Redundant** — another current test already proves the same contract. Name
+   that replacement before deletion.
+
+Tests of deleted class names, registration bridges, and SDK mock targets are
+usually retired. Wire envelopes, error mapping, token usage, tool behavior, and
+public discovery are product contracts only when the new profile/capability
+surface still promises them. Raw deleted-line counts are warnings, not gates.
+
+The clean provider boundary is generic CLI and HTTP executors plus schema
+codecs. Provider-named YAML files are data presets, not architectural
+exceptions, and should ship only when the composer wants that instrument as a
+first-class product surface. Before the final claim, compare the exact diff to
+the stated scope; never report that a subsystem was untouched while its files
+remain modified.
+
 ## Evidence
 
 Instrument profiles are implemented as the public extension surface for execution harnesses, with CLI and HTTP profile families covering command construction, output parsing, schema-family requests, auth environment variables, model metadata, and default model selection [C020, C021, C023, C024, C025]. `recursive_light` is implemented through the generic OpenAI-compatible path rather than a dedicated native module, while Anthropic and Ollama remain implemented specialized native clients [C021, C024, C025]. C023 is contradicted in broad wording: the corrected behavior is that only `AnthropicApiBackend` and `OllamaBackend` remain specialized native clients, while generic HTTP executor behavior is retired or relocated [C023].
