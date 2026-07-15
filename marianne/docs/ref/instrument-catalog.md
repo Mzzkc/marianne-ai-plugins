@@ -37,15 +37,13 @@ Composers select tag intersections (`tier × task × modality × constraint`) an
 | Instrument | Auth | Capabilities | Notes |
 |---|---|---|---|
 | `claude-code` | Anthropic sub or API | tool_use, file_edit, shell, web_fetch, MCP, vision | Full agentic capability |
-| `anthropic_api` | Anthropic API | tool_use, vision | Same models without CLI shell |
 | `gemini-cli` | Google sub or API | tool_use, file_edit, shell, vision, multimodal | Strong native multimodal |
 | `codex-cli` | OpenAI Plus or API | tool_use, file_edit, shell, vision | GPT-5.5 access via Plus subscription |
 | `opencode` | per-provider | tool_use, file_edit, shell, multi_provider | Best route to OpenRouter free tier and Z.AI Coding Plan |
 | `aider` | per-provider | tool_use, file_edit, git, shell, multi_provider | Strong git integration |
 | `goose` | per-provider | tool_use, file_edit, shell, MCP, multi_provider | Block.xyz; MCP-strong |
 | `crush` | per-provider | tool_use, terminal_ui, multi_provider | Charm.land TUI |
-| `ollama` | none | local, offline, no_rate_limit, partial tool use | **Open-source-first default for local work** |
-| `recursive_light` | (specialized) | tdf_judgment, boundary_analysis | Selective use only |
+| `ollama` | none | local, offline, no_rate_limit, structured_output | OpenAI-compatible text/structured-output profile; no file or shell tools |
 | `cli` | none | shell, deterministic | Plain bash; cheapest option per The Tool Chain |
 
 ---
@@ -314,7 +312,7 @@ Fallback: `cohere-rerank-3.5`
 1. **Identify the stage's task** — code translation, classification, synthesis, runner, etc.
 2. **Identify hard constraints** — must-be-offline? long-context? rate-limit-proof? large output (mind GLM chunking)?
 3. **Look up the matching use-case chain.** The chain gives ranked primaries → fallbacks.
-4. **Map to YAML** — set `instrument:` to the recommended primary's instrument; set `cli_model:` to the musician id; set `instrument_fallbacks:` to the fallback chain.
+4. **Map to YAML** — set `instrument:` to the recommended primary's instrument; set `instrument_config.model:` to the musician id; set `instrument_fallbacks:` to the fallback chain.
 5. **Justify any deviation.** If reaching for premier when the chain says open weights would suffice, document why. Marianne's open-source-first ethos puts the burden of proof on premier picks.
 6. **For GLM-routed stages**, add chunking guidance: "Write your output in chunks of ~50–100 lines per Write/Edit; multiple small tool calls succeed where single large ones fail."
 

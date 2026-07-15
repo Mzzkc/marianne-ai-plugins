@@ -19,6 +19,7 @@ REQUIRED = {
     "proof_obligations",
     "compatibility",
     "test_disposition",
+    "verification_context",
     "repair_loop",
     "release",
 }
@@ -125,6 +126,46 @@ def check_design(path: Path) -> list[str]:
                     findings.append(
                         f"{prefix}.replacement: required for {contract} contract"
                     )
+
+    verification = data.get("verification_context")
+    if not isinstance(verification, dict):
+        findings.append("design.verification_context: mapping required")
+    else:
+        source_binding = verification.get("source_binding")
+        binding_markers = ("PYTHONPATH", "editable install", "built wheel", "container")
+        if not isinstance(source_binding, str) or not any(
+            marker in source_binding for marker in binding_markers
+        ):
+            findings.append(
+                "design.verification_context.source_binding: explicitly bind "
+                "the candidate source via PYTHONPATH, an isolated editable "
+                "install, a built wheel, or a container"
+            )
+        import_probe = verification.get("import_probe")
+        if not isinstance(import_probe, str) or not any(
+            marker in import_probe for marker in ("__file__", "inspect.getfile")
+        ):
+            findings.append(
+                "design.verification_context.import_probe: command must print "
+                "the imported candidate module path"
+            )
+        process_control = verification.get("process_control")
+        if not isinstance(process_control, dict):
+            findings.append(
+                "design.verification_context.process_control: mapping required"
+            )
+        else:
+            if process_control.get("one_suite_at_a_time") is not True:
+                findings.append(
+                    "design.verification_context.process_control."
+                    "one_suite_at_a_time: must be true"
+                )
+            cleanup = process_control.get("yielded_process_cleanup")
+            if not isinstance(cleanup, str) or not cleanup.strip():
+                findings.append(
+                    "design.verification_context.process_control."
+                    "yielded_process_cleanup: required"
+                )
     return findings
 
 

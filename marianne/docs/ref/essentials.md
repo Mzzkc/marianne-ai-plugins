@@ -399,10 +399,10 @@ prompt:
 instrument: claude-code
 instrument_config:
   timeout_seconds: 1800         # Per-sheet timeout (30 min default)
-  model: claude-sonnet-4-6      # Model override (alias: cli_model)
+  model: claude-sonnet-4-6      # Model override
 ```
 
-Functional `instrument_config` keys: `model` (alias `cli_model`),
+Functional `instrument_config` keys: `model`,
 `timeout_seconds`, `interactive`, `interactive_max_nudges`,
 `interactive_nudge_message`. **Unknown keys are silently ignored** — old
 `backend:`-era knobs like `skip_permissions`, `disable_mcp`, and

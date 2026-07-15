@@ -49,6 +49,8 @@ Evidence map:
   remain specialized native clients [C020, C021, C022, C023, C024, C025].
   Re-enumerate current consumers and behavior before extending, relocating, or
   deleting these paths; the bundle does not decide their current disposition.
+  **Pinned backend claims are historical** and must never become an implicit
+  compatibility requirement.
 - A2A limits: A2A routing has in-memory runtime state, while completed and
   failed A2A task events are defined and observer-serialized but not executed by
   runtime propagation [C026, C027, C028].
@@ -91,11 +93,11 @@ and job lifecycle surfaces, including PID-file locking when starting the daemon
 stateless free function that moves eligible sheets toward execution through a
 callback rather than as a `BatonCore` method [C004]. A musician is the execution
 adapter path that renders prompt context, resolves techniques, invokes an
-instrument/backend profile, captures output and cost, and reports results for
+instrument profile through its current execution contract, captures output and cost, and reports results for
 validation and state update [C003, C012, C036, C048]. An instrument profile is
-not necessarily a native Python backend; profile registration can point to
-generic HTTP/OpenAI-compatible execution, plugin CLI execution, or one of the
-remaining specialized native clients [C021, C023, C024, C025].
+not a promise of a provider-specific Python class; trace the profile through
+current source to its CLI or supported shared HTTP executor [C021, C023, C024,
+C025].
 
 The two-syntax rule is non-negotiable. Prompt templates are raw Jinja2
 templates stored on `Sheet` and rendered at dispatch time, because cross-sheet
@@ -130,19 +132,13 @@ and the exact enum member `A2A_REQUEST`, with routing priority omitted from the
 short claim but present in the design evidence [C013]. The interface generator
 creates compact Python stubs for MCP tools to reduce prompt token usage [C014].
 
-Backend reality is sharper than the older docs. The docs say
-`recursive_light` is a native backend, but source/tests show it is registered
-and operational through the generic OpenAI-compatible/OpenRouter-shaped HTTP
-path with no dedicated native backend module; treat the registered generic path
-as runtime truth and record native-backend wording as contradicted [C021]. The
-docs say the backends package contains native HTTP executors, but source/tests
-show only `AnthropicApiBackend` and `OllamaBackend` remain specialized native
-clients while generic HTTP executors were retired or moved under
-execution/instruments; treat those two clients as runtime truth and record broad
-native HTTP wording as ambiguous or stale [C023, C024, C025]. The Anthropic SDK
-is a hard dependency, and the backend pool still carries an Anthropic doctrine
-exception, but that does not make every HTTP-profile instrument a specialized
-native backend [C020, C022, C024].
+Backend evidence is a dated snapshot. It records `recursive_light` through a
+generic OpenAI-compatible path and two provider-specific clients at the pinned
+SHA [C020, C021, C022, C023, C024, C025]. Use that cluster to locate historical
+drift, then re-enumerate current source, profiles, dispatch branches,
+dependencies, and tests. A removed provider class is not a compatibility
+obligation, and a provider name in old evidence is not proof that a current
+profile exists.
 
 A2A is partial. A2A runtime structures such as `_a2a_inboxes` are in memory and
 not checkpointed, so they are not restart-persistent [C026]. `A2ATaskCompleted`
@@ -213,10 +209,10 @@ path expansion [C001, C002, C003]. Direct source reads also verify that
 per-model/per-instrument, rate-limit, and stagger checks [C004, C005, C006,
 C007, C008].
 
-The implemented core includes score execution, baton engine, conductor daemon,
-validations, techniques ECS, learning store, compiler, instrument profiles, MCP
-pool, and the two specialized native clients named in the status evidence
-[C010, C011, C012, C014, C015, C024, C025, C034, C044, C045]. The implemented
+The pinned implemented core includes score execution, baton engine, conductor daemon,
+validations, techniques ECS, learning store, compiler, instrument profiles, and MCP
+pool [C010, C011, C012, C014, C015, C024, C025, C034, C044, C045]. Recheck
+current source before claiming its present executor inventory. The implemented
 but security-sensitive surfaces include privileged validation commands and
 score-relative path resolution without confinement [C015, C038]. The
 implemented but security-risk surface includes the baton event inbox as an
@@ -236,24 +232,20 @@ capture limit is implemented at 51,200 bytes despite a stale 10KB test comment
 [C048].
 
 The backend contradiction cluster is the highest-risk naming trap in this kit.
-`recursive_light` is implemented via a generic OpenAI-compatible path and has
-no dedicated native backend module [C021]. The backends package contains only
-`AnthropicApiBackend` and `OllamaBackend` as specialized native Python clients;
-any broader native HTTP executor wording must name those two and explain that
-generic executors were retired or relocated [C023, C024, C025]. The Anthropic
-SDK dependency and doctrine exception support the Anthropic native client, not
-a general claim that all HTTP instruments use native backend modules [C020,
-C022, C024].
+It proves that old documentation misdescribed implementation shape at the
+pinned SHA [C020, C021, C022, C023, C024, C025]. It does not require current
+source to retain those classes, dependencies, aliases, or profiles. Reconcile
+the snapshot with the live checkout and state both observations separately.
 
 ## Trap
 
 Tempting sentence: "Marianne already has scheduling, config reload, grounding
 integrity checks, restart-persistent A2A, and native backends for every HTTP
 profile." Correction: `CronTick` and `ConfigReloaded` are spec-only warning
-handlers, grounding is config-only runtime-unwired, A2A runtime state is
-in-memory only, and native backend language must distinguish generic
-OpenAI-compatible profile execution from `AnthropicApiBackend` and
-`OllamaBackend` [C021, C023, C026, C029, C030, C031].
+handlers, grounding is config-only runtime-unwired, and A2A runtime state is
+in-memory only in the pinned evidence. Current backend language must come from
+current source rather than the snapshot inventory [C021, C023, C026, C029,
+C030, C031].
 
 Tempting sentence: "Validation paths and prompts both use `{{ variable }}`."
 Correction: prompts use Jinja2 double braces at dispatch time, while validation
@@ -292,9 +284,8 @@ C017, C019, C026, C027, C028, C029, C030, C031, C032, C033, C038, C047, C048].
 
 Run these manual checks when editing: confirm the evidence map includes all
 required clusters; confirm the two-syntax rule remains prompt/Jinja versus
-validation/`.format()`; confirm `recursive_light` is never described as a
-dedicated native backend; confirm the native-client boundary names
-`AnthropicApiBackend` and `OllamaBackend`; confirm A2A completion/failure
+validation/`.format()`; confirm backend claims are explicitly labelled pinned
+or current and every current name resolves in the live checkout; confirm A2A completion/failure
 events are not described as executed; confirm A2A runtime state is not described
 as restart-persistent; confirm `CronTick`, `ConfigReloaded`, and grounding do
 not receive active runtime verbs; confirm orphan cleanup remains a no-op with no

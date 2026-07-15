@@ -2,19 +2,19 @@
 
 ## Problem
 
-Marianne developers are most likely to break the runtime by editing the wrong layer: changing score YAML when the public interface is an instrument profile, adding prose about a technique when the runtime only resolves ECS components, or preserving native-backend wording after most executor behavior moved behind generic instrument profiles. The governing boundary is that score configuration, instrument profiles, technique components, validation commands, and backend clients are separate extension points with different trust and test requirements. Use this page when adding an instrument profile, adding a technique, writing tests for dispatch or validation behavior, or planning backend removal. The runtime claims are implemented for instrument profiles, dispatch gates, techniques, validation, and the Anthropic/Ollama native clients; `recursive_light` is implemented through the generic OpenAI-compatible path, grounding is config_only_runtime_unwired, cron/config reload are spec_only, and orphan cleanup is a known_broken_safety_noop [C004, C005, C010, C015, C020, C021, C023, C029, C030, C031, C032, C033].
+Marianne developers are most likely to break the runtime by editing the wrong layer: changing score YAML when the public interface is an instrument profile, adding prose about a technique when the runtime only resolves ECS components, or preserving native-backend wording after executor behavior moved behind generic instrument profiles. The governing boundary is that score configuration, instrument profiles, technique components, validation commands, and execution contracts are separate extension points with different trust and test requirements. Use this page when adding an instrument profile, adding a technique, writing tests for dispatch or validation behavior, or planning backend removal. Claims about Anthropic, Ollama, and `recursive_light` in the bundled evidence describe its pinned snapshot; inspect current source before treating any of those registrations or classes as present [C020, C021, C023, C024, C025].
 
 ## Mechanism
 
 The public score interface is `JobConfig`: scores choose a primary `instrument`, optional `instrument_config`, local `instruments` definitions, per-sheet instrument overrides, prompt configuration, validations, and `techniques` by name [C037, C038, C039, C010, C011]. Relative workspace paths resolve against the score file's parent directory without confinement, so a development recipe must treat score files as trusted project input before telling a user to run one [C038].
 
-Add an instrument profile by defining an `InstrumentProfile` shape, not by adding a new bespoke executor first. A profile names the instrument, declares `kind` as `cli` or `http`, lists capabilities and models, chooses a default model, and then fills either CLI command/output parsing or HTTP base URL/schema/auth fields [C020, C023, C024, C025]. CLI profiles describe subprocess construction, environment variables, stdin prompting, MCP config passing, output formats, JSON/JSONL result paths, token extraction, and interactive TUI support [C020]. HTTP profiles use the generic schema-family path unless the evidence proves a real native-client exception [C021, C023]. The docs say `recursive_light` is a native Python backend, but source/tests show it operates through the generic OpenAI-compatible/OpenRouter path. Treat the generic path as runtime truth and record the native-backend wording as stale or contradicted [C021].
+Add an instrument profile by defining an `InstrumentProfile` shape, not by adding a new bespoke executor first. A profile names the instrument, declares `kind` as `cli` or `http`, lists capabilities and models, chooses a default model, and then fills either CLI command/output parsing or HTTP connection fields [C020, C023, C024, C025]. CLI profiles describe subprocess construction, environment variables, stdin prompting, MCP config passing, output formats, token extraction, and interactive TUI support [C020]. HTTP profiles may claim only wire schemas the current generic executor actually implements. Add a reusable schema codec when another wire contract is required; do not create a provider-named Python executor as an architectural exception.
 
 Add a technique by declaring a named `TechniqueConfig` under `techniques`, selecting `kind: skill`, `kind: mcp`, or `kind: protocol`, and setting `phases` to the agent cycle phases where it is active; `"all"` activates it everywhere, and an empty list disables it [C010, C011, C012]. Skill techniques inject text methodology as cadenza context, MCP techniques point at registered MCP pool servers, and protocol techniques carry coordination wiring [C010, C012, C014]. The router classifies output shapes including prose, code blocks, tool calls, and the exact `A2A_REQUEST` enum member; it routes and classifies but does not turn every protocol surface into durable execution [C013, C026, C027, C028].
 
 Test patterns should follow the layer being changed. For scheduling and concurrency, test `dispatch_ready()` as a stateless free function; it enforces global concurrency, per-instrument/model concurrency, rate-limit skips, and stagger delays [C004, C005, C006, C007, C008]. For validation behavior, test retryable validation types and process lifecycle boundaries; `command_succeeds` is an implemented_security_sensitive privileged bash surface for trusted score authors, spawns with `start_new_session=True`, refuses daemon process-group hijacking, and terminates validation process groups with SIGTERM, a two-second grace period, then SIGKILL [C015, C016, C017, C018]. For prompt/config changes, distinguish validation path expansion using Python `.format()` from prompt rendering using deferred Jinja2 double-brace syntax [C001, C002, C003, C039].
 
-At the pinned SHA, `AnthropicApiBackend` and `OllamaBackend` are the remaining specialized native clients [C020, C022, C023, C024, C025]. That is a snapshot fact, not a permanent exception registry. Before removal or retention, enumerate every current importer, registration caller, provider-specific wire behavior, and behavioral test. Migrate behavior before deleting implementation-specific tests. New provider integrations should start profile-driven, but a profile name alone does not prove a generic executor preserves endpoint, authentication, response, error, usage, streaming, or tool-loop semantics.
+At the pinned SHA, `AnthropicApiBackend` and `OllamaBackend` still existed [C020, C022, C023, C024, C025]. That is historical evidence, not current architecture. Re-enumerate current importers, registrations, profile capabilities, wire behavior, and tests before acting. A profile name alone does not prove an executor preserves endpoint, authentication, response, error, usage, streaming, or tool-loop semantics.
 
 Compatibility is an authority decision, not a default. Record compatibility authority
 before a refactor: `preserve`, `intentional_break`, or
@@ -44,9 +44,19 @@ first-class product surface. Before the final claim, compare the exact diff to
 the stated scope; never report that a subsystem was untouched while its files
 remain modified.
 
+Verification must execute candidate source, not whichever editable checkout a
+shared virtual environment happens to contain. Record a candidate-source
+binding such as `PYTHONPATH="$PWD/src"`, then run an import provenance probe
+that prints `package.__file__` (and the load-bearing submodule `__file__`) before
+tests. Use the same interpreter and binding for targeted and full verification.
+Run one full suite at a time. If a tool yields a running process, retain its
+handle and poll it to completion; before any rerun, terminate and reap only that
+scoped process or process group. A second suite beside an abandoned first suite
+is not independent verification.
+
 ## Evidence
 
-Instrument profiles are implemented as the public extension surface for execution harnesses, with CLI and HTTP profile families covering command construction, output parsing, schema-family requests, auth environment variables, model metadata, and default model selection [C020, C021, C023, C024, C025]. `recursive_light` is implemented through the generic OpenAI-compatible path rather than a dedicated native module, while Anthropic and Ollama remain implemented specialized native clients [C021, C024, C025]. C023 is contradicted in broad wording: the corrected behavior is that only `AnthropicApiBackend` and `OllamaBackend` remain specialized native clients, while generic HTTP executor behavior is retired or relocated [C023].
+The pinned evidence establishes instrument profiles as the public extension surface and records the provider topology that existed at its source SHA [C020, C021, C023, C024, C025]. Use it to identify historical contradictions, then use current source and tests to state the present executor set. Never turn a pinned class inventory into current release guidance.
 
 Technique extension is implemented through ECS-style component configuration: `TechniqueKind` defines skill, MCP, and protocol; `TechniqueConfig` records kind and phase activation; runtime resolution determines active techniques for a sheet; the router classifies outputs; and interface generation emits compact Python stubs for MCP tools [C010, C011, C012, C013, C014]. A2A is only partially implemented beyond routing: inbox state is in memory only, and completion/failure events are serialized for observers but not executed by the runtime [C026, C027, C028].
 
@@ -58,7 +68,7 @@ The non-extension surfaces matter because developers often overclaim them while 
 
 Tempting sentence: "To add a provider, create a native backend and document it as a native HTTP executor."
 
-Correction: "Add a profile-driven CLI or generic HTTP instrument first; only `AnthropicApiBackend` and `OllamaBackend` remain specialized native clients, and `recursive_light` uses the generic OpenAI-compatible path." The consequence of the tempting sentence is a forked execution architecture and stale docs that make downstream developers test the wrong module [C021, C023, C024, C025].
+Correction: "Add a profile-driven CLI or a supported generic HTTP schema; when a new wire contract is necessary, add a reusable codec at the shared boundary." The consequence of the tempting sentence is a forked execution architecture and stale docs that make downstream developers test the wrong module [C021, C023, C024, C025].
 
 Tempting sentence: "A technique with protocol config gives durable A2A task completion semantics."
 
@@ -70,7 +80,7 @@ Correction: "`command_succeeds` is privileged bash for trusted score authors, an
 
 ## Verify
 
-1. For an instrument profile change, run the relevant profile discovery/check path, then inspect whether the implementation used CLI profile fields, generic HTTP schema-family fields, or a justified native client; reject broad "native backend" wording unless it names Anthropic or Ollama [C020, C021, C023, C024, C025].
+1. For an instrument profile change, run the current profile discovery/check path, then inspect whether execution uses CLI profile fields or a supported shared HTTP schema. Reject provider-specific executor classes unless current architecture and explicit composer authority require a shared codec instead [C020, C021, C023, C024, C025].
 2. For a technique change, verify the score declares `kind`, `phases`, and kind-specific config; then test active-technique resolution for the intended phase and avoid claiming executed A2A completion semantics [C010, C011, C012, C026, C027, C028].
 3. For dispatch changes, test `dispatch_ready()` directly for global ceiling, per-instrument/model ceiling, rate-limit skip, and stagger behavior; include a stale-doc check if any prose says global concurrency is not enforced [C004, C005, C006, C007, C008].
 4. For validation changes, label `command_succeeds` as trusted-author bash before any recipe uses it, assert separate process-group spawning and cleanup, and remember the daemon-process-group guard is implemented_untested [C015, C016, C017, C018].

@@ -4,6 +4,8 @@ import re
 import unittest
 from pathlib import Path
 
+import yaml
+
 
 EXPERT_ROOT = (
     Path(__file__).resolve().parents[1] / "marianne" / "skills" / "marianne-expert"
@@ -72,6 +74,58 @@ class MarianneExpertPackageTests(unittest.TestCase):
         self.assertIn("migrated", text.lower())
         self.assertIn("replacement", text.lower())
         self.assertIn("capability", text.lower())
+
+    def test_development_playbook_binds_verification_to_candidate_source(self) -> None:
+        router = (EXPERT_ROOT / "SKILL.md").read_text(encoding="utf-8")
+        playbook = (EXPERT_ROOT / "playbooks" / "develop.md").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("import provenance", router.lower())
+        self.assertIn("candidate source", playbook.lower())
+        self.assertIn("__file__", playbook)
+        self.assertIn("one full suite", playbook.lower())
+        self.assertIn("terminate", playbook.lower())
+        self.assertIn("reap", playbook.lower())
+
+    def test_acting_guidance_does_not_promote_pinned_backend_snapshot(self) -> None:
+        acting_paths = [
+            EXPERT_ROOT / "BOOTSTRAP.md",
+            EXPERT_ROOT / "playbooks" / "architecture.md",
+            EXPERT_ROOT / "playbooks" / "compose.md",
+            EXPERT_ROOT / "playbooks" / "debug.md",
+            EXPERT_ROOT / "playbooks" / "develop.md",
+        ]
+        combined = "\n".join(path.read_text(encoding="utf-8") for path in acting_paths)
+        self.assertNotIn("Doctrine Exception", combined)
+        self.assertNotIn("instrument: recursive_light", combined)
+        self.assertNotIn(
+            "specialized native clients are Anthropic and Ollama only",
+            combined,
+        )
+        for path in acting_paths:
+            text = path.read_text(encoding="utf-8").lower()
+            self.assertIn("current source", text, str(path))
+        bootstrap = acting_paths[0].read_text(encoding="utf-8")
+        self.assertIn("Pinned backend claims are historical", bootstrap)
+
+    def test_instrument_catalog_matches_clean_provider_boundary(self) -> None:
+        catalog_root = EXPERT_ROOT.parents[1] / "docs" / "ref"
+        catalog = yaml.safe_load(
+            (catalog_root / "instrument-catalog.yaml").read_text(encoding="utf-8")
+        )
+        instruments = catalog["instruments"]
+        self.assertNotIn("anthropic_api", instruments)
+        self.assertNotIn("recursive_light", instruments)
+        self.assertEqual(
+            instruments["ollama"]["capabilities"],
+            ["local", "offline", "no_rate_limit", "structured_output"],
+        )
+        self.assertEqual(instruments["claude-code"]["fallback_instruments"], ["codex-cli"])
+        for musician in catalog["musicians"].values():
+            self.assertNotIn("anthropic_api", musician.get("available_via", []))
+        markdown = (catalog_root / "instrument-catalog.md").read_text(encoding="utf-8")
+        self.assertNotIn("`anthropic_api`", markdown)
+        self.assertNotIn("`recursive_light`", markdown)
 
 
 if __name__ == "__main__":

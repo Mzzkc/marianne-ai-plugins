@@ -40,6 +40,9 @@ Before YAML, write `composition-design.yaml` with these required sections:
   `not_applicable` policy, rationale, and every migration target;
 - `test_disposition`: each removed test classified as a retired contract,
   migrated contract with replacement, or redundant contract with replacement;
+- `verification_context`: `source_binding`, an `import_probe` that prints the
+  imported module path, and `process_control` with `one_suite_at_a_time: true`
+  plus a `yielded_process_cleanup` procedure;
 - `repair_loop`: repair stage, reevaluation stage, and maximum iterations;
 - `release`: release stage, reevaluation dependency, and candidate-hash policy.
 
@@ -74,6 +77,9 @@ YAML in one unreviewed stage is not a gate.
 - Test disposition follows contract disposition: delete retired-contract tests,
   migrate retained behavior, and identify the existing replacement for
   redundant tests. Raw line counts are diagnostic, not a release rule.
+- Bind verification to the candidate checkout, prove import provenance before
+  the suite, run one full suite at a time, and poll yielded processes to
+  completion or terminate and reap their scoped process group before rerunning.
 - Keep private evaluator answers outside worker-readable workspaces.
 - Route repair back through reevaluation. Any post-evaluation change invalidates
   the prior pass.

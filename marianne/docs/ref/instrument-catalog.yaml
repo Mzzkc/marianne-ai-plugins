@@ -136,19 +136,8 @@ instruments:
       - claude-haiku-4-5-20251001
       - claude-sonnet-4-5-20250929
       - claude-opus-4-6
-    fallback_instruments: [anthropic_api]
-    notes: "Subscription tier offers cost predictability; API tier offers usage-based billing. Both supported."
-
-  anthropic_api:
-    description: "Direct Anthropic API; pay-per-token; same models as claude-code without CLI wrapper"
-    auth: "anthropic_api_key"
-    capabilities: [tool_use, vision]   # NO file_edit/shell — those are CLI-shell-specific
-    runs_models:
-      - claude-opus-4-7
-      - claude-sonnet-4-6
-      - claude-haiku-4-5-20251001
-    fallback_instruments: []
-    notes: "Use when you need model access without CLI tools (pure prompt-in/text-out)."
+    fallback_instruments: [codex-cli]
+    notes: "Claude access is provided through the agent CLI. Marianne ships no special Anthropic API profile."
 
   gemini-cli:
     description: "Google's official Gemini CLI with tool use, file editing, vision"
@@ -222,10 +211,10 @@ instruments:
     notes: "TUI-first; useful for interactive work but less common in scripted scores."
 
   ollama:
-    description: "Local model runner; no network required after model pull"
+    description: "Local models through Ollama's OpenAI-compatible chat endpoint"
     binary: "ollama"
     auth: "none"
-    capabilities: [local, offline, no_rate_limit, tool_use_partial]
+    capabilities: [local, offline, no_rate_limit, structured_output]
     runs_models:
       # Models available depend on what user has pulled; below is a reasonable
       # default set for code/general work. Run `ollama list` to confirm.
@@ -241,14 +230,7 @@ instruments:
       - codestral:22b
       - gemma3:27b
     fallback_instruments: []
-    notes: "Open-source-first default. No rate limits, no per-token cost, full privacy. Speed and quality depend on local hardware."
-
-  recursive_light:
-    description: "TDF (Tetrahedral Decision Framework) judgment instrument"
-    capabilities: [tdf_judgment, boundary_analysis, multi_domain_decomposition]
-    runs_models: ["recursive_light internal"]
-    fallback_instruments: []
-    notes: "Specialized for boundary recognition and multi-domain reasoning. Used selectively, not for general work."
+    notes: "Profile-driven text/structured-output transport with no agent-harness file or shell tools. No rate limits or per-token cost; speed and quality depend on local hardware."
 
   cli:
     description: "Plain shell — bash. Deterministic, no LLM."
@@ -278,7 +260,7 @@ musicians:
     cost_per_1m_output: 75.00
     cache_read_discount: 0.10   # 10x cheaper on cache hits
     cache_write_premium: 1.25
-    available_via: [claude-code, anthropic_api]
+    available_via: [claude-code]
     tags: [max, heavy, premier, subscription]
     task_tags: [code, code-translation, code-review, review, research, writing,
                 transform, design, synthesis, planning, reasoning, tool-use, agent]
@@ -319,7 +301,7 @@ musicians:
     cost_per_1m_input: 3.00
     cost_per_1m_output: 15.00
     cache_read_discount: 0.10
-    available_via: [claude-code, anthropic_api]
+    available_via: [claude-code]
     tags: [heavy, standard, subscription]
     task_tags: [code, code-translation, code-review, review, research, writing,
                 transform, design, synthesis, planning, tool-use]
@@ -354,7 +336,7 @@ musicians:
     max_output_tokens: 8192
     cost_per_1m_input: 0.80
     cost_per_1m_output: 4.00
-    available_via: [claude-code, anthropic_api]
+    available_via: [claude-code]
     tags: [quick, standard, subscription, fast]
     task_tags: [classification, transform, writing, tool-use, research]
     modality_tags: [text, vision]

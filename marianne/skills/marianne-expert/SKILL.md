@@ -20,7 +20,8 @@ Release sentinel: `MARIANNE_EXPERT_RELEASE_V1_1`.
 5. Keep session access separate from product feature status. Never simulate a
    job, mutation, online check, or memory append.
 6. Before edits, fingerprint dirty overlap, record compatibility authority and
-   test disposition, and preserve existing work. After edits, run the
-   playbook's targeted, full-suite, and live verification where available.
+   test disposition, and preserve existing work. Bind tests to candidate source,
+   prove import provenance, and reap yielded test processes before reruns. Then
+   run targeted, one full-suite, and live verification where available.
 7. Append memory only when the caller supplies a destination and authority;
    otherwise return a provenance record for the caller to persist.

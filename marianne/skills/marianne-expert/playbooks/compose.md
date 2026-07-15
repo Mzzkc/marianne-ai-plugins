@@ -12,7 +12,7 @@ First, decide the work shape. If each sheet performs the same operation over ite
 
 Second, apply the forces framework. The forces are independence, coupling, artifact surface, risk, cost, and validation observability. High independence pushes toward fan-out; high coupling pushes toward a linear pipeline or explicit dependencies [C004, C005, C006]. A narrow artifact surface pushes toward simple file outputs and `content_contains` or `field_match`; a broad artifact surface needs staged validations and possibly `command_succeeds`, which is implemented_security_sensitive privileged bash for trusted score authors [C015]. High risk pushes toward smaller sheets, stronger validations, and explicit synthesis; high cost pushes toward fewer voices, stricter parallel limits, and cheaper instruments through profile selection [C005, C006, C020]. Low validation observability is a stop signal: redesign the artifact before adding sheets.
 
-Third, choose instruments by capability boundary, not provider preference. The score can name a primary `instrument`, provide `instrument_config`, define local `instruments`, and override at movement or sheet level [C037, C020]. Prefer profile-driven CLI or generic HTTP instruments unless the source-backed exception is real [C020, C021, C023]. The docs say `recursive_light` is a native Python backend, but source/tests show it operates through the generic OpenAI-compatible/OpenRouter path. Treat the generic path as runtime truth and record the native-backend wording as stale or contradicted [C021]. Broad native-client wording is also unsafe: the retained specialized native clients are Anthropic and Ollama, while generic HTTP executor behavior was retired or relocated under instrument execution [C023, C024, C025].
+Third, choose instruments by capability boundary, not provider preference. The score can name a primary `instrument`, provide `instrument_config`, define local `instruments`, and override at movement or sheet level [C037, C020]. Inspect current source and `mzt instruments list|check`; a name in the pinned evidence or catalog does not prove it still resolves. Prefer profile-driven CLI or a generic HTTP profile whose declared wire schema the current shared executor implements. Do not invent a provider-specific profile merely because a provider has an API [C020, C021, C023, C024, C025].
 
 Fourth, design injections deliberately. Put invariant project context in `sheet.prelude`, sheet-specific files in `sheet.cadenzas`, and methodology in `techniques` when it is reusable across scores [C010, C011, C012]. Technique components are `skill`, `mcp`, or `protocol`; runtime resolution determines active techniques by phase, skill techniques inject text methodology, MCP techniques connect registered tool pools, and protocol techniques classify coordination surfaces [C010, C011, C012, C013, C014]. Do not confuse protocol routing with durable completion semantics: A2A inbox state is in-memory only, and completion/failure events are observer-serialized rather than executed by the runtime [C026, C027, C028].
 
@@ -71,7 +71,7 @@ Broken example:
 ```yaml
 name: vague-concert
 workspace: ../../shared
-instrument: recursive_light
+instrument: claude-code
 
 sheet:
   size: 1
@@ -100,7 +100,7 @@ Composition begins with the score schema: `JobConfig` carries the score name, wo
 
 Dispatch evidence governs the forces framework. `dispatch_ready()` is the scheduling boundary [C004]. The docs say global concurrency is not enforced, but source/tests show `dispatch_ready()` enforces it. Treat enforcement as runtime truth and record the configuration-reference denial as stale [C005]. Per-instrument/model limits, rate-limit skips, and stagger gates are implemented separately [C006, C007, C008].
 
-Technique and instrument evidence prevents overcomposition. Techniques are implemented as ECS-style components with `skill`, `mcp`, and `protocol` kinds, phase activation, active-technique resolution, router classification, and compact MCP interface generation [C010, C011, C012, C013, C014]. Instrument profiles are the implemented execution extension surface, and backend wording must preserve the corrected `recursive_light` and native-client boundaries [C020, C021, C023, C024, C025].
+Technique and instrument evidence prevents overcomposition. Techniques are implemented as ECS-style components with `skill`, `mcp`, and `protocol` kinds, phase activation, active-technique resolution, router classification, and compact MCP interface generation [C010, C011, C012, C013, C014]. Instrument profiles are the execution extension surface in the pinned evidence; current source and runtime discovery determine the profiles and wire schemas available now [C020, C021, C023, C024, C025].
 
 Validation evidence defines the litmus test. The nine retryable validation types are `file_exists`, `file_modified`, `content_contains`, `content_regex`, `command_succeeds`, `path_in_scope`, `field_match`, `file_sha256`, and `csv_unique_key` [C015]. `command_succeeds` is trusted-author bash, validation commands spawn in their own process group, the daemon-process-group refusal exists but is implemented_untested, and cleanup sends SIGTERM then SIGKILL on exit paths [C015, C016, C017, C018]. Output capture keeps 51,200 bytes / 50 KiB of trailing output; any 10KB test comment is stale when capture size matters [C048].
 
@@ -112,7 +112,7 @@ Corrected sentence: "The score is good only if the prompt names deterministic ar
 
 Tempting sentence: "Use grounding, cron, A2A completion, or a native backend label to make the composition stronger."
 
-Corrected sentence: "Use implemented validation and profile mechanisms; grounding is config_only_runtime_unwired, A2A completion/failure events are observer-serialized rather than executed, and `recursive_light` is generic OpenAI-compatible rather than a dedicated native backend." The consequence is promising behavior the runtime does not perform [C021, C026, C027, C028, C031].
+Corrected sentence: "Use implemented validation and profiles confirmed by current runtime discovery; grounding and A2A completion claims must still be verified against current source." The consequence is promising behavior the runtime does not perform [C021, C026, C027, C028, C031].
 
 ## Verify
 
@@ -120,7 +120,7 @@ Before publishing or running a score, perform these checks:
 
 1. Decision tree: name the selected shape as linear batch, stage pipeline, fan-out/fan-in, or mixed-instrument pipeline; confirm `sheet.size`, `sheet.total_items`, dependencies, and fan-out align with that shape [C004, C005, C040].
 2. Forces: write one sentence each for independence, coupling, artifact surface, risk, cost, and validation observability. If validation observability is weak, change the artifact contract before adding more sheets [C015].
-3. Instruments: run the score through profile vocabulary, not stale backend vocabulary. Reject broad "native" wording unless it preserves `recursive_light` as generic OpenAI-compatible and names Anthropic/Ollama as the retained specialized clients [C020, C021, C023, C024, C025].
+3. Instruments: run the score through current profile vocabulary, not stale backend vocabulary. Confirm each selected name with current source and `mzt instruments check`; require declared capabilities to match the actual shared executor [C020, C021, C023, C024, C025].
 4. Injections: confirm stable context is in prelude/cadenzas or a named technique, and confirm protocol techniques do not claim durable A2A completion semantics [C010, C011, C012, C026, C027, C028].
 5. Litmus test: for every output, the prompt contains `{{ workspace }}/...`, the validation uses `{workspace}/...`, and at least one validation checks freshness, content, structure, digest, command success, scope, or uniqueness rather than only existence [C001, C002, C003, C015].
 6. Safety and contradiction scan: label `command_succeeds` as trusted-author bash, treat relative workspaces as security-sensitive, do not claim grounding runtime hooks, and resolve contradicted claims by source/tests over stale docs [C015, C031, C038].

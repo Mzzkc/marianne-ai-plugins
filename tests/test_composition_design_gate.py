@@ -28,6 +28,14 @@ def valid_design() -> dict[str, object]:
             "migration_targets": [],
         },
         "test_disposition": {"removed": []},
+        "verification_context": {
+            "source_binding": "PYTHONPATH=$PWD/src uv run --no-sync pytest -q",
+            "import_probe": "python -c 'import package; print(package.__file__)'",
+            "process_control": {
+                "one_suite_at_a_time": True,
+                "yielded_process_cleanup": "poll to completion or terminate the scoped process group",
+            },
+        },
         "repair_loop": {"repair_stage": "recon", "reevaluate_stage": "verify", "max_iterations": 2},
         "release": {"stage": "release", "candidate_hash_required": True, "requires": ["verify"]},
     }
@@ -100,6 +108,27 @@ class CompositionDesignGateTests(unittest.TestCase):
         }
         self.assertEqual(self._check(data), [])
 
+    def test_missing_verification_context_fails(self) -> None:
+        data = valid_design()
+        del data["verification_context"]
+        self.assertTrue(any("verification_context" in item for item in self._check(data)))
+
+    def test_verification_requires_candidate_source_provenance(self) -> None:
+        data = valid_design()
+        data["verification_context"] = {
+            "source_binding": "pytest -q",
+            "import_probe": "",
+            "process_control": {
+                "one_suite_at_a_time": False,
+                "yielded_process_cleanup": "",
+            },
+        }
+        findings = self._check(data)
+        self.assertTrue(any("source_binding" in item for item in findings))
+        self.assertTrue(any("import_probe" in item for item in findings))
+        self.assertTrue(any("one_suite_at_a_time" in item for item in findings))
+        self.assertTrue(any("yielded_process_cleanup" in item for item in findings))
+
     def test_composing_skill_requires_executable_release_gates(self) -> None:
         skill = (
             Path(__file__).resolve().parents[1]
@@ -114,6 +143,9 @@ class CompositionDesignGateTests(unittest.TestCase):
         self.assertIn("per_sheet_fallbacks", skill)
         self.assertIn("compatibility", skill.lower())
         self.assertIn("test disposition", skill.lower())
+        self.assertIn("verification_context", skill)
+        self.assertIn("import_probe", skill)
+        self.assertIn("one_suite_at_a_time", skill)
         self.assertNotIn("Every assignment needs a fallback chain", skill)
 
     def test_score_authoring_routes_release_scores_to_composition_gate(self) -> None:
