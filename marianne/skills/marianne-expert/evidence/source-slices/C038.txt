@@ -1,0 +1,6 @@
+        # the daemon loads a score whose path differs from the daemon's CWD.
+        ws_val = data.get("workspace")
+        if ws_val:
+            ws = Path(str(ws_val))
+            if not ws.is_absolute():
+                data["workspace"] = str((path.resolve().parent / ws).resolve())

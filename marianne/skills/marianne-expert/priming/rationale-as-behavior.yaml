@@ -1,0 +1,19 @@
+threat_type: feature-rationale-false-as-current-behavior
+trigger_signature: >
+  An architecture comment names provider-specific features as the RATIONALE for
+  keeping a backend native (e.g. the Doctrine Exception says
+  `AnthropicApiBackend` must stay native to preserve thinking, streaming, and
+  tool use). Readers mistake SDK CAPABILITY for behavior the path actually
+  EXERCISES and affirm all three.
+countermeasure: >
+  Inspect the backend's actual `execute()` request, not the rationale comment.
+  For `AnthropicApiBackend`: `execute()` calls `client.messages.create(...)`
+  once with `model`, `max_tokens`, `temperature`, and a user `messages` list.
+  It supplies no `thinking`, no `tools`/`tool_choice`, and no streaming flag;
+  it receives the complete response and concatenates text blocks. So NONE of
+  thinking/streaming/tool-use is exercised today. Reject each feature
+  individually with the decisive request arguments; do not average SDK
+  capability into path behavior.
+confidence: high
+timestamp: 2026-07-15T18:29:21Z
+claim_ids: [C006]

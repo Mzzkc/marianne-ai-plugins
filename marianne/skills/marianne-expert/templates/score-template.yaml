@@ -1,0 +1,68 @@
+# score-template.yaml
+# Copyable starter score configuration for Marianne jobs.
+# Customize fields below and run: mzt run <score-file>.yaml
+
+name: "job-name-placeholder"
+description: "Brief description of the job's purpose"
+
+# Workspace path where outputs will be produced
+workspace: "./workspace"
+
+# Primary execution instrument profile name (e.g., claude-code, gemini-cli, cli)
+instrument: claude-code
+
+# Fallback instrument profiles tried when the primary instrument fails
+instrument_fallbacks:
+  - gemini-cli
+
+# Flat key-value parameters overriding resolved instrument defaults
+instrument_config:
+  timeout_seconds: 600
+
+# Sheet partitioning and dependency configuration
+sheet:
+  size: 1
+  total_items: 2
+  # DAG dependencies mapping sheet sequence number to prerequisite sheet list
+  dependencies:
+    2: [1]
+
+# Parallel sheet execution parameters
+parallel:
+  enabled: true
+  max_concurrent: 2
+
+# Prompt templating variables and inline template body
+prompt:
+  variables:
+    project_topic: "My Project Topic"
+  template: |
+    {% if sheet_num == 1 %}
+    Initialize the workspace at {{ workspace }} for {{ project_topic }}.
+    Create a file at {{ workspace }}/status.txt with the content 'started'.
+    {% elif sheet_num == 2 %}
+    Read {{ workspace }}/status.txt and finalize the work.
+    Create a file at {{ workspace }}/done.txt with the content 'completed'.
+    {% endif %}
+
+# Post-sheet validation checks applied dynamically
+validations:
+  - type: file_exists
+    path: "{workspace}/status.txt"
+    condition: "sheet_num == 1"
+    stage: 1
+    description: "Status file exists after sheet 1"
+
+  - type: file_exists
+    path: "{workspace}/done.txt"
+    condition: "sheet_num == 2"
+    stage: 1
+    description: "Done file exists after sheet 2"
+
+# Retry count and timing parameters
+retry:
+  max_retries: 2
+  base_delay_seconds: 10
+
+# Hooks triggered after successful completion of all sheets
+on_success: []

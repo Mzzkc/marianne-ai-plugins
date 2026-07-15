@@ -1,0 +1,6 @@
+- **a2a_request** — inter-agent task delegation, route through event bus
+
+For MCP-native instruments (claude-code, gemini-cli), MCP access can happen
+through the instrument's native MCP support when the conductor supplies a valid
+MCP config. The router itself only classifies and extracts requests; it does
+not execute MCP calls.

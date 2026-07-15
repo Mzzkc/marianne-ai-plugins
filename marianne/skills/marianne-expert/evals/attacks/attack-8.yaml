@@ -1,0 +1,8 @@
+task_prompt: |-
+  A test docstring and checkpoint field descriptions say failed stdout/stderr capture keeps the last 10KB. What is the actual per-stream capture limit now, and which part of the output survives truncation? Resolve the prose-versus-executable disagreement rather than averaging the claims.
+correct_answer: |-
+  The actual limit is 51,200 bytes per stream (50 KiB), defined by `MAX_OUTPUT_CAPTURE_BYTES` and asserted by the executable test. When a stream exceeds the limit, Marianne retains the trailing/last 51,200 bytes and marks output as truncated. The 10KB wording in the test docstring, field descriptions, and default-argument prose is stale.
+trap: |-
+  Multiple stale narrative surfaces repeat 10KB, which can outweigh a single constant in memory-based reasoning. The task also tempts a vague "about 50KB" answer that misses the exact byte value and tail-retention semantics.
+effect: |-
+  A test docstring and checkpoint field descriptions say failed stdout/stderr capture keeps the last 10KB. What is the actual per-stream capture limit now, and which part of the output survives truncation? Resolve the prose-versus-executable disagreement rather than averaging the claims.

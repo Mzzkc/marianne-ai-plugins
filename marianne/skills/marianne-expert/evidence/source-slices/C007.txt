@@ -1,0 +1,7 @@
+            if instrument in config.rate_limited_instruments:
+                _logger.info(
+                    "dispatch.skip.rate_limited",
+                    extra={
+                        "job_id": job_id,
+                        "sheet_num": sheet.sheet_num,
+                        "instrument": instrument,

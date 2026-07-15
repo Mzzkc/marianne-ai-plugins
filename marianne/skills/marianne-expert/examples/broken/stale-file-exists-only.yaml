@@ -1,0 +1,25 @@
+# Diagnosis:
+# What breaks: The validation rule only verifies that the file exists (`file_exists`). If the file was created by a previous run or pre-exists in the workspace, this validation check will immediately succeed even if the current execution fails to run or produce any new output. This is known as "decorative validation" because it passes without testing execution integrity.
+# Detection signature: V205 (All validations are file_exists — stale files from previous runs will pass) triggers as an INFO severity issue.
+# The fix: Supplement the validation list with `file_modified` or content checks (e.g. `content_contains` or `content_regex`) to ensure that the file was actually written/modified during the sheet's lifetime.
+# Claim ID: C010
+
+name: "stale-file-exists-only"
+description: "Intentionally broken score demonstrating stale validation trap where only file_exists is used (V205)"
+
+workspace: "./workspace"
+
+instrument: claude-code
+
+sheet:
+  size: 1
+  total_items: 1
+
+prompt:
+  template: |
+    Write a list of features to {{ workspace }}/output.txt.
+
+validations:
+  - type: file_exists
+    path: "{workspace}/output.txt"
+    description: "This validation only checks existence, not modification"

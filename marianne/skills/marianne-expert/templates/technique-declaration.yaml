@@ -1,0 +1,35 @@
+# technique-declaration.yaml
+# Copyable configuration block for registering composable ECS techniques.
+# Include these under the 'techniques:' field in a Marianne score.
+
+techniques:
+  # 1. Skill Technique
+  # Injects text-based methodologies directly into sheet prompt cadenzas.
+  refactoring-standards:
+    kind: "skill"
+    # Wildcard "all" makes the technique active in all execution phases
+    phases: ["all"]
+    config:
+      # Absolute or relative path to the markdown skill guide
+      path: "./plugins/marianne/skills/refactoring/SKILL.md"
+
+  # 2. Model Context Protocol (MCP) Tool Server Technique
+  # Equips agents with dynamic tools served via an MCP connection.
+  filesystem-mcp:
+    kind: "mcp"
+    # Restrict tool access to specific execution phases (e.g. recon, work, integration)
+    phases: ["recon", "work"]
+    config:
+      # Registered name of the MCP server
+      server: "filesystem-mcp-server"
+      # Connection mechanism: stdio or sse
+      transport: "stdio"
+
+  # 3. Protocol Technique (e.g. Agent-to-Agent communication)
+  # Wires inter-agent messaging and capability discovery.
+  a2a-messaging:
+    kind: "protocol"
+    phases: ["integration"]
+    config:
+      protocol_name: "a2a-v1"
+      routing_key: "orchestrator.baton"

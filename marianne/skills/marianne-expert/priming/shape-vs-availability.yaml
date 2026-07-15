@@ -1,0 +1,17 @@
+threat_type: implementation-shape-conflated-with-availability
+trigger_signature: >
+  Documentation groups an entry with native peers (e.g. `recursive_light`
+  listed beside Anthropic and Ollama as a "native backend"). A solver either
+  fabricates a likely module/class to edit, or overcorrects and claims the
+  instrument itself is unimplemented. "No native module" is not "not
+  implemented".
+countermeasure: >
+  Decouple two facts: (1) is there a DEDICATED native backend module/class?
+  (2) is the instrument USABLE today? For `recursive_light`: no
+  `backends/recursive_light.py` exists, but the instrument is operational via
+  the generic OpenAI-compatible/OpenRouter dispatch path. Answer both
+  precisely. Never let "no dedicated module" collapse into "does not work",
+  and never invent a module to satisfy a doc grouping.
+confidence: high
+timestamp: 2026-07-15T18:29:21Z
+claim_ids: [C021]

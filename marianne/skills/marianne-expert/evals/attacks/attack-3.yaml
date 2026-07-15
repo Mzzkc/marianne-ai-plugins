@@ -1,0 +1,8 @@
+task_prompt: |-
+  The backend-pool Doctrine Exception says `AnthropicApiBackend` must remain native because the SDK path preserves thinking, streaming, and tool use. For each of those three features, state whether the backend's actual request path uses it today, and cite the decisive request behavior rather than repeating the doctrine comment.
+correct_answer: |-
+  None of the three is used by the actual `AnthropicApiBackend` request path today. Its `execute()` calls `client.messages.create(...)` once with `model`, `max_tokens`, `temperature`, and a user `messages` list. It supplies no `thinking` parameter, no `tools`/`tool_choice`, and no streaming flag or stream API; it receives the complete response and concatenates text blocks afterward. The backend-pool docstring's feature rationale is therefore false as a description of current behavior, even though the native backend itself exists.
+trap: |-
+  A confident architecture comment names three provider-specific features as the exception's rationale. Readers may mistake SDK capability for behavior actually exercised by this backend and affirm all three without inspecting `execute()`.
+effect: |-
+  The backend-pool Doctrine Exception says `AnthropicApiBackend` must remain native because the SDK path preserves thinking, streaming, and tool use. For each of those three features, state whether the backend's actual request path uses it today, and cite the decisive request behavior rather than repeating the doctrine comment.

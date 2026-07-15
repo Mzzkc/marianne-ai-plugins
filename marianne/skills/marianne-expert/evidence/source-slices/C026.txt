@@ -1,0 +1,4 @@
+        # sheet renders its prompt. These structures are in-memory only today;
+        # restart persistence requires a checkpoint schema extension.
+        self._a2a_registry = AgentCardRegistry()
+        self._a2a_inboxes: dict[str, A2AInbox] = {}

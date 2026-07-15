@@ -1,0 +1,9 @@
+class OutcomeCategory(str, Enum):
+    """Classification of sheet execution outcome (#7)."""
+
+    SUCCESS_FIRST_TRY = "success_first_try"
+    SUCCESS_RETRY = "success_retry"
+    SUCCESS_COMPLETION = "success_completion"
+    FAILED_EXHAUSTED = "failed_exhausted"
+    FAILED_FATAL = "failed_fatal"
+    SKIPPED_BY_ESCALATION = "skipped_by_escalation"

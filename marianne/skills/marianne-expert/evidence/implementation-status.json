@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "source_sha": "65f2dc3b9a0d46341813e91af74f9960dc908446",
+  "capabilities": {
+    "score_execution": "implemented",
+    "baton_engine": "implemented",
+    "conductor_daemon": "implemented",
+    "validations": "implemented",
+    "techniques_ecs": "implemented",
+    "learning_store": "implemented",
+    "compiler": "implemented",
+    "instrument_profiles": "implemented",
+    "recursive_light_backend": "implemented_via_generic_openai_compat",
+    "mcp_pool": "implemented",
+    "a2a_routing": "partially_implemented",
+    "a2a_completion_events": "spec_only",
+    "a2a_inbox_persistence": "partially_implemented",
+    "marianne_mozart_agent": "spec_only",
+    "memory_system": "spec_only",
+    "unconscious_local_model": "spec_only",
+    "smart_conductor": "spec_only",
+    "concierge_telegram": "spec_only",
+    "maestro_tui": "spec_only",
+    "native_backends_anthropic": "implemented",
+    "native_backends_ollama": "implemented",
+    "native_backends_generic_http": "retired_or_relocated",
+    "native_backends_removal_intent": "known_broken",
+    "grounding_hooks": "config_only_runtime_unwired",
+    "orphan_cleanup": "known_broken_inline_safety_noop",
+    "cron_scheduling": "spec_only",
+    "config_reload": "spec_only"
+  },
+  "triangulation_corrections": {
+    "C021": "recursive_light has no dedicated native backend module and runs through the generic OpenAI-compatible path",
+    "C023": "only AnthropicApiBackend and OllamaBackend remain as specialized native clients; generic HTTP executors were retired or relocated",
+    "C029": "CronTick logs an unimplemented warning and does not submit or reschedule jobs",
+    "C030": "ConfigReloaded logs an unimplemented warning and does not rebuild pending sheets",
+    "C031": "grounding configuration exists but runtime hooks are not invoked",
+    "C033": "orphan reaping is disabled inline; no module-level disabled flag exists",
+    "C047": "ErrorCode category is parsed from the first numeric digit at value[1]"
+  }
+}

@@ -1,0 +1,6 @@
+                if proc is not None and proc.returncode is None:
+                    if pgid is not None:
+                        try:
+                            _safe_killpg(pgid, signal.SIGTERM, context="validation.kill_grace")
+                        except (ProcessLookupError, PermissionError):
+                            pass

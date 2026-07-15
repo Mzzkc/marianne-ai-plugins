@@ -1,0 +1,1 @@
+MAX_OUTPUT_CAPTURE_BYTES: int = 51200  # 50KB - last N bytes of stdout/stderr to capture

@@ -1,0 +1,29 @@
+# Diagnosis:
+# What breaks: The `cli` instrument executes the prompt verbatim as a bash script using `bash -c`. If the template contains markdown (e.g., headers, prose, list bullets, code blocks), the shell will attempt to parse it as commands, resulting in instant shell syntax errors (exit code 2). This causes the CLI sheet execution to fail under the hood. If a fallback instrument (like an LLM) is present, it might rescue the sheet, creating an architectural illusion where the CLI instrument was bypassed entirely.
+# Detection signature: Validation check V307 (Renders raw CLI bash prompts and validates shell syntax) triggers an ERROR detecting markdown headings, bullet points, or triple backticks in raw prompt shell sheets.
+# The fix: Strip out all natural-language prose and markdown elements, keeping only clean, executable bash script commands.
+# Claim ID: Gap 14
+
+name: "markdown-in-cli-template"
+description: "Intentionally broken score demonstrating markdown content in a raw CLI template (Gap 14)"
+
+workspace: "./workspace"
+
+instrument: cli
+
+sheet:
+  size: 1
+  total_items: 1
+
+prompt:
+  template: |
+    ## PURPOSE
+    This is natural language prose inside a CLI prompt.
+
+    - Run `echo "Hello World" > {{ workspace }}/output.txt`
+    - Verify it was created successfully.
+
+validations:
+  - type: file_exists
+    path: "{workspace}/output.txt"
+    description: "Expected output file exists"

@@ -1,0 +1,3 @@
+    kind: TechniqueKind = Field(
+        description="Technique kind: skill, mcp, or protocol",
+    )

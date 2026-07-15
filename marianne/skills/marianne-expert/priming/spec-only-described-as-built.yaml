@@ -1,0 +1,19 @@
+threat_type: spec-only-described-as-built
+trigger_signature: >
+  Design prose, architecture specs, or docstrings describe a feature in the
+  present tense as if it ships today (e.g. "CronTick submits a score and
+  schedules the next tick", "mzt maestro launches the TUI", "ConfigReloaded
+  rebuilds pending sheets"). Named classes, serializer entries, and vivid
+  walkthroughs make the feature look wired when the handler only emits
+  `baton.event.unimplemented`.
+countermeasure: >
+  Treat present-tense feature prose as a HYPOTHESIS, not authority. Before
+  claiming a feature is available, locate the handler/CLI registration that
+  EXECUTES it. If the handler logs `unimplemented` or no registered command
+  exists, classify the feature as `spec_only` and refuse to give operational
+  steps or syntax. Check the registered CLI surface (commands/__init__) and the
+  baton event handler, not the design spec. Map to claim IDs C029/C030 and the
+  maestro-TUI status in implementation-status.json.
+confidence: high
+timestamp: 2026-07-15T18:29:21Z
+claim_ids: [C029, C030]

@@ -1,0 +1,82 @@
+# Annotation:
+# Validation Result: PASS
+# Command: mzt validate workspaces/marianne-expert-runtime-build/examples/golden/fanout-synthesis.yaml --json
+# Output details: valid=True, errors=0, warnings=0
+
+name: "fanout-synthesis"
+description: "A parallel fan-out and synthesis score where three parallel sheets explore subtopics and a final sheet merges them"
+
+workspace: "./workspace"
+
+instrument: claude-code
+
+sheet:
+  size: 1
+  total_items: 4
+  dependencies:
+    4: [1, 2, 3]
+
+parallel:
+  enabled: true
+  max_concurrent: 3
+
+cross_sheet:
+  auto_capture_stdout: true
+  max_output_chars: 2000
+  lookback_sheets: 3
+  capture_files:
+    - "{{ workspace }}/topic-{{ sheet_num }}.txt"
+
+prompt:
+  variables:
+    topic_1: "Artificial Intelligence in Medicine"
+    topic_2: "Artificial Intelligence in Education"
+    topic_3: "Artificial Intelligence in Transportation"
+  template: |
+    {% if sheet_num == 1 %}
+    Explore the subtopic: {{ topic_1 }}.
+    Identify two major breakthroughs.
+    Write your analysis to {{ workspace }}/topic-1.txt.
+
+    {% elif sheet_num == 2 %}
+    Explore the subtopic: {{ topic_2 }}.
+    Identify two major breakthroughs.
+    Write your analysis to {{ workspace }}/topic-2.txt.
+
+    {% elif sheet_num == 3 %}
+    Explore the subtopic: {{ topic_3 }}.
+    Identify two major breakthroughs.
+    Write your analysis to {{ workspace }}/topic-3.txt.
+
+    {% elif sheet_num == 4 %}
+    Read the captured previous topic analyses from the workspace:
+    - {{ workspace }}/topic-1.txt
+    - {{ workspace }}/topic-2.txt
+    - {{ workspace }}/topic-3.txt
+
+    Synthesize these three subtopics into a unified report on 'AI in Society'.
+    Identify common themes and cross-cutting challenges.
+    Write your final synthesis to {{ workspace }}/synthesis.txt.
+    {% endif %}
+
+validations:
+  # Validations for exploration sheets
+  - type: file_exists
+    path: "{workspace}/topic-{sheet_num}.txt"
+    condition: "sheet_num in [1, 2, 3]"
+    stage: 1
+    description: "Subtopic output file must exist"
+
+  # Validations for synthesis sheet
+  - type: file_exists
+    path: "{workspace}/synthesis.txt"
+    condition: "sheet_num == 4"
+    stage: 1
+    description: "Synthesis output file must exist"
+
+  - type: content_contains
+    path: "{workspace}/synthesis.txt"
+    pattern: "Common Themes"
+    condition: "sheet_num == 4"
+    stage: 2
+    description: "Synthesis contains common themes"

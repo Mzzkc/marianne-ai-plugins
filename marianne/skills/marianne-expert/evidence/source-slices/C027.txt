@@ -1,0 +1,6 @@
+class A2ATaskCompleted:
+    """A delegated task has been completed with artifacts.
+
+    Results are routed back to the requesting agent's inbox. The requester
+    picks them up on their next relevant sheet.
+    """

@@ -1,0 +1,1 @@
+The backend-pool Doctrine Exception says `AnthropicApiBackend` must remain native because the SDK path preserves thinking, streaming, and tool use. For each of those three features, state whether the backend's actual request path uses it today, and cite the decisive request behavior rather than repeating the doctrine comment.

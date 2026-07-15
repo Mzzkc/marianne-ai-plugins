@@ -1,0 +1,4 @@
+interface:
+  display_name: "Marianne Expert"
+  short_description: "Develop and operate Marianne from verified evidence"
+  default_prompt: "Use $marianne-expert to reconcile this Marianne task against the capabilities and current source available in this session, then act only within explicit authority."

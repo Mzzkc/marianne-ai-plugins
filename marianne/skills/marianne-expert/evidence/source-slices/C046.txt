@@ -1,0 +1,18 @@
+class Severity(IntEnum):
+    """Severity levels for error classification.
+
+    Lower numeric value = higher severity. This allows comparisons like
+    `if severity <= Severity.ERROR` to check for serious issues.
+
+    Assignments:
+    - CRITICAL: Job cannot continue, requires immediate attention
+      (E003 crash, E005 OOM, E401 corruption, E502 auth, E505 binary not found)
+    - ERROR: Operation failed, may be retriable (most error codes)
+    - WARNING: Degraded operation, job may continue (E103 capacity, E204 validation timeout)
+    - INFO: Informational, no action required (reserved for future diagnostic codes)
+    """
+
+    CRITICAL = 1
+    ERROR = 2
+    WARNING = 3
+    INFO = 4

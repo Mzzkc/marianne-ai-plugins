@@ -1,0 +1,10 @@
+class JobStatus(str, Enum):
+    """Status of an entire job run."""
+
+    PENDING = "pending"
+    RUNNING = "running"
+    COMPLETED = "completed"
+    FAILED = "failed"
+    PAUSED = "paused"
+    PAUSED_AT_CHAIN = "paused_at_chain"
+    CANCELLED = "cancelled"

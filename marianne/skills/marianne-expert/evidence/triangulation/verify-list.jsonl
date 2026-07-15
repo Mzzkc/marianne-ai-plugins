@@ -1,0 +1,48 @@
+{"id": "C001", "claim": "Validation path template expansion uses Python single-brace `.format()` syntax.", "source": "src/marianne/execution/validation/engine.py:193-203"}
+{"id": "C002", "claim": "Prompt rendering is deferred until dispatch time, utilizing Jinja2 double-brace syntax for variables.", "source": "src/marianne/core/sheet.py:15-18"}
+{"id": "C003", "claim": "Sheet prompt template is stored as raw Jinja2 template and rendered at dispatch time by the baton.", "source": "src/marianne/core/sheet.py:106-109"}
+{"id": "C004", "claim": "Baton's `dispatch_ready()` is implemented as a stateless free function instead of a BatonCore method.", "source": "src/marianne/daemon/baton/dispatch.py:17-20"}
+{"id": "C005", "claim": "`dispatch_ready()` enforces a global concurrency ceiling on running sheets.", "source": "src/marianne/daemon/baton/dispatch.py:183-184"}
+{"id": "C006", "claim": "`dispatch_ready()` supports per-(instrument, model) concurrency limits.", "source": "src/marianne/daemon/baton/dispatch.py:207-212"}
+{"id": "C007", "claim": "`dispatch_ready()` checks if an instrument is currently rate-limited.", "source": "src/marianne/daemon/baton/dispatch.py:240-246"}
+{"id": "C008", "claim": "`dispatch_ready()` implements a stagger gate using a monotonic clock comparison.", "source": "src/marianne/daemon/baton/dispatch.py:343-349"}
+{"id": "C009", "claim": "`BatonCore` initializes its event inbox as an unbounded asyncio.Queue.", "source": "src/marianne/daemon/baton/core.py:148-148"}
+{"id": "C010", "claim": "The ECS-style technique system defines three kinds of components: skill, mcp, and protocol.", "source": "src/marianne/core/config/techniques.py:24-35"}
+{"id": "C011", "claim": "A technique specifies which kind (skill, mcp, protocol) it is.", "source": "src/marianne/core/config/techniques.py:62-64"}
+{"id": "C012", "claim": "Technique resolution determines the active techniques for a sheet during agent cycle phases.", "source": "src/marianne/daemon/baton/techniques.py:10-15"}
+{"id": "C013", "claim": "TechniqueRouter classifies output formats such as PROSE, CODE_BLOCK, TOOL_CALL, and A2A.", "source": "src/marianne/daemon/technique_router.py:10-15"}
+{"id": "C014", "claim": "Interface generator creates compact Python stubs for MCP tools to reduce token usage.", "source": "src/marianne/execution/interface_gen.py:10-15"}
+{"id": "C015", "claim": "The validation engine defines a set of exactly 9 retryable validation types.", "source": "src/marianne/execution/validation/engine.py:365-375"}
+{"id": "C016", "claim": "Command validation spawns commands via start_new_session=True to handle process groups.", "source": "src/marianne/execution/validation/engine.py:1021-1024"}
+{"id": "C017", "claim": "Refuses validation commands sharing the daemon's pgid to prevent process group hijacking.", "source": "src/marianne/execution/validation/engine.py:1059-1062"}
+{"id": "C018", "claim": "Validation commands send SIGTERM followed by a 2-second grace period and SIGKILL to their process group.", "source": "src/marianne/execution/validation/engine.py:1077-1082"}
+{"id": "C019", "claim": "The backends package init has a stale docstring referencing deleted `claude_cli_legacy` module.", "source": "src/marianne/backends/__init__.py:20-25"}
+{"id": "C020", "claim": "AnthropicApiBackend exception is hard-coded in the backend pool builder based on Doctrine Exceptions.", "source": "src/marianne/daemon/baton/backend_pool.py:268-275"}
+{"id": "C021", "claim": "The `recursive_light` instrument is registered as a native instrument profile but has no Python backend module.", "source": "src/marianne/instruments/registry.py:267-270"}
+{"id": "C022", "claim": "The `anthropic` client SDK is listed as a hard dependency in `pyproject.toml`.", "source": "pyproject.toml:39-39"}
+{"id": "C023", "claim": "The backends package contains native HTTP executors.", "source": "src/marianne/backends/__init__.py:1-5"}
+{"id": "C024", "claim": "AnthropicApiBackend implements the native Anthropic API client.", "source": "src/marianne/backends/anthropic_api.py:15-20"}
+{"id": "C025", "claim": "OllamaBackend implements the native Ollama API client.", "source": "src/marianne/backends/ollama.py:15-20"}
+{"id": "C026", "claim": "A2A runtime state structures, including `_a2a_inboxes`, are in-memory only and not checkpointed.", "source": "src/marianne/daemon/baton/adapter.py:590-593"}
+{"id": "C027", "claim": "A2ATaskCompleted is defined as an event class but is never fired or handled in execution.", "source": "src/marianne/daemon/baton/events.py:524-529"}
+{"id": "C028", "claim": "A2ATaskFailed is defined as an event class but is never fired or handled in execution.", "source": "src/marianne/daemon/baton/events.py:538-543"}
+{"id": "C029", "claim": "The CronTick event handler in baton event loop is registered as unimplemented.", "source": "src/marianne/daemon/baton/core.py:1286-1290"}
+{"id": "C030", "claim": "The ConfigReloaded event handler in baton event loop is registered as unimplemented.", "source": "src/marianne/daemon/baton/core.py:1318-1322"}
+{"id": "C031", "claim": "GroundingConfig is config-defined but grounding hooks are never invoked at runtime.", "source": "src/marianne/core/config/job.py:773-773"}
+{"id": "C032", "claim": "reap_orphaned_backends is disabled as a no-op due to WSL2 systemd crash issue.", "source": "src/marianne/daemon/pgroup.py:16-20"}
+{"id": "C033", "claim": "Process group manager has a module-level disabled flag for reaping orphans.", "source": "src/marianne/daemon/pgroup.py:5-10"}
+{"id": "C034", "claim": "Conductor start writes a PID file locked via fcntl.flock advisory locking.", "source": "src/marianne/daemon/process.py:85-90"}
+{"id": "C035", "claim": "The CLI version callback outputs the version number from `marianne.__version__`.", "source": "src/marianne/cli/__init__.py:148-150"}
+{"id": "C036", "claim": "Cost tracking falls back to a cost_uncertain flag and $0 cost when instrument has no pricing.", "source": "src/marianne/daemon/baton/musician.py:280-282"}
+{"id": "C037", "claim": "State backend defaults to `sqlite` but can be explicitly configured to `json`.", "source": "src/marianne/core/config/job.py:868-871"}
+{"id": "C038", "claim": "Workspace paths in score YAML are resolved relative to the score file's parent directory.", "source": "src/marianne/core/config/job.py:967-972"}
+{"id": "C039", "claim": "PromptConfig raises a `ValueError` if both inline `template` and `template_file` are specified.", "source": "src/marianne/core/config/job.py:656-660"}
+{"id": "C040", "claim": "The Sheet entity contains backward-compatibility aliases for old stage/instance terminology.", "source": "src/marianne/core/sheet.py:183-187"}
+{"id": "C041", "claim": "JobStatus supports 7 distinct states: PENDING, RUNNING, COMPLETED, FAILED, PAUSED, PAUSED_AT_CHAIN, CANCELLED.", "source": "src/marianne/core/checkpoint.py:204-213"}
+{"id": "C042", "claim": "SheetStatus supports 11 scheduling states, from PENDING to CANCELLED.", "source": "src/marianne/core/checkpoint.py:162-172"}
+{"id": "C043", "claim": "OutcomeCategory classifies execution outcome into 6 categories.", "source": "src/marianne/core/checkpoint.py:193-201"}
+{"id": "C044", "claim": "SQLite state backend uses schema version 4.", "source": "src/marianne/state/sqlite_backend.py:9-12"}
+{"id": "C045", "claim": "Learning store base database schema uses version 15.", "source": "src/marianne/learning/store/base.py:97-97"}
+{"id": "C046", "claim": "Severity is defined as an IntEnum with lower values representing higher severity.", "source": "src/marianne/core/errors/codes.py:183-200"}
+{"id": "C047", "claim": "ErrorCode categories are parsed from the second digit of the error code string.", "source": "src/marianne/core/errors/codes.py:388-408"}
+{"id": "C048", "claim": "MAX_OUTPUT_CAPTURE_BYTES defines the limit of output capture as 51,200 bytes.", "source": "src/marianne/core/checkpoint.py:27-27"}

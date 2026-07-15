@@ -1,0 +1,6 @@
+into the musician's prompt as a skill-category item. This is the runtime
+equivalent of the compiler's TechniqueWirer.
+
+Search order for technique documents:
+    1. ``config.path`` — explicit path in the technique's config
+    2. ``~/.marianne/techniques/{name}.md`` — user-level techniques

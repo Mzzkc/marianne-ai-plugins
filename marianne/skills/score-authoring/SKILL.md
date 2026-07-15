@@ -50,6 +50,25 @@ sheet:
 
 See `patterns.md` → "Prelude & Cadenza" for full file/directory injection rules.
 
+### Deterministic and release-grade sheets
+
+For a deterministic `cli` sheet, set an explicit empty replacement chain:
+
+```yaml
+sheet:
+  per_sheet_fallbacks:
+    3: []
+```
+
+Without this, an inherited AI fallback can reinterpret a failed shell command
+and conceal that the deterministic gate never ran.
+
+For multi-stage, evaluator, source-modifying, or release-producing scores, use
+the composing skill's design gate. After `mzt validate`, run
+`composing/scripts/check_score_release.py` to resolve load-bearing injections,
+enforce workspace/fallback/validation policy, and write the exact candidate
+digest. Any score or injection change after evaluation requires reevaluation.
+
 ---
 
 ## Reference Docs

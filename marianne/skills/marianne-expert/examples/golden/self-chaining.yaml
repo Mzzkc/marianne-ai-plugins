@@ -1,0 +1,38 @@
+# Annotation:
+# Validation Result: PASS
+# Command: mzt validate workspaces/marianne-expert-runtime-build/examples/golden/self-chaining.yaml --json
+# Output details: valid=True, errors=0, warnings=0
+
+name: "self-chaining-example"
+description: "A self-chaining score that processes work iteratively and loops back using an on_success hook"
+
+workspace: "./workspace"
+
+instrument: claude-code
+
+sheet:
+  size: 1
+  total_items: 2
+  dependencies:
+    2: [1]
+
+prompt:
+  template: |
+    {% if sheet_num == 1 %}
+    Process the initial draft or load existing state.
+    Create {{ workspace }}/draft.txt with initial content if it does not exist.
+    {% elif sheet_num == 2 %}
+    Enhance the content in {{ workspace }}/draft.txt.
+    {% endif %}
+
+validations:
+  - type: file_exists
+    path: "{workspace}/draft.txt"
+    description: "Draft file must exist"
+
+on_success:
+  - type: run_job
+    job_path: "self-chaining.yaml"
+    detached: true
+    fresh: true
+    description: "Chain back to self with fresh state to run the next iteration"

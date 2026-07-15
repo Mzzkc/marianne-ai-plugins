@@ -1,0 +1,46 @@
+# Annotation:
+# Validation Result: PASS
+# Command: mzt validate workspaces/marianne-expert-runtime-build/examples/golden/cli-deterministic.yaml --json
+# Output details: valid=True, errors=0, warnings=0
+
+name: "cli-deterministic"
+description: "A deterministic score running shell commands directly using the CLI instrument"
+
+workspace: "./workspace"
+
+instrument: cli
+
+sheet:
+  size: 1
+  total_items: 2
+  dependencies:
+    2: [1]
+
+prompt:
+  template: |
+    {% if sheet_num == 1 %}
+    echo "Writing step 1 output" > {{ workspace }}/step1.txt
+    {% elif sheet_num == 2 %}
+    cat {{ workspace }}/step1.txt > {{ workspace }}/step2.txt
+    echo "Writing step 2 output" >> {{ workspace }}/step2.txt
+    {% endif %}
+
+validations:
+  - type: file_exists
+    path: "{workspace}/step1.txt"
+    condition: "sheet_num == 1"
+    stage: 1
+    description: "Step 1 output file exists"
+
+  - type: file_exists
+    path: "{workspace}/step2.txt"
+    condition: "sheet_num == 2"
+    stage: 1
+    description: "Step 2 output file exists"
+
+  - type: content_contains
+    path: "{workspace}/step2.txt"
+    pattern: "Writing step 1 output"
+    condition: "sheet_num == 2"
+    stage: 2
+    description: "Step 2 output contains step 1 content"

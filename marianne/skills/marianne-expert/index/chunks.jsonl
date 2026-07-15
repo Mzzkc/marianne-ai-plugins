@@ -1,0 +1,222 @@
+{"id":"chunk-0001","source":"BOOTSTRAP.md","heading":"Marianne Expert Runtime Bootstrap","tags":["trap"],"tokens":9}
+{"id":"chunk-0002","source":"BOOTSTRAP.md","heading":"Problem","tags":["compose","validation","techniques","instruments","baton","state","memory","trap"],"tokens":914}
+{"id":"chunk-0003","source":"BOOTSTRAP.md","heading":"Mechanism","tags":["compose","validation","techniques","instruments","baton","state","memory","trap"],"tokens":2223}
+{"id":"chunk-0004","source":"BOOTSTRAP.md","heading":"Evidence","tags":["validation","techniques","instruments","baton","state","memory","trap"],"tokens":678}
+{"id":"chunk-0005","source":"BOOTSTRAP.md","heading":"Trap","tags":["validation","state","memory","trap"],"tokens":390}
+{"id":"chunk-0006","source":"BOOTSTRAP.md","heading":"Verify","tags":["validation","state","spec_only","trap"],"tokens":612}
+{"id":"chunk-0007","source":"BOOTSTRAP.md","heading":"Do not overclaim","tags":["state","memory","trap"],"tokens":148}
+{"id":"chunk-0008","source":"MANIFEST.md","heading":"Marianne Expert Runtime Kit 1.0.0","tags":["debug","architecture","develop","embed","state","memory","trap"],"tokens":234}
+{"id":"chunk-0009","source":"SKILL.md","heading":"SKILL","tags":["debug","architecture","develop","embed"],"tokens":47}
+{"id":"chunk-0010","source":"SKILL.md","heading":"Marianne Expert","tags":["memory","trap"],"tokens":269}
+{"id":"chunk-0011","source":"TASK-MAP.md","heading":"Marianne Expert Task Map","tags":["compose","operate","debug","architecture","develop","embed","validation","state","trap"],"tokens":329}
+{"id":"chunk-0012","source":"TASK-MAP.md","heading":"Capability levels","tags":["state"],"tokens":171}
+{"id":"chunk-0013","source":"VERSION","heading":"VERSION","tags":["foundations"],"tokens":22}
+{"id":"chunk-0014","source":"contracts/cli-commands.md","heading":"Marianne CLI Commands (`mzt`)","tags":["built","validation"],"tokens":39}
+{"id":"chunk-0015","source":"contracts/cli-commands.md","heading":"1. Getting Started","tags":["compose","validation"],"tokens":117}
+{"id":"chunk-0016","source":"contracts/cli-commands.md","heading":"2. Score Runs","tags":["develop","validation"],"tokens":273}
+{"id":"chunk-0017","source":"contracts/cli-commands.md","heading":"3. Monitoring","tags":["validation","built"],"tokens":148}
+{"id":"chunk-0018","source":"contracts/cli-commands.md","heading":"4. Diagnostics","tags":["debug","state","validation"],"tokens":158}
+{"id":"chunk-0019","source":"contracts/cli-commands.md","heading":"5. Services","tags":["validation"],"tokens":64}
+{"id":"chunk-0020","source":"contracts/cli-commands.md","heading":"6. Conductor","tags":["validation"],"tokens":132}
+{"id":"chunk-0021","source":"contracts/cli-commands.md","heading":"7. Configuration and Profiles","tags":["instruments","validation"],"tokens":88}
+{"id":"chunk-0022","source":"contracts/cli-commands.md","heading":"8. Learning","tags":["validation"],"tokens":321}
+{"id":"chunk-0023","source":"contracts/error-codes.md","heading":"Error Codes and Retry Behavior","tags":["validation"],"tokens":53}
+{"id":"chunk-0024","source":"contracts/error-codes.md","heading":"Error Categories","tags":["validation","state"],"tokens":198}
+{"id":"chunk-0025","source":"contracts/error-codes.md","heading":"Detailed Error Code Index","tags":["validation"],"tokens":8}
+{"id":"chunk-0026","source":"contracts/error-codes.md","heading":"E0xx: Execution Errors","tags":["memory","validation"],"tokens":200}
+{"id":"chunk-0027","source":"contracts/error-codes.md","heading":"E1xx: Rate Limit / Capacity","tags":["validation"],"tokens":128}
+{"id":"chunk-0028","source":"contracts/error-codes.md","heading":"E2xx: Validation Errors","tags":["validation"],"tokens":156}
+{"id":"chunk-0029","source":"contracts/error-codes.md","heading":"E3xx: Configuration Errors","tags":["validation"],"tokens":177}
+{"id":"chunk-0030","source":"contracts/error-codes.md","heading":"E4xx: State Errors","tags":["state","validation"],"tokens":107}
+{"id":"chunk-0031","source":"contracts/error-codes.md","heading":"E5xx: Backend Errors","tags":["validation"],"tokens":143}
+{"id":"chunk-0032","source":"contracts/error-codes.md","heading":"E6xx: Preflight Errors","tags":["validation"],"tokens":132}
+{"id":"chunk-0033","source":"contracts/error-codes.md","heading":"E9xx: Network / Transient","tags":["validation"],"tokens":142}
+{"id":"chunk-0034","source":"contracts/instrument-profile-schema.md","heading":"Instrument Profile Schema","tags":["validation"],"tokens":54}
+{"id":"chunk-0035","source":"contracts/instrument-profile-schema.md","heading":"InstrumentProfile (Top-level)","tags":["validation"],"tokens":381}
+{"id":"chunk-0036","source":"contracts/instrument-profile-schema.md","heading":"CliProfile","tags":["validation"],"tokens":112}
+{"id":"chunk-0037","source":"contracts/instrument-profile-schema.md","heading":"CliCommand","tags":["validation"],"tokens":552}
+{"id":"chunk-0038","source":"contracts/instrument-profile-schema.md","heading":"CliOutputConfig","tags":["validation"],"tokens":260}
+{"id":"chunk-0039","source":"contracts/instrument-profile-schema.md","heading":"HttpProfile","tags":["validation"],"tokens":108}
+{"id":"chunk-0040","source":"contracts/score-schema.md","heading":"Job, Sheet, and Prompt Configuration Schema","tags":["validation"],"tokens":39}
+{"id":"chunk-0041","source":"contracts/score-schema.md","heading":"JobConfig","tags":["develop","validation","techniques","instruments","state"],"tokens":1142}
+{"id":"chunk-0042","source":"contracts/score-schema.md","heading":"SheetConfig","tags":["instruments","validation"],"tokens":483}
+{"id":"chunk-0043","source":"contracts/score-schema.md","heading":"PromptConfig","tags":["validation"],"tokens":197}
+{"id":"chunk-0044","source":"contracts/technique-config.md","heading":"ECS Technique Configuration","tags":["techniques","validation"],"tokens":58}
+{"id":"chunk-0045","source":"contracts/technique-config.md","heading":"TechniqueKind","tags":["validation"],"tokens":106}
+{"id":"chunk-0046","source":"contracts/technique-config.md","heading":"TechniqueConfig","tags":["validation"],"tokens":23}
+{"id":"chunk-0047","source":"contracts/technique-config.md","heading":"Fields","tags":["validation"],"tokens":230}
+{"id":"chunk-0048","source":"contracts/validation-types.md","heading":"Validation Types and Criteria","tags":["validation"],"tokens":59}
+{"id":"chunk-0049","source":"contracts/validation-types.md","heading":"1. `file_exists`","tags":["validation"],"tokens":67}
+{"id":"chunk-0050","source":"contracts/validation-types.md","heading":"2. `file_modified`","tags":["validation"],"tokens":95}
+{"id":"chunk-0051","source":"contracts/validation-types.md","heading":"3. `content_contains`","tags":["validation"],"tokens":80}
+{"id":"chunk-0052","source":"contracts/validation-types.md","heading":"4. `content_regex`","tags":["validation"],"tokens":88}
+{"id":"chunk-0053","source":"contracts/validation-types.md","heading":"5. `command_succeeds`","tags":["validation"],"tokens":181}
+{"id":"chunk-0054","source":"contracts/validation-types.md","heading":"6. `path_in_scope`","tags":["validation"],"tokens":113}
+{"id":"chunk-0055","source":"contracts/validation-types.md","heading":"7. `field_match`","tags":["validation"],"tokens":188}
+{"id":"chunk-0056","source":"contracts/validation-types.md","heading":"8. `file_sha256`","tags":["validation"],"tokens":88}
+{"id":"chunk-0057","source":"contracts/validation-types.md","heading":"9. `csv_unique_key`","tags":["validation"],"tokens":111}
+{"id":"chunk-0058","source":"evals/attack-defense-matrix.md","heading":"Attack–Defense Matrix","tags":["validation","baton","state"],"tokens":462}
+{"id":"chunk-0059","source":"evals/attack-defense-matrix.md","heading":"Totals","tags":["foundations"],"tokens":36}
+{"id":"chunk-0060","source":"evals/attacks/attack-1.yaml","heading":"attack-1.yaml","tags":["trap"],"tokens":355}
+{"id":"chunk-0061","source":"evals/attacks/attack-2.yaml","heading":"attack-2.yaml","tags":["architecture","trap"],"tokens":314}
+{"id":"chunk-0062","source":"evals/attacks/attack-3.yaml","heading":"attack-3.yaml","tags":["architecture","state","trap"],"tokens":373}
+{"id":"chunk-0063","source":"evals/attacks/attack-4.yaml","heading":"attack-4.yaml","tags":["validation","trap"],"tokens":354}
+{"id":"chunk-0064","source":"evals/attacks/attack-5.yaml","heading":"attack-5.yaml","tags":["trap"],"tokens":327}
+{"id":"chunk-0065","source":"evals/attacks/attack-6.yaml","heading":"attack-6.yaml","tags":["baton","trap"],"tokens":344}
+{"id":"chunk-0066","source":"evals/attacks/attack-7.yaml","heading":"attack-7.yaml","tags":["validation","state","trap"],"tokens":366}
+{"id":"chunk-0067","source":"evals/attacks/attack-8.yaml","heading":"attack-8.yaml","tags":["memory","trap"],"tokens":300}
+{"id":"chunk-0068","source":"evals/effects/effect-1.txt","heading":"effect-1.txt","tags":["foundations"],"tokens":98}
+{"id":"chunk-0069","source":"evals/effects/effect-2.txt","heading":"effect-2.txt","tags":["architecture"],"tokens":72}
+{"id":"chunk-0070","source":"evals/effects/effect-3.txt","heading":"effect-3.txt","tags":["state"],"tokens":82}
+{"id":"chunk-0071","source":"evals/effects/effect-4.txt","heading":"effect-4.txt","tags":["validation"],"tokens":85}
+{"id":"chunk-0072","source":"evals/effects/effect-5.txt","heading":"effect-5.txt","tags":["foundations"],"tokens":70}
+{"id":"chunk-0073","source":"evals/effects/effect-6.txt","heading":"effect-6.txt","tags":["baton"],"tokens":81}
+{"id":"chunk-0074","source":"evals/effects/effect-7.txt","heading":"effect-7.txt","tags":["foundations"],"tokens":88}
+{"id":"chunk-0075","source":"evals/effects/effect-8.txt","heading":"effect-8.txt","tags":["foundations"],"tokens":72}
+{"id":"chunk-0076","source":"evals/rubric.md","heading":"Marianne Expert Runtime Evaluation Report","tags":["foundations"],"tokens":11}
+{"id":"chunk-0077","source":"evals/rubric.md","heading":"Result","tags":["foundations"],"tokens":155}
+{"id":"chunk-0078","source":"evidence/claims.jsonl","heading":"claims.jsonl","tags":["validation","techniques","instruments","baton","state","memory","foundations"],"tokens":3014}
+{"id":"chunk-0079","source":"evidence/implementation-status.json","heading":"implementation-status.json","tags":["validation","techniques","baton","spec_only","memory","foundations"],"tokens":502}
+{"id":"chunk-0080","source":"evidence/source-lock.json","heading":"source-lock.json","tags":["compose","foundations"],"tokens":48}
+{"id":"chunk-0081","source":"evidence/source-slices/C001.txt","heading":"C001.txt","tags":["foundations"],"tokens":109}
+{"id":"chunk-0082","source":"evidence/source-slices/C002.txt","heading":"C002.txt","tags":["baton","foundations"],"tokens":50}
+{"id":"chunk-0083","source":"evidence/source-slices/C003.txt","heading":"C003.txt","tags":["baton","foundations"],"tokens":39}
+{"id":"chunk-0084","source":"evidence/source-slices/C004.txt","heading":"C004.txt","tags":["baton","state","foundations"],"tokens":57}
+{"id":"chunk-0085","source":"evidence/source-slices/C005.txt","heading":"C005.txt","tags":["debug","foundations"],"tokens":24}
+{"id":"chunk-0086","source":"evidence/source-slices/C006.txt","heading":"C006.txt","tags":["foundations"],"tokens":94}
+{"id":"chunk-0087","source":"evidence/source-slices/C007.txt","heading":"C007.txt","tags":["instruments","foundations"],"tokens":79}
+{"id":"chunk-0088","source":"evidence/source-slices/C008.txt","heading":"C008.txt","tags":["baton","state","foundations"],"tokens":77}
+{"id":"chunk-0089","source":"evidence/source-slices/C009.txt","heading":"C009.txt","tags":["baton","foundations"],"tokens":19}
+{"id":"chunk-0090","source":"evidence/source-slices/C010.txt","heading":"C010.txt","tags":["foundations"],"tokens":91}
+{"id":"chunk-0091","source":"evidence/source-slices/C011.txt","heading":"C011.txt","tags":["foundations"],"tokens":26}
+{"id":"chunk-0092","source":"evidence/source-slices/C012.txt","heading":"C012.txt","tags":["techniques","foundations"],"tokens":73}
+{"id":"chunk-0093","source":"evidence/source-slices/C013.txt","heading":"C013.txt","tags":["instruments","foundations"],"tokens":83}
+{"id":"chunk-0094","source":"evidence/source-slices/C014.txt","heading":"C014.txt","tags":["foundations"],"tokens":40}
+{"id":"chunk-0095","source":"evidence/source-slices/C015.txt","heading":"C015.txt","tags":["validation","foundations"],"tokens":70}
+{"id":"chunk-0096","source":"evidence/source-slices/C016.txt","heading":"C016.txt","tags":["foundations"],"tokens":76}
+{"id":"chunk-0097","source":"evidence/source-slices/C017.txt","heading":"C017.txt","tags":["validation","foundations"],"tokens":47}
+{"id":"chunk-0098","source":"evidence/source-slices/C018.txt","heading":"C018.txt","tags":["validation","foundations"],"tokens":84}
+{"id":"chunk-0099","source":"evidence/source-slices/C019.txt","heading":"C019.txt","tags":["foundations"],"tokens":41}
+{"id":"chunk-0100","source":"evidence/source-slices/C020.txt","heading":"C020.txt","tags":["foundations"],"tokens":91}
+{"id":"chunk-0101","source":"evidence/source-slices/C021.txt","heading":"C021.txt","tags":["foundations"],"tokens":43}
+{"id":"chunk-0102","source":"evidence/source-slices/C022.txt","heading":"C022.txt","tags":["foundations"],"tokens":17}
+{"id":"chunk-0103","source":"evidence/source-slices/C023.txt","heading":"C023.txt","tags":["instruments","foundations"],"tokens":64}
+{"id":"chunk-0104","source":"evidence/source-slices/C024.txt","heading":"C024.txt","tags":["foundations"],"tokens":44}
+{"id":"chunk-0105","source":"evidence/source-slices/C025.txt","heading":"C025.txt","tags":["foundations"],"tokens":31}
+{"id":"chunk-0106","source":"evidence/source-slices/C026.txt","heading":"C026.txt","tags":["memory","foundations"],"tokens":63}
+{"id":"chunk-0107","source":"evidence/source-slices/C027.txt","heading":"C027.txt","tags":["foundations"],"tokens":54}
+{"id":"chunk-0108","source":"evidence/source-slices/C028.txt","heading":"C028.txt","tags":["foundations"],"tokens":62}
+{"id":"chunk-0109","source":"evidence/source-slices/C029.txt","heading":"C029.txt","tags":["baton","foundations"],"tokens":51}
+{"id":"chunk-0110","source":"evidence/source-slices/C030.txt","heading":"C030.txt","tags":["baton","foundations"],"tokens":54}
+{"id":"chunk-0111","source":"evidence/source-slices/C031.txt","heading":"C031.txt","tags":["foundations"],"tokens":18}
+{"id":"chunk-0112","source":"evidence/source-slices/C032.txt","heading":"C032.txt","tags":["foundations"],"tokens":85}
+{"id":"chunk-0113","source":"evidence/source-slices/C033.txt","heading":"C033.txt","tags":["foundations"],"tokens":64}
+{"id":"chunk-0114","source":"evidence/source-slices/C034.txt","heading":"C034.txt","tags":["foundations"],"tokens":49}
+{"id":"chunk-0115","source":"evidence/source-slices/C035.txt","heading":"C035.txt","tags":["compose","foundations"],"tokens":26}
+{"id":"chunk-0116","source":"evidence/source-slices/C036.txt","heading":"C036.txt","tags":["foundations"],"tokens":39}
+{"id":"chunk-0117","source":"evidence/source-slices/C037.txt","heading":"C037.txt","tags":["state","foundations"],"tokens":33}
+{"id":"chunk-0118","source":"evidence/source-slices/C038.txt","heading":"C038.txt","tags":["foundations"],"tokens":72}
+{"id":"chunk-0119","source":"evidence/source-slices/C039.txt","heading":"C039.txt","tags":["foundations"],"tokens":66}
+{"id":"chunk-0120","source":"evidence/source-slices/C040.txt","heading":"C040.txt","tags":["foundations"],"tokens":54}
+{"id":"chunk-0121","source":"evidence/source-slices/C041.txt","heading":"C041.txt","tags":["foundations"],"tokens":64}
+{"id":"chunk-0122","source":"evidence/source-slices/C042.txt","heading":"C042.txt","tags":["foundations"],"tokens":140}
+{"id":"chunk-0123","source":"evidence/source-slices/C043.txt","heading":"C043.txt","tags":["foundations"],"tokens":87}
+{"id":"chunk-0124","source":"evidence/source-slices/C044.txt","heading":"C044.txt","tags":["foundations"],"tokens":28}
+{"id":"chunk-0125","source":"evidence/source-slices/C045.txt","heading":"C045.txt","tags":["foundations"],"tokens":6}
+{"id":"chunk-0126","source":"evidence/source-slices/C046.txt","heading":"C046.txt","tags":["validation","foundations"],"tokens":173}
+{"id":"chunk-0127","source":"evidence/source-slices/C047.txt","heading":"C047.txt","tags":["validation","state","foundations"],"tokens":174}
+{"id":"chunk-0128","source":"evidence/source-slices/C048.txt","heading":"C048.txt","tags":["foundations"],"tokens":23}
+{"id":"chunk-0129","source":"evidence/triangulation/contradictions.md","heading":"Triangulation contradictions","tags":["foundations"],"tokens":90}
+{"id":"chunk-0130","source":"evidence/triangulation/contradictions.md","heading":"Primary contradicted claims","tags":["foundations"],"tokens":8}
+{"id":"chunk-0131","source":"evidence/triangulation/contradictions.md","heading":"C021 — `recursive_light` is not a dedicated native backend","tags":["foundations"],"tokens":111}
+{"id":"chunk-0132","source":"evidence/triangulation/contradictions.md","heading":"C023 — “native HTTP executors” is ambiguous and architecture-dependent","tags":["architecture","instruments","state","foundations"],"tokens":140}
+{"id":"chunk-0133","source":"evidence/triangulation/contradictions.md","heading":"C029 — `CronTick` is spec-only","tags":["baton","built","foundations"],"tokens":81}
+{"id":"chunk-0134","source":"evidence/triangulation/contradictions.md","heading":"C030 — `ConfigReloaded` is spec-only","tags":["foundations"],"tokens":60}
+{"id":"chunk-0135","source":"evidence/triangulation/contradictions.md","heading":"C031 — grounding is config-wired but runtime-unwired","tags":["validation","foundations"],"tokens":87}
+{"id":"chunk-0136","source":"evidence/triangulation/contradictions.md","heading":"C033 — no module-level orphan-reaping flag exists","tags":["foundations"],"tokens":85}
+{"id":"chunk-0137","source":"evidence/triangulation/contradictions.md","heading":"C047 — error category uses the first numeric digit","tags":["foundations"],"tokens":70}
+{"id":"chunk-0138","source":"evidence/triangulation/contradictions.md","heading":"Docs-only and stale narrative artifacts","tags":["foundations"],"tokens":11}
+{"id":"chunk-0139","source":"evidence/triangulation/contradictions.md","heading":"C005 — one configuration reference denies an enforced limit","tags":["state","foundations"],"tokens":74}
+{"id":"chunk-0140","source":"evidence/triangulation/contradictions.md","heading":"C019 — deleted `claude_cli_legacy` relocation","tags":["instruments","foundations"],"tokens":87}
+{"id":"chunk-0141","source":"evidence/triangulation/contradictions.md","heading":"C048 — stale 10KB test docstring","tags":["foundations"],"tokens":66}
+{"id":"chunk-0142","source":"evidence/triangulation/contradictions.md","heading":"Resolution","tags":["foundations"],"tokens":92}
+{"id":"chunk-0143","source":"evidence/triangulation/findings-code.jsonl","heading":"findings-code.jsonl","tags":["compose","validation","techniques","instruments","baton","state","memory","foundations"],"tokens":5062}
+{"id":"chunk-0144","source":"evidence/triangulation/findings-docs.jsonl","heading":"findings-docs.jsonl","tags":["architecture","validation","techniques","instruments","baton","state","built","memory","foundations"],"tokens":3311}
+{"id":"chunk-0145","source":"evidence/triangulation/findings-tests.jsonl","heading":"findings-tests.jsonl","tags":["compose","validation","techniques","instruments","baton","state","memory","foundations"],"tokens":10157}
+{"id":"chunk-0146","source":"evidence/triangulation/frame-completeness.jsonl","heading":"frame-completeness.jsonl","tags":["debug","validation","techniques","instruments","baton","state","memory","foundations"],"tokens":3259}
+{"id":"chunk-0147","source":"evidence/triangulation/frame-correctness.jsonl","heading":"frame-correctness.jsonl","tags":["validation","techniques","instruments","baton","state","memory","foundations"],"tokens":1822}
+{"id":"chunk-0148","source":"evidence/triangulation/frame-maintainability.jsonl","heading":"frame-maintainability.jsonl","tags":["develop","validation","instruments","baton","state","foundations"],"tokens":2058}
+{"id":"chunk-0149","source":"evidence/triangulation/frame-security.jsonl","heading":"frame-security.jsonl","tags":["compose","validation","techniques","instruments","baton","state","memory","foundations"],"tokens":6258}
+{"id":"chunk-0150","source":"evidence/triangulation/triangulation.jsonl","heading":"triangulation.jsonl","tags":["operate","validation","instruments","state","spec_only","memory","foundations"],"tokens":2322}
+{"id":"chunk-0151","source":"evidence/triangulation/verify-list.jsonl","heading":"verify-list.jsonl","tags":["validation","techniques","instruments","baton","state","memory","foundations"],"tokens":1982}
+{"id":"chunk-0152","source":"examples/broken/bash-array-jinja-collision.yaml","heading":"bash-array-jinja-collision.yaml","tags":["validation","failure_mode"],"tokens":345}
+{"id":"chunk-0153","source":"examples/broken/jinja-in-validation.yaml","heading":"jinja-in-validation.yaml","tags":["validation","trap"],"tokens":255}
+{"id":"chunk-0154","source":"examples/broken/markdown-in-cli-template.yaml","heading":"markdown-in-cli-template.yaml","tags":["validation","failure_mode"],"tokens":353}
+{"id":"chunk-0155","source":"examples/broken/stale-file-exists-only.yaml","heading":"stale-file-exists-only.yaml","tags":["validation","trap"],"tokens":305}
+{"id":"chunk-0156","source":"examples/broken/workspace-is-root.yaml","heading":"workspace-is-root.yaml","tags":["validation","trap"],"tokens":289}
+{"id":"chunk-0157","source":"examples/golden/cli-deterministic.yaml","heading":"cli-deterministic.yaml","tags":["validation"],"tokens":305}
+{"id":"chunk-0158","source":"examples/golden/fanout-synthesis.yaml","heading":"fanout-synthesis.yaml","tags":["validation"],"tokens":600}
+{"id":"chunk-0159","source":"examples/golden/minimal-pipeline.yaml","heading":"minimal-pipeline.yaml","tags":["validation"],"tokens":204}
+{"id":"chunk-0160","source":"examples/golden/self-chaining.yaml","heading":"self-chaining.yaml","tags":["validation","state"],"tokens":258}
+{"id":"chunk-0161","source":"examples/incidents/incident-344-nonzero-rescue.md","heading":"Incident 344: The Non-Zero Exit Rescue","tags":["foundations","failure_mode"],"tokens":11}
+{"id":"chunk-0162","source":"examples/incidents/incident-344-nonzero-rescue.md","heading":"The Saga","tags":["validation","baton"],"tokens":221}
+{"id":"chunk-0163","source":"examples/incidents/incident-344-nonzero-rescue.md","heading":"The Symptom","tags":["foundations"],"tokens":57}
+{"id":"chunk-0164","source":"examples/incidents/incident-344-nonzero-rescue.md","heading":"The Lessons","tags":["validation","baton"],"tokens":136}
+{"id":"chunk-0165","source":"examples/incidents/incident-352-drain-swap.md","heading":"Incident 352: The Drain Swap Deadlock","tags":["foundations","failure_mode"],"tokens":10}
+{"id":"chunk-0166","source":"examples/incidents/incident-352-drain-swap.md","heading":"The Saga","tags":["develop","memory"],"tokens":238}
+{"id":"chunk-0167","source":"examples/incidents/incident-352-drain-swap.md","heading":"The Symptom","tags":["memory"],"tokens":86}
+{"id":"chunk-0168","source":"examples/incidents/incident-352-drain-swap.md","heading":"The Lessons","tags":["memory"],"tokens":160}
+{"id":"chunk-0169","source":"examples/incidents/incident-doctrine-exception.md","heading":"Incident: The False Doctrine Exception","tags":["foundations","failure_mode"],"tokens":11}
+{"id":"chunk-0170","source":"examples/incidents/incident-doctrine-exception.md","heading":"The Saga","tags":["develop"],"tokens":267}
+{"id":"chunk-0171","source":"examples/incidents/incident-doctrine-exception.md","heading":"The Symptom","tags":["debug","develop"],"tokens":67}
+{"id":"chunk-0172","source":"examples/incidents/incident-doctrine-exception.md","heading":"The Lessons","tags":["foundations"],"tokens":154}
+{"id":"chunk-0173","source":"examples/incidents/incident-stale-liveness.md","heading":"Incident: Stale Detector Liveness False-Kills","tags":["foundations","failure_mode"],"tokens":12}
+{"id":"chunk-0174","source":"examples/incidents/incident-stale-liveness.md","heading":"The Saga","tags":["foundations"],"tokens":208}
+{"id":"chunk-0175","source":"examples/incidents/incident-stale-liveness.md","heading":"The Symptom","tags":["foundations"],"tokens":67}
+{"id":"chunk-0176","source":"examples/incidents/incident-stale-liveness.md","heading":"The Lessons","tags":["foundations"],"tokens":146}
+{"id":"chunk-0177","source":"memory-template/blank-state/warm.yaml","heading":"warm.yaml","tags":["state","memory"],"tokens":1}
+{"id":"chunk-0178","source":"memory-template/protocol.md","heading":"Runtime Memory Protocol","tags":["memory"],"tokens":47}
+{"id":"chunk-0179","source":"memory-template/protocol.md","heading":"Tiers","tags":["state","memory"],"tokens":163}
+{"id":"chunk-0180","source":"memory-template/protocol.md","heading":"Read and compatibility","tags":["memory"],"tokens":113}
+{"id":"chunk-0181","source":"memory-template/protocol.md","heading":"Append record","tags":["state","memory"],"tokens":189}
+{"id":"chunk-0182","source":"memory-template/protocol.md","heading":"Atomic append","tags":["memory"],"tokens":171}
+{"id":"chunk-0183","source":"memory-template/protocol.md","heading":"Evidence and promotion","tags":["memory"],"tokens":138}
+{"id":"chunk-0184","source":"playbooks/architecture.md","heading":"Architecture Playbook","tags":["architecture"],"tokens":6}
+{"id":"chunk-0185","source":"playbooks/architecture.md","heading":"Problem","tags":["architecture","baton","state"],"tokens":259}
+{"id":"chunk-0186","source":"playbooks/architecture.md","heading":"Mechanism","tags":["architecture","validation","techniques","instruments","baton","state","memory"],"tokens":1198}
+{"id":"chunk-0187","source":"playbooks/architecture.md","heading":"Evidence","tags":["architecture","techniques","instruments","baton","state","memory"],"tokens":496}
+{"id":"chunk-0188","source":"playbooks/architecture.md","heading":"Trap","tags":["architecture","techniques","baton","state","trap"],"tokens":219}
+{"id":"chunk-0189","source":"playbooks/architecture.md","heading":"Verify","tags":["architecture","baton","state","memory"],"tokens":348}
+{"id":"chunk-0190","source":"playbooks/compose.md","heading":"Composing a Score","tags":["compose"],"tokens":5}
+{"id":"chunk-0191","source":"playbooks/compose.md","heading":"Problem","tags":["compose","validation","techniques","instruments"],"tokens":218}
+{"id":"chunk-0192","source":"playbooks/compose.md","heading":"Mechanism","tags":["compose","operate","validation","techniques","instruments","state","memory"],"tokens":1474}
+{"id":"chunk-0193","source":"playbooks/compose.md","heading":"Evidence","tags":["compose","validation","techniques","state"],"tokens":536}
+{"id":"chunk-0194","source":"playbooks/compose.md","heading":"Trap","tags":["compose","validation","trap"],"tokens":248}
+{"id":"chunk-0195","source":"playbooks/compose.md","heading":"Verify","tags":["compose","validation","techniques","instruments"],"tokens":385}
+{"id":"chunk-0196","source":"playbooks/debug.md","heading":"Debugging Failures","tags":["debug"],"tokens":6}
+{"id":"chunk-0197","source":"playbooks/debug.md","heading":"Problem","tags":["debug","validation","state"],"tokens":280}
+{"id":"chunk-0198","source":"playbooks/debug.md","heading":"Mechanism","tags":["debug","validation","state"],"tokens":697}
+{"id":"chunk-0199","source":"playbooks/debug.md","heading":"Evidence","tags":["debug","validation","state"],"tokens":525}
+{"id":"chunk-0200","source":"playbooks/debug.md","heading":"Trap","tags":["debug","validation","trap"],"tokens":268}
+{"id":"chunk-0201","source":"playbooks/debug.md","heading":"Verify","tags":["debug","validation","spec_only","trap"],"tokens":514}
+{"id":"chunk-0202","source":"playbooks/develop.md","heading":"Developing Against Marianne","tags":["develop"],"tokens":8}
+{"id":"chunk-0203","source":"playbooks/develop.md","heading":"Problem","tags":["develop","validation","techniques","spec_only"],"tokens":283}
+{"id":"chunk-0204","source":"playbooks/develop.md","heading":"Mechanism","tags":["operate","develop","validation","techniques","instruments","state"],"tokens":912}
+{"id":"chunk-0205","source":"playbooks/develop.md","heading":"Evidence","tags":["develop","validation","techniques","state","spec_only","memory"],"tokens":736}
+{"id":"chunk-0206","source":"playbooks/develop.md","heading":"Trap","tags":["architecture","develop","validation","state","memory","trap"],"tokens":311}
+{"id":"chunk-0207","source":"playbooks/develop.md","heading":"Verify","tags":["develop","validation"],"tokens":407}
+{"id":"chunk-0208","source":"playbooks/embed.md","heading":"Embedding Marianne Behind an App","tags":["embed"],"tokens":9}
+{"id":"chunk-0209","source":"playbooks/embed.md","heading":"Problem","tags":["embed","validation"],"tokens":232}
+{"id":"chunk-0210","source":"playbooks/embed.md","heading":"Mechanism","tags":["embed","validation","instruments","state","memory"],"tokens":921}
+{"id":"chunk-0211","source":"playbooks/embed.md","heading":"Evidence","tags":["embed","validation","state","memory"],"tokens":419}
+{"id":"chunk-0212","source":"playbooks/embed.md","heading":"Trap","tags":["embed","state","memory","trap"],"tokens":197}
+{"id":"chunk-0213","source":"playbooks/embed.md","heading":"Verify","tags":["embed","state","memory"],"tokens":396}
+{"id":"chunk-0214","source":"playbooks/operate.md","heading":"Operating Marianne Jobs","tags":["operate"],"tokens":7}
+{"id":"chunk-0215","source":"playbooks/operate.md","heading":"Problem","tags":["operate","validation","baton","state","spec_only"],"tokens":274}
+{"id":"chunk-0216","source":"playbooks/operate.md","heading":"Mechanism","tags":["operate","validation","instruments","baton","state"],"tokens":1232}
+{"id":"chunk-0217","source":"playbooks/operate.md","heading":"Evidence","tags":["operate","validation"],"tokens":364}
+{"id":"chunk-0218","source":"playbooks/operate.md","heading":"Trap","tags":["operate","validation","state","spec_only","trap"],"tokens":338}
+{"id":"chunk-0219","source":"playbooks/operate.md","heading":"Verify","tags":["operate","validation","state"],"tokens":415}
+{"id":"chunk-0220","source":"templates/instrument-profile.yaml","heading":"instrument-profile.yaml","tags":["instruments"],"tokens":339}
+{"id":"chunk-0221","source":"templates/score-template.yaml","heading":"score-template.yaml","tags":["validation"],"tokens":480}
+{"id":"chunk-0222","source":"templates/technique-declaration.yaml","heading":"technique-declaration.yaml","tags":["techniques","baton"],"tokens":315}

@@ -1,0 +1,48 @@
+{"id":"C001","source_verdict":"CORROBORATED","frame_verdict":"UNANIMOUS","final_status":"implemented","correction_if_any":"","confidence":0.99}
+{"id":"C002","source_verdict":"CORROBORATED","frame_verdict":"UNANIMOUS","final_status":"implemented","correction_if_any":"","confidence":0.99}
+{"id":"C003","source_verdict":"CORROBORATED","frame_verdict":"UNANIMOUS","final_status":"implemented","correction_if_any":"","confidence":0.99}
+{"id":"C004","source_verdict":"CORROBORATED","frame_verdict":"UNANIMOUS","final_status":"implemented","correction_if_any":"","confidence":0.99}
+{"id":"C005","source_verdict":"CORROBORATED","frame_verdict":"UNANIMOUS","final_status":"implemented_with_stale_docs","correction_if_any":"Global concurrency is enforced; configuration-reference.md is stale where it says otherwise.","confidence":0.98}
+{"id":"C006","source_verdict":"CORROBORATED","frame_verdict":"UNANIMOUS","final_status":"implemented","correction_if_any":"","confidence":0.99}
+{"id":"C007","source_verdict":"CORROBORATED","frame_verdict":"UNANIMOUS","final_status":"implemented","correction_if_any":"","confidence":0.99}
+{"id":"C008","source_verdict":"CORROBORATED","frame_verdict":"UNANIMOUS","final_status":"implemented","correction_if_any":"","confidence":0.99}
+{"id":"C009","source_verdict":"CORROBORATED","frame_verdict":"UNANIMOUS","final_status":"implemented_security_risk","correction_if_any":"The queue is intentionally unbounded, which creates a potential daemon OOM/DoS risk.","confidence":0.98}
+{"id":"C010","source_verdict":"CORROBORATED","frame_verdict":"UNANIMOUS","final_status":"implemented","correction_if_any":"","confidence":0.99}
+{"id":"C011","source_verdict":"CORROBORATED","frame_verdict":"UNANIMOUS","final_status":"implemented","correction_if_any":"","confidence":0.99}
+{"id":"C012","source_verdict":"CORROBORATED","frame_verdict":"UNANIMOUS","final_status":"implemented","correction_if_any":"","confidence":0.98}
+{"id":"C013","source_verdict":"CORROBORATED","frame_verdict":"MAJORITY","final_status":"implemented","correction_if_any":"The exact enum member is A2A_REQUEST; the claim omits routing priority.","confidence":0.97}
+{"id":"C014","source_verdict":"CORROBORATED","frame_verdict":"UNANIMOUS","final_status":"implemented","correction_if_any":"","confidence":0.98}
+{"id":"C015","source_verdict":"CORROBORATED","frame_verdict":"UNANIMOUS","final_status":"implemented_security_sensitive","correction_if_any":"command_succeeds is a privileged bash execution surface and assumes trusted score authors.","confidence":0.99}
+{"id":"C016","source_verdict":"CORROBORATED","frame_verdict":"UNANIMOUS","final_status":"implemented","correction_if_any":"","confidence":0.99}
+{"id":"C017","source_verdict":"CORROBORATED","frame_verdict":"MAJORITY","final_status":"implemented_untested","correction_if_any":"The engine guard exists but lacks a dedicated test and its RuntimeError is converted to a failed ValidationResult.","confidence":0.96}
+{"id":"C018","source_verdict":"CORROBORATED","frame_verdict":"UNANIMOUS","final_status":"implemented","correction_if_any":"","confidence":0.99}
+{"id":"C019","source_verdict":"CORROBORATED","frame_verdict":"MAJORITY","final_status":"stale_docstring","correction_if_any":"Remove the deleted claude_cli_legacy relocation claim and repair remaining test patch targets.","confidence":0.99}
+{"id":"C020","source_verdict":"CORROBORATED","frame_verdict":"UNANIMOUS","final_status":"implemented","correction_if_any":"","confidence":0.99}
+{"id":"C021","source_verdict":"CONTRADICTED","frame_verdict":"SPLIT","final_status":"implemented_via_generic_openai_compat","correction_if_any":"recursive_light has no dedicated native backend module; it operates through the generic OpenAI-compatible path.","confidence":0.99}
+{"id":"C022","source_verdict":"CORROBORATED","frame_verdict":"UNANIMOUS","final_status":"implemented","correction_if_any":"","confidence":0.99}
+{"id":"C023","source_verdict":"CONTRADICTED","frame_verdict":"SPLIT","final_status":"claim_wording_ambiguous","correction_if_any":"The package retains only AnthropicApiBackend and OllamaBackend as specialized native clients; generic HTTP executors were retired or moved under execution/instruments.","confidence":0.98}
+{"id":"C024","source_verdict":"CORROBORATED","frame_verdict":"UNANIMOUS","final_status":"implemented","correction_if_any":"","confidence":0.99}
+{"id":"C025","source_verdict":"CORROBORATED","frame_verdict":"UNANIMOUS","final_status":"implemented","correction_if_any":"","confidence":0.99}
+{"id":"C026","source_verdict":"CORROBORATED","frame_verdict":"UNANIMOUS","final_status":"partially_implemented","correction_if_any":"A2A runtime state works in memory but is not restart-persistent.","confidence":0.99}
+{"id":"C027","source_verdict":"CORROBORATED","frame_verdict":"MAJORITY","final_status":"spec_only_execution_observer_serialized","correction_if_any":"The event is serialized for observers but is never fired or handled by execution.","confidence":0.99}
+{"id":"C028","source_verdict":"CORROBORATED","frame_verdict":"MAJORITY","final_status":"spec_only_execution_observer_serialized","correction_if_any":"The event is serialized for observers but is never fired or handled by execution.","confidence":0.99}
+{"id":"C029","source_verdict":"CONTRADICTED","frame_verdict":"SPLIT","final_status":"spec_only","correction_if_any":"CronTick only logs an unimplemented warning; docs claiming it submits and reschedules jobs are stale.","confidence":0.99}
+{"id":"C030","source_verdict":"CONTRADICTED","frame_verdict":"SPLIT","final_status":"spec_only","correction_if_any":"ConfigReloaded only logs an unimplemented warning; docs claiming it rebuilds pending sheets are stale.","confidence":0.99}
+{"id":"C031","source_verdict":"CONTRADICTED","frame_verdict":"MAJORITY","final_status":"config_only_runtime_unwired","correction_if_any":"Grounding configuration validates, but no runtime path invokes grounding hooks; docs describing output validation as active are stale.","confidence":0.99}
+{"id":"C032","source_verdict":"CORROBORATED","frame_verdict":"UNANIMOUS","final_status":"known_broken_safety_noop","correction_if_any":"Orphan reaping is deliberately disabled inline to prevent observed WSL2 VM shutdowns.","confidence":0.99}
+{"id":"C033","source_verdict":"CONTRADICTED","frame_verdict":"UNANIMOUS","final_status":"false_claim","correction_if_any":"There is no module-level disabled flag; orphan reaping is hardcoded as a no-op inside method bodies.","confidence":1.0}
+{"id":"C034","source_verdict":"CORROBORATED","frame_verdict":"UNANIMOUS","final_status":"implemented","correction_if_any":"The behavior is correct, but the registry citation should point to process.py:1194-1199.","confidence":0.99}
+{"id":"C035","source_verdict":"CORROBORATED","frame_verdict":"UNANIMOUS","final_status":"implemented","correction_if_any":"","confidence":0.99}
+{"id":"C036","source_verdict":"CORROBORATED","frame_verdict":"UNANIMOUS","final_status":"implemented","correction_if_any":"","confidence":0.99}
+{"id":"C037","source_verdict":"CORROBORATED","frame_verdict":"UNANIMOUS","final_status":"implemented_job_config_only","correction_if_any":"JobConfig supports json/sqlite; DaemonConfig state_backend_type remains fixed to sqlite.","confidence":0.99}
+{"id":"C038","source_verdict":"CORROBORATED","frame_verdict":"UNANIMOUS","final_status":"implemented_security_sensitive","correction_if_any":"Relative paths resolve against the score directory without confinement; untrusted scores could escape via .. or absolute paths.","confidence":0.98}
+{"id":"C039","source_verdict":"CORROBORATED","frame_verdict":"UNANIMOUS","final_status":"implemented","correction_if_any":"","confidence":0.99}
+{"id":"C040","source_verdict":"CORROBORATED","frame_verdict":"UNANIMOUS","final_status":"implemented","correction_if_any":"","confidence":0.99}
+{"id":"C041","source_verdict":"CORROBORATED","frame_verdict":"UNANIMOUS","final_status":"implemented","correction_if_any":"","confidence":0.99}
+{"id":"C042","source_verdict":"CORROBORATED","frame_verdict":"UNANIMOUS","final_status":"implemented","correction_if_any":"","confidence":0.99}
+{"id":"C043","source_verdict":"CORROBORATED","frame_verdict":"UNANIMOUS","final_status":"implemented","correction_if_any":"","confidence":0.99}
+{"id":"C044","source_verdict":"CORROBORATED","frame_verdict":"UNANIMOUS","final_status":"implemented","correction_if_any":"The value is correct, but the registry source line should point to sqlite_backend.py:29.","confidence":0.99}
+{"id":"C045","source_verdict":"CORROBORATED","frame_verdict":"UNANIMOUS","final_status":"implemented","correction_if_any":"","confidence":0.99}
+{"id":"C046","source_verdict":"CORROBORATED","frame_verdict":"UNANIMOUS","final_status":"implemented","correction_if_any":"","confidence":0.99}
+{"id":"C047","source_verdict":"CONTRADICTED","frame_verdict":"UNANIMOUS","final_status":"false_claim","correction_if_any":"ErrorCode.category uses the first numeric digit at value[1], not the second numeric digit.","confidence":1.0}
+{"id":"C048","source_verdict":"CORROBORATED","frame_verdict":"UNANIMOUS","final_status":"implemented_with_stale_test_comment","correction_if_any":"The 51,200-byte limit is correct and retains trailing output; a test docstring still says 10KB.","confidence":0.99}

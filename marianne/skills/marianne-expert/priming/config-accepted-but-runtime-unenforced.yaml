@@ -1,0 +1,17 @@
+threat_type: config-accepted-but-runtime-unenforced
+trigger_signature: >
+  A configuration block is accepted by the schema (fields parse, state columns
+  exist, docs describe hooks) so the system looks like it enforces an integrity
+  control. Grounding is the canonical case: `GroundingConfig` validates, hooks
+  have scaffolding, but the runtime never invokes them. The trap equates
+  "configurable" with "executed".
+countermeasure: >
+  Never claim a control ran solely because its configuration was accepted.
+  Separate two questions explicitly: (1) does the config PARSE/accept? (2) is
+  the hook INVOKED at runtime on the output path? Trace from the validation
+  engine to the actual hook call site. If no call site exists, label the
+  control `config_only_runtime_unwired` and state the operator gets false
+  assurance. This is hazardous drift — flag it prominently, not as a footnote.
+confidence: high
+timestamp: 2026-07-15T18:29:21Z
+claim_ids: [C031]

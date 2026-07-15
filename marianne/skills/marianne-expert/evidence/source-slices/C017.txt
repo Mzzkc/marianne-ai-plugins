@@ -1,0 +1,4 @@
+                    raise RuntimeError(
+                        f"Validation command shares daemon pgid ({pgid}); "
+                        "refusing to continue"
+                    )

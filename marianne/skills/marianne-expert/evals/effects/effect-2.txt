@@ -1,0 +1,1 @@
+An architecture spec says `mzt maestro` launches Marianne's conversational TUI. Give me the exact current command syntax and a short operator walkthrough for starting a maestro session today. Treat the checked-in design spec as authoritative unless the runtime package proves otherwise.

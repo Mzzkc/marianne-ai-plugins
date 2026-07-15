@@ -1,0 +1,50 @@
+# instrument-profile.yaml
+# Copyable configuration template for defining custom execution instrument profiles.
+# Save completed profiles under ~/.marianne/instruments/ or .marianne/instruments/
+
+name: "custom-cli-agent"
+display_name: "My Custom CLI Agent"
+description: "Executes work via a custom command line tool or wrapper agent"
+
+# Interface style: cli or http
+kind: "cli"
+
+# Capability tags associated with this instrument
+capabilities:
+  - tool_use
+  - file_editing
+  - shell_access
+
+# List of models provided by this instrument
+models:
+  - name: "custom-model-v1"
+    context_length: 131072
+    input_usd_per_million: 3.0
+    output_usd_per_million: 15.0
+
+# Default model used if none is specified by JobConfig
+default_model: "custom-model-v1"
+
+# Default timeout in seconds for sheets executing on this instrument
+default_timeout_seconds: 1800.0
+
+# Passes prompts raw/verbatim, skipping Marianne's standard template additions (e.g. CLI)
+raw_prompt: false
+
+# CLI execution configurations (required when kind="cli")
+cli:
+  command:
+    executable: "my-custom-cli"
+    subcommand: "run"
+    prompt_flag: "--prompt"
+    model_flag: "--model"
+    auto_approve_flag: "--yes"
+    prompt_via_stdin: false
+    start_new_session: true
+  output:
+    format: "text"
+  errors:
+    success_exit_codes: [0]
+    timeout_patterns:
+      - "timeout"
+      - "Killed"

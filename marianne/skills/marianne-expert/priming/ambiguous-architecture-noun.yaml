@@ -1,0 +1,17 @@
+threat_type: ambiguous-architecture-noun
+trigger_signature: >
+  A spec/conventions doc uses an abstract collective noun (e.g. "native HTTP
+  executors") that code and tests read differently. Some interpret it as
+  false (generic executors were retired/relocated); tests interpret the two
+  surviving specialized clients as native executors. The ambiguity hides the
+  real topology.
+countermeasure: >
+  Replace abstract nouns with NAMED concrete modules in any contract. The
+  backends package today contains exactly two specialized native clients:
+  `AnthropicApiBackend` and `OllamaBackend`. Generic/native HTTP executors
+  were retired or relocated under `execution/instruments`. When a term is
+  ambiguous, enumerate the actual symbols rather than affirming or denying
+  the abstraction.
+confidence: high
+timestamp: 2026-07-15T18:29:21Z
+claim_ids: [C023]

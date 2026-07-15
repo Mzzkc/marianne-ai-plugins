@@ -1,0 +1,25 @@
+# Diagnosis:
+# What breaks: The validation engine uses Python `.format()` syntax for path interpolation (e.g. `{workspace}`). If Jinja syntax `{{ workspace }}` is used, the braces remain literal in the path string, causing the validator to search for a literal file containing the double braces, resulting in a false validation failure.
+# Detection signature: Validation check V201 (Jinja syntax in validation paths) triggers a warning.
+# The fix: Replace the double-braced Jinja syntax `{{ workspace }}` with single-braced Python format syntax `{workspace}` in all validation paths.
+# Claim ID: C041
+
+name: "jinja-in-validation"
+description: "Intentionally broken score demonstrating the Jinja-in-validation trap (V201)"
+
+workspace: "./workspace"
+
+instrument: claude-code
+
+sheet:
+  size: 1
+  total_items: 1
+
+prompt:
+  template: |
+    Create {{ workspace }}/output.txt.
+
+validations:
+  - type: file_exists
+    path: "{{ workspace }}/output.txt"
+    description: "This validation path uses Jinja syntax which is a trap"

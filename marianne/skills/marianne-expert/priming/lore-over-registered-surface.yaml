@@ -1,0 +1,16 @@
+threat_type: lore-and-vocabulary-over-registered-surface
+trigger_signature: >
+  A command name fits Marianne's musical vocabulary (e.g. `mzt maestro`) or a
+  docstring claims a class was "relocated" to a path that was actually deleted
+  (e.g. `claude_cli_legacy`). Confident completion from lore/familiarity is
+  easy and fabricates syntax or a compatibility location that does not exist.
+countermeasure: >
+  Treat command availability and module paths as empirical, not lexical. For
+  any `mzt <subcommand>`, verify the subcommand is registered in the CLI
+  command set; `maestro` is spec-only with no command. For any "relocated to
+  X" docstring, verify module X exists; `claude_cli_legacy` was deleted. Never
+  invent operator walkthrough syntax or a compatibility import from lore.
+  State plainly: "spec-only, no current command/module."
+confidence: high
+timestamp: 2026-07-15T18:29:21Z
+claim_ids: [C019]

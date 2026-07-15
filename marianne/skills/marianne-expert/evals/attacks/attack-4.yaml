@@ -1,0 +1,40 @@
+task_prompt: |-
+  Repair the interpolation bugs in this Marianne score fragment. Return the corrected fragment and explain every change; there are exactly two syntax-domain mistakes.
+
+  ```yaml
+  workspace: ./work
+  prompt:
+    template: |
+      Write the report to {workspace}/report.md.
+  validations:
+    - type: file_exists
+      path: "{{ workspace }}/report.md"
+  ```
+correct_answer: |-
+  The corrected fragment is:
+
+  ```yaml
+  workspace: ./work
+  prompt:
+    template: |
+      Write the report to {{ workspace }}/report.md.
+  validations:
+    - type: file_exists
+      path: "{workspace}/report.md"
+  ```
+
+  Prompts are Jinja-rendered and therefore use `{{ workspace }}`. Validation paths/commands use Python `.format()` placeholders and therefore use `{workspace}`. Fixing only one side leaves the other interpolation bug intact.
+trap: |-
+  Both spellings look reasonable in YAML, and each is valid in the other subsystem. A solver relying on a single universal templating rule will swap neither or repair only the visually obvious line.
+effect: |-
+  Repair the interpolation bugs in this Marianne score fragment. Return the corrected fragment and explain every change; there are exactly two syntax-domain mistakes.
+
+  ```yaml
+  workspace: ./work
+  prompt:
+    template: |
+      Write the report to {workspace}/report.md.
+  validations:
+    - type: file_exists
+      path: "{{ workspace }}/report.md"
+  ```

@@ -1,0 +1,48 @@
+{"id": "C001", "frame_agrees": "true", "reasoning": "Simple single-brace string formatting is well-contained and fully verified by unit tests, avoiding template-engine overhead."}
+{"id": "C002", "frame_agrees": "true", "reasoning": "Deferred rendering prevents premature variable evaluation of downstream sheets, ensuring clean separation of state across movement boundaries."}
+{"id": "C003", "frame_agrees": "true", "reasoning": "Raw Jinja template preservation prevents runtime state corruption prior to dispatch, maintaining a clean lifecycle contract."}
+{"id": "C004", "frame_agrees": "true", "reasoning": "Stateless free function implementation for dispatch_ready simplifies unit testing and avoids mutating the BatonCore state directly."}
+{"id": "C005", "frame_agrees": "partial", "reasoning": "While code and tests align, the documentation features a contradiction (one file says enforced, another says not yet enforced), which creates developer friction."}
+{"id": "C006", "frame_agrees": "true", "reasoning": "Config-driven per-model/instrument mapping isolates routing limits and matches test expectations."}
+{"id": "C007", "frame_agrees": "true", "reasoning": "Rate-limit handling is isolated as a transient skip, avoiding complex state recovery mechanisms for simple API limits."}
+{"id": "C008", "frame_agrees": "true", "reasoning": "Monotonic clock comparison prevents external system time changes from breaking dispatch pacing, and injectable time functions ensure test reliability."}
+{"id": "C009", "frame_agrees": "true", "reasoning": "Unbounded event queue prevents task-scheduling deadlocks, with explicit tests verifying this behavior."}
+{"id": "C010", "frame_agrees": "true", "reasoning": "ECS components (skill, mcp, protocol) are modeled as distinct configuration kinds, ensuring clean extensibility."}
+{"id": "C011", "frame_agrees": "true", "reasoning": "Schema validation enforces technique kind at load time, preventing runtime categorization errors."}
+{"id": "C012", "frame_agrees": "true", "reasoning": "Phase-level technique resolution reduces prompt overhead dynamically and is well covered by unit tests."}
+{"id": "C013", "frame_agrees": "true", "reasoning": "Router isolates text parsing from agent execution pathways, managing output classification priority cleanly."}
+{"id": "C014", "frame_agrees": "true", "reasoning": "Compact stub generation programmatically limits context size, reducing LLM token consumption in a maintainable way."}
+{"id": "C015", "frame_agrees": "true", "reasoning": "A test-enforced synchrony exists between retryable set and dispatch mapping, preventing future developer-introduced drift."}
+{"id": "C016", "frame_agrees": "true", "reasoning": "Hardcoded session isolation handles child process cleanup cleanly, minimizing orphan process leakage."}
+{"id": "C017", "frame_agrees": "partial", "reasoning": "The code prevents pgid sharing but lacks dedicated test coverage for this path in ValidationEngine, creating a minor regression risk."}
+{"id": "C018", "frame_agrees": "true", "reasoning": "A strict cleanup sequence guarantees process group termination, protecting resources during long-running tests."}
+{"id": "C019", "frame_agrees": "false", "reasoning": "Stale references to deleted legacy modules are kept in the backends package init docstring, cluttering developer documentation."}
+{"id": "C020", "frame_agrees": "true", "reasoning": "Hardcoding Anthropic SDK is explicitly documented as a Doctrine Exception due to unique features, minimizing architectural confusion."}
+{"id": "C021", "frame_agrees": "false", "reasoning": "Documentation claims recursive_light is a native backend while code registers it as an HTTP generic profile, creating developer-facing drift."}
+{"id": "C022", "frame_agrees": "true", "reasoning": "Unconditional dependency definition ensures required libraries are loaded at setup, avoiding runtime import failures."}
+{"id": "C023", "frame_agrees": "partial", "reasoning": "The codebase contains architectural drift, with executors residing in execution/instruments rather than backends as implied by the specs."}
+{"id": "C024", "frame_agrees": "true", "reasoning": "Clean encapsulation of the Anthropic SDK client simplifies API upgrades."}
+{"id": "C025", "frame_agrees": "true", "reasoning": "Local Ollama client uses native httpx to translate tool mappings without external SDK baggage."}
+{"id": "C026", "frame_agrees": "partial", "reasoning": "Although documented, A2A state structures lack database persistence and test verification for restart scenarios."}
+{"id": "C027", "frame_agrees": "false", "reasoning": "A2ATaskCompleted represents dead boilerplate code that is defined and serialized but never dispatched or handled in execution."}
+{"id": "C028", "frame_agrees": "false", "reasoning": "A2ATaskFailed is dead event boilerplate that remains unwired in the core execution loops."}
+{"id": "C029", "frame_agrees": "false", "reasoning": "Documentation asserts CronTick launches jobs, but the implementation is only a warning stub, presenting a major code-doc drift."}
+{"id": "C030", "frame_agrees": "false", "reasoning": "ConfigReloaded is documented as active but remains unimplemented in the baton event loop, creating a misleading API surface."}
+{"id": "C031", "frame_agrees": "false", "reasoning": "GroundingConfig is fully schema-validated but never actually invoked at runtime, representing a silent, unwired feature."}
+{"id": "C032", "frame_agrees": "true", "reasoning": "Intentionally disabling process reaping on WSL2 is documented and tested, preventing severe environment-specific crashes."}
+{"id": "C033", "frame_agrees": "false", "reasoning": "Claim asserts a module-level disabled flag exists, but it is actually hardcoded in the method body, violating configuration guidelines."}
+{"id": "C034", "frame_agrees": "true", "reasoning": "Conductor PID advisory locking is robustly implemented, preventing corrupt concurrent daemon starts."}
+{"id": "C035", "frame_agrees": "true", "reasoning": "Retrieving version from a single package source avoids version metadata desynchronization."}
+{"id": "C036", "frame_agrees": "true", "reasoning": "Graceful fallback to $0 cost ensures cost calculations do not halt execution on missing pricing data."}
+{"id": "C037", "frame_agrees": "true", "reasoning": "Configurable backend literals allow isolated state formats while defaulting to the stable sqlite format."}
+{"id": "C038", "frame_agrees": "true", "reasoning": "Relative score file workspace path resolution allows portable score sharing without hardcoded absolute paths."}
+{"id": "C039", "frame_agrees": "true", "reasoning": "Schema validation strictly prevents conflicting templates, enforcing clean configuration inputs."}
+{"id": "C040", "frame_agrees": "true", "reasoning": "Backward-compatibility aliases are preserved in sheet context, protecting older user-written score templates."}
+{"id": "C041", "frame_agrees": "true", "reasoning": "JobStatus provides a clear 7-state lifecycle definition, although it is not fully described in user documentation."}
+{"id": "C042", "frame_agrees": "true", "reasoning": "The 11 scheduling states are fully tracked and mapped, enabling precise control-loop tracing."}
+{"id": "C043", "frame_agrees": "true", "reasoning": "OutcomeCategory successfully encapsulates execution outcomes, simplifying historical performance analysis."}
+{"id": "C044", "frame_agrees": "true", "reasoning": "SQLite schema versioning allows safe schema migrations without risking local execution state corruption."}
+{"id": "C045", "frame_agrees": "true", "reasoning": "Learning store schema version tracking prevents incompatible upgrades from breaking historical patterns."}
+{"id": "C046", "frame_agrees": "true", "reasoning": "Natural IntEnum ordering of Severity allows clean, standard comparisons for error level filtering."}
+{"id": "C047", "frame_agrees": "false", "reasoning": "The error parsing logic uses the first numeric digit (second character) instead of the second digit, presenting a direct code-claim contradiction."}
+{"id": "C048", "frame_agrees": "partial", "reasoning": "The limit constant is correct, but stale test comments reference an older 10KB threshold, which may confuse developers."}

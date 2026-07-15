@@ -1,0 +1,4 @@
+    state_backend: Literal["json", "sqlite"] = Field(
+        default="sqlite",
+        description="State storage backend",
+    )

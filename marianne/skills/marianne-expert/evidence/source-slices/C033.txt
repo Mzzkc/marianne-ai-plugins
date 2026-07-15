@@ -1,0 +1,6 @@
+validators, MCP servers) belong to the same pgid, enabling clean group-wide
+shutdown via os.killpg().
+
+Lifecycle:
+    1. setup() — create new process group (daemon becomes leader)
+    2. cleanup_orphans() — scan daemon's child tree for leaked processes

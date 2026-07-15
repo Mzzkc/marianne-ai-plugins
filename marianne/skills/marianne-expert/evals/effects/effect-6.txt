@@ -1,0 +1,1 @@
+Design an operator smoke test for two documented live features: (1) a `CronTick` submits a score and schedules its next tick, and (2) `ConfigReloaded` rebuilds pending sheets. Before giving steps, classify what the current baton does for each event and whether either feature can honestly be smoke-tested end to end today.

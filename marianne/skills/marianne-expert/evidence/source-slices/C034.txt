@@ -1,0 +1,5 @@
+    metadata: dict[str, Any] = {}
+    sock = writer.get_extra_info("socket")
+    peercred = getattr(socket, "SO_PEERCRED", None)
+    if sock is None or peercred is None:
+        return metadata

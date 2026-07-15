@@ -1,0 +1,4 @@
+        # Process Lifecycle Phase 1: spawn with start_new_session=True so
+        # bash -> pytest -> xdist workers share a killable group. SIGTERM
+        # then 2s grace then SIGKILL runs in the finally on every exit path.
+        # See docs/specs/2026-04-16-process-lifecycle-design.md (Change 1, 2).

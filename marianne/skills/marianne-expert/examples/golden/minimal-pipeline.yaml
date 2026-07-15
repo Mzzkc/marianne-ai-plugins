@@ -1,0 +1,31 @@
+# Annotation:
+# Validation Result: PASS
+# Command: mzt validate workspaces/marianne-expert-runtime-build/examples/golden/minimal-pipeline.yaml --json
+# Output details: valid=True, errors=0, warnings=0
+
+name: "minimal-pipeline"
+description: "The simplest valid Marianne score executing a sequential 3-sheet pipeline"
+
+workspace: "./workspace"
+
+instrument: claude-code
+
+sheet:
+  size: 1
+  total_items: 3
+  dependencies:
+    2: [1]
+    3: [2]
+
+prompt:
+  variables:
+    target_name: "world"
+  template: |
+    Process sheet {{ sheet_num }} of {{ total_sheets }}.
+    Greet the {{ target_name }} and output a text file.
+    Create a file at {{ workspace }}/output-{{ sheet_num }}.txt.
+
+validations:
+  - type: file_exists
+    path: "{workspace}/output-{sheet_num}.txt"
+    description: "Sheet output file must be created"

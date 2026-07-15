@@ -1,0 +1,4 @@
+
+def _recursive_light_profile() -> InstrumentProfile:
+    """Create an InstrumentProfile describing the native Recursive Light backend."""
+    return InstrumentProfile(

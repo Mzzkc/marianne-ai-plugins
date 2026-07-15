@@ -1,0 +1,11 @@
+    _RETRYABLE_VALIDATION_TYPES = frozenset({
+        "file_exists",
+        "file_modified",
+        "content_contains",
+        "content_regex",
+        "command_succeeds",
+        "path_in_scope",
+        "field_match",
+        "file_sha256",
+        "csv_unique_key",
+    })

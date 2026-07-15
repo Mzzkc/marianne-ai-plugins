@@ -1,0 +1,12 @@
+class TechniqueKind(str, Enum):
+    """Kind of technique component.
+
+    Maps to the ECS component taxonomy:
+    - SKILL: Text-based methodology injected as cadenza context
+    - MCP: MCP server tools accessible via the shared pool
+    - PROTOCOL: Communication protocols (A2A, coordination)
+    """
+
+    SKILL = "skill"
+    MCP = "mcp"
+    PROTOCOL = "protocol"

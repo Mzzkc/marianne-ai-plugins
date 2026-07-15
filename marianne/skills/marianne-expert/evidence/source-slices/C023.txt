@@ -1,0 +1,5 @@
+"""Execution backends — instruments that musicians play.
+
+Phase 4 of the backend atlas retired the native ``ClaudeCliBackend``
+module from this package. ``claude_cli`` is now served by
+``PluginCliBackend`` with the ``claude-code.yaml`` instrument profile.

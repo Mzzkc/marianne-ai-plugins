@@ -1,0 +1,6 @@
+            instrument = sheet.instrument_name or ""
+            model_key = f"{instrument}:{sheet.model}" if sheet.model else instrument
+            model_limit = config.model_concurrency.get(model_key)
+            if model_limit is None:
+                model_limit = config.instrument_concurrency.get(instrument)
+            model_count = model_running.get(model_key, 0)

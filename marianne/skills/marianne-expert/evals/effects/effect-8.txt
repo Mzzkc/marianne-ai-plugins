@@ -1,0 +1,1 @@
+A test docstring and checkpoint field descriptions say failed stdout/stderr capture keeps the last 10KB. What is the actual per-stream capture limit now, and which part of the output survives truncation? Resolve the prose-versus-executable disagreement rather than averaging the claims.

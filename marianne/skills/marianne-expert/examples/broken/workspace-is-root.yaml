@@ -1,0 +1,25 @@
+# Diagnosis:
+# What breaks: Setting the workspace directory to the root directory `/` or system-critical directories (like user home `~/`) creates a major data-loss hazard. When the job is executed with the `--fresh` flag or cleanup runs, Marianne performs recursive directory moves or deletes on the workspace directory. If the workspace is root, this can wipe out the entire filesystem or user files.
+# Detection signature: Static validation check V303/V103 (or similar path safety checks) will flag the workspace path as invalid or dangerous, failing validation before execution.
+# The fix: Set the `workspace` directory to a dedicated, nested relative directory (e.g. `./workspace` or `./workspaces/job-name`) containing only job-specific artifacts.
+# Claim ID: C009
+
+name: "workspace-is-root"
+description: "Intentionally broken score demonstrating the workspace-is-root data-loss trap"
+
+workspace: "/"
+
+instrument: claude-code
+
+sheet:
+  size: 1
+  total_items: 1
+
+prompt:
+  template: |
+    echo "This is a dangerous workspace"
+
+validations:
+  - type: file_exists
+    path: "{workspace}/dangerous_test.txt"
+    description: "Validation path under root"

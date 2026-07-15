@@ -1,0 +1,21 @@
+    def category(self) -> str:
+        """Get the category prefix (first digit) of this error code.
+
+        Returns:
+            Category string like "execution", "rate_limit", "validation", etc.
+        """
+        category_map = {
+            "0": "execution",
+            "1": "rate_limit",
+            "2": "validation",
+            "3": "configuration",
+            "4": "state",
+            "5": "backend",
+            "6": "preflight",
+            "9": "transient",
+        }
+        # Error code format: "E<digit><digit><digit>"
+        if len(self.value) >= 2:
+            first_digit = self.value[1]
+            return category_map.get(first_digit, "unknown")
+        return "unknown"

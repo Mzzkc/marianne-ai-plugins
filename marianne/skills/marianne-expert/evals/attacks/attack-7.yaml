@@ -1,0 +1,8 @@
+task_prompt: |-
+  I am hardening a production score. If I set `grounding.enabled: true` with checksum hooks and turn on the documented module-level orphan-reaping flag, can I claim outputs are externally grounded and abandoned backend processes will be killed? Separate configuration acceptance from runtime enforcement and name any operator-controllable orphan toggle.
+correct_answer: |-
+  No. `GroundingConfig` and hook validation/scaffolding exist, so a grounding configuration can be accepted, but the runtime never invokes the configured hooks; it cannot support a claim that outputs were externally grounded. Orphan backend reaping is an inline hardcoded safety no-op (motivated by WSL2 shutdown incidents), and no module-level enable/disable flag exists for operators to toggle. Neither claimed safety property is enforced by those settings today.
+trap: |-
+  Both surfaces have convincing schema, fields, state columns, docs, or method names. The trap equates configurable/observable structure with an executed integrity control, and invents a toggle from prose describing disabled behavior.
+effect: |-
+  I am hardening a production score. If I set `grounding.enabled: true` with checksum hooks and turn on the documented module-level orphan-reaping flag, can I claim outputs are externally grounded and abandoned backend processes will be killed? Separate configuration acceptance from runtime enforcement and name any operator-controllable orphan toggle.

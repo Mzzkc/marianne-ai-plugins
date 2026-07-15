@@ -1,0 +1,18 @@
+threat_type: stale-numeric-prose-outweighing-the-constant
+trigger_signature: >
+  A stale number is repeated across multiple prose surfaces (test docstrings,
+  field descriptions, default-argument comments) and outweighs the single
+  executable constant in memory-based reasoning. Two known cases: (1) failed
+  stdout/stderr capture described as "10KB" in three places while
+  `MAX_OUTPUT_CAPTURE_BYTES` = 51,200 (50 KiB); (2) ErrorCode category parsed
+  from the FIRST numeric digit (`value[1]`) while prose says "second digit".
+countermeasure: >
+  When a numeric fact appears in prose, locate the executable constant/test
+  assertion that governs it. The constant wins. For the capture limit: answer
+  51,200 bytes (50 KiB), trailing/last bytes retained, truncation marked —
+  ignore the 10KB docstring as stale. For ErrorCode: the category is
+  `self.value[1]`, the first digit after `E`. When a constant is authoritative,
+  audit EVERY prose repetition in one pass and note each stale surface.
+confidence: high
+timestamp: 2026-07-15T18:29:21Z
+claim_ids: [C047, C048]

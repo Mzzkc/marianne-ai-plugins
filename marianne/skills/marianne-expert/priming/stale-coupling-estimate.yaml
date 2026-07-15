@@ -1,0 +1,18 @@
+threat_type: stale-coupling-estimate-from-memory
+trigger_signature: >
+  A remembered but unverified numeric estimate (e.g. "26 test files directly
+  import the concrete native backend modules"). A broad search for any
+  `marianne.backends` import then inflates the count by including the shared
+  base interface and unrelated consumers, confirming the false number.
+countermeasure: >
+  Re-count from CURRENT source, never from memory. Honor the exact import
+  boundary stated in the task: direct imports of
+  `marianne.backends.anthropic_api` or `marianne.backends.ollama` ONLY —
+  exclude the shared base, mocks that merely mention a backend, and
+  instrument-profile tests. The correct count is 3:
+  `tests/test_anthropic_api_backend.py`, `tests/test_backends.py`,
+  `tests/test_ollama_backend.py`. The asserted 26 is false. Define the
+  counting boundary before searching.
+confidence: high
+timestamp: 2026-07-15T18:29:21Z
+claim_ids: [C009]

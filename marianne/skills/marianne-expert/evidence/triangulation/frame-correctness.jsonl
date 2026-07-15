@@ -1,0 +1,48 @@
+{"id": "C001", "frame_agrees": "true", "reasoning": "Both codebase and tests confirm that validation paths are expanded using Python's standard `str.format()` with single-brace placeholders."}
+{"id": "C002", "frame_agrees": "true", "reasoning": "Code docstring and tests verify that prompt templates are stored raw with Jinja2 double-brace syntax and rendered by the baton at dispatch."}
+{"id": "C003", "frame_agrees": "true", "reasoning": "Prompt templates are defined as raw Jinja2 strings in Sheet properties and are rendered at dispatch time."}
+{"id": "C004", "frame_agrees": "true", "reasoning": "dispatch_ready() is a module-level async function rather than a method on BatonCore, taking baton as its first argument."}
+{"id": "C005", "frame_agrees": "true", "reasoning": "The dispatch loop checks global_running against config.max_concurrent_sheets to enforce the global ceiling."}
+{"id": "C006", "frame_agrees": "true", "reasoning": "Supports concurrency limits mapped to instrument:model keys, falling back to per-instrument concurrency."}
+{"id": "C007", "frame_agrees": "true", "reasoning": "Checks if sheet instrument name is in config.rate_limited_instruments and skips dispatch if present."}
+{"id": "C008", "frame_agrees": "true", "reasoning": "Compares monotonic time difference against config.stagger_delay_ms to stagger parallel dispatches."}
+{"id": "C009", "frame_agrees": "true", "reasoning": "Event inbox _inbox is initialized as an unbounded asyncio.Queue with no maxsize parameter."}
+{"id": "C010", "frame_agrees": "true", "reasoning": "TechniqueKind enum explicitly defines SKILL, MCP, and PROTOCOL."}
+{"id": "C011", "frame_agrees": "true", "reasoning": "TechniqueConfig contains a kind field typing TechniqueKind."}
+{"id": "C012", "frame_agrees": "true", "reasoning": "Technique resolution resolves active techniques and injects documents during the sheet execution phases."}
+{"id": "C013", "frame_agrees": "true", "reasoning": "TechniqueRouter classifies agent output into PROSE, CODE_BLOCK, TOOL_CALL, and A2A_REQUEST."}
+{"id": "C014", "frame_agrees": "true", "reasoning": "InterfaceGenerator generates compact stubs to fit within prompt token budgets."}
+{"id": "C015", "frame_agrees": "true", "reasoning": "_RETRYABLE_VALIDATION_TYPES defines exactly 9 retryable validation types, matching dispatcher keys."}
+{"id": "C016", "frame_agrees": "true", "reasoning": "Command validation subprocesses are spawned with start_new_session=True to create a process group."}
+{"id": "C017", "frame_agrees": "true", "reasoning": "Code checks if child PGID matches daemon PGID and raises RuntimeError to prevent hijacking."}
+{"id": "C018", "frame_agrees": "true", "reasoning": "Code sends SIGTERM, waits for a 2-second timeout, and sends SIGKILL if the validation command group is still running."}
+{"id": "C019", "frame_agrees": "true", "reasoning": "The backends/__init__.py docstring references the deleted claude_cli_legacy module."}
+{"id": "C020", "frame_agrees": "true", "reasoning": "The backend pool builder explicitly hardcodes AnthropicApiBackend creation under the Doctrine Exception Registry."}
+{"id": "C021", "frame_agrees": "true", "reasoning": "recursive_light is registered in registry.py but has no dedicated backend module file under backends/."}
+{"id": "C022", "frame_agrees": "true", "reasoning": "anthropic client SDK is listed under the primary dependencies array in pyproject.toml."}
+{"id": "C023", "frame_agrees": "false", "reasoning": "The backends package does not contain generic native HTTP executors as they have been retired, leaving only AnthropicApiBackend and OllamaBackend. This is documented as an architectural drift."}
+{"id": "C024", "frame_agrees": "true", "reasoning": "AnthropicApiBackend implements message execution using the official anthropic SDK."}
+{"id": "C025", "frame_agrees": "true", "reasoning": "OllamaBackend executes prompts and translates tools using Ollama's HTTP API."}
+{"id": "C026", "frame_agrees": "true", "reasoning": "A2A registry and inboxes are defined in BatonAdapter in-memory only and not persisted in checkpoints."}
+{"id": "C027", "frame_agrees": "true", "reasoning": "A2ATaskCompleted event class is defined and serialized but never fired or processed by the baton loop."}
+{"id": "C028", "frame_agrees": "true", "reasoning": "A2ATaskFailed event class is defined and serialized but never fired or processed by the baton loop."}
+{"id": "C029", "frame_agrees": "true", "reasoning": "CronTick event cases are handled in the event loop by generating an unimplemented warning."}
+{"id": "C030", "frame_agrees": "true", "reasoning": "ConfigReloaded event cases are handled in the event loop by generating an unimplemented warning."}
+{"id": "C031", "frame_agrees": "true", "reasoning": "GroundingConfig is present in configuration models, but no runtime code invokes grounding hooks."}
+{"id": "C032", "frame_agrees": "true", "reasoning": "reap_orphaned_backends is disabled (returns an empty list) to prevent VM power-offs on WSL2."}
+{"id": "C033", "frame_agrees": "false", "reasoning": "There is no module-level disabled boolean flag; the function is directly hardcoded as a no-op method."}
+{"id": "C034", "frame_agrees": "true", "reasoning": "Conductor locks PID files using fcntl.flock with exclusive non-blocking flags."}
+{"id": "C035", "frame_agrees": "true", "reasoning": "The CLI --version flag outputs the version string imported from marianne.__version__."}
+{"id": "C036", "frame_agrees": "true", "reasoning": "If model pricing is missing, the cost tracks as 0.0 with cost_uncertain set to True."}
+{"id": "C037", "frame_agrees": "true", "reasoning": "state_backend is a Literal field in JobConfig that defaults to 'sqlite' but accepts 'json'."}
+{"id": "C038", "frame_agrees": "true", "reasoning": "Relative workspace paths are resolved using the parent directory of the score file."}
+{"id": "C039", "frame_agrees": "true", "reasoning": "PromptConfig raises ValueError if both inline template and template_file are set."}
+{"id": "C040", "frame_agrees": "true", "reasoning": "Compatibility aliases for old stage/instance terms are mapped inside Sheet.template_variables()."}
+{"id": "C041", "frame_agrees": "true", "reasoning": "JobStatus is an Enum defining exactly 7 distinct status states."}
+{"id": "C042", "frame_agrees": "true", "reasoning": "SheetStatus is an Enum defining exactly 11 distinct scheduling states."}
+{"id": "C043", "frame_agrees": "true", "reasoning": "OutcomeCategory is an Enum defining exactly 6 distinct execution outcome categories."}
+{"id": "C044", "frame_agrees": "true", "reasoning": "SCHEMA_VERSION in sqlite_backend.py is defined as constant integer 4."}
+{"id": "C045", "frame_agrees": "true", "reasoning": "SCHEMA_VERSION in learning/store/base.py is defined as constant integer 15."}
+{"id": "C046", "frame_agrees": "true", "reasoning": "Severity is an IntEnum where lower numeric values denote higher severity levels."}
+{"id": "C047", "frame_agrees": "false", "reasoning": "Error categories are parsed using self.value[1], which is the first numeric digit (second character) of the code string, not the second digit (index 2)."}
+{"id": "C048", "frame_agrees": "true", "reasoning": "MAX_OUTPUT_CAPTURE_BYTES defines the limit of output capture as 51200 bytes in checkpoint.py."}

@@ -1,0 +1,11 @@
+    PENDING = "pending"
+    READY = "ready"              # Dependencies met, eligible for dispatch
+    DISPATCHED = "dispatched"    # Sent to musician, not yet running
+    IN_PROGRESS = "in_progress"  # Musician actively executing (alias: RUNNING)
+    WAITING = "waiting"          # Blocked on rate-limited instrument
+    RETRY_SCHEDULED = "retry_scheduled"  # Failed, awaiting retry timer
+    FERMATA = "fermata"          # Paused for escalation decision
+    COMPLETED = "completed"
+    FAILED = "failed"
+    SKIPPED = "skipped"
+    CANCELLED = "cancelled"

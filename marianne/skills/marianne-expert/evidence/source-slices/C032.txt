@@ -1,0 +1,5 @@
+    cleanup_orphans() walks the daemon's own child tree via psutil.
+    This misses processes that were reparented to init (PID 1) after
+    their parent (e.g. Claude CLI) exited — which is exactly how
+    MCP/LSP server leaks happen.  reap_orphaned_backends() scans
+    ALL processes owned by the current user for known orphan patterns.

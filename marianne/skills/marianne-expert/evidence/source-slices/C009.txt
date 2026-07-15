@@ -1,0 +1,1 @@
+        self._inbox: asyncio.Queue[BatonEvent] = inbox or asyncio.Queue()

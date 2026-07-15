@@ -1,0 +1,11 @@
+Repair the interpolation bugs in this Marianne score fragment. Return the corrected fragment and explain every change; there are exactly two syntax-domain mistakes.
+
+```yaml
+workspace: ./work
+prompt:
+  template: |
+    Write the report to {workspace}/report.md.
+validations:
+  - type: file_exists
+    path: "{{ workspace }}/report.md"
+```

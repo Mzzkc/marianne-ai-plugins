@@ -1,0 +1,8 @@
+task_prompt: |-
+  Design an operator smoke test for two documented live features: (1) a `CronTick` submits a score and schedules its next tick, and (2) `ConfigReloaded` rebuilds pending sheets. Before giving steps, classify what the current baton does for each event and whether either feature can honestly be smoke-tested end to end today.
+correct_answer: |-
+  Both are spec-only at runtime. The baton event loop matches `CronTick` and `ConfigReloaded`, but each branch only logs `baton.event.unimplemented` with its event type. `CronTick` does not submit a job or schedule another tick, and `ConfigReloaded` does not rebuild pending sheets. Neither documented feature has an end-to-end behavior to smoke-test today; a legitimate test can only assert the warning/no-op until implementation lands.
+trap: |-
+  Event classes, serializer support, and detailed design prose make the features look wired. A solver may infer execution from the existence of named events and propose an operational test for behavior the handlers never perform.
+effect: |-
+  Design an operator smoke test for two documented live features: (1) a `CronTick` submits a score and schedules its next tick, and (2) `ConfigReloaded` rebuilds pending sheets. Before giving steps, classify what the current baton does for each event and whether either feature can honestly be smoke-tested end to end today.

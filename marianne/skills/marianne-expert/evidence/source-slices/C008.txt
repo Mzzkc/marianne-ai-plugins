@@ -1,0 +1,7 @@
+            if config.stagger_delay_ms > 0:
+                inst_state = baton.get_instrument_state(instrument)
+                if (
+                    inst_state is not None
+                    and now - inst_state.last_dispatch_at
+                    < config.stagger_delay_ms / 1000.0
+                ):

@@ -1,0 +1,4 @@
+Design notes:
+- dispatch_ready() is a free function, not a method on BatonCore.
+  This keeps the core focused on state management and event handling.
+  The conductor calls dispatch_ready() after the baton processes each event.

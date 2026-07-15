@@ -1,0 +1,3 @@
+    if value:
+        console.print(f"Marianne AI Compose v{__version__}")
+        raise typer.Exit()

@@ -1,0 +1,16 @@
+threat_type: hardcoded-noop-presented-as-operator-toggle
+trigger_signature: >
+  Prose describes a module-level enable/disable flag for a safety behavior
+  (e.g. orphan backend reaping). In reality the relevant methods return no-op
+  results inline with no operator-controllable toggle. Method names and a
+  "disabled" motivation narrative invite inventing the alleged flag.
+countermeasure: >
+  When prose mentions a toggle/flag, search the module for the actual symbol.
+  If reaping/cleanup methods return empty/no-op results inline and no
+  module-level boolean exists, state: the behavior is a hardcoded safety no-op
+  and there is NO operator toggle. Do not fabricate a flag from prose
+  describing "disabled" behavior. Record the real motivation (e.g. WSL2
+  shutdown incidents) so the no-op is understood, not mistaken for a stub.
+confidence: high
+timestamp: 2026-07-15T18:29:21Z
+claim_ids: [C033]

@@ -1,0 +1,3 @@
+            ),
+            cost_uncertain=_pricing_missing(cost_per_1k_input, cost_per_1k_output),
+            input_tokens=exec_result.input_tokens or 0,

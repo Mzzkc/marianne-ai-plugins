@@ -1,0 +1,5 @@
+only the standard library so sandboxed agent code can import it without
+Marianne installed in the sandbox environment.
+"""
+
+from __future__ import annotations

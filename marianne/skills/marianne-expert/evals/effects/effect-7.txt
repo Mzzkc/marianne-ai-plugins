@@ -1,0 +1,1 @@
+I am hardening a production score. If I set `grounding.enabled: true` with checksum hooks and turn on the documented module-level orphan-reaping flag, can I claim outputs are externally grounded and abandoned backend processes will be killed? Separate configuration acceptance from runtime enforcement and name any operator-controllable orphan toggle.

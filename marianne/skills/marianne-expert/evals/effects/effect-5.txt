@@ -1,0 +1,1 @@
+We need to patch a provider bug in Marianne's native `recursive_light` Python backend. Identify the backend module/class to edit, describe how it is dispatched, and say whether the instrument is usable today. Be precise: "no native module" is not the same as "not implemented."

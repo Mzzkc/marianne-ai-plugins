@@ -1,0 +1,6 @@
+@dataclass(frozen=True)
+class A2ATaskFailed:
+    """A delegated task could not be fulfilled.
+
+    The requesting agent is notified with the reason for failure so they
+    can decide whether to retry, delegate elsewhere, or handle it themselves.

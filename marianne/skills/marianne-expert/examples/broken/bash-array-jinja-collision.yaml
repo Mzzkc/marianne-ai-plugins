@@ -1,0 +1,31 @@
+# Diagnosis:
+# What breaks: The bash syntax for finding array length `${#arr[@]}` or variable length `${#var}` contains the characters `{#`, which is the Jinja comment opening syntax. The Jinja template engine parses this as the start of a Jinja comment, swallowing everything until the next `#}` or the end of the file. This results in silent truncation of the rendered bash script, which subsequently fails to run.
+# Detection signature: V305 (Detects bash '${#...}' length syntax that Jinja eats as a comment) triggers an ERROR.
+# The fix: Either wrap the bash array expression in `{% raw %}` and `{% endraw %}`, or use an alternative bash mechanism like `$(printf '%s\n' "${arr[@]}" | wc -l)` to avoid the `{#` substring.
+# Claim ID: Gap 13
+
+name: "bash-array-jinja-collision"
+description: "Intentionally broken score demonstrating bash array length syntax causing a Jinja comment collision (Gap 13)"
+
+workspace: "./workspace"
+
+instrument: cli
+
+sheet:
+  size: 1
+  total_items: 1
+
+prompt:
+  template: |
+    # Define an array of source files
+    src_files=("file1.txt" "file2.txt" "file3.txt")
+
+    # Get the length of the array — this will collide with Jinja comment syntax!
+    len=${#src_files[@]}
+
+    echo "Found $len files" > {{ workspace }}/output.txt
+
+validations:
+  - type: file_exists
+    path: "{workspace}/output.txt"
+    description: "Expected output file exists"

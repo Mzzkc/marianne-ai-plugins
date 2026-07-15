@@ -1,0 +1,4 @@
+Prompt rendering is deferred. The template stays unrendered because
+cross-sheet context ({{ previous_outputs[2] }}) only exists after earlier
+sheets complete. The baton renders at dispatch time.
+"""

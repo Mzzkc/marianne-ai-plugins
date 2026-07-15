@@ -1,0 +1,5 @@
+            # Old terminology (aliases — kept forever)
+            "stage": self.movement,
+            "instance": self.voice,
+            "fan_count": self.voice_count,
+            "total_stages": total_movements,

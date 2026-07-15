@@ -1,0 +1,7 @@
+    """Construct a Backend for schema_family='anthropic' profiles.
+
+    Uses the native AnthropicApiBackend (Doctrine Exception Registry: the
+    Anthropic SDK provides thinking/streaming/tool_use features that a
+    generic HTTP POST cannot replicate, so this backend remains native).
+    """
+    from marianne.backends.anthropic_api import AnthropicApiBackend
