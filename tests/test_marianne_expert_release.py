@@ -57,11 +57,16 @@ class MarianneExpertPackageTests(unittest.TestCase):
                 offenders.append(str(path.relative_to(EXPERT_ROOT)))
         self.assertEqual(offenders, [])
 
-    def test_release_metadata_is_candidate_honest(self) -> None:
+    def test_release_metadata_records_completed_acting_acceptance(self) -> None:
         release = (EXPERT_ROOT / "RELEASE.md").read_text(encoding="utf-8")
         manifest = (EXPERT_ROOT / "MANIFEST.md").read_text(encoding="utf-8")
+        version = (EXPERT_ROOT / "VERSION").read_text(encoding="utf-8")
         self.assertIn("1.1.0", release)
-        self.assertIn("PENDING_ACTING_ACCEPTANCE", release)
+        self.assertIn("RELEASED", release)
+        self.assertIn("final-score", release)
+        self.assertIn("10739 passed", release)
+        self.assertIn("status: released", version)
+        self.assertIn("verdict: RELEASED", version)
         self.assertIn("capability vector", release.lower())
         self.assertNotIn("This package is self-regenerating", release)
         self.assertIn("scripts/preflight.py", manifest)

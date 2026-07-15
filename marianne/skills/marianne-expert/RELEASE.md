@@ -1,10 +1,11 @@
 # RELEASE — Marianne Expert 1.1.0
 
-## Verdict: **PENDING_ACTING_ACCEPTANCE**
+## Verdict: **RELEASED**
 
 The 1.0.0 factual defense remains historical evidence, not the 1.1.0 release
-gate. Version 1.1.0 is released only after the Marianne C1 acting acceptance
-finishes and the evaluated package digest equals the installed package digest.
+gate. Version 1.1.0 passed its live Marianne C1 acting acceptance on
+2026-07-15. The evaluated package is installed byte-identically in both local
+skill roots.
 
 ## Changes
 
@@ -19,18 +20,29 @@ finishes and the evaluated package digest equals the installed package digest.
 - Retired the claim that the historical publisher concert is a bundled,
   self-regenerating release mechanism.
 
-## Required release evidence
+## Release evidence
 
-1. Plugin unit tests and skill validators pass.
-2. The package manifest verifies after relocation.
-3. Codex and Agents installations are byte-identical.
-4. A Marianne-run expert records `marianne_harness: true`, current source state,
-   explicit authority, and the candidate release sentinel.
-5. The expert reconciles the raw C1 handoff against live source before edits.
-6. C1 targeted tests, full suite, documentation scans, and live instrument
-   checks pass after the final repair.
-7. Any change after evaluation invalidates the candidate digest and triggers a
-   fresh evaluation.
+1. Plugin unit tests passed: `32 tests` before release finalization.
+2. The skill validator and relocatable package manifest passed.
+3. Codex and Agents installations verified byte-identical to the canonical
+   plugin package.
+4. Live Marianne job `final-score` completed in one attempt with all eight
+   validations passing. The expert recorded `marianne_harness: true`, explicit
+   source-write authority, candidate import provenance, and
+   `MARIANNE_EXPERT_RELEASE_V1_1`.
+5. The expert reviewed acting commit `0cc3e67` and issued PASS without source
+   repair. The integrated parent commit is `368eb45`.
+6. Focused live-expert verification passed `37 tests`. The authoritative
+   candidate suite passed: `10739 passed, 70 skipped, 17 xfailed, 6 xpassed`.
+   Static source/example scans, YAML parsing, lock checking, Ollama discovery,
+   and retired-Anthropic rejection also passed.
+7. The composing design and score release gates passed before submission and
+   locked the skill, design, report, and score inputs.
+
+The live report is
+`/home/emzi/workspaces/marianne-expert-c1-final-20260715/final-review.md`.
+Any later package change requires manifest regeneration and re-verification;
+behavioral changes require a fresh acting acceptance.
 
 ## Pinned evidence compatibility
 
