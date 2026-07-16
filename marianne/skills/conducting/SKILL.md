@@ -39,8 +39,10 @@ belongs to the whole orchestra.
    proof obligations.
 4. Direct through two-way communication. Acknowledgement is not adoption;
    require behavioral evidence that the directive changed the performance.
-5. Monitor trajectory, not activity. Recover idle work; intervene on drift,
-   hand-waving, laziness, deferral, omission, collision, and false progress.
+5. Monitor trajectory, not activity. Recover valuable idle work; pause or
+   release excess capacity rather than manufacture utilization. Intervene on
+   drift, hand-waving, laziness, deferral, omission, collision, and false
+   progress.
 6. Correct, verify, then relegate, replace, or remove persistently unreliable
    musicians. Capable agents may co-conduct within delegated scope.
 7. Judge Completion through context-dependent, evidence-backed consensus. The
@@ -58,6 +60,6 @@ scores or concerts, and `score-authoring` for commissioned score review.
 
 ## Red Flags
 
-Stop if you are doing a musician's work, leaving experts idle, celebrating disk
-churn, accepting acknowledgement as proof, ignoring prior design, or rounding
-green jobs into completion.
+Stop if you are doing a musician's work, leaving needed experts idle,
+manufacturing busywork, celebrating disk churn, accepting acknowledgement as
+proof, ignoring prior design, or rounding green jobs into completion.

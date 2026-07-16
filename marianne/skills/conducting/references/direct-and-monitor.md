@@ -49,7 +49,8 @@ Watch trajectory and evidence, not message volume. Track:
 
 The conductor's attention is scarce. Restore useful work to idle experts,
 delegate observation, and avoid becoming the slowest serial worker in a
-parallel system.
+parallel system. If no valuable assignment exists, pause or release the excess
+capacity. Never manufacture utilization to make the orchestra look busy.
 
 ## Status judgment
 

@@ -69,6 +69,11 @@ class ConductingSkillReleaseTests(unittest.TestCase):
         self.assertNotIn("update compiler code", text)
         self.assertNotIn("compile, do not hand-maintain", text)
 
+    def test_router_rejects_fake_utilization(self) -> None:
+        text = (ROOT / "SKILL.md").read_text(encoding="utf-8").lower()
+        self.assertIn("manufacture utilization", text)
+        self.assertRegex(text, r"pause or\s+release")
+
     def test_package_contains_no_volatile_machine_doctrine(self) -> None:
         combined = "\n".join(
             path.read_text(encoding="utf-8", errors="ignore")
