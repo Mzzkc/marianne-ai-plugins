@@ -1,0 +1,4 @@
+interface:
+  display_name: "Marianne Conductor"
+  short_description: "Direct expert performances toward a shared vision"
+  default_prompt: "Use $conducting to direct this performance without taking over the musicians' substantive work."
