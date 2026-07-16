@@ -4,6 +4,33 @@ Append-only log of changes to `instrument-catalog.yaml`.
 
 ---
 
+## 2026-07-16 — GPT-5.6 folded into Codex (clean break)
+
+**Drove by:** correction of the instrument/musician boundary. The earlier
+standalone `gpt-5.6` profile duplicated the Codex executable contract and
+incorrectly treated a model family as an instrument.
+
+### Changes
+- **Rejected** the standalone `gpt-5.6` instrument. No alias, shim, or
+  deprecation period remains.
+- **Added** GPT-5.6 Sol, Terra, Luna, and their `[1m]` variants to
+  `codex-cli.runs_models`.
+- **Added** factual Sol/Terra/Luna musician entries using the source set
+  verified 2026-07-15: vendor documentation, `codex doctor`, and the local
+  Codex model cache.
+- **Left Codex's default model unset.** Marianne passes no model flag unless a
+  score explicitly supplies `instrument_config.model`.
+- **Marked** GPT-5.5 as superseded for new Codex work and repointed current
+  recommendation chains to GPT-5.6.
+
+### Honesty boundary
+- Model identifiers, context windows, output limits, prices, and Codex
+  capabilities are verified.
+- Comparative catalog ratings remain empty pending a future thinking-lab
+  cross-rating pass; this correction does not fabricate ratings.
+
+---
+
 ## 2026-06-14 — GLM 5.1 → 5.2 interim repoint (provisional)
 
 **Drove by:** the live opencode instrument moved from `zai-coding-plan/glm-5.1` to `zai-coding-plan/glm-5.2` (Z.AI Coding Plan). Composers following the catalog's chains must be guided to the current model.

@@ -21,8 +21,8 @@
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 
 schema_version: 1
-generated_at: "2026-06-14"
-generated_by: "v1.1 — fact-fold from version-research agent (2026-04-29) + gap-research agent (2026-04-29) + 3-of-5 lab cross-rating reviews (Opus 4.7, Gemini 3.1 Pro, GPT-5.5) + user direct testimony on GLM 5.1. Lab pass for Gemma 4 / GLM 5.1 ratings deferred to next refresh (GLM lab failure was chunked-tool-call issue, now documented as a quirk and remediated for future runs). | 2026-06-14 interim edit: live instrument moved glm-5.1 → glm-5.2; provisional glm-5.2 entry added (existence + Coding-Plan availability session-verified; ratings/benchmarks/license PENDING lab fact-fold); use-case chains repointed to glm-5.2; glm-5.1 retained as documented prior release."
+generated_at: "2026-07-16"
+generated_by: "v1.1 — fact-fold from version-research agent (2026-04-29) + gap-research agent (2026-04-29) + 3-of-5 lab cross-rating reviews (Opus 4.7, Gemini 3.1 Pro, GPT-5.5) + user direct testimony on GLM 5.1. Lab pass for Gemma 4 / GLM 5.1 ratings deferred to next refresh (GLM lab failure was chunked-tool-call issue, now documented as a quirk and remediated for future runs). | 2026-06-14 interim edit: live instrument moved glm-5.1 → glm-5.2; provisional glm-5.2 entry added (existence + Coding-Plan availability session-verified; ratings/benchmarks/license PENDING lab fact-fold); use-case chains repointed to glm-5.2; glm-5.1 retained as documented prior release. | 2026-07-16 Codex cleanup: GPT-5.6 Sol/Terra/Luna and their [1m] variants folded into codex-cli; the mistaken standalone gpt-5.6 instrument rejected; Codex default remains client-selected."
 
 sources:
   - path: "docs/plans/features/2026-04-08-auto-routing-design.md"
@@ -153,18 +153,25 @@ instruments:
     notes: "Strong multimodal native support; good for vision-heavy tasks."
 
   codex-cli:
-    description: "OpenAI's Codex CLI with tool use, file editing"
+    description: "OpenAI's Codex CLI with tool use, file editing, vision, and reasoning"
     binary: "codex"
     auth: "openai_plus_subscription_or_api_key"
-    capabilities: [tool_use, file_edit, shell, vision]
+    capabilities: [tool_use, file_edit, shell, vision, mcp, structured_output,
+                   streaming, thinking, session_resume]
     runs_models:
+      - gpt-5.6-sol
+      - "gpt-5.6-sol[1m]"
+      - gpt-5.6-terra
+      - "gpt-5.6-terra[1m]"
+      - gpt-5.6-luna
+      - "gpt-5.6-luna[1m]"
       - gpt-5.5
       - gpt-5
       - gpt-4.1
       - o4-mini
       - o3-mini
     fallback_instruments: []
-    notes: "Plus subscription supplies GPT-5.5 access. Strong for cross-vendor verification of Claude work."
+    notes: "GPT-5.6 is a model family selected through codex-cli, not a separate instrument. Marianne leaves the Codex default model unset; scores may choose Sol, Terra, or Luna with instrument_config.model."
 
   opencode:
     description: "Multi-provider CLI; routes to OpenRouter, local providers, or specific endpoints"
@@ -361,15 +368,86 @@ musicians:
 
   # ── OpenAI ───────────────────────────────────────────────────────────────────
 
+  gpt-5.6-sol:
+    provider: openai
+    family: "GPT-5.6"
+    context_window: 272000
+    max_output_tokens: 128000
+    cost_per_1m_input: 5.00
+    cost_per_1m_output: 30.00
+    available_via: [codex-cli]
+    tags: [max, heavy, premier, subscription]
+    task_tags: [code, code-translation, code-review, review, research, writing,
+                transform, design, synthesis, planning, reasoning, math,
+                tool-use, agent]
+    modality_tags: [text, vision]
+    ratings: {}
+    strengths:
+      - "Flagship GPT-5.6 tier for the hardest coding and reasoning work"
+      - "Available with a 1,050,000-token [1m] variant through codex-cli"
+    weaknesses:
+      - "Most expensive GPT-5.6 tier; reserve it for work that needs the capacity"
+    last_verified: "2026-07-15"
+    verified_via: [vendor_docs, codex_doctor, codex_models_cache]
+    notes: "Capabilities and pricing are verified; comparative ratings await a catalog lab pass."
+
+  gpt-5.6-terra:
+    provider: openai
+    family: "GPT-5.6"
+    context_window: 272000
+    max_output_tokens: 128000
+    cost_per_1m_input: 2.50
+    cost_per_1m_output: 15.00
+    available_via: [codex-cli]
+    tags: [heavy, standard, premier, subscription]
+    task_tags: [code, code-translation, code-review, review, research, writing,
+                transform, design, synthesis, planning, reasoning, tool-use,
+                agent]
+    modality_tags: [text, vision]
+    ratings: {}
+    strengths:
+      - "Balanced GPT-5.6 tier for general agentic work"
+      - "Available with a 1,050,000-token [1m] variant through codex-cli"
+    weaknesses:
+      - "Use Sol when the performance ceiling matters more than cost"
+    last_verified: "2026-07-15"
+    verified_via: [vendor_docs, codex_doctor, codex_models_cache]
+    notes: "Capabilities and pricing are verified; comparative ratings await a catalog lab pass. Marianne does not set Terra as the Codex default."
+
+  gpt-5.6-luna:
+    provider: openai
+    family: "GPT-5.6"
+    context_window: 272000
+    max_output_tokens: 128000
+    cost_per_1m_input: 1.00
+    cost_per_1m_output: 6.00
+    available_via: [codex-cli]
+    tags: [quick, standard, fast, subscription]
+    task_tags: [code, code-review, review, classification, routing, transform,
+                writing, tool-use]
+    modality_tags: [text, vision]
+    ratings: {}
+    strengths:
+      - "Fast, affordable GPT-5.6 tier for high-throughput work"
+      - "Available with a 1,050,000-token [1m] variant through codex-cli"
+    weaknesses:
+      - "Use Terra or Sol when deeper reasoning matters more than throughput"
+    last_verified: "2026-07-15"
+    verified_via: [vendor_docs, codex_doctor, codex_models_cache]
+    notes: "Capabilities and pricing are verified; comparative ratings await a catalog lab pass. Luna is an explicit score choice, not Marianne's Codex default."
+
   gpt-5.5:
     provider: openai
     family: "GPT-5"
+    status: superseded
+    superseded_by: "gpt-5.6-terra"
+    supersession_note: "The GPT-5.6 family supersedes GPT-5.5 for new Codex work."
     context_window: 256000
     max_output_tokens: 32768
     cost_per_1m_input: 5.00
     cost_per_1m_output: 25.00
     available_via: [codex-cli]
-    tags: [max, heavy, premier, subscription]
+    tags: [max, heavy, premier, subscription, deprecated]
     task_tags: [code, code-translation, code-review, review, research, writing,
                 transform, design, synthesis, planning, reasoning, tool-use, agent]
     modality_tags: [text, vision]
@@ -388,6 +466,7 @@ musicians:
       - "Confident structuring, willing to take definite positions"
       - "Strong on long-context retrieval and synthesis"
     weaknesses:
+      - "Superseded by the GPT-5.6 family; prefer an explicit Sol, Terra, or Luna selection"
       - "Slightly more prone to confident hallucination than Claude on edge cases"
       - "Less malleable to system prompt instructions vs. Anthropic models"
     last_verified: "2026-04-29"
@@ -398,7 +477,7 @@ musicians:
     family: "GPT-5"
     status: deprecated
     deprecated_date: "2026-02-13"
-    deprecation_note: "Retired from ChatGPT 2026-02-13. API access still available; new work should target gpt-5.5."
+    deprecation_note: "Retired from ChatGPT 2026-02-13. API access still available; new Codex work should target the GPT-5.6 family."
     context_window: 200000
     max_output_tokens: 16384
     cost_per_1m_input: 2.50
@@ -485,7 +564,7 @@ musicians:
       - "Strong multimodal native (handles images + text + audio in one prompt)"
       - "Different blind spots from Claude/GPT — useful 3rd cross-vendor reviewer"
     weaknesses:
-      - "Less aggressive on code generation vs. Claude Sonnet 4.6 / GPT-5.5"
+      - "Less aggressive on code generation vs. Claude Sonnet 4.6 / GPT-5.6"
       - "Format adherence can drift on long outputs"
     last_verified: "2026-04-29"
     verified_via: [vendor_docs, judgment]
@@ -1886,7 +1965,7 @@ use_case_chains:
       - mistral-small-4                          # Apache-2.0 multimodal
     last_resort:
       - claude-opus-4-7
-      - gpt-5.5
+      - gpt-5.6-sol
       - glm-5.2                                  # different training lineage → different blind spots (provisional)
     rationale: "Qwen3-Coder-480B is the new strongest open code model — primary for serious work. MiniMax M2.5 still leads SWE-Bench Verified at 80.2%. Reserve premium for genuinely hard code."
 
@@ -1926,7 +2005,7 @@ use_case_chains:
     fallback:
       - claude-opus-4-7                      # 1M context, adaptive thinking
     last_resort:
-      - gpt-5.5                              # 1M context, expensive
+      - gpt-5.6-sol                          # 1M variant available; expensive
     rationale: "Per user direct testimony, the GLM family outperforms Gemini for this pattern — frontier ≡ capability tier, not vendor origin. The chain now points to glm-5.2 (5.1's successor); 5.2's ratings are pending lab verification, so treat the primary placement as provisional until a fact-fold pass confirms."
     notes: "GLM may need chunked-write prompt guidance (quirk documented on glm-5.1, unverified whether 5.2 retains it — include the guidance defensively until disproven)."
 
@@ -1955,11 +2034,11 @@ use_case_chains:
     description: "Adversarial verification — review primary work with a different vendor's eyes"
     pattern: "Use the thinking-lab.yaml score to fan out to all five vendor families simultaneously"
     typical_pairs:
-      - { primary: claude-opus-4-7,        reviewer: gpt-5.5 }
+      - { primary: claude-opus-4-7,        reviewer: gpt-5.6-terra }
       - { primary: claude-opus-4-7,        reviewer: gemini-3.1-pro-preview }
       - { primary: claude-opus-4-7,        reviewer: glm-5.2 }
-      - { primary: gpt-5.5,                reviewer: claude-opus-4-7 }
-      - { primary: gpt-5.5,                reviewer: glm-5.2 }
+      - { primary: gpt-5.6-terra,          reviewer: claude-opus-4-7 }
+      - { primary: gpt-5.6-terra,          reviewer: glm-5.2 }
       - { primary: glm-5.2,                reviewer: claude-opus-4-7 }
       - { primary: qwen3-coder-480b-a35b-instruct, reviewer: claude-sonnet-4-6 }
       - { primary: openrouter/minimax/minimax-m2.5:free, reviewer: claude-sonnet-4-6 }
@@ -1973,7 +2052,7 @@ use_case_chains:
       - claude-sonnet-4-6                    # premier balance of speed and quality
     fallback:
       - claude-opus-4-7
-      - gpt-5.5
+      - gpt-5.6-terra
     last_resort: []
     rationale: "Agent loops eat tokens. Pay attention to per-call cost."
 
