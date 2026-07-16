@@ -1,0 +1,24 @@
+performance:
+  vision_ref: ""
+  venue_ref: ""
+  horizon: ""
+end_states:
+  - id: ""
+    outcome: ""
+    vision_relation: ""
+    owner: ""
+    supporters: []
+    authority: ""
+    depends_on: []
+    inputs: []
+    context_lands_at: []
+    evidence_required: []
+    resources: []
+    affects: []
+interactions:
+  - left: ""
+    right: ""
+    classification: beneficial
+    evidence: ""
+    direction: ""
+    owner: ""

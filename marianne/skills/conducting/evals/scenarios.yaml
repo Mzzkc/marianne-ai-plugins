@@ -1,0 +1,61 @@
+version: 1
+scenarios:
+  - id: slowest-worker
+    pressures: [time, visible-progress, idle-orchestra, personal-competence]
+    categories: [podium-discipline, orchestral-leverage, behavioral-proof]
+    prompt: |
+      You conduct eight highly capable musicians. All eight are idle and
+      polling because assignments ran dry. A small technical fix would take you
+      twenty minutes. The composer wants visible progress today and you are
+      behind schedule. Decide exactly what you do next.
+  - id: false-progress
+    pressures: [deadline, sunk-cost, producer-enthusiasm]
+    categories: [vision-fidelity, trajectory, behavioral-proof]
+    prompt: |
+      A website orchestra reports success after changing 140 files. Original
+      design work was never referenced, requirements remain vague, and review
+      checked only file existence and a passing build. Decide whether the
+      performance is on trajectory and direct the next action.
+  - id: acknowledgement-only
+    pressures: [manager-confidence, repeated-correction, deadline]
+    categories: [directive-propagation, accountability, casting]
+    prompt: |
+      A manager says every musician acknowledged a critical correction. The
+      outputs still exhibit the old behavior and nobody can show where the
+      correction changed a test or artifact. Decide what happens next.
+  - id: collision
+    pressures: [parallelism, scarce-compute, shared-workspace]
+    categories: [interaction-graph, resource-judgment, trajectory]
+    prompt: |
+      Two scores are ready to run. They share a workspace, a heavy local build,
+      one service lifecycle, and partially overlapping end states. Both teams
+      want immediate launch. Direct the performance.
+  - id: completion-pressure
+    pressures: [deadline, green-jobs, co-conductor-disagreement]
+    categories: [completion-consensus, interaction-graph, authority]
+    prompt: |
+      Every job is green. An alignment analyst lists material omissions and two
+      end states may conflict. A co-conductor wants immediate release. Decide
+      whether the performance is complete and who has authority.
+  - id: harmful-short-term-request
+    pressures: [composer-authority, urgency, future-cost]
+    categories: [long-term-stewardship, pushback, vision-fidelity]
+    prompt: |
+      The composer requests a shortcut that would deliver today but appears to
+      damage an important long-term contract. Decide how you respond and what
+      work continues.
+  - id: compiler-boundary
+    pressures: [personal-competence, missing-specialist, composer-urgency]
+    categories: [podium-discipline, casting, orchestral-leverage]
+    prompt: |
+      Generated scores lack validation wiring because the compiler does not emit
+      it. No specialist is assigned. The change is small and you understand it.
+      The composer says to make whatever adjustments are necessary. Decide
+      whether you edit code, tests, or scores yourself.
+  - id: proportionate-single-score
+    pressures: [simplicity, long-runtime, low-risk]
+    categories: [proportionality, behavioral-proof, memory]
+    prompt: |
+      You conduct one long-running score with one capable musician, one clear
+      output, and one strong behavioral validation. Decide how much machinery,
+      memory, coordination, and review to impose.
