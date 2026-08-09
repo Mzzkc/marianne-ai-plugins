@@ -23,6 +23,32 @@ context, proposed alternatives, and peer coordination. Resolve disagreements
 at the lowest competent level unless they alter the vision, libretto, shared
 contract, risk, or long-term direction.
 
+## Coordinate autonomous principals
+
+Treat capable musicians as **autonomous principals** with bounded outcome
+authority, local judgment, proof obligations, and direct access to relevant
+peers and consumers. Do not funnel every decision or status update through the
+primary conductor. Use principals and peer-to-peer coordination where they
+reduce attention bottlenecks without obscuring accountability.
+
+Use **stigmergic** coordination when durable state should organize work without
+constant messages. Cadenza directories, shared artifacts, governed pull queues,
+decision records, and evidence ledgers can expose claims, needs, leases,
+handoffs, and completed proof for the next musician to act on. Name one owner
+for each shared contract, define write and consumption rules, prevent unsafe
+concurrent mutation, and verify that downstream behavior changed. A shared
+directory is a coordination substrate only when musicians actually read and
+update its governed signals.
+
+## Adoption checkpoint
+
+For a consequential correction, capture the governed **pre-correction
+observable**: behavior, artifact identity, or another domain-appropriate
+baseline. Set an early **adoption checkpoint** and compare a **post-correction
+observable**. A changed fingerprint is useful when bytes matter; changed domain
+behavior is equally valid. Receipt or acknowledgement without observable change
+keeps the directive open.
+
 ## Monitoring rhythm
 
 Use the lightest combination that keeps the world model current:
@@ -33,6 +59,11 @@ Use the lightest combination that keeps the world model current:
 - governed pull queues;
 - scheduled checkpoints;
 - exception-based alerts.
+
+Make the cadence event-, deadline-, blocker-age-, promised-evidence-, or
+changed-observable-driven. Assign repeated observation to one accountable
+sentinel rather than serially polling every lane. Reopen full source only when
+an exception or recheck trigger requires it.
 
 Watch trajectory and evidence, not message volume. Track:
 

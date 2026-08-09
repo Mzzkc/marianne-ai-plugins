@@ -9,10 +9,21 @@ end_states:
     owner: ""
     supporters: []
     authority: ""
+    control_owner: ""
+    control_layer: "runtime-native | score approximation | conductor-supplied primitive"
+    coordination_substrate: "direct | principal | cadenza | shared artifacts | pull queue | other"
     depends_on: []
     inputs: []
     context_lands_at: []
     evidence_required: []
+    evidence_lanes:
+      persisted_state: ""
+      process_session: ""
+      interaction: ""
+      artifact: ""
+      semantic: ""
+      validation: ""
+      judgment: ""
     resources: []
     affects: []
 interactions:

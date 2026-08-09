@@ -1,5 +1,12 @@
 # Intervene and Cast
 
+## Separate state before replacement
+
+After an apparent stop, establish **job state**, **process/session** liveness,
+**interaction state**, artifact movement, and semantic progress independently.
+A pause in one lane does not close another. Before recasting, close, cancel, or
+transfer every live control surface so two owners cannot act on the same work.
+
 ## Intervention signals
 
 Intervene when a pattern shows:
@@ -36,6 +43,13 @@ not close it.
 ## Casting decisions
 
 Record demonstrated behavior, not personality labels.
+
+When casting a **persistent agent**, verify identity and profile provenance,
+**relevant recent memory**, relevant **growth context**, lifecycle provenance,
+and evidence that this context reached the recipient. A disposable musician
+given a familiar name is not that persistent agent. Verify **instrument health**
+and availability separately; instrument status does not prove identity or
+context delivery.
 
 - **Coach** when the gap is specific and the musician responds to evidence.
 - **Narrow** scope when reliability is adequate only for simpler or lower-risk

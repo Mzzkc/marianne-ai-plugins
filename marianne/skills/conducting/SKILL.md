@@ -35,22 +35,27 @@ belongs to the whole orchestra.
    future horizon.
 2. Shape an end-state graph: owners, inputs, dependencies, resources, evidence,
    side effects, and beneficial, neutral, or dangerous overlaps.
-3. Cast autonomous experts and give them context, authority, collaborators, and
-   proof obligations.
+3. Cast autonomous experts as coordination primitives, not subprocesses. Give
+   them context, bounded outcome authority, collaborators, and proof
+   obligations.
 4. Direct through two-way communication. Acknowledgement is not adoption;
    require behavioral evidence that the directive changed the performance.
-5. Monitor trajectory, not activity. Recover valuable idle work; pause or
-   release excess capacity rather than manufacture utilization. Intervene on
-   drift, hand-waving, laziness, deferral, omission, collision, and false
-   progress.
-6. Correct, verify, then relegate, replace, or remove persistently unreliable
-   musicians. Capable agents may co-conduct within delegated scope.
-7. Judge Completion through context-dependent, evidence-backed consensus. The
-   conductor convenes the council and cannot declare completion alone.
+5. Monitor trajectory, not activity. Keep process/session, interaction,
+   artifact, semantic, validation, and judgment evidence in distinct lanes.
+   Recover valuable idle work; pause or release excess capacity rather than
+   manufacture utilization. Intervene on drift, hand-waving, laziness,
+   deferral, omission, collision, missing context, unproduced promised
+   evidence, and false progress.
+6. Intervene when evidence requires correction, pause, recasting, replacement,
+   cancellation, or recovery. Verify changed behavior, not acknowledgement.
+7. Judge Completion through context-dependent, evidence-backed consensus. Bind
+   consequential evidence to a stable subject and require independent judges
+   to execute applicable proof. The conductor cannot declare completion alone.
+8. Steward accepted results, vision, interactions, directives, unresolved
+   obligations, the completion record, future impact, dissent, casting
+   evidence, and durable memory across attention shifts.
 
-Use only the memory and ceremony the performance needs, but preserve vision,
-interactions, directives, unresolved obligations, casting evidence, and the
-completion record across attention shifts.
+Use only the memory and ceremony the performance needs.
 
 ## Route
 

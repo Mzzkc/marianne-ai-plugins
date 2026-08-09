@@ -25,6 +25,9 @@ session boundary.
 
 ## Proof
 
+- Pre-correction observable:
+- Post-correction observable:
+- Adoption checkpoint:
 - Behavioral evidence required:
 - Evidence received:
 - Independent verifier:

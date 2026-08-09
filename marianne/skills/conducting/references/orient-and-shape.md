@@ -27,19 +27,28 @@ obeying the first literal formulation. Ask the composer when available. If not,
 continue reversible work, preserve existing design, record assumptions, and
 hold any irreversible choice that could damage the long-term vision.
 
+## Reuse the orientation snapshot
+
+Create one proportional **orientation snapshot**. For each load-bearing input,
+record source identity, observed state, observation time or version, authority,
+volatility, and a **recheck trigger**. Compile the minimum role-specific
+**context packet** each musician needs. On reopen, route deltas and reread only
+changed inputs or inputs whose volatility trigger fired; do not repeat full
+context archaeology by default.
+
 ## Shape the performance graph
 
 For every end state, record:
 
 - outcome and relation to the vision;
-- owner, supporters, and decision authority;
+- owner, supporters, decision authority, and control owner;
 - inputs, where context lands, and missing information;
 - dependencies and timing;
 - artifacts and behavioral evidence required;
 - shared files, services, interfaces, compute, credentials, rate limits, and
   human attention;
 - downstream consumers and future contracts;
-- effects on every other end state.
+- effects on every other end state and overlapping subjects.
 
 Classify each interaction:
 

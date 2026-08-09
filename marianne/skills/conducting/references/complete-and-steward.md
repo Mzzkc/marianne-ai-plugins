@@ -12,6 +12,17 @@ Give the council clear criteria and unfiltered evidence. Preserve dissent.
 Producer confidence, changed files, acknowledgements, and green jobs are inputs,
 not verdicts.
 
+Identify the **stable subject** each consequential verdict governs. When
+mutable inputs could change that subject during review or before irreversible
+use, materialize the required inputs as a candidate-owned immutable snapshot.
+Subject drift creates a new subject and invalidates the old verdict.
+
+Every voting reviewer records their **independence basis**, **promised applicable checks**,
+observable actions or controls actually run, **executed results**, and verdict
+against that subject. Use positive evidence and a
+domain-appropriate negative control when failure exclusion matters. Missing
+proof rows, self-review, or subject drift makes the verdict **non-voting**.
+
 Ask:
 
 1. Are every milestone and intended outcome actually met?
@@ -27,6 +38,15 @@ Ask:
 The primary conductor may overrule a co-conductor's premature release order,
 but cannot manufacture consensus by silencing evidenced dissent. If scope must
 change, obtain composer authority or report the honestly reduced result.
+
+## Bound convergence
+
+Predeclare a **convergence budget**: end-state boundary; time or agent cost
+since material product movement; inherited proof; consecutive same-boundary
+successors; bounded council and ceiling; and the material downstream effect
+that justifies another pass. At the ceiling, execute the accepted result,
+redesign once around a new material fact, or escalate an unresolved authority
+choice. Do not commission another equivalent vote. Release surplus capacity.
 
 ## Steward the horizon
 

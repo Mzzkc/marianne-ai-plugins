@@ -11,6 +11,16 @@ label.
 - Delegated authority:
 - Principal or co-conductor:
 
+## Persistent-agent provenance, when applicable
+
+- Identity provenance:
+- Profile provenance:
+- Relevant recent memory:
+- Relevant growth context:
+- Lifecycle provenance:
+- Context delivery evidence:
+- Instrument health evidence:
+
 ## Reliability evidence
 
 - Demonstrated strengths:
