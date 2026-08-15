@@ -38,6 +38,8 @@ def test_glm_5_3_catalog_capacity_and_calibration() -> None:
 
 def test_current_glm_routes_and_security_chain_use_5_3() -> None:
     catalog = _catalog()
+    musicians = catalog["musicians"]
+    assert isinstance(musicians, dict)
     chains = catalog["use_case_chains"]
     assert isinstance(chains, dict)
     assert "glm-5.2" not in str(chains)
@@ -46,6 +48,14 @@ def test_current_glm_routes_and_security_chain_use_5_3() -> None:
     assert security["primary"] == ["glm-5.3"]
     assert "authorized" in security["description"].lower()
     assert "specialized score" in security["rationale"].lower()
+
+    historical_guidance = " ".join(
+        str(musicians[model][field])
+        for model in ("glm-5.2", "glm-5.1")
+        for field in ("strengths", "notes")
+    )
+    assert "current frontier GLM" not in historical_guidance
+    assert "chains now point to" not in historical_guidance
 
 
 def test_composing_names_current_glm_but_conducting_stays_provider_neutral() -> None:

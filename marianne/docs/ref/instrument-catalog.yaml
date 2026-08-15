@@ -1259,7 +1259,7 @@ musicians:
     modality_tags: [text]
     ratings: {}                                        # PROVISIONAL — pending lab cross-rating
     strengths:
-      - "Successor to glm-5.1 in the GLM 5 family; the current frontier GLM served via the Z.AI Coding Plan."
+      - "Historical successor to glm-5.1 in the GLM 5 family; formerly served via the Z.AI Coding Plan before glm-5.3 became the live route."
       - "Different training lineage from US labs — valuable cross-vendor reviewer pairing (rationale inherited from 5.1)."
     weaknesses: []                                     # pending verification
     quirks:
@@ -1267,7 +1267,7 @@ musicians:
     benchmarks: {}                                     # do NOT carry over 5.1's SWE-Bench Pro 58.4 — different release
     last_verified: "2026-06-14"
     verified_via: [user_session_observation_2026_06_14]   # observed running via opencode on Z.AI Coding Plan
-    notes: "PROVISIONAL ENTRY — added manually when the live instrument moved from glm-5.1 to glm-5.2. Existence and Coding-Plan availability verified by direct session use; all ratings, benchmarks, license, and architecture PENDING a lab fact-fold pass (run scores/instrument-catalog-build-fold.yaml). The use-case chains below point here as the current GLM; glm-5.1 is retained as the documented prior release. Do NOT cite 5.1's SWE-Bench Pro 58.4 for 5.2."
+    notes: "HISTORICAL PROVISIONAL ENTRY — added manually when the live instrument moved from glm-5.1 to glm-5.2, then superseded by glm-5.3 on 2026-08-15. Existence and Coding-Plan availability were verified by direct session use; ratings, benchmarks, license, and architecture were never established by a catalog fact-fold. Active use-case chains select glm-5.3. Do NOT cite 5.1's SWE-Bench Pro 58.4 for 5.2."
 
   glm-5.1:
     provider: z-ai
@@ -1308,7 +1308,7 @@ musicians:
       swe_bench_pro: 0.584
     last_verified: "2026-04-29"
     verified_via: [vendor_docs, public_benchmarks, version_research_2026_04_29, user_direct_testimony]
-    notes: "User trusts GLM 5.1 over Gemini for complex long-running analysis. Prior catalog primary for the 'careful-long-running' use-case chain; succeeded by glm-5.2 (which the chains now point to). Retained as the documented prior release."
+    notes: "User trusts GLM 5.1 over Gemini for complex long-running analysis. Former catalog primary for the 'careful-long-running' use-case chain; later succeeded by glm-5.2 and then glm-5.3. Active chains select glm-5.3; this entry remains documented history."
 
   glm-5:
     provider: z-ai
