@@ -4,6 +4,35 @@ Append-only log of changes to `instrument-catalog.yaml`.
 
 ---
 
+## 2026-08-15 — GLM 5.3 one-million-context rollout
+
+**Drove by:** live OpenCode model-registry evidence and composer operational
+calibration. `zai-coding-plan/glm-5.3` reports a 1,000,000-token context limit,
+131,072-token output limit, reasoning support, and tool-call support.
+
+### Changes
+
+- Added `glm-5.3` as the current GLM entry, with separate provenance for live
+  capacity facts and composer-supplied capability calibration.
+- Recorded Fable 5-level performance only for well-bounded, clearly specified
+  tasks at high/max reasoning with observable proof obligations, attributed to
+  post-training rather than inherited benchmarks.
+- Added authorized defensive cybersecurity and vulnerability discovery as a
+  specialist use, gated by explicit scope, non-destructive reproduction,
+  independent triage, regression-backed remediation, and coordinated
+  disclosure.
+- Repointed every current GLM 5.2 use-case selection to GLM 5.3. GLM 5.2
+  remains in the musician history and this append-only changelog.
+- Kept volatile model names out of conducting doctrine; conducting now carries
+  a provider-neutral rule for commissioning an authorized task to a configured
+  specialist without treating delegation as a guardrail bypass.
+
+### Honesty boundary
+
+No GLM 5.3 public benchmark, license, parameter count, architecture, or
+open-weight status is claimed. The Fable comparison and security suitability
+are composer operational calibration, not a cross-rating pass.
+
 ## 2026-07-16 — GPT-5.6 folded into Codex (clean break)
 
 **Drove by:** correction of the instrument/musician boundary. The earlier

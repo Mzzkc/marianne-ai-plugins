@@ -52,3 +52,12 @@ Separate:
 Choose musicians and instruments by required capability, reliability,
 independence, cost, timing, and interaction with the rest of the orchestra.
 Recast when live evidence disproves the plan.
+
+When the conductor's own harness cannot perform an authorized task, commission
+it to a capable configured specialist rather than treating podium inability as
+evidence that the work is invalid. Delegation is not a guardrail bypass: the
+composer must authorize the target and scope, the selected instrument must
+permit the work, and the conductor retains stop, evidence, and review authority.
+Bound the commission, isolate side effects, require reproducible findings, and
+independently validate existence, reachability, and severity before remediation
+or disclosure.

@@ -25,6 +25,23 @@ Inspect the venue and current runtime before design. Read:
 
 Disk and runtime behavior outrank pattern prose.
 
+## Current GLM specialist guidance
+
+The instrument catalog currently routes one-million-context GLM 5.3 through
+Claude Code as `glm-5.3[1m]` and through OpenCode as
+`zai-coding-plan/glm-5.3`. Use high or max reasoning for the composer's
+Fable 5-level calibration, and only on well-bounded, clearly specified tasks
+with observable proof obligations. Do not generalize that calibration to
+ambiguous or unvalidated work.
+
+For authorized defensive cybersecurity and vulnerability discovery, commission
+a specialized vulnerability-discovery score. It must gate target authority and
+scope before execution, keep discovery non-destructive, split the search into
+explicit vulnerability classes or components, require reproducible findings
+and independent severity triage, and route accepted findings through
+regression-backed remediation and coordinated disclosure. Instrument selection
+does not broaden the composer's authority or bypass provider guardrails.
+
 ## Design gate
 
 Before YAML, write `composition-design.yaml` with these required sections:

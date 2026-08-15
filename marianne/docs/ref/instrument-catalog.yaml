@@ -21,8 +21,8 @@
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 
 schema_version: 1
-generated_at: "2026-07-16"
-generated_by: "v1.1 — fact-fold from version-research agent (2026-04-29) + gap-research agent (2026-04-29) + 3-of-5 lab cross-rating reviews (Opus 4.7, Gemini 3.1 Pro, GPT-5.5) + user direct testimony on GLM 5.1. Lab pass for Gemma 4 / GLM 5.1 ratings deferred to next refresh (GLM lab failure was chunked-tool-call issue, now documented as a quirk and remediated for future runs). | 2026-06-14 interim edit: live instrument moved glm-5.1 → glm-5.2; provisional glm-5.2 entry added (existence + Coding-Plan availability session-verified; ratings/benchmarks/license PENDING lab fact-fold); use-case chains repointed to glm-5.2; glm-5.1 retained as documented prior release. | 2026-07-16 Codex cleanup: GPT-5.6 Sol/Terra/Luna and their [1m] variants folded into codex-cli; the mistaken standalone gpt-5.6 instrument rejected; Codex default remains client-selected."
+generated_at: "2026-08-15"
+generated_by: "v1.1 — fact-fold from version-research agent (2026-04-29) + gap-research agent (2026-04-29) + 3-of-5 lab cross-rating reviews (Opus 4.7, Gemini 3.1 Pro, GPT-5.5) + user direct testimony on GLM 5.1. Lab pass for Gemma 4 / GLM 5.1 ratings deferred to next refresh (GLM lab failure was chunked-tool-call issue, now documented as a quirk and remediated for future runs). | 2026-06-14 interim edit: live instrument moved glm-5.1 → glm-5.2; provisional glm-5.2 entry added (existence + Coding-Plan availability session-verified; ratings/benchmarks/license PENDING lab fact-fold); use-case chains repointed to glm-5.2; glm-5.1 retained as documented prior release. | 2026-07-16 Codex cleanup: GPT-5.6 Sol/Terra/Luna and their [1m] variants folded into codex-cli; the mistaken standalone gpt-5.6 instrument rejected; Codex default remains client-selected. | 2026-08-15 GLM 5.3 rollout: live OpenCode registry verified 1M context, 131072 output, reasoning and tool use; composer supplied bounded-task high/max calibration and authorized defensive-security suitability; current GLM chains repointed from 5.2 to 5.3."
 
 sources:
   - path: "docs/plans/features/2026-04-08-auto-routing-design.md"
@@ -1208,6 +1208,41 @@ musicians:
 
   # ── Z.AI / GLM frontier additions ───────────────────────────────────────────
 
+  glm-5.3:
+    provider: z-ai
+    family: "GLM 5"
+    released: "2026-08-14"
+    context_window: 1000000
+    max_output_tokens: 131072
+    cost_per_1m_input: 0                               # Z.AI Coding Plan: flat subscription
+    cost_per_1m_output: 0
+    license: null                                      # not established by this rollout
+    architecture: null                                 # not established by this rollout
+    available_via: [claude-code-z-ai-gateway, opencode, z-ai-coding-plan]
+    tags: [max, heavy, premier, subscription]
+    task_tags: [code, code-review, review, research, design, planning, reasoning,
+                tool-use, agent, careful-long-running, defensive-security,
+                vulnerability-discovery]
+    modality_tags: [text]
+    reasoning_effort: [high, max]
+    ratings: {}                                        # no cross-rating pass yet
+    strengths:
+      - "Fable 5-level performance at high/max reasoning on well-bounded, clearly specified tasks with observable proof obligations (composer operational calibration)."
+      - "The composer attributes materially improved bounded agentic performance to post-training; do not generalize the calibration to ambiguous or unvalidated work."
+      - "Well suited to authorized defensive cybersecurity analysis and vulnerability discovery when target authority and non-destructive proof obligations are explicit."
+      - "Different training lineage from US labs makes it a valuable specialist and cross-vendor reviewer."
+    weaknesses:
+      - "No independent catalog cross-rating, public benchmark fold, license conclusion, or architecture conclusion is claimed by this rollout."
+    quirks:
+      - "Use high or max reasoning; lower effort is outside the composer-supplied capability calibration."
+      - "Bound tasks narrowly and require reproducible evidence. Older GLM chunking behavior is not inherited as a 5.3 fact without a fresh probe."
+    benchmarks: {}
+    last_verified: "2026-08-15"
+    verified_via: [opencode_live_model_registry_2026_08_15, composer_operational_calibration_2026_08_15]
+    notes:
+      - "Current GLM selection for Marianne composition. The one-million-token route is glm-5.3[1m] through the Claude Code Z.AI gateway and zai-coding-plan/glm-5.3 through OpenCode."
+      - "For authorized vulnerability discovery, use a specialized score with scope, non-destructive reproduction, independent triage, remediation regression, and coordinated-disclosure gates."
+
   glm-5.2:
     provider: z-ai
     family: "GLM 5"
@@ -1966,7 +2001,7 @@ use_case_chains:
     last_resort:
       - claude-opus-4-7
       - gpt-5.6-sol
-      - glm-5.2                                  # different training lineage → different blind spots (provisional)
+      - glm-5.3                                  # bounded high/max reasoning; different lineage
     rationale: "Qwen3-Coder-480B is the new strongest open code model — primary for serious work. MiniMax M2.5 still leads SWE-Bench Verified at 80.2%. Reserve premium for genuinely hard code."
 
   code_translation:
@@ -1981,7 +2016,7 @@ use_case_chains:
       - mistral-small-4
     last_resort:
       - claude-opus-4-7                          # 1M context as of 2026-04-16
-      - glm-5.2                                  # provisional — see model entry
+      - glm-5.3                                  # 1M context; bounded high/max reasoning
     rationale: "Code translation rewards long-context retrieval and code specialization. Qwen3-Coder native 256K context wins. DeepSeek V4 displaces V3 (V3 sunsets 2026-07-24)."
 
   reasoning_verification:
@@ -1993,21 +2028,30 @@ use_case_chains:
     fallback:
       - claude-opus-4-7
       - gemini-3.1-pro-preview
-      - glm-5.2                              # cross-vendor reasoning (successor to 5.1; ratings pending)
+      - glm-5.3                              # cross-vendor verifier at high/max reasoning
     last_resort: []
     note: "o4-mini deprecated as of 2026-04-29 — removed from chain."
-    rationale: "Reasoning models pay off here. Open-weight options are class-competitive. GLM (5.2; lab ratings pending) strong as a cross-vendor verifier — different lineage."
+    rationale: "Reasoning models pay off here. Open-weight options are class-competitive. GLM 5.3 at high/max effort is composer-calibrated for well-bounded verification and contributes a different training lineage."
 
   careful_long_running_analysis:
     description: "Complex sustained work that requires careful, complete analysis. Multi-stage refactors, deep code review, long-form research synthesis where premature compression is the failure mode."
     primary:
-      - glm-5.2                              # GLM lineage trusted by user over Gemini for this pattern (testimony on 5.1; 5.2 successor — ratings pending)
+      - glm-5.3                              # composer-calibrated at high/max for bounded sustained work
     fallback:
       - claude-opus-4-7                      # 1M context, adaptive thinking
     last_resort:
       - gpt-5.6-sol                          # 1M variant available; expensive
-    rationale: "Per user direct testimony, the GLM family outperforms Gemini for this pattern — frontier ≡ capability tier, not vendor origin. The chain now points to glm-5.2 (5.1's successor); 5.2's ratings are pending lab verification, so treat the primary placement as provisional until a fact-fold pass confirms."
-    notes: "GLM may need chunked-write prompt guidance (quirk documented on glm-5.1, unverified whether 5.2 retains it — include the guidance defensively until disproven)."
+    rationale: "Composer operational calibration places GLM 5.3 at Fable 5-level on well-bounded, clearly specified work when high/max reasoning and observable proof obligations are used. Frontier is a capability tier, not a vendor origin."
+    notes: "Do not generalize the calibration to ambiguous or unvalidated work. Bound long work into explicit stages and verify every produced artifact."
+
+  authorized_vulnerability_discovery:
+    description: "Authorized defensive vulnerability discovery against an owned or explicitly permitted target"
+    primary:
+      - glm-5.3                              # security specialist; high/max reasoning required
+    fallback: []
+    last_resort: []
+    rationale: "Commission a specialized score rather than embedding vulnerability search in a general fleet prompt: explicit scope gate, attack-surface inventory, bounded specialist searches, non-destructive reproduction, independent triage, regression-backed remediation, and coordinated disclosure."
+    notes: "Delegation is not a guardrail bypass. The composer authorizes target and scope; the selected instrument must permit the work; the conductor retains stop, evidence, and review authority."
 
   classification_at_scale:
     description: "Batch classification of many items where rate limits matter"
@@ -2036,14 +2080,14 @@ use_case_chains:
     typical_pairs:
       - { primary: claude-opus-4-7,        reviewer: gpt-5.6-terra }
       - { primary: claude-opus-4-7,        reviewer: gemini-3.1-pro-preview }
-      - { primary: claude-opus-4-7,        reviewer: glm-5.2 }
+      - { primary: claude-opus-4-7,        reviewer: glm-5.3 }
       - { primary: gpt-5.6-terra,          reviewer: claude-opus-4-7 }
-      - { primary: gpt-5.6-terra,          reviewer: glm-5.2 }
-      - { primary: glm-5.2,                reviewer: claude-opus-4-7 }
+      - { primary: gpt-5.6-terra,          reviewer: glm-5.3 }
+      - { primary: glm-5.3,                reviewer: claude-opus-4-7 }
       - { primary: qwen3-coder-480b-a35b-instruct, reviewer: claude-sonnet-4-6 }
       - { primary: openrouter/minimax/minimax-m2.5:free, reviewer: claude-sonnet-4-6 }
-    rationale: "Different training lineages have different blind spots. GLM retained as a peer reviewer (successor 5.2; frontier-class ratings pending lab verification). Subtle use only — when verification matters."
-    notes: "Don't dilute by overusing. Only deploy on stages where review value beats coordination cost. GLM-as-reviewer may need chunking guidance in the prompt (quirk documented on glm-5.1, unverified for 5.2)."
+    rationale: "Different training lineages have different blind spots. GLM 5.3 is a composer-calibrated peer reviewer on well-bounded stages at high/max reasoning. Use it when verification value beats coordination cost."
+    notes: "Require an explicit review question and reproducible evidence; do not use a broad model-quality claim as acceptance authority."
 
   agent_loops:
     description: "Multi-step agentic workflows with tool use and self-correction"
@@ -2073,7 +2117,7 @@ use_case_chains:
       - qwen3-235b-a22b                      # general work, Apache-2.0
       - qwen3.6-27b                          # local dense, Apache-2.0
       - qwen3-coder-480b-a35b-instruct       # code-leaning
-      - glm-5.2                              # frontier GLM successor (license pending verification)
+      - glm-5.3                              # current frontier GLM (license pending verification)
     fallback:
       - openrouter/minimax/minimax-m2.5:free
       - openrouter/google/gemma-4-31b-it:free
@@ -2081,7 +2125,7 @@ use_case_chains:
       - llama3.3:70b                         # legacy fallback
     last_resort:
       - claude-sonnet-4-6                    # paid fallback
-    rationale: "Open-source-first. The 2026 open-weight ecosystem (Qwen3, GLM, DeepSeek V4, Mistral Small 4) is competitive with frontier proprietary models. Reach for paid only when no open option fits. (GLM 5.2's open-weight status is pending verification; glm-5.1 was MIT.)"
+    rationale: "Open-source-first. The 2026 open-weight ecosystem (Qwen3, older open GLM releases, DeepSeek V4, Mistral Small 4) is competitive with frontier proprietary models. Reach for paid only when no open option fits. GLM 5.3's open-weight status is not established here; glm-5.1 was MIT."
     notes: "Llama 3.3:70b is increasingly legacy as Qwen3, GLM, and Mistral Small 4 take its slot. Demote on next refresh."
 
   # ── Specialization chains (capability shopping) ──────────────────────────────
