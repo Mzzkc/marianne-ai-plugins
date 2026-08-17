@@ -124,8 +124,12 @@ def test_version_and_plugin_manifests_are_0_4_0() -> None:
         "969da4e206777e413f954fbce077d2c68f205638dc3b623278f2482426b5e3f1"
     ) in version
     plugin = json.loads((REPO / "marianne/.claude-plugin/plugin.json").read_text(encoding="utf-8"))
+    codex_plugin = json.loads(
+        (REPO / "marianne/.codex-plugin/plugin.json").read_text(encoding="utf-8")
+    )
     marketplace = json.loads((REPO / ".claude-plugin/marketplace.json").read_text(encoding="utf-8"))
     assert plugin["version"] == "0.4.0"
+    assert codex_plugin["version"] == "0.4.0"
     entry = next(item for item in marketplace["plugins"] if item["name"] == "marianne")
     assert entry["version"] == "0.4.0"
 

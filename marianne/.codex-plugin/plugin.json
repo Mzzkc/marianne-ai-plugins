@@ -1,6 +1,6 @@
 {
   "name": "marianne",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Marianne AI Compose plugin for composing scores, authoring configs, submitting scores to the conductor, debugging failed runs, and embedding Marianne behind apps.",
   "author": {
     "name": "Emzi",
