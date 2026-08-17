@@ -87,6 +87,7 @@ prompt:
     test -d {{ project_root_q }}
     test -s {{ authority_roots_q }}
     mkdir -p {{ workspace_root_q }}/backup {{ backup_root_q }}/backup
+    chmod 700 {{ workspace_root_q }}/backup {{ backup_root_q }}/backup
     python -B {{ bundle_root_q }}/scripts/refreshctl.py inventory-authority {{ authority_roots_q }} {{ workspace_root_q }}/inventory.json
     {% elif stage == 2 %}
     You own scope classification and current-fact research, not mutation.
@@ -122,7 +123,9 @@ prompt:
     set -euo pipefail
     python -B {{ bundle_root_q }}/scripts/refreshctl.py backup {{ workspace_root_q }}/update-manifest.json {{ backup_root_q }}/backup --authority-roots {{ authority_roots_q }} --authority-sha256 {{ authority_sha256_q }} --transaction-id {{ transaction_id_q }}
     cp {{ backup_root_q }}/backup/index.json {{ workspace_root_q }}/backup/index.json
+    chmod 600 {{ workspace_root_q }}/backup/index.json
     test -s {{ backup_root_q }}/backup/recovery-index.json
+    test -s {{ backup_root_q }}/backup/transaction-state.json
     {% elif stage == 5 %}
     You own bounded apply, not scope expansion. The
     `marianne-model-profile-refresh` technique is mandatory in this phase.
@@ -141,85 +144,13 @@ prompt:
     differ after apply. Use an empty array for a true no-op.
     {% elif stage == 6 %}
     set -euo pipefail
-    python -B {{ bundle_root_q }}/scripts/refreshctl.py static-commission {{ workspace_root_q }}/update-manifest.json {{ backup_root_q }}/backup/index.json {{ workspace_root_q }}/changed-paths.json {{ workspace_root_q }}/commissioning.json
+    python -B {{ bundle_root_q }}/scripts/refreshctl.py static-commission {{ workspace_root_q }}/update-manifest.json {{ backup_root_q }}/backup/transaction-state.json {{ workspace_root_q }}/changed-paths.json {{ workspace_root_q }}/commissioning.json
     {% elif stage == 7 %}
     set -euo pipefail
-    python -B - {{ bundle_root_q }} {{ workspace_root_q }} {{ transaction_id_q }} <<'PY'
-    import json
-    import os
-    from pathlib import Path
-    import sys
-
-    bundle, workspace = map(Path, sys.argv[1:3])
-    transaction_id = sys.argv[3]
-    sys.path.insert(0, str(bundle / "scripts"))
-    import refreshctl
-
-    manifest = json.loads((workspace / "update-manifest.json").read_text(encoding="utf-8"))
-    commissioning = json.loads((workspace / "commissioning.json").read_text(encoding="utf-8"))
-    if commissioning.get("transaction_id") != transaction_id:
-        raise SystemExit("commissioning transaction does not match runtime transaction")
-    facts = manifest.get("facts", {})
-    required = bool(manifest.get("live_contract_required", False))
-    provider = facts.get("provider")
-    if provider == "google":
-        auth_names = ("GOOGLE_API_KEY", "GOOGLE_APPLICATION_CREDENTIALS", "GOOGLE_CLOUD_PROJECT")
-        authenticated = any(os.environ.get(name) for name in auth_names)
-        state = "unsupported" if authenticated else "unauthenticated"
-        detail = (
-            "existing Google auth detected, but no provider-neutral non-mutating live adapter is available"
-            if authenticated
-            else "no supported pre-existing Google API or gcloud authentication detected"
-        )
-    else:
-        state = "unsupported"
-        detail = "no provider-specific non-mutating live adapter is available"
-    commissioning["live"] = {"state": state, "required": required, "detail": detail}
-    refreshctl._atomic_write_json(workspace / "commissioning.json", refreshctl.redact(commissioning))
-    PY
+    python -B {{ bundle_root_q }}/scripts/refreshctl.py live-commission {{ workspace_root_q }}/update-manifest.json {{ workspace_root_q }}/commissioning.json --transaction-id {{ transaction_id_q }}
     {% elif stage == 8 %}
     set -euo pipefail
-    python -B - {{ bundle_root_q }} {{ workspace_root_q }} {{ backup_root_q }} {{ transaction_id_q }} <<'PY'
-    import json
-    from pathlib import Path
-    import sys
-
-    bundle, workspace, backup = map(Path, sys.argv[1:4])
-    transaction_id = sys.argv[4]
-    sys.path.insert(0, str(bundle / "scripts"))
-    import refreshctl
-
-    commissioning = json.loads((workspace / "commissioning.json").read_text(encoding="utf-8"))
-    if commissioning.get("transaction_id") != transaction_id:
-        raise SystemExit("commissioning transaction does not match runtime transaction")
-    manifest_path = workspace / "update-manifest.json"
-    index_path = backup / "backup" / "index.json"
-    gate_errors = list(commissioning["static"].get("errors", []))
-    gate_errors.extend(refreshctl.verify_changed_paths(manifest_path, index_path))
-    live = commissioning["live"]
-    if live.get("required") and live.get("state") != "live_smoked":
-        gate_errors.append("required live-smoke contract was not verified")
-    restored = False
-    restore_errors = []
-    if gate_errors:
-        restore_errors = refreshctl.restore_backup(index_path)
-        restored = not restore_errors
-    if restore_errors:
-        status = "compensation_failed"
-    elif gate_errors:
-        status = "rolled_back"
-    else:
-        status = "success"
-    transaction = {
-        "schema_version": 1,
-        "transaction_id": transaction_id,
-        "transaction_status": status,
-        "restored": restored,
-        "gate_errors": refreshctl.redact(gate_errors),
-        "restore_errors": refreshctl.redact(restore_errors),
-    }
-    refreshctl._atomic_write_json(workspace / "transaction.json", transaction)
-    PY
+    python -B {{ bundle_root_q }}/scripts/refreshctl.py finalize-transaction {{ workspace_root_q }}/update-manifest.json {{ backup_root_q }}/backup/transaction-state.json {{ workspace_root_q }}/commissioning.json {{ workspace_root_q }}/transaction.json --authority-roots {{ authority_roots_q }} --authority-sha256 {{ authority_sha256_q }} --transaction-id {{ transaction_id_q }}
     {% elif stage == 9 %}
     set -euo pipefail
     python -B - {{ bundle_root_q }} {{ workspace_root_q }} {{ transaction_id_q }} <<'PY'
@@ -276,7 +207,7 @@ validations:
     description: deterministic manifest gate accepted the candidate
   - type: command_succeeds
     command: |
-      test -s {workspace_root_q}/backup/index.json && test -s {backup_root_q}/backup/recovery-index.json
+      test -s {workspace_root_q}/backup/index.json && test -s {backup_root_q}/backup/recovery-index.json && test -s {backup_root_q}/backup/transaction-state.json
     condition: stage == 4
     description: public and protected backup records exist before apply
   - type: command_succeeds
@@ -291,7 +222,7 @@ validations:
     description: static commissioning records a deterministic outcome
   - type: command_succeeds
     command: |
-      python -B -c "import json,sys; d=json.load(open(sys.argv[1])); assert d.get('transaction_id') == sys.argv[2] and d.get('live', {}).get('state') in {'live_smoked','unsupported','unauthenticated','not_attempted'}" {workspace_root_q}/commissioning.json {transaction_id_q}
+      python -B -c "import json,sys; d=json.load(open(sys.argv[1])); assert d.get('transaction_id') == sys.argv[2] and d.get('live', {}).get('state') in {'live_smoked','unsupported','unauthenticated','failed','not_attempted'}" {workspace_root_q}/commissioning.json {transaction_id_q}
     condition: stage == 7
     description: live commissioning uses an honest documented state
   - type: command_succeeds
@@ -301,6 +232,6 @@ validations:
     description: finalization either retains a valid candidate or records compensation
   - type: command_succeeds
     command: |
-      python -B -c "import json,sys; d=json.load(open(sys.argv[1])); assert d.get('transaction_id') == sys.argv[2] and d.get('transaction_status') in {'success','rolled_back','compensation_failed'} and d.get('live_state') in {'live_smoked','unsupported','unauthenticated','not_attempted'}" {workspace_root_q}/receipt.json {transaction_id_q} && test -s {workspace_root_q}/receipt.md
+      python -B -c "import json,sys; d=json.load(open(sys.argv[1])); assert d.get('transaction_id') == sys.argv[2] and d.get('transaction_status') in {'success','rolled_back','compensation_failed'} and d.get('live_state') in {'live_smoked','unsupported','unauthenticated','failed','not_attempted'}" {workspace_root_q}/receipt.json {transaction_id_q} && test -s {workspace_root_q}/receipt.md
     condition: stage == 9
     description: machine and human receipts share a valid final state

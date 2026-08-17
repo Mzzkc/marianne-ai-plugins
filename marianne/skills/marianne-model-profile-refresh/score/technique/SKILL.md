@@ -41,10 +41,14 @@ authorized. Preserve score-pinned and frozen references.
 
 ## Apply phase
 
-Refuse to mutate without an accepted manifest and adjacent pre-mutation backup
-index. Modify only accepted target paths, preserve each file's syntax and local
-conventions, and update all authorized active downstream references. Do not
-touch skipped matches or broaden scope during editing.
+Refuse to mutate without an accepted manifest and protected pre-mutation
+transaction state. That state must already bind the recovery-index and manifest
+digests, exact transaction ID, exact accepted target spellings, resolved scope,
+pre-apply parent-chain identity, and caller authority digest. The public backup
+index alone is not recovery authority. Modify only accepted target paths,
+preserve each file's syntax and local conventions, and update all authorized
+active downstream references. Do not touch skipped matches or broaden scope
+during editing.
 
 Write `changed-paths.json` with schema version 1, the exact transaction ID, an
 exact sorted `changed_paths` array, and explicit skipped dispositions. The
@@ -54,9 +58,18 @@ changed JSON, YAML, and TOML target. A no-op uses an empty array. Never write
 credentials, cookies, tokens, private keys, environment values, or
 secret-bearing config bodies into an artifact.
 
-Configured, parsed, and live-smoked are different states. Unsupported or
-unauthenticated clients remain accurately unverified. If apply or a required
-gate fails, stop mutation; the deterministic transaction owner restores exact
-prior bytes, ownership, modes, mtimes, symlink targets and lstat metadata, and
-prior absence. A restore that cannot prove exact metadata is a compensation
-failure, not success.
+Configured, parsed, and live-smoked are different states. For current Google
+facts, deterministic commissioning may use an already-installed Gemini CLI and
+existing API-key or complete Vertex environment for one fixed, non-mutating,
+timeout-bounded prompt. It filters the child environment and discards all
+provider output after checking the sentinel. OAuth-only state and non-Google
+clients remain unsupported; missing auth is unauthenticated; timeouts, client
+errors, and invalid output are failed. None is fabricated as live-smoked.
+
+If apply or a required gate fails, stop mutation. Before its first target write,
+the deterministic transaction owner rejects modified recovery indices,
+substituted/missing/extra or out-of-authority paths, transaction/scope mismatch,
+changed or redirected target parent chains, and corrupt blobs before capturing
+a restore attempt. Only then may it restore exact prior bytes, ownership, modes,
+mtimes, symlink targets and lstat metadata, and prior absence. A restore that
+cannot prove exact metadata is a compensation failure, not success.

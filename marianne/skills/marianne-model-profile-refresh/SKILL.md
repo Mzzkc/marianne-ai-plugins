@@ -21,11 +21,13 @@ inventory, manifests, backup reports, and receipts.
 
 - **Direct-agent mode:** perform the entire contract directly with the bundled
   deterministic runtime. Route through `TASK-MAP.md` and use
-  `score/run_refresh.py` when Marianne is available. Without Marianne, execute
-  the same ordered stages directly and use `score/scripts/refreshctl.py` for
-  deterministic inventory, authority validation, backup, commissioning,
-  restore, receipt, and lock operations; never install Marianne to complete a
-  refresh.
+  `score/run_refresh.py` when Marianne is available. The runner captures and
+  restores the exact prior technique on every runner exit. Its temporary mode
+  is separate from the explicit persistent `install-technique` command.
+  Without Marianne, execute the same ordered stages directly and use
+  `score/scripts/refreshctl.py` for deterministic inventory, authority
+  validation, backup, commissioning, restore, receipt, and lock operations;
+  never install Marianne to complete a refresh.
 - **Marianne musician mode:** follow the bounded research or apply assignment
   injected by the score. Treat `score/technique/SKILL.md` as the score-safe
   projection and keep deterministic backup, validation, commissioning, and
@@ -43,15 +45,19 @@ historical, and unknown-authority references unless the request explicitly
 names an eligible pinned or frozen target. Search matches do not grant mutation
 authority.
 
-Require an accepted manifest and adjacent transactional backup before the
-first target mutation. Keep the observed change set identical to the accepted
-target ledger. Stop on a required gate failure and perform deterministic
-compensation in reverse order. Treat an unproved restore as compensation
-failure and preserve recovery state.
+Require an accepted manifest and transactional backup before the first target
+mutation. Its protected transaction state binds recovery and manifest
+digests, transaction, exact paths, resolved scope, pre-apply parent-chain
+identity, and caller authority; the public index alone is not recovery
+authority. Keep the observed change set identical to the accepted target
+ledger. Stop on a required gate failure and perform deterministic compensation
+in reverse order. Treat an unproved restore as compensation failure and
+preserve recovery state.
 
-Keep configured, parsed, integrated, and live-smoked evidence distinct.
-Unsupported or unauthenticated live access remains unverified rather than
-being promoted to success.
+Keep configured, parsed, integrated, and live-smoked evidence distinct. The
+bounded Google adapter uses only an installed Gemini CLI and supported existing
+authentication. Unsupported, unauthenticated, or failed live access remains
+unverified rather than being promoted to success.
 
 ## Route
 

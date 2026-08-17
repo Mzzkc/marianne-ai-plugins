@@ -66,6 +66,9 @@ def test_router_exposes_both_modes_and_the_uninterrupted_contract() -> None:
         "updates only",
         "never install",
         "without marianne",
+        "protected transaction state",
+        "every runner exit",
+        "install-technique",
     ):
         assert phrase in router
     assert "task-map.md" in router
@@ -133,6 +136,11 @@ def test_progressive_references_hold_the_detailed_contract() -> None:
         "prior absence",
         "secret",
         "reverse order",
+        "transaction state",
+        "recovery-index digest",
+        "exact target spellings",
+        "0700",
+        "0600",
     ):
         assert phrase in backup
 
@@ -143,6 +151,9 @@ def test_progressive_references_hold_the_detailed_contract() -> None:
         "live-smoked",
         "unauthenticated",
         "unsupported",
+        "failed",
+        "gemini cli",
+        "oauth",
         "rolled_back",
         "compensation failure",
     ):

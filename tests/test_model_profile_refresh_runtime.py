@@ -23,12 +23,12 @@ RUNTIME_FILES = {
     "technique/SKILL.md",
 }
 LOCKED_RUNTIME = {
-    "model-profile-refresh.yaml": "ead0e48a3eddea65bb8e9c13606f5826a64c79855a35903046db67b96f4a0833",
+    "model-profile-refresh.yaml": "68baeeeb1f146a60604975ee5b1569c771bef444598dfcf19c6fb46691c36527",
     "request.md": "1aa18e78695a449a9a3bc80f68afab6e540a9f0527000744e65a41f993a9a84b",
-    "runbook.md": "09975ba2d3e8b8306d2f52ff4d9ee79a42e3a156eb09505d9221a959604d2abe",
-    "scripts/refreshctl.py": "2c8fe613625f2060e7d7b7e06ed56e43893c702404a7e4093a7d55ae94cb19fc",
-    "scripts/run_refresh.py": "fd6637c774f22461b3a4e0b85d9f4caa8e308def35a9fb885abef5bf54f1690a",
-    "technique/SKILL.md": "09b4d22ffb685544166958b75e6f89301b4edc9505d2f993959756fa85ecf7cc",
+    "runbook.md": "717634d82d4ea11305ee6468a847196b6c9608c2af370008c7bcc6c3d27e8bc0",
+    "scripts/refreshctl.py": "bd871b9e5bb224874b1916f8abfafb720418240be7569e3ef7e3e5568a71b45c",
+    "scripts/run_refresh.py": "2bc0935ff209945e6433215e4b7370a46b4a97720c7982386eea744f94983fde",
+    "technique/SKILL.md": "b73815fc8b70e2b71eae554b6fc7655e1e8ab638b7397ea33a6d14fdc5735427",
 }
 
 
@@ -121,7 +121,7 @@ def test_version_and_plugin_manifests_are_0_4_0() -> None:
     assert "version: 0.4.0" in version
     assert (
         "canonical_release_lock_sha256: "
-        "969da4e206777e413f954fbce077d2c68f205638dc3b623278f2482426b5e3f1"
+        "321154b7b63baddbd3f4383c7613db3e987c02f12ae3c02ab6a4ecd76e4c32e3"
     ) in version
     plugin = json.loads((REPO / "marianne/.claude-plugin/plugin.json").read_text(encoding="utf-8"))
     codex_plugin = json.loads(
@@ -275,3 +275,176 @@ def test_runner_defaults_remain_home_relative(tmp_path: Path, monkeypatch) -> No
     assert args.workspace_root == tmp_path / ".marianne/workspaces/model-profile-refresh"
     assert args.backup_root.parent == tmp_path / ".marianne/backups/model-profile-refresh"
     assert os.fspath(tmp_path) in os.fspath(args.workspace_root)
+
+
+def test_public_runtime_temporary_technique_restores_preexisting_file(
+    tmp_path: Path,
+) -> None:
+    refreshctl = load_refreshctl()
+    source = tmp_path / "source" / "SKILL.md"
+    source.parent.mkdir()
+    source.write_bytes(b"temporary\n")
+    home = tmp_path / "home"
+    destination = (
+        home
+        / ".marianne"
+        / "techniques"
+        / "marianne-model-profile-refresh"
+        / "SKILL.md"
+    )
+    destination.parent.mkdir(parents=True)
+    destination.write_bytes(b"preexisting\n")
+    destination.chmod(0o640)
+    before = destination.stat()
+
+    installed = refreshctl.install_temporary_technique(
+        source,
+        tmp_path / "technique-recovery",
+        transaction_id="txn-plugin-test",
+        home=home,
+    )
+    assert destination.read_bytes() == b"temporary\n"
+    assert refreshctl.restore_temporary_technique(
+        Path(installed["state_path"]),
+        transaction_id="txn-plugin-test",
+        home=home,
+    ) == []
+    after = destination.stat()
+    assert destination.read_bytes() == b"preexisting\n"
+    assert stat.S_IMODE(after.st_mode) == 0o640
+    assert (after.st_uid, after.st_gid, after.st_mtime_ns) == (
+        before.st_uid,
+        before.st_gid,
+        before.st_mtime_ns,
+    )
+
+
+def test_public_runtime_bound_state_rejects_recovery_tampering_before_mutation(
+    tmp_path: Path,
+) -> None:
+    refreshctl = load_refreshctl()
+    target = tmp_path / "profile.yaml"
+    target.write_bytes(b"before\n")
+    manifest = write_manifest(tmp_path, valid_manifest(tmp_path, target))
+    index = refreshctl.create_backup(manifest, tmp_path / "backup")
+    state_path = Path(index["index_path"]).parent / index["transaction_state"]
+    state = json.loads(state_path.read_text(encoding="utf-8"))
+    recovery_path = state_path.parent / state["recovery_index"]
+    recovery = json.loads(recovery_path.read_text(encoding="utf-8"))
+    recovery["entries"][0]["kind"] = "absent"
+    recovery_path.write_text(json.dumps(recovery), encoding="utf-8")
+    target.write_bytes(b"working\n")
+
+    errors = refreshctl.restore_backup(
+        state_path,
+        manifest_path=manifest,
+        transaction_id="txn-plugin-test",
+    )
+
+    assert any("recovery index digest" in error for error in errors)
+    assert target.read_bytes() == b"working\n"
+
+
+def test_public_runtime_refuses_parent_symlink_escape_before_outside_write(
+    tmp_path: Path,
+) -> None:
+    refreshctl = load_refreshctl()
+    project = tmp_path / "project"
+    nested = project / "nested"
+    nested.mkdir(parents=True)
+    target = nested / "profile.yaml"
+    target.write_bytes(b"authorized-original\n")
+    manifest_data = valid_manifest(project, target)
+    manifest = write_manifest(tmp_path, manifest_data)
+    index = refreshctl.create_backup(manifest, tmp_path / "backup")
+    recoverable_parent = project / "nested-preimage"
+    nested.rename(recoverable_parent)
+    outside_parent = tmp_path / "outside"
+    outside_parent.mkdir()
+    outside_target = outside_parent / target.name
+    outside_target.write_bytes(b"outside-untouched\n")
+    nested.symlink_to(outside_parent, target_is_directory=True)
+
+    errors = refreshctl.restore_backup(
+        Path(index["index_path"]).parent / index["transaction_state"],
+        manifest_path=manifest,
+        transaction_id="txn-plugin-test",
+    )
+
+    assert errors
+    assert any("parent" in error for error in errors)
+    assert nested.is_symlink()
+    assert outside_target.read_bytes() == b"outside-untouched\n"
+    assert (recoverable_parent / target.name).read_bytes() == b"authorized-original\n"
+
+
+def test_public_runtime_protects_backup_modes_under_permissive_umask(
+    tmp_path: Path,
+) -> None:
+    refreshctl = load_refreshctl()
+    target = tmp_path / "profile.yaml"
+    target.write_bytes(b"before\n")
+    manifest = write_manifest(tmp_path, valid_manifest(tmp_path, target))
+    previous = os.umask(0)
+    try:
+        index = refreshctl.create_backup(manifest, tmp_path / "backup")
+    finally:
+        os.umask(previous)
+
+    backup = Path(index["index_path"]).parent
+    assert stat.S_IMODE(backup.stat().st_mode) == 0o700
+    assert stat.S_IMODE((backup / "blobs").stat().st_mode) == 0o700
+    for path in (
+        backup / "index.json",
+        backup / "recovery-index.json",
+        backup / "transaction-state.json",
+        next((backup / "blobs").iterdir()),
+    ):
+        assert stat.S_IMODE(path.stat().st_mode) == 0o600
+
+
+def test_public_runtime_gemini_adapter_reaches_live_smoked_without_leaking_output(
+    tmp_path: Path,
+) -> None:
+    refreshctl = load_refreshctl()
+    bin_dir = tmp_path / "bin"
+    bin_dir.mkdir()
+    binary = bin_dir / "gemini"
+    secret = "AIza" + "P" * 24
+    binary.write_text(
+        "#!/bin/sh\n"
+        "printf '{\"response\":\"LIVE_SMOKE_OK\",\"diagnostic\":\"%s\"}\\n' "
+        '"$GEMINI_API_KEY"\n',
+        encoding="utf-8",
+    )
+    binary.chmod(0o755)
+    target = tmp_path / "profile.yaml"
+    target.write_bytes(b"before\n")
+    manifest = write_manifest(tmp_path, valid_manifest(tmp_path, target))
+    commissioning = tmp_path / "commissioning.json"
+    commissioning.write_text(
+        json.dumps(
+            {
+                "schema_version": 1,
+                "transaction_id": "txn-plugin-test",
+                "static": {"passed": True, "errors": []},
+                "live": {"state": "not_attempted", "required": False},
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    result = refreshctl.live_commission(
+        manifest,
+        commissioning,
+        transaction_id="txn-plugin-test",
+        environ={
+            "PATH": str(bin_dir),
+            "HOME": str(tmp_path / "home"),
+            "GEMINI_API_KEY": secret,
+        },
+        timeout_seconds=1,
+    )
+
+    assert result["live"]["state"] == "live_smoked"
+    assert secret not in commissioning.read_text(encoding="utf-8")
