@@ -21,8 +21,8 @@
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 
 schema_version: 1
-generated_at: "2026-08-15"
-generated_by: "v1.1 — fact-fold from version-research agent (2026-04-29) + gap-research agent (2026-04-29) + 3-of-5 lab cross-rating reviews (Opus 4.7, Gemini 3.1 Pro, GPT-5.5) + user direct testimony on GLM 5.1. Lab pass for Gemma 4 / GLM 5.1 ratings deferred to next refresh (GLM lab failure was chunked-tool-call issue, now documented as a quirk and remediated for future runs). | 2026-06-14 interim edit: live instrument moved glm-5.1 → glm-5.2; provisional glm-5.2 entry added (existence + Coding-Plan availability session-verified; ratings/benchmarks/license PENDING lab fact-fold); use-case chains repointed to glm-5.2; glm-5.1 retained as documented prior release. | 2026-07-16 Codex cleanup: GPT-5.6 Sol/Terra/Luna and their [1m] variants folded into codex-cli; the mistaken standalone gpt-5.6 instrument rejected; Codex default remains client-selected. | 2026-08-15 GLM 5.3 rollout: live OpenCode registry verified 1M context, 131072 output, reasoning and tool use; composer supplied bounded-task high/max calibration and authorized defensive-security suitability; current GLM chains repointed from 5.2 to 5.3."
+generated_at: "2026-08-17"
+generated_by: "v1.1 — fact-fold from version-research agent (2026-04-29) + gap-research agent (2026-04-29) + 3-of-5 lab cross-rating reviews (Opus 4.7, Gemini 3.1 Pro, GPT-5.5) + user direct testimony on GLM 5.1. Lab pass for Gemma 4 / GLM 5.1 ratings deferred to next refresh (GLM lab failure was chunked-tool-call issue, now documented as a quirk and remediated for future runs). | 2026-06-14 interim edit: live instrument moved glm-5.1 → glm-5.2; provisional glm-5.2 entry added (existence + Coding-Plan availability session-verified; ratings/benchmarks/license PENDING lab fact-fold); use-case chains repointed to glm-5.2; glm-5.1 retained as documented prior release. | 2026-07-16 Codex cleanup: GPT-5.6 Sol/Terra/Luna and their [1m] variants folded into codex-cli; the mistaken standalone gpt-5.6 instrument rejected; Codex default remains client-selected. | 2026-08-15 GLM 5.3 rollout: live OpenCode registry verified 1M context, 131072 output, reasoning and tool use; composer supplied bounded-task high/max calibration and authorized defensive-security suitability; current GLM chains repointed from 5.2 to 5.3. | 2026-08-17 Gemini 3.7 Flash refresh: official Google model, models-index, and changelog facts added; current Flash chains repointed from gemini-3-flash-preview to stable gemini-3.7-flash; qualitative ratings left provisional pending independent evaluation."
 
 sources:
   - path: "docs/plans/features/2026-04-08-auto-routing-design.md"
@@ -143,14 +143,27 @@ instruments:
     description: "Google's official Gemini CLI with tool use, file editing, vision"
     binary: "gemini"
     auth: "google_subscription_or_api_key"
-    capabilities: [tool_use, file_edit, shell, vision, multimodal]
+    capabilities: [tool_use, file_edit, shell, vision, mcp, structured_output,
+                   thinking]
     runs_models:
+      - gemini-3.7-flash
       - gemini-3.1-pro-preview
+    historical_models:
       - gemini-3-flash-preview
       - gemini-2.5-pro
       - gemini-2.5-flash
     fallback_instruments: []
-    notes: "Strong multimodal native support; good for vision-heavy tasks."
+    notes: "Catalog availability does not prove that a local Gemini CLI profile is configured, dispatch-compatible, authenticated, or live-verified."
+
+  antigravity:
+    description: "Google Antigravity agent client with profile-selected Gemini models"
+    binary: "agy"
+    auth: "existing_google_account_or_api_configuration"
+    capabilities: [tool_use, file_edit, shell, mcp, session_resume, thinking]
+    runs_models:
+      - gemini-3.7-flash
+    fallback_instruments: [gemini-cli]
+    notes: "Model presence in this catalog is separate from local profile configuration, dispatch compatibility, authentication, and a live execution probe."
 
   codex-cli:
     description: "OpenAI's Codex CLI with tool use, file editing, vision, and reasoning"
@@ -537,6 +550,58 @@ musicians:
 
   # ── Google ───────────────────────────────────────────────────────────────────
 
+  gemini-3.7-flash:
+    provider: google
+    family: "Gemini 3"
+    status: stable
+    release_stage: ga
+    released: "2026-08-13"
+    context_window: 1048576
+    max_output_tokens: 65536
+    input_modalities: [text, image, video, audio, pdf]
+    output_modalities: [text]
+    thinking_levels: [low, medium, high]
+    capabilities:
+      - caching
+      - code_execution
+      - computer_use_preview
+      - file_search
+      - function_calling
+      - google_maps_grounding
+      - search_grounding
+      - structured_output
+      - thinking
+      - url_context
+    available_via: [gemini-cli, antigravity]
+    tags: [quick, standard, heavy, subscription]
+    task_tags: [classification, code, code-review, transform, research, writing,
+                design, synthesis, planning, reasoning, tool-use, agent]
+    modality_tags: [text, vision, multimodal, audio-in]
+    ratings: {}
+    ratings_status: provisional_pending_independent_evaluation
+    strengths:
+      - "Stable Gemini Flash release with documented coding and agentic-workflow support"
+      - "Natively accepts text, image, video, audio, and PDF input and returns text"
+      - "Supports function calling, structured output, caching, code execution, search grounding, URL context, file search, Google Maps grounding, and preview computer use"
+    weaknesses:
+      - "Independent catalog evaluation is pending; no comparative benchmark or superiority rating is claimed"
+      - "The minimal thinking level is unsupported and returns an error"
+    notes:
+      - "Use high thinking for load-bearing clear coding and agentic work, medium as the balanced default, and low for cheap bounded work; never request minimal."
+      - "The available_via list is catalog routing data, not evidence of local configuration, dispatch compatibility, authentication, or live success."
+    source_urls:
+      model: "https://ai.google.dev/gemini-api/docs/models/gemini-3.7-flash"
+      models: "https://ai.google.dev/gemini-api/docs/models"
+      changelog: "https://ai.google.dev/gemini-api/docs/changelog"
+    evidence_lanes:
+      catalog: "official Google model, models-index, and changelog pages verified 2026-08-17."
+      configured: "available_via names supported catalog routes; it does not prove a local profile is configured."
+      dispatch_compatible: "Instrument/profile dispatch compatibility is not established by this catalog refresh."
+      live_verified: "A live model execution was not attempted by this public catalog and guidance refresh."
+    last_verified: "2026-08-17"
+    verified_via: [official_google_model_page, official_google_models_index,
+                   official_google_changelog]
+
   gemini-3.1-pro-preview:
     provider: google
     family: "Gemini 3"
@@ -572,6 +637,9 @@ musicians:
   gemini-3-flash-preview:
     provider: google
     family: "Gemini 3"
+    status: historical
+    routing: historical_fallback_only
+    successor: gemini-3.7-flash
     context_window: 1000000
     max_output_tokens: 32768
     cost_per_1m_input: 0.30
@@ -594,6 +662,7 @@ musicians:
       - "Very fast, cheap, with 1M context — great for cheap-tier classification"
       - "No rate limiting on Google subscription — good runner-stage option"
       - "Strong vision understanding for the price"
+    notes: "Historical preview retained only as an explicit fallback/reference. Current Gemini Flash use-case chains route to stable gemini-3.7-flash."
     last_verified: "2026-04-29"
     verified_via: [vendor_docs, judgment]
 
@@ -1982,7 +2051,7 @@ use_case_chains:
       - zai-coding-plan/glm-4.7-flash      # free + unlimited
       - phi-4:14b                           # local + free if user has it
     fallback:
-      - gemini-3-flash-preview              # subscription, no rate limit
+      - gemini-3.7-flash                     # stable Gemini Flash; low thinking
       - claude-haiku-4-5-20251001           # subscription, paid per token
     last_resort:
       - claude-sonnet-4-6
@@ -2059,14 +2128,14 @@ use_case_chains:
       - zai-coding-plan/glm-4.7-flash       # truly unlimited
       - phi-4:14b                            # local
     fallback:
-      - gemini-3-flash-preview
+      - gemini-3.7-flash                    # stable Gemini Flash; low thinking
     last_resort: []
     rationale: "Pick rate-limit-proof options; the work is throughput-sensitive"
 
   long_document_synthesis:
     description: "Synthesis over very long inputs (>200K tokens)"
     primary:
-      - gemini-3-flash-preview                  # 1M context, cheap
+      - gemini-3.7-flash                        # stable, 1,048,576-token context
       - claude-opus-4-7                          # 1M context as of 2026-04-16, no premium
       - deepseek-v4-pro                          # 1M context
     fallback:

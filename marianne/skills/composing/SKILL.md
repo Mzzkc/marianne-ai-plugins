@@ -25,6 +25,21 @@ Inspect the venue and current runtime before design. Read:
 
 Disk and runtime behavior outrank pattern prose.
 
+## Current Gemini 3.7 Flash guidance
+
+The catalog's current stable Gemini Flash route is `gemini-3.7-flash`, with a
+1,048,576-token input limit and a 65,536-token output limit. Use high thinking for load-bearing coding and agentic work when the task is clear, bounded, and
+backed by observable proof obligations. Use medium thinking as the balanced default for general work. Use low thinking for cheap, bounded work. The model
+rejects the `minimal` level, so never request `minimal` for Gemini 3.7 Flash.
+
+Keep four evidence lanes distinct when selecting it: catalog availability
+through `gemini-cli` or `antigravity`, configured profile availability in the
+target installation, dispatch compatibility for the selected instrument and
+profile, and live verification with working authentication. Evidence in one
+lane does not establish another. Do not claim comparative quality or benchmark
+superiority from the catalog entry; its qualitative ratings remain provisional
+pending independent evaluation.
+
 ## Current GLM specialist guidance
 
 The instrument catalog currently routes one-million-context GLM 5.3 through
