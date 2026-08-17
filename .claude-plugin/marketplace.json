@@ -9,7 +9,7 @@
     {
       "name": "marianne",
       "description": "Marianne AI Compose plugin — compose scores, author configs, run and debug jobs. Turns ideas into executable orchestration configs.",
-      "version": "0.3.0",
+      "version": "0.4.0",
       "source": "./marianne",
       "category": "development",
       "homepage": "https://github.com/Mzzkc/marianne-ai-compose"

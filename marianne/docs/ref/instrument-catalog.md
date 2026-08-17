@@ -1,15 +1,14 @@
 # Instrument Catalog
 
-**Generated:** 2026-04-29 (v1.1 fact-fold) from `instrument-catalog.yaml`; current instrument/model corrections applied through 2026-08-15.
+**Generated:** 2026-04-29 (v1.1 fact-fold) from `instrument-catalog.yaml`; current instrument/model corrections applied through 2026-08-17.
 **Refresh policy:** every 30 days; per-musician staleness flagged at 90 days. Run `scores/instrument-catalog-refresh.yaml`.
 **Changelog:** `CHANGELOG-instrument-catalog.md` records every fact change.
 
-> **GLM correction 2026-08-15:** the authoritative YAML now selects GLM 5.3
-> for current GLM work. The live Z.AI Coding Plan registry reports a 1M context
-> and 131,072-token output limit. The composer calibrates it at Fable 5-level
-> for well-bounded, clearly specified tasks at high/max reasoning, and as a
-> strong authorized defensive-security specialist. This older generated view
-> retains historical 5.1/5.2 detail; read the YAML for current routing.
+> **Gemini correction 2026-08-17:** stable / GA `gemini-3.7-flash` was released
+> 2026-08-13 with a 1,048,576-token input limit, 65,536-token output limit,
+> text/image/video/audio/PDF input, text output, and low/medium/high thinking.
+> `minimal` is unsupported and returns an error. Current Flash chains use 3.7;
+> the older `gemini-3-flash-preview` entry remains historical only.
 
 > **Codex correction 2026-07-16:** GPT-5.6 Sol, Terra, Luna, and their `[1m]`
 > variants are models played through `codex-cli`. There is no separate
@@ -26,7 +25,7 @@ Marianne distinguishes **instruments** from **musicians**:
 - **Instrument** = the execution framework (a plugin profile). Determines *capabilities* — tool use, file editing, shell access, vision, MCP.
 - **Musician** = the model played by the instrument. Determines *capacity* — context window, cost, speed, reasoning quality.
 
-Composers select tag intersections (`tier × task × modality × constraint`) and the catalog maps the intersection to ranked model chains. **Open-source-first by default**; subscription and premier as fallbacks where open models genuinely don't suffice. Frontier means capability tier, not vendor origin. The authoritative YAML currently carries the GLM 5.3 routing update; this generated markdown view may still show older GLM 5.1/5.2 detail until it is rebuilt.
+Composers select tag intersections (`tier × task × modality × constraint`) and the catalog maps the intersection to ranked model chains. **Open-source-first by default**; subscription and premier as fallbacks where open models genuinely don't suffice. Frontier means capability tier, not vendor origin.
 
 ---
 
@@ -46,7 +45,8 @@ Composers select tag intersections (`tier × task × modality × constraint`) an
 | Instrument | Auth | Capabilities | Notes |
 |---|---|---|---|
 | `claude-code` | Anthropic sub or API | tool_use, file_edit, shell, web_fetch, MCP, vision | Full agentic capability |
-| `gemini-cli` | Google sub or API | tool_use, file_edit, shell, vision, multimodal | Strong native multimodal |
+| `gemini-cli` | Google sub or API | tool_use, file_edit, shell, vision, MCP, structured_output, thinking | Current Flash route: `gemini-3.7-flash`; catalog presence does not prove local configuration or live execution |
+| `antigravity` | existing Google account/API configuration | tool_use, file_edit, shell, MCP, session_resume, thinking | Profile-selected models; configuration and dispatch compatibility require separate checks |
 | `codex-cli` | OpenAI Plus or API | tool_use, file_edit, shell, vision, MCP, thinking | Plays GPT-5.6 Sol/Terra/Luna; model remains client-selected unless a score overrides it |
 | `opencode` | per-provider | tool_use, file_edit, shell, multi_provider | Best route to OpenRouter free tier and Z.AI Coding Plan |
 | `aider` | per-provider | tool_use, file_edit, git, shell, multi_provider | Strong git integration |
@@ -82,9 +82,22 @@ Composers select tag intersections (`tier × task × modality × constraint`) an
 
 | Model | Context | Cost in/out | Tags | Status |
 |---|---:|---|---|---|
+| **`gemini-3.7-flash`** | **1,048,576 input / 65,536 output** | not recorded | quick, standard, heavy | **stable / GA; released 2026-08-13; ratings provisional pending independent evaluation** |
 | `gemini-3.1-pro-preview` | 2M | $2.50 / $10 | max | preview |
-| `gemini-3-flash-preview` | 1M | $0.30 / $1.20 | quick, fast | preview |
+| `gemini-3-flash-preview` | 1M | $0.30 / $1.20 | quick, fast | historical fallback/reference only; current chains use 3.7 |
 | `gemini-2.5-pro` | 2M | $1.25 / $5 | heavy, **deprecating** | deprecates 2026-06-17 (API), 2026-10-16 (Vertex) |
+
+Gemini 3.7 Flash accepts text, image, video, audio, and PDF input and produces
+text. Google documents caching, code execution, preview computer use, file
+search, function calling, Google Maps grounding, search grounding, structured
+output, thinking, and URL context. Use only low, medium, or high thinking.
+
+Official evidence: [model page](https://ai.google.dev/gemini-api/docs/models/gemini-3.7-flash),
+[models index](https://ai.google.dev/gemini-api/docs/models), and
+[Gemini API changelog](https://ai.google.dev/gemini-api/docs/changelog).
+Catalog availability through `gemini-cli` and `antigravity` is not proof of a
+configured local profile, dispatch compatibility, authentication, or a live
+model execution; this catalog refresh performed no live probe.
 
 ### Z.AI — GLM (frontier-class, MIT-licensed for 5.1)
 
@@ -243,37 +256,37 @@ Open-source-first ranking. `→` = fallback ladder.
 2. `openrouter/minimax/minimax-m2.5:free` (SWE-Bench 80.2%)
 3. `qwen2.5-coder:32b` (local)
 → `claude-sonnet-4-6`, `mistral-small-4`, `openrouter/google/gemma-4-31b-it:free`
-→ last resort: `claude-opus-4-7`, `gpt-5.6-sol`, `glm-5.1`
+→ last resort: `claude-opus-4-7`, `gpt-5.6-sol`, `glm-5.3`
 
 ### Code translation (port-toolkit-style)
 1. `qwen3-coder-480b-a35b-instruct`, `openrouter/minimax/minimax-m2.5:free`, `qwen2.5-coder:32b`, `deepseek-v4-pro`
 → `claude-sonnet-4-6`, `mistral-small-4`
-→ last resort: `claude-opus-4-7`, `glm-5.1`
+→ last resort: `claude-opus-4-7`, `glm-5.3`
 
 ### Reasoning verification
 1. `deepseek-r1`, `qwq-32b`, `phi-4-reasoning`
-→ `claude-opus-4-7`, `gemini-3.1-pro-preview`, `glm-5.1`
+→ `claude-opus-4-7`, `gemini-3.1-pro-preview`, `glm-5.3`
 
 ### **Careful long-running analysis** (NEW chain)
-1. **`glm-5.1`** — primary per user direct testimony
+1. **`glm-5.3`** — primary for well-bounded work at high/max reasoning per composer operational calibration
 → `claude-opus-4-7`
 → last resort: `gpt-5.6-sol`
 
 ### Long-document synthesis (>200K tokens)
-1. `gemini-3-flash-preview` (1M, cheap), `claude-opus-4-7` (1M now), `deepseek-v4-pro` (1M)
+1. `gemini-3.7-flash` (1,048,576), `claude-opus-4-7` (1M), `deepseek-v4-pro` (1M)
 → `gemini-3.1-pro-preview` (2M)
 
 ### Classification
 1. `zai-coding-plan/glm-4.7-flash`, `phi-4:14b`
-→ `gemini-3-flash-preview`, `claude-haiku-4-5-20251001`
+→ `gemini-3.7-flash`, `claude-haiku-4-5-20251001`
 
 ### Cross-vendor review (subtle)
 
 Use `scores/prep/thinking-lab.yaml` for full 5-vendor fan-out. Typical pairs:
 
-- `claude-opus-4-7` ↔ `gpt-5.6-terra`, `gemini-3.1-pro-preview`, **`glm-5.1`**
-- `gpt-5.6-terra` ↔ `claude-opus-4-7`, `glm-5.1`
-- `glm-5.1` ↔ `claude-opus-4-7`
+- `claude-opus-4-7` ↔ `gpt-5.6-terra`, `gemini-3.1-pro-preview`, **`glm-5.3`**
+- `gpt-5.6-terra` ↔ `claude-opus-4-7`, `glm-5.3`
+- `glm-5.3` ↔ `claude-opus-4-7`
 - `qwen3-coder-480b-a35b-instruct` ↔ `claude-sonnet-4-6`
 
 > GLM-as-reviewer needs chunking guidance in prompt.
@@ -288,7 +301,7 @@ Use `scores/prep/thinking-lab.yaml` for full 5-vendor fan-out. Typical pairs:
 → `phi-4:14b`, `claude-haiku-4-5-20251001`
 
 ### Open-default general
-1. `qwen3-235b-a22b`, `qwen3.6-27b`, `qwen3-coder-480b-a35b-instruct`, `glm-5.1`
+1. `qwen3-235b-a22b`, `qwen3.6-27b`, `qwen3-coder-480b-a35b-instruct`, `glm-5.3`
 → `openrouter/minimax/minimax-m2.5:free`, `openrouter/google/gemma-4-31b-it:free`, `mistral-small-4`, `llama3.3:70b` (legacy)
 → last resort: `claude-sonnet-4-6`
 

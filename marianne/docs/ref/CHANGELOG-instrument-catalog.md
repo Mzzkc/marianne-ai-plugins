@@ -4,6 +4,40 @@ Append-only log of changes to `instrument-catalog.yaml`.
 
 ---
 
+## 2026-08-17 — Gemini 3.7 Flash stable catalog refresh
+
+**Driven by:** Google Gemini API model documentation, the official models
+index, and the Gemini API release notes, verified 2026-08-17. Google released
+stable / GA `gemini-3.7-flash` on 2026-08-13.
+
+### Changes
+
+- Added `gemini-3.7-flash` with its exact 1,048,576-token input limit,
+  65,536-token output limit, text/image/video/audio/PDF inputs, and text output.
+- Recorded the supported low, medium, and high thinking levels and the explicit
+  rejection of `minimal`.
+- Recorded only capabilities documented on Google's model page: caching, code
+  execution, preview computer use, file search, function calling, Google Maps
+  grounding, search grounding, structured output, thinking, and URL context.
+- Recorded catalog availability through `gemini-cli` and `antigravity` and
+  repointed current Gemini Flash use-case chains to the stable model.
+- Retained `gemini-3-flash-preview` as a historical fallback/reference rather
+  than deleting the older entry.
+- Synchronized the human-readable Markdown view with the authoritative YAML.
+
+### Honesty boundary
+
+Catalog availability, configured profile availability, dispatch compatibility,
+and live verification are separate evidence lanes. This refresh verified the
+catalog facts against official Google documentation; it did not prove local
+configuration, dispatch compatibility, authentication, or live execution.
+Qualitative ratings remain empty and explicitly provisional pending independent
+evaluation; no comparative benchmark or superiority claim was added.
+
+Official sources: [model page](https://ai.google.dev/gemini-api/docs/models/gemini-3.7-flash),
+[models index](https://ai.google.dev/gemini-api/docs/models), and
+[Gemini API changelog](https://ai.google.dev/gemini-api/docs/changelog).
+
 ## 2026-08-15 — GLM 5.3 one-million-context rollout
 
 **Drove by:** live OpenCode model-registry evidence and composer operational
