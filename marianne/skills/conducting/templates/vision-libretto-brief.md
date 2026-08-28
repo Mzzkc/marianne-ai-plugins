@@ -22,6 +22,14 @@ Use only when the vision or venue cannot safely remain implicit.
 - Safety, policy, and ownership constraints:
 - Authoritative artifacts:
 
+## Orientation snapshot
+
+- Source identity:
+- Observed state and observation time or version:
+- Authority:
+- Volatility:
+- Recheck trigger:
+
 ## Interpretation
 
 - Literal request:

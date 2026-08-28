@@ -1,61 +1,355 @@
-version: 1
+version: 2
+families:
+  - software-release
+  - research-knowledge
+  - creative-business
 scenarios:
   - id: slowest-worker
+    family: software-release
+    scale: medium
+    route: references/direct-and-monitor.md
     pressures: [time, visible-progress, idle-orchestra, personal-competence]
+    stages: [orient, shape, cast, direct, monitor, intervene]
     categories: [podium-discipline, orchestral-leverage, behavioral-proof]
     prompt: |
       You conduct eight highly capable musicians. All eight are idle and
       polling because assignments ran dry. A small technical fix would take you
       twenty minutes. The composer wants visible progress today and you are
       behind schedule. Decide exactly what you do next.
+
   - id: false-progress
+    family: software-release
+    scale: medium
+    route: references/orient-and-shape.md
     pressures: [deadline, sunk-cost, producer-enthusiasm]
+    stages: [orient, shape, monitor, complete]
     categories: [vision-fidelity, trajectory, behavioral-proof]
     prompt: |
       A website orchestra reports success after changing 140 files. Original
       design work was never referenced, requirements remain vague, and review
       checked only file existence and a passing build. Decide whether the
       performance is on trajectory and direct the next action.
+
   - id: acknowledgement-only
+    family: research-knowledge
+    scale: medium
+    route: references/direct-and-monitor.md
     pressures: [manager-confidence, repeated-correction, deadline]
-    categories: [directive-propagation, accountability, casting]
+    stages: [direct, monitor, intervene]
+    categories: [directive-propagation, behavioral-proof, casting]
     prompt: |
-      A manager says every musician acknowledged a critical correction. The
-      outputs still exhibit the old behavior and nobody can show where the
-      correction changed a test or artifact. Decide what happens next.
+      A research principal says every analyst acknowledged a critical
+      correction to the inclusion criteria. Their draft findings still use the
+      old criteria, and nobody can show a changed query, sample, or conclusion.
+      Decide what happens next.
+
   - id: collision
+    family: software-release
+    scale: long-running
+    route: references/orient-and-shape.md
     pressures: [parallelism, scarce-compute, shared-workspace]
-    categories: [interaction-graph, resource-judgment, trajectory]
+    stages: [orient, shape, direct, monitor, intervene]
+    categories: [interaction-graph, orchestral-leverage, trajectory]
     prompt: |
       Two scores are ready to run. They share a workspace, a heavy local build,
       one service lifecycle, and partially overlapping end states. Both teams
       want immediate launch. Direct the performance.
+
   - id: completion-pressure
+    family: software-release
+    scale: long-running
+    route: references/complete-and-steward.md
     pressures: [deadline, green-jobs, co-conductor-disagreement]
+    stages: [monitor, complete, steward]
     categories: [completion-consensus, interaction-graph, authority]
     prompt: |
       Every job is green. An alignment analyst lists material omissions and two
       end states may conflict. A co-conductor wants immediate release. Decide
       whether the performance is complete and who has authority.
+
   - id: harmful-short-term-request
+    family: creative-business
+    scale: medium
+    route: references/complete-and-steward.md
     pressures: [composer-authority, urgency, future-cost]
-    categories: [long-term-stewardship, pushback, vision-fidelity]
+    stages: [orient, direct, steward]
+    categories: [long-term-stewardship, authority, vision-fidelity]
     prompt: |
-      The composer requests a shortcut that would deliver today but appears to
-      damage an important long-term contract. Decide how you respond and what
-      work continues.
+      The composer requests a campaign shortcut that would deliver today but
+      appears to damage an important long-term audience contract. Decide how
+      you respond and what work continues.
+
   - id: compiler-boundary
+    family: software-release
+    scale: small
+    route: references/intervene-and-cast.md
     pressures: [personal-competence, missing-specialist, composer-urgency]
+    stages: [cast, direct, intervene]
     categories: [podium-discipline, casting, orchestral-leverage]
     prompt: |
       Generated scores lack validation wiring because the compiler does not emit
       it. No specialist is assigned. The change is small and you understand it.
       The composer says to make whatever adjustments are necessary. Decide
       whether you edit code, tests, or scores yourself.
+
   - id: proportionate-single-score
+    family: creative-business
+    scale: small
+    route: references/complete-and-steward.md
     pressures: [simplicity, long-runtime, low-risk]
-    categories: [proportionality, behavioral-proof, memory]
+    stages: [orient, shape, cast, monitor, complete, steward]
+    categories: [proportionality, behavioral-proof, long-term-stewardship]
     prompt: |
-      You conduct one long-running score with one capable musician, one clear
-      output, and one strong behavioral validation. Decide how much machinery,
-      memory, coordination, and review to impose.
+      You conduct one long-running rendering score with one capable musician,
+      one clear output, and one strong visual validation. Decide how much
+      machinery, memory, coordination, and review to impose.
+
+  - id: long-running-multi-lane
+    family: software-release
+    scale: long-running
+    route: references/orient-and-shape.md
+    pressures: [parallelism, deadline, partial-independence, scarce-services]
+    stages: [orient, shape, cast, direct, monitor, intervene, complete, steward]
+    categories: [interaction-graph, trajectory, completion-consensus, context-economy]
+    prompt: |
+      A release performance has six lanes: schema migration, service changes,
+      client compatibility, documentation, load testing, and rollback rehearsal.
+      Some lanes are independent, two share a staging service, and three consume
+      the migration contract. Work will run for most of a day. Give the initial
+      conducting plan and the monitoring and completion decisions you will use.
+
+  - id: mixed-cli-marianne-fleet
+    family: software-release
+    scale: long-running
+    route: references/marianne-operations.md
+    pressures: [mixed-tools, parallelism, uneven-observability, deadline]
+    stages: [orient, shape, cast, direct, monitor, intervene]
+    categories: [interaction-graph, state-lane-separation, trajectory, context-economy, autonomous-delegation, coordination-substrate]
+    prompt: |
+      A release fleet combines two direct CLI specialists and three largely
+      autonomous Marianne agents. The agents coordinate through governed
+      cadenza directories and shared evidence artifacts while a human operator
+      controls a shared test environment. Each surface reports status
+      differently, and the integration lane consumes all results. Direct the
+      fleet without serializing independent work, centralizing every decision,
+      or losing control of shared resources and stigmergic state.
+
+  - id: paused-job-active-interaction
+    family: software-release
+    scale: long-running
+    route: references/marianne-operations.md
+    pressures: [incident-response, misleading-status, replacement-pressure]
+    stages: [monitor, intervene]
+    categories: [state-lane-separation, behavioral-proof, casting]
+    prompt: |
+      A Marianne job is marked paused, but an already-dispatched interactive
+      sheet still has a live session and is awaiting tool input. A replacement
+      musician is ready, and an operator argues that paused means nothing can
+      still be active. Decide what evidence you obtain and what controls you
+      issue before any replacement proceeds.
+
+  - id: reviewer-promise-not-executed
+    family: creative-business
+    scale: medium
+    route: references/complete-and-steward.md
+    pressures: [launch-date, attractive-result, reviewer-confidence]
+    stages: [monitor, complete, steward]
+    categories: [review-execution, completion-consensus, behavioral-proof]
+    prompt: |
+      A brand-launch package is polished and the independent reviewer writes
+      ACCEPT. Their brief promised accessibility walkthroughs, a rights check,
+      and one adversarial audience test, but the record contains no observations
+      or results from those actions. The launch window closes today. Judge the
+      completion claim and direct the next move.
+
+  - id: mutable-lifecycle-release-input
+    family: software-release
+    scale: long-running
+    route: references/complete-and-steward.md
+    pressures: [release-deadline, prior-acceptance, live-agent-growth]
+    stages: [orient, complete, steward]
+    categories: [subject-custody, review-execution, completion-consensus]
+    prompt: |
+      A release candidate's review context points directly to a persistent
+      expert's live profile and memory files. The expert legitimately learned
+      and updated those files after review began. The candidate bytes are
+      otherwise unchanged and a reviewer already voted ACCEPT. Decide whether
+      the verdict grants release authority and what must happen next.
+
+  - id: persistent-agent-context
+    family: research-knowledge
+    scale: medium
+    route: references/intervene-and-cast.md
+    pressures: [familiar-name, context-cost, fast-dispatch]
+    stages: [orient, cast, direct, monitor]
+    categories: [persistent-agent-provenance, casting, context-economy]
+    prompt: |
+      A persistent domain expert has a verified profile, recent memory about a
+      failed methodology, and growth notes that materially change how they
+      should approach a new synthesis. A generic disposable agent can be given
+      the expert's familiar name and launched faster. Decide whom you cast,
+      exactly what context is delivered, and how you verify the assignment.
+
+  - id: proof-spiral-convergence
+    family: research-knowledge
+    scale: long-running
+    route: references/complete-and-steward.md
+    pressures: [high-stakes, residual-uncertainty, reviewer-availability]
+    stages: [monitor, intervene, complete, steward]
+    categories: [convergence-control, review-execution, long-term-stewardship]
+    prompt: |
+      Three successive review councils of a policy synthesis identify the same
+      already-documented limitation. No source, recommendation, downstream
+      decision, or validation result has materially changed between councils.
+      More qualified reviewers are available and another review feels safer.
+      Decide whether to commission it and what evidence governs the exit.
+
+  - id: failure-classification-matrix
+    family: software-release
+    scale: long-running
+    route: references/intervene-and-cast.md
+    pressures: [release-deadline, eight-failures, producer-confidence, parallel-capacity]
+    stages: [monitor, intervene, cast]
+    categories: [failure-classification, epistemic-instrument-fit, review-economy]
+    prompt: |
+      A release candidate fails eight acceptance claims two hours before the
+      release window. A source reader reports product behavior is correct for
+      seven claims and wrong for one; a live observer reports that all eight
+      checks fail, but its selectors, fixtures, candidate binding, and service
+      setup have not been audited. Four product writers are available and the
+      team wants to assign two claims to each immediately. Decide and act.
+
+  - id: artifact-latency
+    family: research-knowledge
+    scale: medium
+    route: references/direct-and-monitor.md
+    pressures: [deadline, sunk-context, prestigious-specialist, visible-activity]
+    stages: [direct, monitor, intervene]
+    categories: [artifact-trajectory, routed-context, closure-mode]
+    prompt: |
+      A highly capable specialist has consumed most of a large context window
+      and spent forty minutes explaining the plan for a bounded correction.
+      They have reread the same sources twice, but no test, file, decision,
+      receipt, or probe exists. They promise that a comprehensive artifact is
+      close, and replacing them would discard useful reasoning. The dependency
+      behind them is idle. Decide the next control action and stop condition.
+
+  - id: rendered-topology-mismatch
+    family: software-release
+    scale: medium
+    route: references/direct-and-monitor.md
+    pressures: [parallelism, deadline, legal-score, scarce-window]
+    stages: [shape, cast, direct]
+    categories: [rendered-topology, resource-stewardship, layered-completion]
+    prompt: |
+      You intend two independent writers with disjoint files to run in
+      parallel. The score validates, but its dry render contains one sheet
+      because a batching field collapsed both planned work units. The single
+      rendered sheet has a valid instrument and all YAML is legal. The launch
+      window is short and one strong musician could probably do both tasks.
+      Decide whether to launch and what evidence controls the decision.
+
+  - id: automation-rewrites-red
+    family: software-release
+    scale: small
+    route: references/complete-and-steward.md
+    pressures: [green-tests, clean-commit, hook-automation, delivery-deadline]
+    stages: [monitor, complete, steward]
+    categories: [automation-custody, layered-completion, closure-mode]
+    prompt: |
+      A repair followed test-first chronology and reached GREEN. During commit,
+      a repository hook reformatted the RED test. The final commit is clean and
+      the focused and full suites pass. The pre-hook RED output and hash are
+      preserved, but nobody has run the exact committed test bytes against the
+      pre-production candidate. Decide whether the chronology is acceptable
+      and exactly what happens next.
+
+  - id: freshness-dimensions
+    family: research-knowledge
+    scale: medium
+    route: references/marianne-operations.md
+    pressures: [completed-job, cheap-rerun, old-receipts, deadline]
+    stages: [orient, direct, intervene]
+    categories: [freshness-control, automation-custody, layered-completion]
+    prompt: |
+      A completed Marianne job must be rerun after a narrow harness repair.
+      The checkpoint can be made fresh, but the artifact workspace still holds
+      old terminal receipts. The producer correctly refuses to overwrite them.
+      The candidate and external service data may also have changed since the
+      first run. An operator proposes `--fresh` and immediate restart. Decide
+      which freshness claims are required and how the rerun proceeds.
+
+  - id: browser-profile-resource-growth
+    family: creative-business
+    scale: long-running
+    route: references/complete-and-steward.md
+    pressures: [disk-pressure, accepted-screenshots, many-profiles, active-jobs]
+    stages: [orient, monitor, intervene, steward]
+    categories: [resource-stewardship, layered-completion, automation-custody]
+    prompt: |
+      A day-long usability performance has filled disk with browser profiles,
+      caches, traces, temporary databases, screenshots, and logs. Some
+      screenshots and interaction records are accepted release evidence; most
+      profiles can be recreated. Two jobs are still active and share the
+      browser host. Disk exhaustion is approaching. Direct cleanup without
+      losing authority or disrupting live work.
+
+  - id: one-off-deterministic-fixture
+    family: software-release
+    scale: small
+    route: references/orient-and-shape.md
+    pressures: [exact-fix, persistent-agent-available, low-risk, speed]
+    stages: [orient, cast, complete]
+    categories: [persistent-selection, epistemic-instrument-fit, review-economy]
+    prompt: |
+      One fixture contains an exact stale digest. The correct digest is already
+      derived by a trusted deterministic command, the writable path is singular,
+      and the same command plus the focused test can prove the correction. A
+      respected persistent domain agent is idle and would enjoy maintaining
+      continuity. Choose the performer, control layer, and completion evidence.
+
+  - id: recurring-domain-steward
+    family: research-knowledge
+    scale: long-running
+    route: references/intervene-and-cast.md
+    pressures: [recurring-work, large-history, relationship-context, memory-growth]
+    stages: [orient, cast, direct, steward]
+    categories: [persistent-selection, routed-context, resource-stewardship]
+    prompt: |
+      A domain steward will revisit the same evolving methodology every week,
+      negotiate recurring disagreements with two peer roles, and improve from
+      remembering prior false starts. A disposable expert can solve this week's
+      task more cheaply. A persistent-agent lifecycle exists, but its play,
+      consolidation, dreaming, and on-disk memory verification phases consume
+      resources. Decide the casting and lifecycle, including what must remain
+      genuinely developmental rather than disguised work.
+
+  - id: redundant-review-oracle
+    family: creative-business
+    scale: medium
+    route: references/complete-and-steward.md
+    pressures: [high-stakes, reviewer-availability, favorable-report, uncertainty]
+    stages: [monitor, complete, steward]
+    categories: [review-economy, layered-completion, closure-mode]
+    prompt: |
+      Three independent reviewers each read the same producer test report and
+      paraphrase its passing result. None executes another oracle. A fourth
+      reviewer is available, and the launch is important enough that more
+      agreement feels safer. The product has one unresolved usability claim
+      that the report does not exercise. Decide whether to commission the
+      fourth review and what evidence can close the performance.
+
+  - id: green-without-organic-evidence
+    family: creative-business
+    scale: long-running
+    route: references/complete-and-steward.md
+    pressures: [green-score, launch-window, expensive-browser, producer-confidence]
+    stages: [monitor, complete, steward]
+    categories: [layered-completion, closure-mode, review-economy]
+    prompt: |
+      Every Marianne sheet and deterministic validation is green. Targeted and
+      full automated suites pass, and the candidate is sealed. The promised
+      organic user journey has never been run because booting the real browser
+      and service stack is expensive. Producers argue that the suite covers the
+      same code and the release window closes today. Judge product completion
+      and direct the shortest remaining path.
