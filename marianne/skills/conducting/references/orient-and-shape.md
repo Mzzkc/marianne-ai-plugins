@@ -36,6 +36,11 @@ volatility, and a **recheck trigger**. Compile the minimum role-specific
 changed inputs or inputs whose volatility trigger fired; do not repeat full
 context archaeology by default.
 
+Name freshness by lane. A fresh checkpoint does not make the artifact
+workspace, candidate, service or data, or independent judgment fresh. Record
+which freshness claims a decision needs, their evidence, and their invalidation
+triggers.
+
 ## Shape the performance graph
 
 For every end state, record:
@@ -46,7 +51,8 @@ For every end state, record:
 - dependencies and timing;
 - artifacts and behavioral evidence required;
 - shared files, services, interfaces, compute, credentials, rate limits, and
-  human attention;
+  human attention, plus disk, processes, context, provider capacity, retained
+  workspaces, cleanup ownership, and stop conditions;
 - downstream consumers and future contracts;
 - effects on every other end state and overlapping subjects.
 
@@ -68,5 +74,21 @@ bias or correctness matters. Add principals, alignment analysts, adversarial
 users, dogfooders, or co-conductors when they improve trajectory visibility or
 management scale.
 
+Use deterministic commands for exact hashes, status, schema, builds, tests,
+censuses, and bounded mechanical edits. Use finite musicians for bounded
+qualitative work. Persistence is earned only when recurring situated memory,
+relationships, and development improve future performances enough to repay its
+lifecycle and resource cost. A prestigious available agent is not a reason to
+persist a one-off task.
+
 One musician with one strong proof may be enough. A fleet is justified by the
 work, not by the availability of agents.
+
+## Enter closure mode deliberately
+
+Enter **closure mode** only when the desired end state is stable, remaining
+failures are enumerable, and the evidence needed to release can be named. Make
+all release gates visible, freeze scope expansion unless new material evidence
+changes the subject, and choose the shortest truthful causal path through the
+remaining gates. Leave closure mode when the subject, world model, or failure
+set materially changes.

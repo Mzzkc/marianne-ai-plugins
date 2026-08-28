@@ -2,6 +2,11 @@ performance:
   vision_ref: ""
   venue_ref: ""
   horizon: ""
+  mode: "orientation | expansion | closure"
+  open_release_gates: []
+  intended_work_units: 0
+  rendered_sheet_count: 0
+  topology_evidence: ""
 end_states:
   - id: ""
     outcome: ""
@@ -25,6 +30,15 @@ end_states:
       validation: ""
       judgment: ""
     resources: []
+    resource_owner: ""
+    cleanup_stop_condition: ""
+    freshness_required:
+      checkpoint: ""
+      artifact_workspace: ""
+      candidate: ""
+      service_data: ""
+      independent_judgment: ""
+    artifact_checkpoint: ""
     affects: []
 interactions:
   - left: ""
@@ -33,3 +47,19 @@ interactions:
     evidence: ""
     direction: ""
     owner: ""
+efficiency_ledger:
+  enabled: false
+  movements:
+    - movement: ""
+      owner: ""
+      started_at: ""
+      ended_at: ""
+      instrument_class: "deterministic | capability class"
+      attempts: 1
+      artifacts_produced: []
+      proofs_executed: []
+      rework_cause: "none | context_gap | harness_defect | product_defect | collision | drift | environment"
+      conductor_intervention: "none | tightened | split | recast | cancelled | recovered"
+      disk_delta_bytes: "integer | unknown"
+      cost_or_quota_confidence: "known | uncertain | unavailable"
+      next_dependency: "stable id | terminal"

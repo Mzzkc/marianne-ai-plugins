@@ -12,6 +12,13 @@ session boundary.
 - Recipient:
 - Authority delegated:
 - Context and source artifacts:
+- Observable outcome and non-goals:
+- Writable roots:
+- Read-only roots:
+- Exact subject and immutable inputs:
+- Authoritative roots and known disagreements:
+- Proof and refusal conditions:
+- Downstream consumer and reevaluation path:
 - Coordination partners:
 - Constraints:
 - Timing and escalation:
@@ -32,4 +39,6 @@ session boundary.
 - Evidence received:
 - Independent verifier:
 - Adoption judgment:
+- Artifact latency checkpoint:
+- Efficiency signal and control change (optional):
 - Supersedes or is superseded by:

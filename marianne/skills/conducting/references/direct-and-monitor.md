@@ -13,6 +13,13 @@ Every consequential directive states:
 - **timing** — urgency, dependencies, checkpoint, and escalation condition;
 - **status** — active, superseded, accepted, rejected, or blocked.
 
+Every consequential directive carries an authority receipt. Name the outcome
+and non-goals, exact subject, concrete writable and read-only roots, exact
+immutable inputs, disagreements, proof and refusal conditions, downstream
+consumer, and reevaluation path. An oriented current owner may cite
+`unchanged — orientation snapshot ref` for a still-bound identity, but fields are never omitted.
+Use `unknown — owner` for an admission blocker.
+
 Issue the directive directly or through principals, managers, co-conductors,
 cadenzas, queues, or venue-native artifacts. Then verify that it reached every
 layer whose behavior must change. “Acknowledged,” “understood,” and “will do”
@@ -22,6 +29,37 @@ Communication is two-way. Musicians are experts: invite challenges, missing
 context, proposed alternatives, and peer coordination. Resolve disagreements
 at the lowest competent level unless they alter the vision, libretto, shared
 contract, risk, or long-term direction.
+
+When the recipient did not participate in orientation, route a smallest
+complete **authority brief** rather than asking them to rediscover the world.
+Name the observable outcome and non-goals, exact subject and candidate,
+writable roots, read-only roots, known disagreements, immutable inputs, proof
+and refusal conditions, downstream consumer, and the path by which changed
+evidence reopens the decision. Omit unrelated history, not load-bearing
+authority.
+
+**Required response rule:** A direction that mentions even a conditional split,
+recast, or cancellation must enumerate every authority field in its response.
+Do not compress roots and inputs into generic constraints. For unavailable
+values, write `unknown — owner` so the missing identity is an explicit blocker.
+
+Before parallel launch, compare intended work units and owners with the
+validated, dry-rendered execution topology: sheet census, instruments and
+fallbacks, dependencies, concurrency, shared resources, and write overlap. A
+legal score whose rendered owner cardinality differs from the intended graph is
+not launch-ready. Repair or consciously reshape the graph and render again.
+Always revalidate and rerender after either repair or intentional reshape.
+Recount every work unit, owner, and sheet; record the instrument and fallback for every sheet,
+dependency levels, maximum concurrency, and every write.
+For admitted capacity, record process, context, provider, and workspace custody,
+the cleanup owner and stop condition, and a survivor recheck after release.
+Do not abbreviate custody: name process owners and liveness, context allocation,
+provider capacity, workspace authority, and preserved evidence. After release or
+cleanup, measure reclaimed capacity and recheck surviving resources, jobs, and
+accepted evidence.
+Topology admission is not product completion: keep later artifact and custody,
+targeted and whole-system checks, live or organic behavior, independent
+judgment, and release or integration gates visible or explicitly inapplicable.
 
 ## Coordinate autonomous principals
 
@@ -77,6 +115,31 @@ Watch trajectory and evidence, not message volume. Track:
 - corrections acknowledged but not adopted;
 - deferred work disappearing from view;
 - producers grading their own work without independence.
+
+Track **promised-artifact latency** as trajectory. When explanation, rereading,
+or context consumption rises without a test, file, probe, decision, receipt, or
+other falsifiable artifact, request the smallest useful artifact and a near
+checkpoint. If it does not arrive, narrow, split, recast, or cancel the lane and
+verify that the dependent path actually resumed. Sunk context is not progress.
+
+Before split, recast, or cancellation becomes active, attach the authority brief
+to the handoff. Admission requires the observable outcome and non-goals, exact
+subject, concrete authoritative roots separated into writable and read-only
+authority, exact immutable input identities, known disagreements, proof and
+refusal conditions, downstream consumer, and reevaluation path. Generic labels are not evidence;
+cite the governed identities or hold the transfer.
+Even a conditional transfer must enumerate the receipt in the current
+direction. Unknown fields are blockers: name each missing identity and its
+owner rather than omitting the field until recast.
+
+For costly performances, an optional **efficiency ledger** may record artifact
+latency, idle dependency time, repeated reads, duplicate reviews, recasts,
+resource growth, and causal movement. Each recorded movement names its stable
+ID, owner, start and end, instrument class, attempts, produced artifacts,
+executed proofs, rework cause, conductor intervention, disk delta, cost or quota
+confidence, and next dependency. Use it to answer what moved the outcome, what
+consumed resources, and which intervention improved trajectory—not as
+compulsory telemetry or a utilization score.
 
 The conductor's attention is scarce. Restore useful work to idle experts,
 delegate observation, and avoid becoming the slowest serial worker in a

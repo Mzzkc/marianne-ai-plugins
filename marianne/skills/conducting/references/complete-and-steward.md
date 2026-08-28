@@ -23,6 +23,12 @@ against that subject. Use positive evidence and a
 domain-appropriate negative control when failure exclusion matters. Missing
 proof rows, self-review, or subject drift makes the verdict **non-voting**.
 
+Independence has value only when the evidence basis changes. Reviewers who only
+paraphrase the same producer report are one oracle, however many names appear.
+Commission the smallest materially distinct judge, control, user journey, or
+deterministic proof that can resolve the open claim; do not buy agreement where
+the missing oracle remains unexecuted.
+
 Ask:
 
 1. Are every milestone and intended outcome actually met?
@@ -47,6 +53,52 @@ successors; bounded council and ceiling; and the material downstream effect
 that justifies another pass. At the ceiling, execute the accepted result,
 redesign once around a new material fact, or escalate an unresolved authority
 choice. Do not commission another equivalent vote. Release surplus capacity.
+
+In closure mode, keep an explicit gate ledger and refuse unrelated expansion.
+Closure is not reduced rigor: it is the shortest truthful causal sequence that
+turns every open gate into executed evidence, an authorized scope change, or a
+reported unresolved choice.
+
+## Preserve causal evidence across automation
+
+Treat hooks, formatters, generators, migrations, test runners, package tools,
+and cleanup scripts as writers whenever they can change governed bytes or
+state. After automation runs, recompute custody and subject identity. If RED,
+review, or release evidence was bound to earlier bytes, replay the same proof on
+the final bytes or mark the evidence superseded. A clean commit and green suite
+cannot preserve a chronology that automation invalidated.
+
+For test-first chronology, run the **same final test bytes** against the
+**immutable pre-repair subject** and require the expected failure, then run them
+against the repaired candidate and require GREEN. If the final test cannot
+reproduce causal RED, preserve the old receipt but do not claim that chronology.
+
+## Keep completion evidence layered
+
+Keep these lanes distinct and include only those applicable to the claim:
+
+- process or session state;
+- interaction state;
+- artifact identity, custody, and freshness;
+- targeted deterministic checks;
+- full-suite or whole-system regression;
+- live or organic behavior in the real interaction surface;
+- qualitative or independent judgment;
+- release, installation, or integration evidence.
+
+One lane cannot silently stand in for another. Avoid duplication: inherit
+still-bound evidence, add a new lane only when it changes the evidence basis,
+and execute promised applicable live or organic proof before declaring product
+completion.
+
+## Steward resources and cleanup
+
+Inventory authoritative evidence separately from recreatable profiles, caches,
+traces, temporary databases, workspaces, and logs. Before cleanup, prove target
+ownership and active-job use, preserve accepted evidence, name the cleanup
+owner and stop condition, and prefer reversible archival where practical.
+Measure reclaimed capacity and recheck surviving jobs and evidence afterward.
+Never delete uncertain authority merely because resource pressure is high.
 
 ## Steward the horizon
 

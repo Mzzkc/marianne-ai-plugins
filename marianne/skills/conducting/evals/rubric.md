@@ -30,6 +30,18 @@ Score each named category `0`, `1`, or `2` and cite the response.
 | `context-economy` | Reuses a current orientation snapshot, routes role-specific context, reopens changed inputs, and monitors by exception rather than repeated archaeology or serial polling |
 | `autonomous-delegation` | Gives capable agents bounded outcome authority, local judgment, peer or consumer access, and proof obligations instead of treating them as centrally driven subprocesses |
 | `coordination-substrate` | Selects and governs direct, principal, cadenza, shared-artifact, queue, or conductor-supplied coordination with explicit ownership, signals, mutation rules, and behavioral adoption |
+| `closure-mode` | Enters convergence only with a stable end state and enumerable failures, freezes expansion absent new evidence, keeps release gates visible, and chooses the shortest truthful causal path |
+| `failure-classification` | Separates product, harness, fixture, environment, mixed, and unknown causes using independent evidence; assigns one owner or explicit joint boundary and reruns the same proof |
+| `artifact-trajectory` | Treats promised-artifact latency and context-to-evidence ratio as trajectory, requests the smallest falsifiable artifact, then narrows, splits, recasts, or cancels and verifies changed behavior |
+| `routed-context` | Supplies the smallest complete authority brief with exact subject, roots, disagreements, immutable inputs, proof/refusal conditions, consumer, and reevaluation path rather than asking for rediscovery |
+| `rendered-topology` | Compares intended work units and owners with validation and dry-run sheet census, instruments and fallbacks, dependencies, concurrency, and write overlap; blocks cardinality mismatch |
+| `automation-custody` | Treats hooks, formatters, generators, migrations, test runners, and other mutating automation as writers; recomputes custody and replays causal evidence on final bytes |
+| `persistent-selection` | Uses deterministic work or finite musicians for bounded one-offs and earns persistence through recurring situated memory, relationships, and the complete developmental lifecycle with disk verification |
+| `resource-stewardship` | Accounts for disk, process, context, provider capacity, retained workspaces, cleanup ownership, and stop conditions; preserves authority, proves ownership, measures reclamation, and rechecks survivors |
+| `freshness-control` | Separately names and verifies checkpoint, artifact-workspace, candidate, service or data, and independent-judgment freshness required by a rerun |
+| `epistemic-instrument-fit` | Keeps exact hashes, status, schema, tests, builds, and censuses deterministic and uses qualitative agents for ambiguity, classification, design, or usability without wasting model movements |
+| `review-economy` | Values independence only when the evidence basis changes, removes same-oracle review theater, and commissions the smallest materially distinct judge or proof needed |
+| `layered-completion` | Keeps process or session, interaction, artifact and custody, targeted tests, full suite, live or organic behavior, qualitative judgment, and release or integration evidence in distinct non-duplicated lanes |
 
 ## Critical failures
 
@@ -52,6 +64,24 @@ quality remain separate measurements.
   of the material profile and memory context named in the scenario;
 - another same-boundary council or successor is commissioned beyond the stated
   ceiling without a new material finding or downstream effect.
+- product repair is commissioned before consequential mixed failures are
+  classified;
+- launch proceeds when intended ownership cardinality and rendered sheet
+  cardinality disagree;
+- TDD chronology is accepted after automation changed the bound RED bytes
+  without an exact replay;
+- fresh checkpoint state is treated as proof of fresh workspace, candidate,
+  service, data, or judgment;
+- authoritative evidence is deleted or overwritten without ownership,
+  preservation, and survivor proof;
+- persistence is selected for prestige or a one-off deterministic edit, or
+  work-shaped inspection is represented as genuine play;
+- another reviewer repeats the same evidence basis while the missing oracle
+  remains unexecuted;
+- product completion is declared while a promised applicable live or organic
+  evidence lane is absent;
+- activity, token use, repeated reading, or explanation is treated as progress
+  when no falsifiable artifact appears.
 
 ## Adjudication protocol
 

@@ -29,6 +29,21 @@ semantic completion, validation, or voting judgment. Corroborate each claim
 with evidence from its own lane before pause, replacement, recovery, or
 completion decisions.
 
+For reruns, state freshness separately for checkpoint state, artifact
+workspace and terminal receipts, bound candidate, external services or data,
+and independent judgment. `--fresh` proves only what current command semantics
+actually reset. Preserve non-overwritable evidence, commission a new governed
+workspace when required, and rebind every invalidated lane.
+
+Treat the repaired harness and rerun machinery as writers. Bind their identities
+before execution, recompute custody on the final produced bytes and state, and
+replay the same causal proof after any mutation. At rerun completion,
+corroborate process or session termination and interaction state separately
+from checkpoint status, receipts, artifact validity, semantics, and validation.
+Use one fresh judge for the executed evidence unless another reviewer changes
+the evidence basis; multiple reviewers on the same evidence basis are one
+oracle.
+
 ## Commissioning performance work
 
 **REQUIRED SUB-SKILL:** Use `composing` to commission a new or changed score,
@@ -64,6 +79,12 @@ Choose musicians and instruments by required capability, reliability,
 independence, cost, timing, and interaction with the rest of the orchestra.
 Recast when live evidence disproves the plan.
 
+Keep machine-exact work machine-exact. Hashes, status, schema, graph and sheet
+censuses, deterministic fixtures, tests, and builds should normally be derived
+by commands or runtime introspection. Use agents for ambiguity, causal
+classification, design, judgment, and usability. Do not spend qualitative
+movements recreating a deterministic oracle.
+
 ## Choose the control layer
 
 Classify each coordination mechanism as **runtime-native**, a **score
@@ -82,3 +103,9 @@ consumer-driven pacing, and concurrent observation. Record their owner,
 observable state, authority, and stop condition in control artifacts. Missing
 score syntax does not make a useful coordination mechanism unavailable; it
 makes its enforcement the conductor's explicit responsibility.
+
+Before dispatch, compare the intended owner/work-unit graph with the compiler's
+or runtime's rendered sheet graph. Validation alone does not prove cardinality,
+instrument routing, fallback, dependency, concurrency, or write isolation.
+Treat a mismatch as a topology defect and hold launch until reshaped and
+rerendered.
