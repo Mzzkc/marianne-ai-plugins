@@ -1,6 +1,6 @@
 ---
 name: score-authoring
-description: Use when writing, reviewing, or fixing Marianne score YAML configs. Covers syntax (Jinja vs format strings), validation engineering, prompt design, fan-out architecture, and common pitfalls. Do NOT use for running/debugging jobs (use command instead).
+description: Use when writing, reviewing, or fixing Marianne score YAML configs, including persistent-agent identity, memory, technique, cadenza, and lifecycle attachment. Do NOT use for running/debugging jobs (use command instead).
 ---
 
 # Marianne Score Authoring Skill
@@ -41,14 +41,27 @@ sheet:
     1:
       - file: "{{ workspace }}/setup.md"        # one file
         as: skill
+        required: true
     2:
       - directory: "/abs/path/to/inputs"        # whole directory at once
         as: context
 ```
 
+`required` defaults to `false` for legacy compatibility. Set it to `true` for
+every load-bearing persistent-agent identity, memory, and cadenza attachment so
+missing context fails before execution. Runtime context-delivery receipts prove
+the resolved paths and hashes actually assembled into the prompt.
+
 **Directory cadenzas are NOT recursive** — only the immediate children of the directory are injected. Subdirectories are silently ignored. If you need a deeper tree, flatten the input dir or list each subdir as its own cadenza item. A common pattern: a small `instrument: cli` preflight stage curates/copies the relevant files into one flat directory the cadenza points at.
 
 See `patterns.md` → "Prelude & Cadenza" for full file/directory injection rules.
+
+For a persistent agent, read
+`${CLAUDE_PLUGIN_ROOT}/docs/ref/modern-agents.md` before authoring. Do not encode
+the person as an instrument profile, treat registry membership as attachment,
+or use a legacy plugin helper or `musician-XXXX` profile. Start from the shipped
+full-lifecycle, targeted-work, or lifecycle-integration score when it matches;
+compose a custom score only when the engagement needs a different DAG.
 
 ### Deterministic and release-grade sheets
 

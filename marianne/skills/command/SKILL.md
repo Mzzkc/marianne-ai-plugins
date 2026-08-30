@@ -1,6 +1,6 @@
 ---
 name: command
-description: Use when the user is submitting, monitoring, debugging, or recovering Marianne score runs. Covers the conductor, runtime job_id handles, diagnostics, config reload, recovery, self-healing, concert operations, and anti-patterns that lose work. Do NOT use for writing score configs (use score-authoring instead).
+description: Use when submitting, monitoring, debugging, or recovering Marianne score and persistent-agent lifecycle runs. Covers runtime job_id handles, delivery receipts, lifecycle debt, diagnostics, recovery, and anti-patterns that lose work. Do NOT use for writing score configs (use score-authoring instead).
 ---
 
 # Marianne Command Skill
@@ -65,6 +65,13 @@ When you run `mzt run config.yaml`, the CLI checks for a running conductor via U
 
 ## Score Lifecycle
 
+For a persistent-agent score, first read
+`${CLAUDE_PLUGIN_ROOT}/docs/ref/modern-agents.md`. Keep the runtime `job_id`
+separate from the semantic agent ID. Before submission, confirm the canonical
+agent data root, run any package/seed update in `--dry-run`, validate the exact
+score, inspect live instrument evidence, and verify all load-bearing injections
+are explicit and `required: true`.
+
 ### Submitting a Score
 
 ```bash
@@ -114,6 +121,18 @@ mzt history my-job               # Execution history
 | `list` | `--all`, `--status` / `-s`, `--limit` / `-l` |
 | `logs` | `--follow` / `-F`, `--lines` / `-n`, `--level` / `-l`, `--json` / `-j` |
 | `history` | `--json` / `-j` |
+
+For each attempted sheet, inspect the hash-only receipt below
+`<workspace>/.marianne/context-receipts/<job>/`. Join it to terminal sheet and
+validation evidence before claiming that identity, memory, techniques, or a
+cadenza reached the performer. A registry entry, association, or agent name is
+not delivery evidence.
+
+After targeted work, verify the immediate AAR/recent-memory write and the
+pending lifecycle debt file. Do not clear or summarize away that debt. Run the
+agent's lifecycle-integration score when authorized, retain before/after memory
+hashes and agent-authored seed-conflict resolutions, then require a later
+engagement to recall and apply a grounded learning.
 
 ### Pausing
 

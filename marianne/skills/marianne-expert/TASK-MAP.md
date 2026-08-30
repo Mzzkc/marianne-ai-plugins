@@ -4,6 +4,7 @@ Read `BOOTSTRAP.md` first, then choose one row. Open only the routed material.
 
 | Intent | Playbook | Add these references | Primary verification |
 |---|---|---|---|
+| Construct, reuse, update, or operate a persistent agent | `playbooks/compose.md` or `playbooks/operate.md` | `${CLAUDE_PLUGIN_ROOT}/docs/ref/modern-agents.md`, current registry README/index, exact seed and score | Prove canonical data authority, required attachment receipts, lifecycle debt/writeback, and later recall |
 | Write or review score YAML | `playbooks/compose.md` | `contracts/score-schema.md`, `contracts/validation-types.md`, `templates/`, `examples/golden/`, `examples/broken/` | `tools/check-score.py SCORE` |
 | Run, monitor, pause, resume, or cancel | `playbooks/operate.md` | `contracts/cli-commands.md`, `evidence/implementation-status.json` | Verify an actuator exists; inspect typed state and artifacts |
 | Diagnose a failure | `playbooks/debug.md` | `contracts/error-codes.md`, `examples/incidents/`, relevant claim slices | Search exact error; reproduce with the narrowest safe probe |

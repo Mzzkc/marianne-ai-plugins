@@ -34,13 +34,10 @@ now must be direct children of `shared/active/`.
 
 Generated generic fleets seed these starter files in `shared/active/`:
 
-- `00-cadenza-coordination.md` - the coordination contract.
 - `01-task-board.md` - current-cycle work claims.
-- `02-agent-status.md` - compact live status and handoffs.
-- `03-findings.md` - evidence-backed facts other agents can rely on.
-- `04-decision-log.md` - choices that affect other work.
-- `05-directives.md` - composer or conductor instructions.
-- `06-handoff-index.md` - pointers to detailed artifacts elsewhere.
+- `02-status.md` - the current cohort state in its existing local form.
+- `03-urgent-directives.md` - controlling conductor instructions.
+- `04-handoffs.md` - exact subject/evidence/next-owner transitions.
 
 Agents may add more active files, but they must keep the folder curated.
 
@@ -64,23 +61,20 @@ is normal coordination pressure, not a reason to stop.
 
 When this technique is active:
 
-1. Read every direct file in `shared/active/` before making a plan.
-2. Read `shared/directives/` if directive files exist.
+1. Read all four direct files before making a plan.
+2. Treat `shared/active/03-urgent-directives.md` as controlling ordinary plans.
 3. Claim overlapping work in `shared/active/01-task-board.md` before starting.
-4. Update `shared/active/02-agent-status.md` when starting, blocking, handing
-   off, reviewing, or completing material work.
-5. Record reusable facts in `shared/active/03-findings.md` or a detailed file
-   in `shared/findings/` with an active pointer.
-6. Record decisions in `shared/active/04-decision-log.md` or a detailed file in
-   `shared/decisions/` with an active pointer.
-7. Add handoff pointers to `shared/active/06-handoff-index.md`.
-8. Move stale detail out of `shared/active/` when it no longer needs to be in
+4. Preserve the existing form of `shared/active/02-status.md`; add concise,
+   evidence-bound status without inventing a replacement schema.
+5. Record reusable facts in `shared/findings/` and decisions in
+   `shared/decisions/`, with compact pointers in the relevant task or handoff.
+6. Add exact subject/evidence/remaining-boundary/next-owner tuples to
+   `shared/active/04-handoffs.md` when continuity crosses an owner or session.
+7. Move stale detail out of `shared/active/` when it no longer needs to be in
    every prompt.
 
-Use owner-scoped ids in shared active tables: `{agent}-T-001` for tasks,
-`{agent}-F-001` for findings, `{agent}-D-001` for decisions, and
-`{agent}-H-001` for handoffs. Do not allocate global numeric ids under
-parallel execution; another agent can choose the same number at the same time.
+Use owner-scoped task ids such as `{agent}-T-001`. Do not allocate global
+numeric ids under parallel execution; another agent can choose the same number.
 
 ## Claim Example
 
@@ -91,22 +85,15 @@ parallel execution; another agent can choose the same number at the same time.
 If another agent has already claimed overlapping work, update that row with a
 coordination note instead of starting a competing implementation.
 
-## Finding Example
+## Handoff Example
 
 ```markdown
-| sentinel-F-001 | high | sentinel | Generated scores inject `shared/active`, but compile did not seed it. | `compiler/src/.../sheets.py`, temp compile output | confirmed |
+- Canyon → Forge; exact score `scores/canyon.yaml` at SHA-256 `...`; compiler
+  gates passed; implementation remains; Forge owns the tests-first successor.
 ```
 
-Findings require evidence: a file path, command output summary, test name, log
-line, or exact source. Unsupported claims do not belong in shared state.
-
-## Decision Example
-
-```markdown
-| north-D-001 | north | Treat cadenza coordination as primary and A2A as optional. | Disk artifacts survive job boundaries and can be rendered as cadenzas. | compiler, docs, tests | 2026-06-21 |
-```
-
-Decisions must include the reason and impacted surfaces.
+Handoffs require exact evidence and the unresolved boundary. A roster name or
+verbal completion claim is not an attached, transferable handoff.
 
 ## A2A Boundary
 

@@ -1,6 +1,6 @@
 ---
 name: composing
-description: Use when turning a goal into a Marianne score, multi-stage AI workflow, concert, fan-out, evaluator loop, or release-grade orchestration YAML.
+description: Use when turning a goal into a Marianne score, persistent-agent engagement, multi-stage AI workflow, concert, fan-out, evaluator loop, or release-grade orchestration YAML.
 ---
 
 # Composing Marianne Scores
@@ -14,6 +14,13 @@ release candidate are provable.
 Compose only when coordination earns its overhead: distinct stages, parallel
 work, different instruments, costly downstream contamination, recovery, or
 reuse. Otherwise recommend a prompt or command.
+
+Before casting, decide whether the work should reuse a persistent person,
+construct a new persistent person, or use an ephemeral worker. Read
+`${CLAUDE_PLUGIN_ROOT}/docs/ref/modern-agents.md` whenever future learning,
+identity, relationships, or lifecycle memory may matter. Never reach for a
+legacy file under `plugins/marianne/agents/` or a DJ-only `musician-XXXX`
+profile as a modern-agent template.
 
 Inspect the venue and current runtime before design. Read:
 
@@ -42,12 +49,15 @@ pending independent evaluation.
 
 ## Current GLM specialist guidance
 
-The instrument catalog currently routes one-million-context GLM 5.3 through
-Claude Code as `glm-5.3[1m]` and through OpenCode as
-`zai-coding-plan/glm-5.3`. Use high or max reasoning for the composer's
-Fable 5-level calibration, and only on well-bounded, clearly specified tasks
-with observable proof obligations. Do not generalize that calibration to
-ambiguous or unvalidated work.
+Do not freeze a convenient local profile alias into a score. GLM 5.3 Flash may
+be selected only when current profile and live evidence prove a Z.AI route,
+the exact released model ID, entitlement, limits, vision capability, and
+invocation contract. `opencode-ox-alpha` may remain a historical box-local
+alias; it is not a free OpenRouter route or a portable score contract. Bind
+semantic phase requirements through live evidence and retain the routing
+receipt. Treat free or subscription-included metering as one cost dimension,
+not as evidence of low latency, quota, queue, or rate-limit risk.
+When GLM 5.3 is selected for substantial work, use high or max reasoning.
 
 For authorized defensive cybersecurity and vulnerability discovery, commission
 a specialized vulnerability-discovery score. It must gate target authority and
@@ -77,6 +87,12 @@ Before YAML, write `composition-design.yaml` with these required sections:
   plus a `yielded_process_cleanup` procedure;
 - `repair_loop`: repair stage, reevaluation stage, and maximum iterations;
 - `release`: release stage, reevaluation dependency, and candidate-hash policy.
+
+When persistence is chosen, also record the selected person or new durable gap,
+canonical L1-L4 authority, portable seed, required identity/memory/technique and
+cadenza attachments, lifecycle score shape, immediate writeback, pending debt,
+agent-authored conflict adjudication, delivery-receipt check, and later-recall
+test.
 
 Run:
 

@@ -24,7 +24,11 @@ description: Use when you need independent expert reviews from multiple frontier
 
 `scores/prep/thinking-lab.yaml` — several frontier reviewers from different vendor families run in parallel with directory-cadenza injection of the input dir. Pattern: `cli` stage 1 stages a setup marker; the review stages fan in parallel, each routed to a different vendor family.
 
-**Reviewers (current lineup):** one reviewer per vendor family — a mix of paid frontier and free/open-weight models across independent labs. The concrete lineup (which models, how many) lives in the score's `instruments:` and `movements:` and is intentionally not duplicated here, so this skill doesn't rot when the lineup changes.
+**Reviewers (current lineup):** one reviewer per vendor family — a mix of paid
+frontier and supplementary open-weight routes across independent labs. The
+concrete lineup (which models, how many) lives in the score's `instruments:` and
+`movements:` and is intentionally not duplicated here. Verify the live profile,
+provider, model, entitlement, limits, and invocation contract before each run.
 
 To change the lineup, edit `instruments:` and `movements:` in the score.
 
@@ -91,7 +95,13 @@ The calling score generates `prompt.md` and any context files into `scores/prep/
 - Always use `--fresh` for new questions (the score sets `archive_on_fresh: true` so previous outputs archive automatically).
 - Don't put secrets in the input dir — five providers see it.
 - Typical runtime: 5–15 minutes.
-- Cost: ~$0.20–0.80 per run (paid frontier reviewers dominate the cost; free/open-weight reviewers are ~$0).
+- Reviewers are ephemeral by default. Do not give them persistent identity or
+  memory merely because the lab is reused. If a named persistent agent is
+  deliberately reviewing, use its lifecycle score and read
+  `${CLAUDE_PLUGIN_ROOT}/docs/ref/modern-agents.md`.
+- Estimate cost from the live lineup. A zero or subscription-included token
+  price still carries latency, queue, quota, rate-limit, reliability, and human
+  waiting costs; never make a supplementary lane the only load-bearing judge.
 - Reviewer lineup is configurable in `scores/prep/thinking-lab.yaml` under `instruments:` and `movements:`.
 - Adding a 6th reviewer = add an instrument, add a movement, add a stage cadenza, add a stage validation.
 

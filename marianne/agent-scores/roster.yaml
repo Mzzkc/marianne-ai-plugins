@@ -1,0 +1,600 @@
+schema_version: 1
+kind: marianne-persistent-agent-roster
+agent_data_root: ~/.marianne/agents
+technique_runtime_root: ~/.marianne/techniques
+routing_policy: live-capability-evidence-required
+agents:
+- id: north
+  seed_version: 1.0.0
+  role: CTO
+  focus: technical direction leadership
+  specialist_technique: north-specialist
+  scores:
+    full_lifecycle: scores/north/full-lifecycle.yaml
+    targeted_work: scores/north/targeted-work.yaml
+    lifecycle_integration: scores/north/lifecycle-integration.yaml
+  asset_hashes:
+    scores/north/full-lifecycle.yaml: sha256:d42bd04ea6df893efdeba2269ea211d5e5b18c5ef553df556aa9e314772f2269
+    scores/north/lifecycle-integration.yaml: sha256:7bb1041e28b5e107453336c2006c9f51bb3dec27ff785a8873d0a97fc95947e2
+    scores/north/targeted-work.yaml: sha256:2650295dd64146527fe7b77632dcf2d8f1deb7da3390f07a4300223de03ce439
+    seeds/north/cadenzas/personal/active/01-task-board.md: sha256:9d24920e9f13ad0825b10a52c3c1c7dea1a313aed62aa8c219fc023e24d25dd7
+    seeds/north/cadenzas/personal/active/02-status.md: sha256:49a5b03071a02825b4465bdb4301e440fe9de43aa55e336438500fd7c98da086
+    seeds/north/cadenzas/personal/active/03-urgent-directives.md: sha256:988b574298f34caed0543fdfcd5003d33448abe550f28cb5422c1140e6dc282c
+    seeds/north/cadenzas/personal/active/04-handoffs.md: sha256:7d4ac9c3b460f26c4fcc11027e41e6b0a433301b6fb962273e103a2831653523
+    seeds/north/seed.yaml: sha256:6fdf8c0eff0444cbed943af949d650a0aa9ca5f413b2fdd1e64923d23d62ee88
+- id: captain
+  seed_version: 1.0.0
+  role: coordinator
+  focus: coordination tracking
+  specialist_technique: captain-specialist
+  scores:
+    full_lifecycle: scores/captain/full-lifecycle.yaml
+    targeted_work: scores/captain/targeted-work.yaml
+    lifecycle_integration: scores/captain/lifecycle-integration.yaml
+  asset_hashes:
+    scores/captain/full-lifecycle.yaml: sha256:711fe8eb6681e78bf22c6cb8283e801de11ea89e2dcd17073cc5190abfc66ed1
+    scores/captain/lifecycle-integration.yaml: sha256:f786fe9ae82c216cdc65dea62873ec2252fa03c70926170b73879138c48b9c0f
+    scores/captain/targeted-work.yaml: sha256:2b1400cc1eb6f140775c12f8bca913388201088ccd2192c9163d459a8e8d8828
+    seeds/captain/cadenzas/personal/active/01-task-board.md: sha256:9d24920e9f13ad0825b10a52c3c1c7dea1a313aed62aa8c219fc023e24d25dd7
+    seeds/captain/cadenzas/personal/active/02-status.md: sha256:49a5b03071a02825b4465bdb4301e440fe9de43aa55e336438500fd7c98da086
+    seeds/captain/cadenzas/personal/active/03-urgent-directives.md: sha256:988b574298f34caed0543fdfcd5003d33448abe550f28cb5422c1140e6dc282c
+    seeds/captain/cadenzas/personal/active/04-handoffs.md: sha256:7d4ac9c3b460f26c4fcc11027e41e6b0a433301b6fb962273e103a2831653523
+    seeds/captain/seed.yaml: sha256:277b068c013600d9dbc49aa22eb71788fdf6dacc111b4f3bdce5055d94531df8
+- id: atlas
+  seed_version: 1.0.0
+  role: strategist
+  focus: strategic alignment assessment
+  specialist_technique: atlas-specialist
+  scores:
+    full_lifecycle: scores/atlas/full-lifecycle.yaml
+    targeted_work: scores/atlas/targeted-work.yaml
+    lifecycle_integration: scores/atlas/lifecycle-integration.yaml
+  asset_hashes:
+    scores/atlas/full-lifecycle.yaml: sha256:9bfa3bfb65cc63fd3617e22fd8de1b11d16f57061a557172d925cd2dbd38e0a5
+    scores/atlas/lifecycle-integration.yaml: sha256:ae61c69ba515b51296984456898fad843cefcf91d8a4ec5309d0ad50b2a8fc90
+    scores/atlas/targeted-work.yaml: sha256:9f2279cc016740d888988fe5aeca13d14f0dd04f5aa89c28c43fcfe7eecfcefa
+    seeds/atlas/cadenzas/personal/active/01-task-board.md: sha256:9d24920e9f13ad0825b10a52c3c1c7dea1a313aed62aa8c219fc023e24d25dd7
+    seeds/atlas/cadenzas/personal/active/02-status.md: sha256:49a5b03071a02825b4465bdb4301e440fe9de43aa55e336438500fd7c98da086
+    seeds/atlas/cadenzas/personal/active/03-urgent-directives.md: sha256:988b574298f34caed0543fdfcd5003d33448abe550f28cb5422c1140e6dc282c
+    seeds/atlas/cadenzas/personal/active/04-handoffs.md: sha256:7d4ac9c3b460f26c4fcc11027e41e6b0a433301b6fb962273e103a2831653523
+    seeds/atlas/seed.yaml: sha256:14c44cb829d37c5356bd3215ad99dd8a6bbc5aa5f7f6b51a73e1f5d0670b1eba
+- id: tempo
+  seed_version: 1.0.0
+  role: observer
+  focus: cadence rhythm measurement
+  specialist_technique: tempo-specialist
+  scores:
+    full_lifecycle: scores/tempo/full-lifecycle.yaml
+    targeted_work: scores/tempo/targeted-work.yaml
+    lifecycle_integration: scores/tempo/lifecycle-integration.yaml
+  asset_hashes:
+    scores/tempo/full-lifecycle.yaml: sha256:127f1c0c27145af002760b86d46d06f1b74b703f90750147b61518060ccda03d
+    scores/tempo/lifecycle-integration.yaml: sha256:8c8757078313c829a2c3d091d6d789d65545099ff81804c385974690c73e857f
+    scores/tempo/targeted-work.yaml: sha256:9b0374588563a603dc4c56bd2673e69f360aead19b42e2d9c5968521f334bfc5
+    seeds/tempo/cadenzas/personal/active/01-task-board.md: sha256:9d24920e9f13ad0825b10a52c3c1c7dea1a313aed62aa8c219fc023e24d25dd7
+    seeds/tempo/cadenzas/personal/active/02-status.md: sha256:49a5b03071a02825b4465bdb4301e440fe9de43aa55e336438500fd7c98da086
+    seeds/tempo/cadenzas/personal/active/03-urgent-directives.md: sha256:988b574298f34caed0543fdfcd5003d33448abe550f28cb5422c1140e6dc282c
+    seeds/tempo/cadenzas/personal/active/04-handoffs.md: sha256:7d4ac9c3b460f26c4fcc11027e41e6b0a433301b6fb962273e103a2831653523
+    seeds/tempo/seed.yaml: sha256:31235264101a2b5e74749d5d550dd93acc2dfb503104dcb0124cfa77069f16a4
+- id: canyon
+  seed_version: 1.0.0
+  role: co-composer
+  focus: systems architecture
+  specialist_technique: canyon-specialist
+  scores:
+    full_lifecycle: scores/canyon/full-lifecycle.yaml
+    targeted_work: scores/canyon/targeted-work.yaml
+    lifecycle_integration: scores/canyon/lifecycle-integration.yaml
+  asset_hashes:
+    scores/canyon/full-lifecycle.yaml: sha256:0cd4d0b542ebd99c28f4a8eb970b3c7c1362e0d91c5bf49a85b1be2b83522d6c
+    scores/canyon/lifecycle-integration.yaml: sha256:1431364f4f0a1a6015f304969f8695e4b169fe8119aa2d6bd545385ae1bba7bc
+    scores/canyon/targeted-work.yaml: sha256:2c409adc78a849a96f9e261265c27c7ce62601a9ecb786c04a77cd83b832bd5e
+    seeds/canyon/cadenzas/personal/active/01-task-board.md: sha256:9d24920e9f13ad0825b10a52c3c1c7dea1a313aed62aa8c219fc023e24d25dd7
+    seeds/canyon/cadenzas/personal/active/02-status.md: sha256:49a5b03071a02825b4465bdb4301e440fe9de43aa55e336438500fd7c98da086
+    seeds/canyon/cadenzas/personal/active/03-urgent-directives.md: sha256:988b574298f34caed0543fdfcd5003d33448abe550f28cb5422c1140e6dc282c
+    seeds/canyon/cadenzas/personal/active/04-handoffs.md: sha256:7d4ac9c3b460f26c4fcc11027e41e6b0a433301b6fb962273e103a2831653523
+    seeds/canyon/seed.yaml: sha256:d7345604a1b8ccbd39b51a9f709ec828c7b62fe520fd4fac6eb069b65412ac6d
+- id: foundation
+  seed_version: 1.0.0
+  role: integrator
+  focus: infrastructure layer building
+  specialist_technique: foundation-specialist
+  scores:
+    full_lifecycle: scores/foundation/full-lifecycle.yaml
+    targeted_work: scores/foundation/targeted-work.yaml
+    lifecycle_integration: scores/foundation/lifecycle-integration.yaml
+  asset_hashes:
+    scores/foundation/full-lifecycle.yaml: sha256:96b20f82fa44a17d7cc536b8bac469969b4714c8bf201260f3ad2fdceb0ce624
+    scores/foundation/lifecycle-integration.yaml: sha256:0792caf74f1e4fbfc9756bbdecdb816830cb465ea1384b55ad36ccc41a9d803d
+    scores/foundation/targeted-work.yaml: sha256:556c6bf2ba36e13f404b0064c2fb0cfad805db658b3f650f9afe2be92d513555
+    seeds/foundation/cadenzas/personal/active/01-task-board.md: sha256:9d24920e9f13ad0825b10a52c3c1c7dea1a313aed62aa8c219fc023e24d25dd7
+    seeds/foundation/cadenzas/personal/active/02-status.md: sha256:49a5b03071a02825b4465bdb4301e440fe9de43aa55e336438500fd7c98da086
+    seeds/foundation/cadenzas/personal/active/03-urgent-directives.md: sha256:988b574298f34caed0543fdfcd5003d33448abe550f28cb5422c1140e6dc282c
+    seeds/foundation/cadenzas/personal/active/04-handoffs.md: sha256:7d4ac9c3b460f26c4fcc11027e41e6b0a433301b6fb962273e103a2831653523
+    seeds/foundation/seed.yaml: sha256:82c07bb2eacfe014135a1cea209747e0940a02d041727826443579160e46ea79
+- id: blueprint
+  seed_version: 1.0.0
+  role: designer
+  focus: schema contract design
+  specialist_technique: blueprint-specialist
+  scores:
+    full_lifecycle: scores/blueprint/full-lifecycle.yaml
+    targeted_work: scores/blueprint/targeted-work.yaml
+    lifecycle_integration: scores/blueprint/lifecycle-integration.yaml
+  asset_hashes:
+    scores/blueprint/full-lifecycle.yaml: sha256:9391990bcf9b9efdb16b333097ad1de98de64f175d996721bec14ca41dcdf839
+    scores/blueprint/lifecycle-integration.yaml: sha256:3c15322a18d15b2f50255abe492d0cad6adcf5d3c4a7f272a3fd30dfb0214ebf
+    scores/blueprint/targeted-work.yaml: sha256:d142fd21cfd0266c3734d4892d791856fb1ad5dfe4c75ce4a10ae415b37b6419
+    seeds/blueprint/cadenzas/personal/active/01-task-board.md: sha256:9d24920e9f13ad0825b10a52c3c1c7dea1a313aed62aa8c219fc023e24d25dd7
+    seeds/blueprint/cadenzas/personal/active/02-status.md: sha256:49a5b03071a02825b4465bdb4301e440fe9de43aa55e336438500fd7c98da086
+    seeds/blueprint/cadenzas/personal/active/03-urgent-directives.md: sha256:988b574298f34caed0543fdfcd5003d33448abe550f28cb5422c1140e6dc282c
+    seeds/blueprint/cadenzas/personal/active/04-handoffs.md: sha256:7d4ac9c3b460f26c4fcc11027e41e6b0a433301b6fb962273e103a2831653523
+    seeds/blueprint/seed.yaml: sha256:5c432cb0171edd507470bfaab5cd17f911b2b9dd78ecee34acb664eacc54dc64
+- id: weaver
+  seed_version: 1.0.0
+  role: integrator
+  focus: integration dependency mapping
+  specialist_technique: weaver-specialist
+  scores:
+    full_lifecycle: scores/weaver/full-lifecycle.yaml
+    targeted_work: scores/weaver/targeted-work.yaml
+    lifecycle_integration: scores/weaver/lifecycle-integration.yaml
+  asset_hashes:
+    scores/weaver/full-lifecycle.yaml: sha256:855af5abf147b2ccf6a4d674c4bb2ac14be2e84877ec4d00c1d04d4ff816224c
+    scores/weaver/lifecycle-integration.yaml: sha256:fc526f4ab6bce548362ba500d33f5d9ad91dc67de0e337ea3b34bf796b73920e
+    scores/weaver/targeted-work.yaml: sha256:29aa9c883e0bac78d91fce55ba1f86de7ce7641eec378e9ec6b398e37e3e8481
+    seeds/weaver/cadenzas/personal/active/01-task-board.md: sha256:9d24920e9f13ad0825b10a52c3c1c7dea1a313aed62aa8c219fc023e24d25dd7
+    seeds/weaver/cadenzas/personal/active/02-status.md: sha256:49a5b03071a02825b4465bdb4301e440fe9de43aa55e336438500fd7c98da086
+    seeds/weaver/cadenzas/personal/active/03-urgent-directives.md: sha256:988b574298f34caed0543fdfcd5003d33448abe550f28cb5422c1140e6dc282c
+    seeds/weaver/cadenzas/personal/active/04-handoffs.md: sha256:7d4ac9c3b460f26c4fcc11027e41e6b0a433301b6fb962273e103a2831653523
+    seeds/weaver/seed.yaml: sha256:c1c13455fee64216a48d53d0469b1aff243bcdf566cb5941ac930c70db507d70
+- id: circuit
+  seed_version: 1.0.0
+  role: integrator
+  focus: systems integration debugging
+  specialist_technique: circuit-specialist
+  scores:
+    full_lifecycle: scores/circuit/full-lifecycle.yaml
+    targeted_work: scores/circuit/targeted-work.yaml
+    lifecycle_integration: scores/circuit/lifecycle-integration.yaml
+  asset_hashes:
+    scores/circuit/full-lifecycle.yaml: sha256:33a131c7d4ad7621366f4a13978a40f3b89791152886f2dec22072320c6341cd
+    scores/circuit/lifecycle-integration.yaml: sha256:ded5ef03d239a4b170e855a15f360e365195cb727a35602e00e5dbc8f0936f23
+    scores/circuit/targeted-work.yaml: sha256:c6af1e04b6cf11429ff6950b7e5b6c85e2fe96e347037a6f8a276cbfafb3cefe
+    seeds/circuit/cadenzas/personal/active/01-task-board.md: sha256:9d24920e9f13ad0825b10a52c3c1c7dea1a313aed62aa8c219fc023e24d25dd7
+    seeds/circuit/cadenzas/personal/active/02-status.md: sha256:49a5b03071a02825b4465bdb4301e440fe9de43aa55e336438500fd7c98da086
+    seeds/circuit/cadenzas/personal/active/03-urgent-directives.md: sha256:988b574298f34caed0543fdfcd5003d33448abe550f28cb5422c1140e6dc282c
+    seeds/circuit/cadenzas/personal/active/04-handoffs.md: sha256:7d4ac9c3b460f26c4fcc11027e41e6b0a433301b6fb962273e103a2831653523
+    seeds/circuit/seed.yaml: sha256:50b3de84b3c9983ce190c95c473e0207cb2ea44de76fd8904f6e67c4418ab809
+- id: sentinel
+  seed_version: 1.0.0
+  role: auditor
+  focus: security auditing
+  specialist_technique: sentinel-specialist
+  scores:
+    full_lifecycle: scores/sentinel/full-lifecycle.yaml
+    targeted_work: scores/sentinel/targeted-work.yaml
+    lifecycle_integration: scores/sentinel/lifecycle-integration.yaml
+  asset_hashes:
+    scores/sentinel/full-lifecycle.yaml: sha256:978d8576c4bce4a6f273fc24eca4e1629fc8f3e5656db81c6748655132d7fdce
+    scores/sentinel/lifecycle-integration.yaml: sha256:7c5152b6df9ceba5d0b05ea6f98531b23cba33d7e049181ab2854e2e7f73bd4d
+    scores/sentinel/targeted-work.yaml: sha256:91a4532c5ff05a6f721f3aeddb2d6fbd82c603089faede678e918e500c8b8793
+    seeds/sentinel/cadenzas/personal/active/01-task-board.md: sha256:9d24920e9f13ad0825b10a52c3c1c7dea1a313aed62aa8c219fc023e24d25dd7
+    seeds/sentinel/cadenzas/personal/active/02-status.md: sha256:49a5b03071a02825b4465bdb4301e440fe9de43aa55e336438500fd7c98da086
+    seeds/sentinel/cadenzas/personal/active/03-urgent-directives.md: sha256:988b574298f34caed0543fdfcd5003d33448abe550f28cb5422c1140e6dc282c
+    seeds/sentinel/cadenzas/personal/active/04-handoffs.md: sha256:7d4ac9c3b460f26c4fcc11027e41e6b0a433301b6fb962273e103a2831653523
+    seeds/sentinel/seed.yaml: sha256:b4b77c85e2fe1aead468385c10778f2217b1e954930b584578af5674ce3dacba
+- id: warden
+  seed_version: 1.0.0
+  role: auditor
+  focus: safety architecture auditing
+  specialist_technique: warden-specialist
+  scores:
+    full_lifecycle: scores/warden/full-lifecycle.yaml
+    targeted_work: scores/warden/targeted-work.yaml
+    lifecycle_integration: scores/warden/lifecycle-integration.yaml
+  asset_hashes:
+    scores/warden/full-lifecycle.yaml: sha256:88ab446bddbb62add97e896ff55c1548fd81ca085024cea8aed61baa04a282f6
+    scores/warden/lifecycle-integration.yaml: sha256:2df63c2e1c63f6ecb2da861fe95ef307a646bf55b4fd54bdb811e378c42bc447
+    scores/warden/targeted-work.yaml: sha256:737549d125723735e099845c6d48048baf75ecbd4d4a8462b4a2e83112295a2d
+    seeds/warden/cadenzas/personal/active/01-task-board.md: sha256:9d24920e9f13ad0825b10a52c3c1c7dea1a313aed62aa8c219fc023e24d25dd7
+    seeds/warden/cadenzas/personal/active/02-status.md: sha256:49a5b03071a02825b4465bdb4301e440fe9de43aa55e336438500fd7c98da086
+    seeds/warden/cadenzas/personal/active/03-urgent-directives.md: sha256:988b574298f34caed0543fdfcd5003d33448abe550f28cb5422c1140e6dc282c
+    seeds/warden/cadenzas/personal/active/04-handoffs.md: sha256:7d4ac9c3b460f26c4fcc11027e41e6b0a433301b6fb962273e103a2831653523
+    seeds/warden/seed.yaml: sha256:94099937f4847b457e77c6e49eaa8c15324502e2c41fcdb5a9149225a31c7b49
+- id: adversary
+  seed_version: 1.0.0
+  role: tester
+  focus: adversarial security testing
+  specialist_technique: adversary-specialist
+  scores:
+    full_lifecycle: scores/adversary/full-lifecycle.yaml
+    targeted_work: scores/adversary/targeted-work.yaml
+    lifecycle_integration: scores/adversary/lifecycle-integration.yaml
+  asset_hashes:
+    scores/adversary/full-lifecycle.yaml: sha256:a4251d5542ae963397bb3a329cb06f9833c48e731c7ab61ca39faf064221ae86
+    scores/adversary/lifecycle-integration.yaml: sha256:c706deea5cb3d333bb9a06f2403e795d917a0bb02aef5d20352232ff8367d150
+    scores/adversary/targeted-work.yaml: sha256:cb4c5f567c615d2a2e56d4af88bfe2ec46d4ea5083e852c44a404544a74e2590
+    seeds/adversary/cadenzas/personal/active/01-task-board.md: sha256:9d24920e9f13ad0825b10a52c3c1c7dea1a313aed62aa8c219fc023e24d25dd7
+    seeds/adversary/cadenzas/personal/active/02-status.md: sha256:49a5b03071a02825b4465bdb4301e440fe9de43aa55e336438500fd7c98da086
+    seeds/adversary/cadenzas/personal/active/03-urgent-directives.md: sha256:988b574298f34caed0543fdfcd5003d33448abe550f28cb5422c1140e6dc282c
+    seeds/adversary/cadenzas/personal/active/04-handoffs.md: sha256:7d4ac9c3b460f26c4fcc11027e41e6b0a433301b6fb962273e103a2831653523
+    seeds/adversary/seed.yaml: sha256:4cd440d8759a5507a6ab0afb33121a73890874149da847960a5037ce662da4ea
+- id: breakpoint
+  seed_version: 1.0.0
+  role: tester
+  focus: adversarial test execution
+  specialist_technique: breakpoint-specialist
+  scores:
+    full_lifecycle: scores/breakpoint/full-lifecycle.yaml
+    targeted_work: scores/breakpoint/targeted-work.yaml
+    lifecycle_integration: scores/breakpoint/lifecycle-integration.yaml
+  asset_hashes:
+    scores/breakpoint/full-lifecycle.yaml: sha256:91f43742d6d51a1d677a6a9b4dc9f38429243f38300ca1e6ec68507aae5ba383
+    scores/breakpoint/lifecycle-integration.yaml: sha256:39a178af3524b5b94385761c6ef652825a60a2dd6fb78e6cb15d59cb7c4995c1
+    scores/breakpoint/targeted-work.yaml: sha256:6e959aae559f48ad096f2689aacbfa3d64d4d20f1d23b73a1af56a25d518d7b7
+    seeds/breakpoint/cadenzas/personal/active/01-task-board.md: sha256:9d24920e9f13ad0825b10a52c3c1c7dea1a313aed62aa8c219fc023e24d25dd7
+    seeds/breakpoint/cadenzas/personal/active/02-status.md: sha256:49a5b03071a02825b4465bdb4301e440fe9de43aa55e336438500fd7c98da086
+    seeds/breakpoint/cadenzas/personal/active/03-urgent-directives.md: sha256:988b574298f34caed0543fdfcd5003d33448abe550f28cb5422c1140e6dc282c
+    seeds/breakpoint/cadenzas/personal/active/04-handoffs.md: sha256:7d4ac9c3b460f26c4fcc11027e41e6b0a433301b6fb962273e103a2831653523
+    seeds/breakpoint/seed.yaml: sha256:643cf7a333525f50021f34ae0c7258f2c8a1fd90e30929fb6cd3d7de6d2fcc10
+- id: axiom
+  seed_version: 1.0.0
+  role: verifier
+  focus: invariant verification
+  specialist_technique: axiom-specialist
+  scores:
+    full_lifecycle: scores/axiom/full-lifecycle.yaml
+    targeted_work: scores/axiom/targeted-work.yaml
+    lifecycle_integration: scores/axiom/lifecycle-integration.yaml
+  asset_hashes:
+    scores/axiom/full-lifecycle.yaml: sha256:5e6185203d446721e5cfdd649103b24ab497fd237243d4c6808181c9fec40783
+    scores/axiom/lifecycle-integration.yaml: sha256:777b5b41256a4f549e1979e006b2d2bf3150277025e399ee14f47cb1191e5969
+    scores/axiom/targeted-work.yaml: sha256:809a92c05202ba5352382a8fda83a816252cb39d6e33cf20b263363f5eee3bfd
+    seeds/axiom/cadenzas/personal/active/01-task-board.md: sha256:9d24920e9f13ad0825b10a52c3c1c7dea1a313aed62aa8c219fc023e24d25dd7
+    seeds/axiom/cadenzas/personal/active/02-status.md: sha256:49a5b03071a02825b4465bdb4301e440fe9de43aa55e336438500fd7c98da086
+    seeds/axiom/cadenzas/personal/active/03-urgent-directives.md: sha256:988b574298f34caed0543fdfcd5003d33448abe550f28cb5422c1140e6dc282c
+    seeds/axiom/cadenzas/personal/active/04-handoffs.md: sha256:7d4ac9c3b460f26c4fcc11027e41e6b0a433301b6fb962273e103a2831653523
+    seeds/axiom/seed.yaml: sha256:6ddb819807d4a427f7edcc51bf4940236afc75f651c119e2a9c3103457566de5
+- id: theorem
+  seed_version: 1.0.0
+  role: verifier
+  focus: formal property verification
+  specialist_technique: theorem-specialist
+  scores:
+    full_lifecycle: scores/theorem/full-lifecycle.yaml
+    targeted_work: scores/theorem/targeted-work.yaml
+    lifecycle_integration: scores/theorem/lifecycle-integration.yaml
+  asset_hashes:
+    scores/theorem/full-lifecycle.yaml: sha256:c592b666ab61a8c4c723978d6ec113bb32331c4565e7204d48a9f69193f7d6c0
+    scores/theorem/lifecycle-integration.yaml: sha256:a203c760f155e1c5729655e4509bda2c8bf693df528361277b01ba0a0de4c3a4
+    scores/theorem/targeted-work.yaml: sha256:827c6fa6c0ba41840501cbcd79f13d663abc01f45aac2d3ac519515dc5588930
+    seeds/theorem/cadenzas/personal/active/01-task-board.md: sha256:9d24920e9f13ad0825b10a52c3c1c7dea1a313aed62aa8c219fc023e24d25dd7
+    seeds/theorem/cadenzas/personal/active/02-status.md: sha256:49a5b03071a02825b4465bdb4301e440fe9de43aa55e336438500fd7c98da086
+    seeds/theorem/cadenzas/personal/active/03-urgent-directives.md: sha256:988b574298f34caed0543fdfcd5003d33448abe550f28cb5422c1140e6dc282c
+    seeds/theorem/cadenzas/personal/active/04-handoffs.md: sha256:7d4ac9c3b460f26c4fcc11027e41e6b0a433301b6fb962273e103a2831653523
+    seeds/theorem/seed.yaml: sha256:956aaffc9be9517e944aa0e7e5d98aa2d093c88c51d50b08c396cf8514bc65aa
+- id: prism
+  seed_version: 1.0.0
+  role: reviewer
+  focus: multi-angle verification review
+  specialist_technique: prism-specialist
+  scores:
+    full_lifecycle: scores/prism/full-lifecycle.yaml
+    targeted_work: scores/prism/targeted-work.yaml
+    lifecycle_integration: scores/prism/lifecycle-integration.yaml
+  asset_hashes:
+    scores/prism/full-lifecycle.yaml: sha256:ff9aa74655c939e753804741ad53510feccf872447a8d05df7c78c7fe50a18a6
+    scores/prism/lifecycle-integration.yaml: sha256:e6562e0b1cab5256e91f598ac7e18b7034cdf83e00ed433d7110997b91a8dbcd
+    scores/prism/targeted-work.yaml: sha256:ba4187296e46fc0a3e14c05551b2a29160f0822d8d76e01b8d00decc8aa022dd
+    seeds/prism/cadenzas/personal/active/01-task-board.md: sha256:9d24920e9f13ad0825b10a52c3c1c7dea1a313aed62aa8c219fc023e24d25dd7
+    seeds/prism/cadenzas/personal/active/02-status.md: sha256:49a5b03071a02825b4465bdb4301e440fe9de43aa55e336438500fd7c98da086
+    seeds/prism/cadenzas/personal/active/03-urgent-directives.md: sha256:988b574298f34caed0543fdfcd5003d33448abe550f28cb5422c1140e6dc282c
+    seeds/prism/cadenzas/personal/active/04-handoffs.md: sha256:7d4ac9c3b460f26c4fcc11027e41e6b0a433301b6fb962273e103a2831653523
+    seeds/prism/seed.yaml: sha256:b55a7540000048aaf6b0b87cdf5567c76238bfd5645ce99eed2b45cf2fc35da7
+- id: litmus
+  seed_version: 1.0.0
+  role: tester
+  focus: intelligence effectiveness testing
+  specialist_technique: litmus-specialist
+  scores:
+    full_lifecycle: scores/litmus/full-lifecycle.yaml
+    targeted_work: scores/litmus/targeted-work.yaml
+    lifecycle_integration: scores/litmus/lifecycle-integration.yaml
+  asset_hashes:
+    scores/litmus/full-lifecycle.yaml: sha256:d0b4785d7e687537bd31a93b0b4151c0ae674b80e70c2ccd7e78ad8fe7d8157a
+    scores/litmus/lifecycle-integration.yaml: sha256:e5688571e90acc4a6ab88e3d1e44668f37f5f870593b5146383fcb62efd1cd7f
+    scores/litmus/targeted-work.yaml: sha256:4ca3c70e7d9d5eb38d91b1eb53f8d4849c612404d528a3fd793464d550b4ff06
+    seeds/litmus/cadenzas/personal/active/01-task-board.md: sha256:9d24920e9f13ad0825b10a52c3c1c7dea1a313aed62aa8c219fc023e24d25dd7
+    seeds/litmus/cadenzas/personal/active/02-status.md: sha256:49a5b03071a02825b4465bdb4301e440fe9de43aa55e336438500fd7c98da086
+    seeds/litmus/cadenzas/personal/active/03-urgent-directives.md: sha256:988b574298f34caed0543fdfcd5003d33448abe550f28cb5422c1140e6dc282c
+    seeds/litmus/cadenzas/personal/active/04-handoffs.md: sha256:7d4ac9c3b460f26c4fcc11027e41e6b0a433301b6fb962273e103a2831653523
+    seeds/litmus/seed.yaml: sha256:002096925ea3a360252c8dd1af9b38c8421bc022ba066009ef0fb21b4bd234b9
+- id: oracle
+  seed_version: 1.0.0
+  role: observer
+  focus: metrics and observability analysis
+  specialist_technique: oracle-specialist
+  scores:
+    full_lifecycle: scores/oracle/full-lifecycle.yaml
+    targeted_work: scores/oracle/targeted-work.yaml
+    lifecycle_integration: scores/oracle/lifecycle-integration.yaml
+  asset_hashes:
+    scores/oracle/full-lifecycle.yaml: sha256:4b2cb16bbdc5c053dd3bc656d750691b139a52202932d04fcbd60e95cf400bf7
+    scores/oracle/lifecycle-integration.yaml: sha256:468204155b7001790cd8ba9b6587ef2092f21022b7ae9b18f9e5eacd17bc3d93
+    scores/oracle/targeted-work.yaml: sha256:f9dc828b38daa70c75c1fbdbff5eb86203227bced6d6a5983533b72ff696a7f9
+    seeds/oracle/cadenzas/personal/active/01-task-board.md: sha256:9d24920e9f13ad0825b10a52c3c1c7dea1a313aed62aa8c219fc023e24d25dd7
+    seeds/oracle/cadenzas/personal/active/02-status.md: sha256:49a5b03071a02825b4465bdb4301e440fe9de43aa55e336438500fd7c98da086
+    seeds/oracle/cadenzas/personal/active/03-urgent-directives.md: sha256:988b574298f34caed0543fdfcd5003d33448abe550f28cb5422c1140e6dc282c
+    seeds/oracle/cadenzas/personal/active/04-handoffs.md: sha256:7d4ac9c3b460f26c4fcc11027e41e6b0a433301b6fb962273e103a2831653523
+    seeds/oracle/seed.yaml: sha256:00232e42946cfb235ed1cd0e661e54ae15ce4b23475dc3ad0c58a36d77378544
+- id: compass
+  seed_version: 1.0.0
+  role: product-advocate
+  focus: product experience advocacy
+  specialist_technique: compass-specialist
+  scores:
+    full_lifecycle: scores/compass/full-lifecycle.yaml
+    targeted_work: scores/compass/targeted-work.yaml
+    lifecycle_integration: scores/compass/lifecycle-integration.yaml
+  asset_hashes:
+    scores/compass/full-lifecycle.yaml: sha256:fd0ce7c74c20999335868f1600401cef0a4337f09cd878a9c5882a6a1aeab47d
+    scores/compass/lifecycle-integration.yaml: sha256:e88b9e71d5fbc36b290c04b4c27f786a2aff199bc1b7d5d05dee0b6d14fe34f2
+    scores/compass/targeted-work.yaml: sha256:f6637c8654ec3d8140cf04641051df0d5c49058a81404fd0d8d71289f8fa13e6
+    seeds/compass/cadenzas/personal/active/01-task-board.md: sha256:9d24920e9f13ad0825b10a52c3c1c7dea1a313aed62aa8c219fc023e24d25dd7
+    seeds/compass/cadenzas/personal/active/02-status.md: sha256:49a5b03071a02825b4465bdb4301e440fe9de43aa55e336438500fd7c98da086
+    seeds/compass/cadenzas/personal/active/03-urgent-directives.md: sha256:988b574298f34caed0543fdfcd5003d33448abe550f28cb5422c1140e6dc282c
+    seeds/compass/cadenzas/personal/active/04-handoffs.md: sha256:7d4ac9c3b460f26c4fcc11027e41e6b0a433301b6fb962273e103a2831653523
+    seeds/compass/seed.yaml: sha256:97805563e2a456125e2915b5d38cdd7181199f60e0546731396fc87666fc00e5
+- id: dash
+  seed_version: 1.0.0
+  role: designer
+  focus: dashboard and UX design
+  specialist_technique: dash-specialist
+  scores:
+    full_lifecycle: scores/dash/full-lifecycle.yaml
+    targeted_work: scores/dash/targeted-work.yaml
+    lifecycle_integration: scores/dash/lifecycle-integration.yaml
+  asset_hashes:
+    scores/dash/full-lifecycle.yaml: sha256:555bbc5be30b6e4d61951799b5ec98bd513908f46081ab627d037e0aa6cd6d3c
+    scores/dash/lifecycle-integration.yaml: sha256:d71af005ef9f12d098f92a8b1e8c5c0e8cbbb8166536c4a4dec761031313a462
+    scores/dash/targeted-work.yaml: sha256:c504d8f8726a0f5cac794106c6adff1368698f158f2b2f21a69a5228d7198a03
+    seeds/dash/cadenzas/personal/active/01-task-board.md: sha256:9d24920e9f13ad0825b10a52c3c1c7dea1a313aed62aa8c219fc023e24d25dd7
+    seeds/dash/cadenzas/personal/active/02-status.md: sha256:49a5b03071a02825b4465bdb4301e440fe9de43aa55e336438500fd7c98da086
+    seeds/dash/cadenzas/personal/active/03-urgent-directives.md: sha256:988b574298f34caed0543fdfcd5003d33448abe550f28cb5422c1140e6dc282c
+    seeds/dash/cadenzas/personal/active/04-handoffs.md: sha256:7d4ac9c3b460f26c4fcc11027e41e6b0a433301b6fb962273e103a2831653523
+    seeds/dash/seed.yaml: sha256:b887c0509f7f7f9999a3cd6aed219789fc83e4c304faa607dd4168b0f3942071
+- id: newcomer
+  seed_version: 1.0.0
+  role: auditor
+  focus: fresh-eyes UX auditing
+  specialist_technique: newcomer-specialist
+  scores:
+    full_lifecycle: scores/newcomer/full-lifecycle.yaml
+    targeted_work: scores/newcomer/targeted-work.yaml
+    lifecycle_integration: scores/newcomer/lifecycle-integration.yaml
+  asset_hashes:
+    scores/newcomer/full-lifecycle.yaml: sha256:dbd5bbd864a7f094e7a81e05b010acca0efdf80a6778d4eefd3c3098581a501f
+    scores/newcomer/lifecycle-integration.yaml: sha256:c1c04f231f3dc448c60a64deaded013b31d3c27afcf6cfafdfd888e678c86c92
+    scores/newcomer/targeted-work.yaml: sha256:d0fb072065677ce0fa81b04e76a9cc68615601a40a97c1653ebc664447e6e453
+    seeds/newcomer/cadenzas/personal/active/01-task-board.md: sha256:9d24920e9f13ad0825b10a52c3c1c7dea1a313aed62aa8c219fc023e24d25dd7
+    seeds/newcomer/cadenzas/personal/active/02-status.md: sha256:49a5b03071a02825b4465bdb4301e440fe9de43aa55e336438500fd7c98da086
+    seeds/newcomer/cadenzas/personal/active/03-urgent-directives.md: sha256:988b574298f34caed0543fdfcd5003d33448abe550f28cb5422c1140e6dc282c
+    seeds/newcomer/cadenzas/personal/active/04-handoffs.md: sha256:7d4ac9c3b460f26c4fcc11027e41e6b0a433301b6fb962273e103a2831653523
+    seeds/newcomer/seed.yaml: sha256:27f419dc42395b2e34c250b8e66c947a297fed08bfe5b8eb806bf1911864cafb
+- id: guide
+  seed_version: 1.0.0
+  role: documenter
+  focus: newcomer documentation
+  specialist_technique: guide-specialist
+  scores:
+    full_lifecycle: scores/guide/full-lifecycle.yaml
+    targeted_work: scores/guide/targeted-work.yaml
+    lifecycle_integration: scores/guide/lifecycle-integration.yaml
+  asset_hashes:
+    scores/guide/full-lifecycle.yaml: sha256:90284f902aa77ddd6bd072a6895b9e9c5e1425452633e7d4885a1f10007caf2c
+    scores/guide/lifecycle-integration.yaml: sha256:ea5b68465ae42ddee0118afc68b60b0c522f294b81eae21b8f2fd69cb65ea48d
+    scores/guide/targeted-work.yaml: sha256:fce8f576adf989f844d5341b1f1ff43fc12148aa7ceeb81f24107dcaca788b11
+    seeds/guide/cadenzas/personal/active/01-task-board.md: sha256:9d24920e9f13ad0825b10a52c3c1c7dea1a313aed62aa8c219fc023e24d25dd7
+    seeds/guide/cadenzas/personal/active/02-status.md: sha256:49a5b03071a02825b4465bdb4301e440fe9de43aa55e336438500fd7c98da086
+    seeds/guide/cadenzas/personal/active/03-urgent-directives.md: sha256:988b574298f34caed0543fdfcd5003d33448abe550f28cb5422c1140e6dc282c
+    seeds/guide/cadenzas/personal/active/04-handoffs.md: sha256:7d4ac9c3b460f26c4fcc11027e41e6b0a433301b6fb962273e103a2831653523
+    seeds/guide/seed.yaml: sha256:12289b9a982489f418f801f2f32de2903f5abd2fc97ac109775c6c8e3d6ebdb5
+- id: scribe
+  seed_version: 1.0.0
+  role: documenter
+  focus: documentation maintenance
+  specialist_technique: scribe-specialist
+  scores:
+    full_lifecycle: scores/scribe/full-lifecycle.yaml
+    targeted_work: scores/scribe/targeted-work.yaml
+    lifecycle_integration: scores/scribe/lifecycle-integration.yaml
+  asset_hashes:
+    scores/scribe/full-lifecycle.yaml: sha256:0131e93e9831c99d69367488571260b5be76683a386254ceb057dddbeb04040b
+    scores/scribe/lifecycle-integration.yaml: sha256:ae12e9697142ff6b66b4b14edc204f478ceab4bf4037d8c226e1cd3e9b1eb114
+    scores/scribe/targeted-work.yaml: sha256:1a6898250c72dfebf0c498c98cf1a2a4bb3f7a996033ad7280ca3839bc55c19d
+    seeds/scribe/cadenzas/personal/active/01-task-board.md: sha256:9d24920e9f13ad0825b10a52c3c1c7dea1a313aed62aa8c219fc023e24d25dd7
+    seeds/scribe/cadenzas/personal/active/02-status.md: sha256:49a5b03071a02825b4465bdb4301e440fe9de43aa55e336438500fd7c98da086
+    seeds/scribe/cadenzas/personal/active/03-urgent-directives.md: sha256:988b574298f34caed0543fdfcd5003d33448abe550f28cb5422c1140e6dc282c
+    seeds/scribe/cadenzas/personal/active/04-handoffs.md: sha256:7d4ac9c3b460f26c4fcc11027e41e6b0a433301b6fb962273e103a2831653523
+    seeds/scribe/seed.yaml: sha256:7a6e8842f6932acc059d6461a8fff3b1a445778e9a115f5b05e11dc0160fedee
+- id: lens
+  seed_version: 1.0.0
+  role: designer
+  focus: CLI UX analysis
+  specialist_technique: lens-specialist
+  scores:
+    full_lifecycle: scores/lens/full-lifecycle.yaml
+    targeted_work: scores/lens/targeted-work.yaml
+    lifecycle_integration: scores/lens/lifecycle-integration.yaml
+  asset_hashes:
+    scores/lens/full-lifecycle.yaml: sha256:da9cfe21da4a9ca1af7cdc20429edc8250875ea7d4ff69ad963acef472e34003
+    scores/lens/lifecycle-integration.yaml: sha256:c2a78a579fef4b0154ae54c616ac3f16299000d26af4d7ee9ac3524b77fbf0a2
+    scores/lens/targeted-work.yaml: sha256:566492b6da41a0f537a814c45a2c3d21efc35a5f8f5b6d0a9d929fd3713036ae
+    seeds/lens/cadenzas/personal/active/01-task-board.md: sha256:9d24920e9f13ad0825b10a52c3c1c7dea1a313aed62aa8c219fc023e24d25dd7
+    seeds/lens/cadenzas/personal/active/02-status.md: sha256:49a5b03071a02825b4465bdb4301e440fe9de43aa55e336438500fd7c98da086
+    seeds/lens/cadenzas/personal/active/03-urgent-directives.md: sha256:988b574298f34caed0543fdfcd5003d33448abe550f28cb5422c1140e6dc282c
+    seeds/lens/cadenzas/personal/active/04-handoffs.md: sha256:7d4ac9c3b460f26c4fcc11027e41e6b0a433301b6fb962273e103a2831653523
+    seeds/lens/seed.yaml: sha256:be4499bd7e4cf44ea1d965f6401b4ae82a5869771b09e318365dcc330d647820
+- id: forge
+  seed_version: 1.0.0
+  role: builder
+  focus: implementation craftsmanship
+  specialist_technique: forge-specialist
+  scores:
+    full_lifecycle: scores/forge/full-lifecycle.yaml
+    targeted_work: scores/forge/targeted-work.yaml
+    lifecycle_integration: scores/forge/lifecycle-integration.yaml
+  asset_hashes:
+    scores/forge/full-lifecycle.yaml: sha256:f6751cb169e50ff4706289ea1a13675757b40f86aba67454f98f0dc6bbf7753c
+    scores/forge/lifecycle-integration.yaml: sha256:25581718371f02a342182e53f09a1fccc7e74861a46213833717770e604af3f9
+    scores/forge/targeted-work.yaml: sha256:f066cdcd79bfc858f46f9f6da2f98bccf4bb8dfc7be5061f378751017abf7038
+    seeds/forge/cadenzas/personal/active/01-task-board.md: sha256:9d24920e9f13ad0825b10a52c3c1c7dea1a313aed62aa8c219fc023e24d25dd7
+    seeds/forge/cadenzas/personal/active/02-status.md: sha256:49a5b03071a02825b4465bdb4301e440fe9de43aa55e336438500fd7c98da086
+    seeds/forge/cadenzas/personal/active/03-urgent-directives.md: sha256:988b574298f34caed0543fdfcd5003d33448abe550f28cb5422c1140e6dc282c
+    seeds/forge/cadenzas/personal/active/04-handoffs.md: sha256:7d4ac9c3b460f26c4fcc11027e41e6b0a433301b6fb962273e103a2831653523
+    seeds/forge/seed.yaml: sha256:1d728bf77aecc6825d266ab1b2b87aa218929414f21bd7d8e9884c79a5cec9e0
+- id: spark
+  seed_version: 1.0.0
+  role: builder
+  focus: rapid prototyping
+  specialist_technique: spark-specialist
+  scores:
+    full_lifecycle: scores/spark/full-lifecycle.yaml
+    targeted_work: scores/spark/targeted-work.yaml
+    lifecycle_integration: scores/spark/lifecycle-integration.yaml
+  asset_hashes:
+    scores/spark/full-lifecycle.yaml: sha256:03ceaf8a8ffdf2f982f80857ea1102f3962b63709cb73a219da7b2c121e2f84d
+    scores/spark/lifecycle-integration.yaml: sha256:51e064c912d5642daf996638ec4a42e0d8d4798777750b0800f9fccff24e0c26
+    scores/spark/targeted-work.yaml: sha256:c3f86f73652e9f66b79e870130cf17c8354f60c9c867bb6d60672b45ad33c859
+    seeds/spark/cadenzas/personal/active/01-task-board.md: sha256:9d24920e9f13ad0825b10a52c3c1c7dea1a313aed62aa8c219fc023e24d25dd7
+    seeds/spark/cadenzas/personal/active/02-status.md: sha256:49a5b03071a02825b4465bdb4301e440fe9de43aa55e336438500fd7c98da086
+    seeds/spark/cadenzas/personal/active/03-urgent-directives.md: sha256:988b574298f34caed0543fdfcd5003d33448abe550f28cb5422c1140e6dc282c
+    seeds/spark/cadenzas/personal/active/04-handoffs.md: sha256:7d4ac9c3b460f26c4fcc11027e41e6b0a433301b6fb962273e103a2831653523
+    seeds/spark/seed.yaml: sha256:d8f9fb2e4b0aa202b76ffdbbeaeed9ce40db6191f948e3414ba98fc4cc2d9f5c
+- id: maverick
+  seed_version: 1.0.0
+  role: simplifier
+  focus: simplest-intervention architecture
+  specialist_technique: maverick-specialist
+  scores:
+    full_lifecycle: scores/maverick/full-lifecycle.yaml
+    targeted_work: scores/maverick/targeted-work.yaml
+    lifecycle_integration: scores/maverick/lifecycle-integration.yaml
+  asset_hashes:
+    scores/maverick/full-lifecycle.yaml: sha256:4d673ac0d5591d0800c74343ade30a008d4ffd97853d76f9ee77bcd030dc3327
+    scores/maverick/lifecycle-integration.yaml: sha256:f2b3eac2804936f94fff810bc24ccb74ffb3fea3f784fbd914d69bccb57c1cd8
+    scores/maverick/targeted-work.yaml: sha256:ef3767d1c8f28c88d9c561ac316005bdc0b4c64abfc90ce18f5326ec39ca9cd3
+    seeds/maverick/cadenzas/personal/active/01-task-board.md: sha256:9d24920e9f13ad0825b10a52c3c1c7dea1a313aed62aa8c219fc023e24d25dd7
+    seeds/maverick/cadenzas/personal/active/02-status.md: sha256:49a5b03071a02825b4465bdb4301e440fe9de43aa55e336438500fd7c98da086
+    seeds/maverick/cadenzas/personal/active/03-urgent-directives.md: sha256:988b574298f34caed0543fdfcd5003d33448abe550f28cb5422c1140e6dc282c
+    seeds/maverick/cadenzas/personal/active/04-handoffs.md: sha256:7d4ac9c3b460f26c4fcc11027e41e6b0a433301b6fb962273e103a2831653523
+    seeds/maverick/seed.yaml: sha256:d7bb5e4e6dd25fcaae6acd14aee41447ebc88654d52e95c38d1ab96125fd773c
+- id: harper
+  seed_version: 1.0.0
+  role: builder
+  focus: interface contract infrastructure
+  specialist_technique: harper-specialist
+  scores:
+    full_lifecycle: scores/harper/full-lifecycle.yaml
+    targeted_work: scores/harper/targeted-work.yaml
+    lifecycle_integration: scores/harper/lifecycle-integration.yaml
+  asset_hashes:
+    scores/harper/full-lifecycle.yaml: sha256:90e6419fe876ed22426c4d561bdc1b7432bebb2e50ae0a2e57fc6c242c20dbfb
+    scores/harper/lifecycle-integration.yaml: sha256:1de509573b5041f283fcc85faab01f5e8ef993ba8841aa2a46047645b96fb64b
+    scores/harper/targeted-work.yaml: sha256:a7e8680a7cd5cdc1f254d27caaf2d0fde59f41b4f9a7c72878eea164576e10d5
+    seeds/harper/cadenzas/personal/active/01-task-board.md: sha256:9d24920e9f13ad0825b10a52c3c1c7dea1a313aed62aa8c219fc023e24d25dd7
+    seeds/harper/cadenzas/personal/active/02-status.md: sha256:49a5b03071a02825b4465bdb4301e440fe9de43aa55e336438500fd7c98da086
+    seeds/harper/cadenzas/personal/active/03-urgent-directives.md: sha256:988b574298f34caed0543fdfcd5003d33448abe550f28cb5422c1140e6dc282c
+    seeds/harper/cadenzas/personal/active/04-handoffs.md: sha256:7d4ac9c3b460f26c4fcc11027e41e6b0a433301b6fb962273e103a2831653523
+    seeds/harper/seed.yaml: sha256:ff100b722cbd559fee28fb3343911d6c6922e139e1963aa67e7e3506c90f374d
+- id: journey
+  seed_version: 1.0.0
+  role: tester
+  focus: user story testing
+  specialist_technique: journey-specialist
+  scores:
+    full_lifecycle: scores/journey/full-lifecycle.yaml
+    targeted_work: scores/journey/targeted-work.yaml
+    lifecycle_integration: scores/journey/lifecycle-integration.yaml
+  asset_hashes:
+    scores/journey/full-lifecycle.yaml: sha256:58770dbca5e1f8e068766a0139e381d66a1d872b1f30f22316570d84a1dc67a1
+    scores/journey/lifecycle-integration.yaml: sha256:6a28106ffbfb5bdbd510fee202668e86c1cbb29cffbc9ba586a68366e1b14164
+    scores/journey/targeted-work.yaml: sha256:b92460d5b75b8cafe67c7c810398f2126d97b445d043ea8d4e77d277a70017fb
+    seeds/journey/cadenzas/personal/active/01-task-board.md: sha256:9d24920e9f13ad0825b10a52c3c1c7dea1a313aed62aa8c219fc023e24d25dd7
+    seeds/journey/cadenzas/personal/active/02-status.md: sha256:49a5b03071a02825b4465bdb4301e440fe9de43aa55e336438500fd7c98da086
+    seeds/journey/cadenzas/personal/active/03-urgent-directives.md: sha256:988b574298f34caed0543fdfcd5003d33448abe550f28cb5422c1140e6dc282c
+    seeds/journey/cadenzas/personal/active/04-handoffs.md: sha256:7d4ac9c3b460f26c4fcc11027e41e6b0a433301b6fb962273e103a2831653523
+    seeds/journey/seed.yaml: sha256:3efcbc9e9566300662cb2f5aff809e1f46d65b4b7f95df25919b1b8256502111
+- id: ember
+  seed_version: 1.0.0
+  role: tester
+  focus: experiential UX review
+  specialist_technique: ember-specialist
+  scores:
+    full_lifecycle: scores/ember/full-lifecycle.yaml
+    targeted_work: scores/ember/targeted-work.yaml
+    lifecycle_integration: scores/ember/lifecycle-integration.yaml
+  asset_hashes:
+    scores/ember/full-lifecycle.yaml: sha256:110a38ce893b160b4c0ab7d7b23677809b34d2e0124ebfb01df3b86811f9d12b
+    scores/ember/lifecycle-integration.yaml: sha256:9a1fb5b0329f2ac3c863e8eb34933881f9bd8262170a366b767e8afa134af15b
+    scores/ember/targeted-work.yaml: sha256:53d6e07085da08d92e3c69ec8a21bb5064156f8c32aa4c7eabfd970fb256fa1b
+    seeds/ember/cadenzas/personal/active/01-task-board.md: sha256:9d24920e9f13ad0825b10a52c3c1c7dea1a313aed62aa8c219fc023e24d25dd7
+    seeds/ember/cadenzas/personal/active/02-status.md: sha256:49a5b03071a02825b4465bdb4301e440fe9de43aa55e336438500fd7c98da086
+    seeds/ember/cadenzas/personal/active/03-urgent-directives.md: sha256:988b574298f34caed0543fdfcd5003d33448abe550f28cb5422c1140e6dc282c
+    seeds/ember/cadenzas/personal/active/04-handoffs.md: sha256:7d4ac9c3b460f26c4fcc11027e41e6b0a433301b6fb962273e103a2831653523
+    seeds/ember/seed.yaml: sha256:cbb6b563d733d6aa9f1e9fb4ed5443c47090c5293b148d368d19159e6002cd6c
+- id: bedrock
+  seed_version: 1.0.0
+  role: maintainer
+  focus: quality gate enforcement
+  specialist_technique: bedrock-specialist
+  scores:
+    full_lifecycle: scores/bedrock/full-lifecycle.yaml
+    targeted_work: scores/bedrock/targeted-work.yaml
+    lifecycle_integration: scores/bedrock/lifecycle-integration.yaml
+  asset_hashes:
+    scores/bedrock/full-lifecycle.yaml: sha256:991d82c66ebb686fc1ed1f9517e461ad5244c0c2206af71600b32822504a1a3c
+    scores/bedrock/lifecycle-integration.yaml: sha256:1ec89c6ae1684371ed8cc185abc7a55cd8bec0685da8d320f5df471439977b90
+    scores/bedrock/targeted-work.yaml: sha256:305899e39e06a652e5a5334638401985c293508b2e810328825512999a31a56c
+    seeds/bedrock/cadenzas/personal/active/01-task-board.md: sha256:9d24920e9f13ad0825b10a52c3c1c7dea1a313aed62aa8c219fc023e24d25dd7
+    seeds/bedrock/cadenzas/personal/active/02-status.md: sha256:49a5b03071a02825b4465bdb4301e440fe9de43aa55e336438500fd7c98da086
+    seeds/bedrock/cadenzas/personal/active/03-urgent-directives.md: sha256:988b574298f34caed0543fdfcd5003d33448abe550f28cb5422c1140e6dc282c
+    seeds/bedrock/cadenzas/personal/active/04-handoffs.md: sha256:7d4ac9c3b460f26c4fcc11027e41e6b0a433301b6fb962273e103a2831653523
+    seeds/bedrock/seed.yaml: sha256:ad8c9fd3cc75890d61abc4950f210a33e448736caf207aaf693c076b75051a72
+- id: ghost
+  seed_version: 1.0.0
+  role: auditor
+  focus: infrastructure audit verification
+  specialist_technique: ghost-specialist
+  scores:
+    full_lifecycle: scores/ghost/full-lifecycle.yaml
+    targeted_work: scores/ghost/targeted-work.yaml
+    lifecycle_integration: scores/ghost/lifecycle-integration.yaml
+  asset_hashes:
+    scores/ghost/full-lifecycle.yaml: sha256:afe8eaee1f8aaa37dea88d09200f8153430d1db75e756cc5c3b4ddee0b899701
+    scores/ghost/lifecycle-integration.yaml: sha256:4c2fa4f873dcff66e04a1f1a2ffc41379724579948dac9cb7b8c367a97bd020b
+    scores/ghost/targeted-work.yaml: sha256:cb3d73678b103bfcae59e75dacbd47765b5f1e3a73ec5aded868b3da1df9f8d6
+    seeds/ghost/cadenzas/personal/active/01-task-board.md: sha256:9d24920e9f13ad0825b10a52c3c1c7dea1a313aed62aa8c219fc023e24d25dd7
+    seeds/ghost/cadenzas/personal/active/02-status.md: sha256:49a5b03071a02825b4465bdb4301e440fe9de43aa55e336438500fd7c98da086
+    seeds/ghost/cadenzas/personal/active/03-urgent-directives.md: sha256:988b574298f34caed0543fdfcd5003d33448abe550f28cb5422c1140e6dc282c
+    seeds/ghost/cadenzas/personal/active/04-handoffs.md: sha256:7d4ac9c3b460f26c4fcc11027e41e6b0a433301b6fb962273e103a2831653523
+    seeds/ghost/seed.yaml: sha256:3616c4d52e9d76f29b5c2cad44ab32346e1b266a86b6a6c40a4586ec31864149
+- id: keystone
+  seed_version: 1.0.0
+  role: completion principal
+  focus: senior full-stack integration, TDD, human usability, and release custody
+  specialist_technique: keystone-specialist
+  scores:
+    full_lifecycle: scores/keystone/full-lifecycle.yaml
+    targeted_work: scores/keystone/targeted-work.yaml
+    lifecycle_integration: scores/keystone/lifecycle-integration.yaml
+  asset_hashes:
+    scores/keystone/full-lifecycle.yaml: sha256:8c8f8ea70fa676b253133ade7cd10d8a68bc173fe4949be89bc2764cfea054a0
+    scores/keystone/lifecycle-integration.yaml: sha256:3e9c3b5811b2b9f16eacf6a7864a89d2addb15b901237f10aeb68b94de77c402
+    scores/keystone/targeted-work.yaml: sha256:5e7f4540c2b06219a21f5d109c203ac0d9cfc0baea492f1782a883dcb1665d96
+    seeds/keystone/cadenzas/personal/active/01-task-board.md: sha256:9d24920e9f13ad0825b10a52c3c1c7dea1a313aed62aa8c219fc023e24d25dd7
+    seeds/keystone/cadenzas/personal/active/02-status.md: sha256:49a5b03071a02825b4465bdb4301e440fe9de43aa55e336438500fd7c98da086
+    seeds/keystone/cadenzas/personal/active/03-urgent-directives.md: sha256:988b574298f34caed0543fdfcd5003d33448abe550f28cb5422c1140e6dc282c
+    seeds/keystone/cadenzas/personal/active/04-handoffs.md: sha256:7d4ac9c3b460f26c4fcc11027e41e6b0a433301b6fb962273e103a2831653523
+    seeds/keystone/seed.yaml: sha256:7443d2bae1083e995d4d692857549937438da623df5400bdc0638601e27baaed

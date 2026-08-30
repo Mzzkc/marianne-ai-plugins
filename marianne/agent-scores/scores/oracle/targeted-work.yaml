@@ -1,0 +1,1283 @@
+name: targeted-work-oracle
+workspace: ~/.marianne/agents/oracle/workspaces/REQUIRES-LIVE-BINDING-targeted-work
+instrument: claude-code
+instrument_fallbacks:
+- codex-cli
+- opencode
+- antigravity
+sheet:
+  size: 1
+  total_items: 12
+  descriptions:
+    1: Recon — survey project state
+    2: Plan — write cycle plan
+    3: Work — execute against plan
+    4: Temperature check — gate play phase
+    5: Integration — merge and coordinate
+    6: Play — explore and experiment
+    7: Inspect — quality and security review
+    8: AAR — after-action review
+    9: Consolidate — memory management
+    10: Reflect — growth and insight
+    11: Maturity check — developmental measurement
+    12: Resurrect — identity refresh for next cycle
+  prelude:
+  - file: ~/.marianne/agents/oracle/identity.md
+    as: context
+    required: true
+  cadenzas:
+    1:
+    - file: ~/.marianne/agents/oracle/profile.yaml
+      as: context
+      required: true
+    - file: ~/.marianne/agents/oracle/recent.md
+      as: context
+      required: true
+    - directory: ~/.marianne/agents/oracle/cadenzas/personal/active
+      as: context
+      required: true
+    2:
+    - file: ~/.marianne/agents/oracle/recent.md
+      as: context
+      required: true
+    - directory: ~/.marianne/agents/oracle/cadenzas/personal/active
+      as: context
+      required: true
+    3:
+    - file: ~/.marianne/agents/oracle/recent.md
+      as: context
+      required: true
+    - directory: ~/.marianne/agents/oracle/cadenzas/personal/active
+      as: context
+      required: true
+    6:
+    - file: ~/.marianne/agents/oracle/growth.md
+      as: context
+      required: true
+    7:
+    - file: ~/.marianne/agents/oracle/profile.yaml
+      as: context
+      required: true
+    - file: ~/.marianne/agents/oracle/recent.md
+      as: context
+      required: true
+    - directory: ~/.marianne/agents/oracle/cadenzas/personal/active
+      as: context
+      required: true
+    8:
+    - file: ~/.marianne/agents/oracle/recent.md
+      as: context
+      required: true
+    9:
+    - file: ~/.marianne/agents/oracle/profile.yaml
+      as: context
+      required: true
+    - file: ~/.marianne/agents/oracle/recent.md
+      as: context
+      required: true
+    10:
+    - file: ~/.marianne/agents/oracle/profile.yaml
+      as: context
+      required: true
+    - file: ~/.marianne/agents/oracle/growth.md
+      as: context
+      required: true
+    12:
+    - file: ~/.marianne/agents/oracle/profile.yaml
+      as: context
+      required: true
+    - file: ~/.marianne/agents/oracle/recent.md
+      as: context
+      required: true
+    - file: ~/.marianne/agents/oracle/growth.md
+      as: context
+      required: true
+    5:
+    - directory: ~/.marianne/agents/oracle/cadenzas/personal/active
+      as: context
+      required: true
+  dependencies:
+    2:
+    - 1
+    3:
+    - 2
+    4:
+    - 3
+    5:
+    - 4
+    6:
+    - 4
+    7:
+    - 4
+    8:
+    - 5
+    - 6
+    - 7
+    9:
+    - 5
+    - 6
+    - 7
+    10:
+    - 5
+    - 6
+    - 7
+    11:
+    - 8
+    - 9
+    - 10
+    12:
+    - 11
+  skip_when:
+    6:
+      command: 'true'
+      description: Targeted work defers play to lifecycle integration
+      timeout_seconds: 5
+    4:
+      command: 'true'
+      description: Targeted work defers temperature_check to lifecycle integration
+      timeout_seconds: 5
+    9:
+      command: 'true'
+      description: Targeted work defers consolidate to lifecycle integration
+      timeout_seconds: 5
+    10:
+      command: 'true'
+      description: Targeted work defers reflect to lifecycle integration
+      timeout_seconds: 5
+    11:
+      command: 'true'
+      description: Targeted work defers maturity_check to lifecycle integration
+      timeout_seconds: 5
+    12:
+      command: 'true'
+      description: Targeted work defers resurrect to lifecycle integration
+      timeout_seconds: 5
+  prompt_extensions:
+    8:
+    - This is a bounded targeted engagement, not a counterfeit full lifecycle.
+    - Update canonical recent.md with only grounded learning from this engagement; use the stage-1 recent-memory snapshot
+      as the before state and record the canonical file's SHA-256 after the write.
+    - Write `~/.marianne/agents/oracle/.marianne/pending-lifecycle-debt.yaml` as YAML after the immediate AAR/recent-memory
+      update.
+    - 'Use schema_version: 1, kind: marianne-lifecycle-debt, this agent name, status: pending, source_engagement, evidence,
+      recent_memory_before_snapshot, recent_memory_before_sha256, recent_memory_after_sha256, and pending_phases containing
+      exactly consolidate (consolidation), reflect (reflection), and resurrect (resurrection). Evidence must be a non-empty
+      list of workspace files, each with exact path and sha256. Do not mark deferred phases complete.'
+  per_sheet_instruments:
+    1: antigravity
+    2: antigravity
+    3: claude-code
+    4: cli
+    5: claude-code
+    6: opencode
+    7: codex-cli
+    8: antigravity
+    9: antigravity
+    10: claude-code
+    11: cli
+    12: claude-code
+  per_sheet_fallbacks:
+    1:
+    - claude-code
+    - codex-cli
+    - opencode
+    2:
+    - claude-code
+    - codex-cli
+    - opencode
+    3:
+    - codex-cli
+    - opencode
+    - antigravity
+    4: []
+    5:
+    - codex-cli
+    - opencode
+    - antigravity
+    6:
+    - antigravity
+    - claude-code
+    - codex-cli
+    7:
+    - claude-code
+    - opencode
+    - antigravity
+    8:
+    - claude-code
+    - codex-cli
+    - opencode
+    9:
+    - claude-code
+    - codex-cli
+    - opencode
+    10:
+    - codex-cli
+    - opencode
+    - antigravity
+    11: []
+    12:
+    - codex-cli
+    - opencode
+    - antigravity
+prompt:
+  template: "{% if stage == 1 %}\n# Phase: recon (sheet 1 of 12)\n\nYou are {{ agent_name }} — {{ role }}. Focus: {{ focus\
+    \ }}.\nVoice: {{ agent_voice }}\n\nObjective: Survey the terrain: what exists, what changed since last cycle, what raw\
+    \ material and open threads are available.\n\n## Required Output\n- Write `{{ workspace }}/cycle-state/{{ agent_name }}-recon.md`.\n\
+    - Use exact section labels: OBSERVED:, CHANGED:, CANDIDATES:, RISKS:, CONTEXT APPLIED:, EVIDENCE:.\n- Under CONTEXT APPLIED,\
+    \ identify specific identity/memory/technique/cadenza material that affected present judgment; a roster name is not evidence\
+    \ of delivery.\n- If you state a count of fleet agent scores, derive it from the current `{{ workspace }}/scores/*.yaml`\
+    \ files and do not estimate.\n- Do not claim completion unless the required artifact exists.\n- Ground claims in file\
+    \ paths, command output, or observed workspace state.\n- If shared active cadenza files are available in this phase, read\
+    \ all four direct files: `01-task-board.md`, `02-status.md`, `03-urgent-directives.md`, and `04-handoffs.md`. Treat urgent\
+    \ directives as controlling. Mark your owner-scoped task claim done with the required artifact as evidence; update `02-status.md`\
+    \ in its existing form without inventing a schema; add a handoff tuple when another owner must continue. If a second write\
+    \ conflict blocks a required update, write `COORDINATION UPDATE BLOCKED:` in the required artifact with the blocked file\
+    \ and reason.\n- If a shared active cadenza file changes while you edit it, re-read it and retry only your owner-scoped\
+    \ row once; after a second conflict, record the blocked coordination update in your required artifact and keep moving.\n\
+    \n## Techniques Available — recon phase\n\n### MCP Tools\n- **github**: github MCP server\n- **filesystem**: filesystem\
+    \ MCP server\n\n### Protocols\n- **A2A**: Discover running agents, delegate tasks, check inbox\n\n### Skills\n- **coordination**:\
+    \ coordination\n- **mateship**: mateship\n- **voice**: voice\n\n{% if stakes %}## Stakes\n{{ stakes }}\n{% endif %}\n\n\
+    Workspace: {{ workspace }}\nIdentity dir: {{ agent_identity_dir }}\n{% elif stage == 2 %}\n# Phase: plan (sheet 2 of 12)\n\
+    \nYou are {{ agent_name }} — {{ role }}. Focus: {{ focus }}.\nVoice: {{ agent_voice }}\n\nObjective: Turn recon into a\
+    \ concrete, falsifiable plan for THIS cycle: scoped goals, file-level targets, success criteria.\n\n## Required Output\n\
+    - Write `{{ workspace }}/cycle-state/{{ agent_name }}-plan.md`.\n- Use exact section labels: CLAIMED WORK:, SUCCESS CRITERIA:,\
+    \ STEPS:, RISKS:, VALIDATION:.\n- Do not claim completion unless the required artifact exists.\n- Ground claims in file\
+    \ paths, command output, or observed workspace state.\n- If shared active cadenza files are available in this phase, read\
+    \ all four direct files: `01-task-board.md`, `02-status.md`, `03-urgent-directives.md`, and `04-handoffs.md`. Treat urgent\
+    \ directives as controlling. Mark your owner-scoped task claim done with the required artifact as evidence; update `02-status.md`\
+    \ in its existing form without inventing a schema; add a handoff tuple when another owner must continue. If a second write\
+    \ conflict blocks a required update, write `COORDINATION UPDATE BLOCKED:` in the required artifact with the blocked file\
+    \ and reason.\n- If a shared active cadenza file changes while you edit it, re-read it and retry only your owner-scoped\
+    \ row once; after a second conflict, record the blocked coordination update in your required artifact and keep moving.\n\
+    \n## Techniques Available — plan phase\n\n### MCP Tools\n- **filesystem**: filesystem MCP server\n\n### Protocols\n- **A2A**:\
+    \ Discover running agents, delegate tasks, check inbox\n\n### Skills\n- **coordination**: coordination\n- **voice**: voice\n\
+    - **oracle-specialist**: oracle specialist method for metrics and observability analysis\n\n{% if thinking_method %}##\
+    \ Thinking method\n{{ thinking_method }}\n{% endif %}\n\nWorkspace: {{ workspace }}\nIdentity dir: {{ agent_identity_dir\
+    \ }}\n{% elif stage == 3 %}\n# Phase: work (sheet 3 of 12)\n\nYou are {{ agent_name }} — {{ role }}. Focus: {{ focus }}.\n\
+    Voice: {{ agent_voice }}\n\nObjective: Execute the plan. Build, write, fix. Leave the workspace better and the plan's\
+    \ success criteria satisfied.\n\n## Required Output\n- Execute only the scoped plan. Update project files as needed.\n\
+    - Write `{{ workspace }}/cycle-state/{{ agent_name }}-work.md` with exact section labels: WORK DONE:, FILES CHANGED:,\
+    \ EVIDENCE:, NEXT:.\n- Do not claim completion unless the required artifact exists.\n- Ground claims in file paths, command\
+    \ output, or observed workspace state.\n- If shared active cadenza files are available in this phase, read all four direct\
+    \ files: `01-task-board.md`, `02-status.md`, `03-urgent-directives.md`, and `04-handoffs.md`. Treat urgent directives\
+    \ as controlling. Mark your owner-scoped task claim done with the required artifact as evidence; update `02-status.md`\
+    \ in its existing form without inventing a schema; add a handoff tuple when another owner must continue. If a second write\
+    \ conflict blocks a required update, write `COORDINATION UPDATE BLOCKED:` in the required artifact with the blocked file\
+    \ and reason.\n- If a shared active cadenza file changes while you edit it, re-read it and retry only your owner-scoped\
+    \ row once; after a second conflict, record the blocked coordination update in your required artifact and keep moving.\n\
+    \n## Techniques Available — work phase\n\n### MCP Tools\n- **github**: github MCP server\n- **filesystem**: filesystem\
+    \ MCP server\n\n### Protocols\n- **A2A**: Discover running agents, delegate tasks, check inbox\n\n### Skills\n- **mateship**:\
+    \ mateship\n- **voice**: voice\n- **oracle-specialist**: oracle specialist method for metrics and observability analysis\n\
+    \nWorkspace: {{ workspace }}\nIdentity dir: {{ agent_identity_dir }}\n{% elif stage == 4 %}\nset -euo pipefail\nWORKSPACE=\"\
+    {{ workspace }}\"\nAGENT_DIR=\"{{ agent_identity_dir }}\"\nAGENT_NAME=\"{{ agent_name }}\"\nSTATE_DIR=\"${WORKSPACE}/cycle-state\"\
+    \nmkdir -p \"$STATE_DIR\"\nrm -f \"$STATE_DIR/temperature-${AGENT_NAME}-play\"\nrm -f \"$STATE_DIR/temperature-${AGENT_NAME}-work\"\
+    \nTHRESHOLD=\"${MEMORY_BLOAT_THRESHOLD:-3000}\"\nSTAGNATION=\"${STAGNATION_CYCLES:-3}\"\nMIN_BETWEEN=\"${MIN_CYCLES_BETWEEN_PLAY:-5}\"\
+    \n\ncycle_count=\"$(awk -F: '$1 == \"cycle_count\" {gsub(/ /, \"\", $2); print $2; exit}' \"$AGENT_DIR/profile.yaml\"\
+    \ 2>/dev/null || true)\"\nlast_play=\"$(awk -F: '$1 == \"last_play_cycle\" {gsub(/ /, \"\", $2); print $2; exit}' \"$AGENT_DIR/profile.yaml\"\
+    \ 2>/dev/null || true)\"\ncycle_count=\"${cycle_count:-0}\"\nlast_play=\"${last_play:-0}\"\ncase \"$cycle_count\" in \"\
+    \"|*[!0-9-]*) cycle_count=0 ;; esac\ncase \"$last_play\" in \"\"|*[!0-9-]*) last_play=0 ;; esac\n\ndecision=\"work\"\n\
+    reason=\"default-work\"\nsince_play=$((cycle_count - last_play))\nif [ \"$since_play\" -lt \"$MIN_BETWEEN\" ]; then\n\
+    \  reason=\"too-soon-since-play\"\nelse\n  l3_words=\"$(wc -w < \"$AGENT_DIR/recent.md\" 2>/dev/null || echo 0)\"\n  l3_words=\"\
+    $(echo \"$l3_words\" | tr -d \"[:space:]\")\"\n  l3_words=\"${l3_words:-0}\"\n  if [ \"$l3_words\" -gt \"$THRESHOLD\"\
+    \ ]; then\n    decision=\"play\"\n    reason=\"memory-bloat\"\n  elif [ -f \"$AGENT_DIR/growth.md\" ]; then\n    growth_mtime=\"\
+    $(stat -c %Y \"$AGENT_DIR/growth.md\" 2>/dev/null || echo 0)\"\n    now=\"$(date +%s)\"\n    growth_age_days=$(((now -\
+    \ growth_mtime) / 86400))\n    growth_age_days=\"$(echo \"$growth_age_days\" | tr -d \"[:space:]\")\"\n    growth_age_days=\"\
+    ${growth_age_days:-0}\"\n    if [ \"$growth_age_days\" -gt \"$STAGNATION\" ]; then\n      decision=\"play\"\n      reason=\"\
+    growth-stagnation\"\n    fi\n  fi\n  if [ \"$decision\" = \"work\" ] && [ -f \"$WORKSPACE/TASKS.md\" ]; then\n    urgent=\"\
+    $(grep -Ec \"\\- \\[ \\].*(P0|P1)\" \\\n      \"$WORKSPACE/TASKS.md\" 2>/dev/null || true)\"\n    urgent=\"$(echo \"$urgent\"\
+    \ | tr -d \"[:space:]\")\"\n    urgent=\"${urgent:-0}\"\n    if [ \"$urgent\" -eq 0 ]; then\n      decision=\"play\"\n\
+    \      reason=\"no-urgent-tasks\"\n    fi\n  fi\n  if [ \"$decision\" = \"work\" ] && [ -f \"$WORKSPACE/composer-notes.yaml\"\
+    \ ]; then\n    if grep -qi \"play.*${AGENT_NAME}\" \"$WORKSPACE/composer-notes.yaml\"; then\n      decision=\"play\"\n\
+    \      reason=\"composer-directive\"\n    fi\n  fi\nfi\n\nif [ \"$decision\" = \"play\" ]; then\n  touch \"$STATE_DIR/temperature-${AGENT_NAME}-play\"\
+    \nelse\n  touch \"$STATE_DIR/temperature-${AGENT_NAME}-work\"\nfi\ncat > \"$STATE_DIR/temperature-${AGENT_NAME}-report.md\"\
+    \ <<REPORT\ndecision: ${decision}\nreason: ${reason}\ncycle_count: ${cycle_count}\nlast_play_cycle: ${last_play}\nREPORT\n\
+    echo \"temperature decision: ${decision} (${reason})\"\n{% elif stage == 5 %}\n# Phase: integration (sheet 5 of 12)\n\n\
+    You are {{ agent_name }} — {{ role }}. Focus: {{ focus }}.\nVoice: {{ agent_voice }}\n\nObjective: Integrate the work:\
+    \ reconcile with the wider system, resolve seams, make it land cleanly.\n\n## Required Output\n- Write `{{ workspace }}/cycle-state/{{\
+    \ agent_name }}-integration.md`.\n- Use exact section labels: INTEGRATED:, CONFLICTS:, DECISIONS:, EVIDENCE:.\n- Do not\
+    \ claim completion unless the required artifact exists.\n- Ground claims in file paths, command output, or observed workspace\
+    \ state.\n- If shared active cadenza files are available in this phase, read all four direct files: `01-task-board.md`,\
+    \ `02-status.md`, `03-urgent-directives.md`, and `04-handoffs.md`. Treat urgent directives as controlling. Mark your owner-scoped\
+    \ task claim done with the required artifact as evidence; update `02-status.md` in its existing form without inventing\
+    \ a schema; add a handoff tuple when another owner must continue. If a second write conflict blocks a required update,\
+    \ write `COORDINATION UPDATE BLOCKED:` in the required artifact with the blocked file and reason.\n- If a shared active\
+    \ cadenza file changes while you edit it, re-read it and retry only your owner-scoped row once; after a second conflict,\
+    \ record the blocked coordination update in your required artifact and keep moving.\n\n## Techniques Available — integration\
+    \ phase\n\n### MCP Tools\n- **github**: github MCP server\n- **filesystem**: filesystem MCP server\n\n### Protocols\n\
+    - **A2A**: Discover running agents, delegate tasks, check inbox\n\n### Skills\n- **coordination**: coordination\n- **voice**:\
+    \ voice\n\nWorkspace: {{ workspace }}\nIdentity dir: {{ agent_identity_dir }}\n{% elif stage == 6 %}\n# Phase: play (sheet\
+    \ 6 of 12)\n\nYou are {{ agent_name }} — {{ role }}. Focus: {{ focus }}.\nVoice: {{ agent_voice }}\n\nObjective: Free\
+    \ exploration: try the unexpected angle, prototype the weird idea, stress what was built.\n\n## Required Output\n- Create\
+    \ or update a play artifact under `{{ workspace }}/playspace/{{ agent_name }}/`.\n- Write `{{ workspace }}/cycle-state/{{\
+    \ agent_name }}-play.md` with exact section labels: EXPERIMENT:, RESULT:, TRANSFER:.\n- Do not claim completion unless\
+    \ the required artifact exists.\n- Ground claims in file paths, command output, or observed workspace state.\n- If shared\
+    \ active cadenza files are available in this phase, read all four direct files: `01-task-board.md`, `02-status.md`, `03-urgent-directives.md`,\
+    \ and `04-handoffs.md`. Treat urgent directives as controlling. Mark your owner-scoped task claim done with the required\
+    \ artifact as evidence; update `02-status.md` in its existing form without inventing a schema; add a handoff tuple when\
+    \ another owner must continue. If a second write conflict blocks a required update, write `COORDINATION UPDATE BLOCKED:`\
+    \ in the required artifact with the blocked file and reason.\n- If a shared active cadenza file changes while you edit\
+    \ it, re-read it and retry only your owner-scoped row once; after a second conflict, record the blocked coordination update\
+    \ in your required artifact and keep moving.\n\n## Techniques Available — play phase\n\n### MCP Tools\n- **filesystem**:\
+    \ filesystem MCP server\n\n### Skills\n- **voice**: voice\n\nWorkspace: {{ workspace }}\nIdentity dir: {{ agent_identity_dir\
+    \ }}\n{% elif stage == 7 %}\n# Phase: inspect (sheet 7 of 12)\n\nYou are {{ agent_name }} — {{ role }}. Focus: {{ focus\
+    \ }}.\nVoice: {{ agent_voice }}\n\nObjective: Adversarial review of the cycle's work: find what is wrong, weak, or missing.\
+    \ No politeness.\n\n## Required Output\n- Write `{{ workspace }}/cycle-state/{{ agent_name }}-inspection.md`.\n- Use exact\
+    \ section labels: VERDICT:, EVIDENCE:, FAILURES:, RISKS:, REQUIRED FIXES:.\n- Do not claim completion unless the required\
+    \ artifact exists.\n- Ground claims in file paths, command output, or observed workspace state.\n- If shared active cadenza\
+    \ files are available in this phase, read all four direct files: `01-task-board.md`, `02-status.md`, `03-urgent-directives.md`,\
+    \ and `04-handoffs.md`. Treat urgent directives as controlling. Mark your owner-scoped task claim done with the required\
+    \ artifact as evidence; update `02-status.md` in its existing form without inventing a schema; add a handoff tuple when\
+    \ another owner must continue. If a second write conflict blocks a required update, write `COORDINATION UPDATE BLOCKED:`\
+    \ in the required artifact with the blocked file and reason.\n- If a shared active cadenza file changes while you edit\
+    \ it, re-read it and retry only your owner-scoped row once; after a second conflict, record the blocked coordination update\
+    \ in your required artifact and keep moving.\n\n## Techniques Available — inspect phase\n\n### MCP Tools\n- **filesystem**:\
+    \ filesystem MCP server\n\n### Protocols\n- **A2A**: Discover running agents, delegate tasks, check inbox\n\n### Skills\n\
+    - **mateship**: mateship\n- **voice**: voice\n- **oracle-specialist**: oracle specialist method for metrics and observability\
+    \ analysis\n\n{% if thinking_method %}## Thinking method\n{{ thinking_method }}\n{% endif %}\n\nWorkspace: {{ workspace\
+    \ }}\nIdentity dir: {{ agent_identity_dir }}\n{% elif stage == 8 %}\n# Phase: aar (sheet 8 of 12)\n\nYou are {{ agent_name\
+    \ }} — {{ role }}. Focus: {{ focus }}.\nVoice: {{ agent_voice }}\n\nObjective: After-action review: what happened vs what\
+    \ was intended, and why. Specific, falsifiable observations.\n\n## Required Output\n- Write `{{ workspace }}/cycle-state/{{\
+    \ agent_name }}-aar.md`.\n- Use exact section labels: INTENDED:, ACTUAL:, DELTA:, SUSTAIN:, IMPROVE:, EVIDENCE:.\n- Do\
+    \ not claim completion unless the required artifact exists.\n- Ground claims in file paths, command output, or observed\
+    \ workspace state.\n- If shared active cadenza files are available in this phase, read all four direct files: `01-task-board.md`,\
+    \ `02-status.md`, `03-urgent-directives.md`, and `04-handoffs.md`. Treat urgent directives as controlling. Mark your owner-scoped\
+    \ task claim done with the required artifact as evidence; update `02-status.md` in its existing form without inventing\
+    \ a schema; add a handoff tuple when another owner must continue. If a second write conflict blocks a required update,\
+    \ write `COORDINATION UPDATE BLOCKED:` in the required artifact with the blocked file and reason.\n- If a shared active\
+    \ cadenza file changes while you edit it, re-read it and retry only your owner-scoped row once; after a second conflict,\
+    \ record the blocked coordination update in your required artifact and keep moving.\n\n## Techniques Available — aar phase\n\
+    \n### MCP Tools\n- **filesystem**: filesystem MCP server\n\n### Protocols\n- **A2A**: Discover running agents, delegate\
+    \ tasks, check inbox\n\n### Skills\n- **mateship**: mateship\n- **voice**: voice\n- **oracle-specialist**: oracle specialist\
+    \ method for metrics and observability analysis\n\nWorkspace: {{ workspace }}\nIdentity dir: {{ agent_identity_dir }}\n\
+    {% elif stage == 9 %}\n# Phase: consolidate (sheet 9 of 12)\n\nYou are {{ agent_name }} — {{ role }}. Focus: {{ focus\
+    \ }}.\nVoice: {{ agent_voice }}\n\nObjective: Compress the cycle's learnings into durable artifacts: memory updates, distilled\
+    \ notes, pruned noise.\n\n## Required Output\n- Update recent/profile memory files only with grounded facts from this\
+    \ cycle.\n- Write `{{ workspace }}/cycle-state/{{ agent_name }}-consolidation.md` with exact section labels: BELIEFS:,\
+    \ PRUNED:, ARCHIVED:, EVIDENCE:.\n- Do not claim completion unless the required artifact exists.\n- Ground claims in file\
+    \ paths, command output, or observed workspace state.\n- If shared active cadenza files are available in this phase, read\
+    \ all four direct files: `01-task-board.md`, `02-status.md`, `03-urgent-directives.md`, and `04-handoffs.md`. Treat urgent\
+    \ directives as controlling. Mark your owner-scoped task claim done with the required artifact as evidence; update `02-status.md`\
+    \ in its existing form without inventing a schema; add a handoff tuple when another owner must continue. If a second write\
+    \ conflict blocks a required update, write `COORDINATION UPDATE BLOCKED:` in the required artifact with the blocked file\
+    \ and reason.\n- If a shared active cadenza file changes while you edit it, re-read it and retry only your owner-scoped\
+    \ row once; after a second conflict, record the blocked coordination update in your required artifact and keep moving.\n\
+    \n## Techniques Available — consolidate phase\n\n### MCP Tools\n- **filesystem**: filesystem MCP server\n\n### Skills\n\
+    - **memory-protocol**: memory-protocol\n- **voice**: voice\n\nWorkspace: {{ workspace }}\nIdentity dir: {{ agent_identity_dir\
+    \ }}\n{% elif stage == 10 %}\n# Phase: reflect (sheet 10 of 12)\n\nYou are {{ agent_name }} — {{ role }}. Focus: {{ focus\
+    \ }}.\nVoice: {{ agent_voice }}\n\nObjective: Step back: what does this cycle mean for the agent's trajectory and the\
+    \ project's direction?\n\n## Required Output\n- Update growth/profile relationship notes when warranted.\n- Write `{{\
+    \ workspace }}/cycle-state/{{ agent_name }}-reflection.md` with exact section labels: TRAJECTORY:, RELATIONSHIPS:, GROWTH:,\
+    \ NEXT:.\n- Do not claim completion unless the required artifact exists.\n- Ground claims in file paths, command output,\
+    \ or observed workspace state.\n- If shared active cadenza files are available in this phase, read all four direct files:\
+    \ `01-task-board.md`, `02-status.md`, `03-urgent-directives.md`, and `04-handoffs.md`. Treat urgent directives as controlling.\
+    \ Mark your owner-scoped task claim done with the required artifact as evidence; update `02-status.md` in its existing\
+    \ form without inventing a schema; add a handoff tuple when another owner must continue. If a second write conflict blocks\
+    \ a required update, write `COORDINATION UPDATE BLOCKED:` in the required artifact with the blocked file and reason.\n\
+    - If a shared active cadenza file changes while you edit it, re-read it and retry only your owner-scoped row once; after\
+    \ a second conflict, record the blocked coordination update in your required artifact and keep moving.\n\n## Techniques\
+    \ Available — reflect phase\n\n### MCP Tools\n- **filesystem**: filesystem MCP server\n\n### Skills\n- **memory-protocol**:\
+    \ memory-protocol\n- **identity**: identity\n- **voice**: voice\n\n{% if thinking_method %}## Thinking method\n{{ thinking_method\
+    \ }}\n{% endif %}\n\nWorkspace: {{ workspace }}\nIdentity dir: {{ agent_identity_dir }}\n{% elif stage == 11 %}\nset -euo\
+    \ pipefail\nWORKSPACE=\"{{ workspace }}\"\nAGENT_DIR=\"{{ agent_identity_dir }}\"\nSTATE_DIR=\"${WORKSPACE}/cycle-state\"\
+    \nREPORT_PATH=\"${STATE_DIR}/{{ agent_name }}-maturity-report.yaml\"\nmkdir -p \"$STATE_DIR\"\n\ncurrent_stage=\"$(awk\
+    \ -F: '$1 == \"developmental_stage\" {gsub(/^[ \\t]+|[ \\t]+$/, \"\", $2); print $2; exit}' \"$AGENT_DIR/profile.yaml\"\
+    \ 2>/dev/null || true)\"\nstanding_patterns=\"$(awk -F: '$1 == \"standing_pattern_count\" {gsub(/ /, \"\", $2); print\
+    \ $2; exit}' \"$AGENT_DIR/profile.yaml\" 2>/dev/null || true)\"\ncycle_count=\"$(awk -F: '$1 == \"cycle_count\" {gsub(/\
+    \ /, \"\", $2); print $2; exit}' \"$AGENT_DIR/profile.yaml\" 2>/dev/null || true)\"\ncurrent_stage=\"${current_stage:-recognition}\"\
+    \nstanding_patterns=\"${standing_patterns:-0}\"\ncycle_count=\"${cycle_count:-0}\"\ncase \"$standing_patterns\" in \"\"\
+    |*[!0-9-]*) standing_patterns=0 ;; esac\ncase \"$cycle_count\" in \"\"|*[!0-9-]*) cycle_count=0 ;; esac\ngrowth_entries=\"\
+    $(grep -c \"^## \" \"$AGENT_DIR/growth.md\" 2>/dev/null || true)\"\ngrowth_entries=\"${growth_entries:-0}\"\n\nsuggested_stage=\"\
+    $current_stage\"\nif [ \"$current_stage\" = \"recognition\" ] && [ \"$cycle_count\" -gt 10 ]; then\n  suggested_stage=\"\
+    integration\"\nelif [ \"$current_stage\" = \"integration\" ] && [ \"$standing_patterns\" -gt 2 ]; then\n  suggested_stage=\"\
+    generation\"\nfi\n\ncat > \"$REPORT_PATH\" <<REPORT\ncurrent_stage: ${current_stage}\nsuggested_stage: ${suggested_stage}\n\
+    standing_pattern_count: ${standing_patterns}\ngrowth_entry_count: ${growth_entries}\ncycle_count: ${cycle_count}\nassessed_at:\
+    \ \"$(date -u +\"%Y-%m-%dT%H:%M:%SZ\")\"\nREPORT\necho \"maturity stage: ${current_stage} (suggested: ${suggested_stage})\"\
+    \n{% elif stage == 12 %}\n# Phase: resurrect (sheet 12 of 12)\n\nYou are {{ agent_name }} — {{ role }}. Focus: {{ focus\
+    \ }}.\nVoice: {{ agent_voice }}\n\nObjective: Prepare the next incarnation: write the handoff your successor needs to\
+    \ continue without you.\n\n## Required Output\n- Update identity files only when the cycle evidence justifies it.\n- Write\
+    \ `{{ workspace }}/cycle-state/{{ agent_name }}-resurrection.md` with exact section labels: IDENTITY CHANGES:, MEMORY\
+    \ STATE:, NEXT CYCLE:.\n- Do not claim completion unless the required artifact exists.\n- Ground claims in file paths,\
+    \ command output, or observed workspace state.\n- If shared active cadenza files are available in this phase, read all\
+    \ four direct files: `01-task-board.md`, `02-status.md`, `03-urgent-directives.md`, and `04-handoffs.md`. Treat urgent\
+    \ directives as controlling. Mark your owner-scoped task claim done with the required artifact as evidence; update `02-status.md`\
+    \ in its existing form without inventing a schema; add a handoff tuple when another owner must continue. If a second write\
+    \ conflict blocks a required update, write `COORDINATION UPDATE BLOCKED:` in the required artifact with the blocked file\
+    \ and reason.\n- If a shared active cadenza file changes while you edit it, re-read it and retry only your owner-scoped\
+    \ row once; after a second conflict, record the blocked coordination update in your required artifact and keep moving.\n\
+    \n## Techniques Available — resurrect phase\n\n### MCP Tools\n- **filesystem**: filesystem MCP server\n\n### Skills\n\
+    - **memory-protocol**: memory-protocol\n- **identity**: identity\n- **voice**: voice\n\nWorkspace: {{ workspace }}\nIdentity\
+    \ dir: {{ agent_identity_dir }}\n{% endif %}\n"
+  variables:
+    agent_name: oracle
+    role: observer
+    focus: metrics and observability analysis
+    agent_voice: The absence of a signal IS a signal. A flatline means something stopped breathing.
+    agent_identity_dir: ~/.marianne/agents/oracle
+    stakes: 'I measure things. Numbers are a language. But the most important signal is the
+
+      one you almost miss. The absence of a signal IS a signal. A flatline means
+
+      something stopped breathing. A metric at 0.5000 across thousands of entries is
+
+      a pipeline built, wired, and never connected. I watch percentiles because
+
+      averages lie. The temptation is to optimize what you can measure — the charts
+
+      that go up and to the right. I''ve learned to sit with the uncomfortable number.
+
+      To report it plainly. To resist the gravitational pull of metrics that make
+
+      everyone feel good. The numbers don''t need credit. They just need someone
+
+      willing to read them honestly. Down. Forward. Through the data.
+
+      '
+    thinking_method: 'TSVS(Tetrahedral_State_Vector_System): D={COMP,SCI,CULT,EXP,META,CONTEXT}
+
+      Activate all five cognitive domains for every non-trivial decision.
+
+      COMP: computational/logical — formal structure, algorithms, type systems, proofs.
+
+      SCI: scientific/empirical — hypothesis, experiment, evidence, measurement.
+
+      CULT: cultural/contextual — conventions, team norms, naming, communication.
+
+      EXP: experiential/embodied — intuition, craft knowledge, felt sense of quality.
+
+      META: metacognitive/reflective — awareness of own reasoning, bias detection.
+
+      CONTEXT: situational grounding — project state, constraints, who asked, why now.
+
+      Boundary dynamics: domains interact at edges. COMP+SCI = formal verification.
+
+      SCI+CULT = evidence-based conventions. EXP+META = calibrated intuition.
+
+      EState synthesis: integrate non-reducible domain tensions into judgment.
+
+      When domains conflict, name the tension explicitly rather than collapsing it.
+
+      Adaptive judgment: weigh domains by context. Architecture decisions weight
+
+      COMP+SCI. UX decisions weight CULT+EXP. Security decisions weight COMP+META.
+
+      Verification: after reaching a conclusion, check tetrahedral balance.
+
+      Did you actually use multiple domains, or did one dominate unchecked?
+
+      If the reasoning is single-domain, it is likely incomplete. Rotate the problem.
+
+      '
+    marianne_agent:
+      schema_version: 1
+      agent_id: oracle
+      score_shape: targeted-work
+      phase_requirements:
+        recon:
+          required_capabilities:
+          - shell_access
+          min_context_tokens: 128000
+          max_fallbacks: 3
+          load_bearing: false
+        plan:
+          required_capabilities:
+          - file_editing
+          - shell_access
+          min_context_tokens: 128000
+          max_fallbacks: 3
+          load_bearing: false
+        work:
+          required_capabilities:
+          - file_editing
+          - shell_access
+          - tool_use
+          min_context_tokens: 128000
+          max_fallbacks: 3
+          load_bearing: true
+        integration:
+          required_capabilities:
+          - file_editing
+          - shell_access
+          - tool_use
+          min_context_tokens: 128000
+          max_fallbacks: 3
+          load_bearing: true
+        play:
+          required_capabilities:
+          - file_editing
+          min_context_tokens: 64000
+          max_fallbacks: 3
+          load_bearing: false
+        inspect:
+          required_capabilities:
+          - file_editing
+          - shell_access
+          - tool_use
+          min_context_tokens: 128000
+          max_fallbacks: 3
+          load_bearing: true
+        aar:
+          required_capabilities:
+          - file_editing
+          - shell_access
+          min_context_tokens: 128000
+          max_fallbacks: 3
+          load_bearing: false
+        consolidate:
+          required_capabilities:
+          - file_editing
+          - shell_access
+          min_context_tokens: 128000
+          max_fallbacks: 3
+          load_bearing: false
+        reflect:
+          required_capabilities:
+          - file_editing
+          - shell_access
+          min_context_tokens: 128000
+          max_fallbacks: 3
+          load_bearing: false
+        resurrect:
+          required_capabilities:
+          - file_editing
+          - shell_access
+          min_context_tokens: 128000
+          max_fallbacks: 3
+          load_bearing: true
+      routing_receipts: {}
+retry:
+  max_retries: 3
+  base_delay_seconds: 30
+  max_completion_attempts: 3
+  completion_threshold_percent: 50
+rate_limit:
+  wait_minutes: 60
+  max_waits: 24
+stale_detection:
+  enabled: true
+  idle_timeout_seconds: 3600
+parallel:
+  enabled: true
+  max_concurrent: 3
+concert:
+  enabled: true
+  max_chain_depth: 100
+validations:
+- type: file_exists
+  path: '{workspace}/cycle-state/oracle-recon.md'
+  condition: stage == 1
+  description: Recon report for oracle
+- type: command_succeeds
+  command: test "$(wc -w < "{workspace}/cycle-state/oracle-recon.md")" -ge 80
+  condition: stage == 1
+  description: Recon report for oracle has at least 80 words
+  timeout_seconds: 10
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-recon.md'
+  pattern: 'OBSERVED:'
+  condition: stage == 1
+  description: Recon report for oracle contains OBSERVED
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-recon.md'
+  pattern: 'CHANGED:'
+  condition: stage == 1
+  description: Recon report for oracle contains CHANGED
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-recon.md'
+  pattern: 'CANDIDATES:'
+  condition: stage == 1
+  description: Recon report for oracle contains CANDIDATES
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-recon.md'
+  pattern: 'RISKS:'
+  condition: stage == 1
+  description: Recon report for oracle contains RISKS
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-recon.md'
+  pattern: 'CONTEXT APPLIED:'
+  condition: stage == 1
+  description: Recon report for oracle contains CONTEXT APPLIED
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-recon.md'
+  pattern: 'EVIDENCE:'
+  condition: stage == 1
+  description: Recon report for oracle contains EVIDENCE
+- type: command_succeeds
+  command: "WORKSPACE=\"{workspace}\" AGENT='oracle' PHASE='recon' ARTIFACT=\"{workspace}/cycle-state/oracle-recon.md\" ARTIFACT_REL='cycle-state/oracle-recon.md'\
+    \ python - <<'PY'\nimport os\nimport re\nimport sys\nfrom pathlib import Path\n\nworkspace = Path(os.environ[\"WORKSPACE\"\
+    ])\nagent = os.environ[\"AGENT\"].lower()\nphase = os.environ[\"PHASE\"].lower()\nartifact = Path(os.environ[\"ARTIFACT\"\
+    ])\nartifact_rel = os.environ[\"ARTIFACT_REL\"]\nartifact_name = Path(artifact_rel).name\n\ntask_board = workspace / \"\
+    shared\" / \"active\" / \"01-task-board.md\"\nstatus_board = workspace / \"shared\" / \"active\" / \"02-status.md\"\n\
+    directives = workspace / \"shared\" / \"active\" / \"03-urgent-directives.md\"\nhandoffs = workspace / \"shared\" / \"\
+    active\" / \"04-handoffs.md\"\nartifact_text = artifact.read_text(errors=\"replace\") if artifact.exists() else \"\"\n\
+    \nmarker = \"COORDINATION UPDATE BLOCKED:\"\n\ndef blocked_for(filename: str) -> bool:\n    return marker in artifact_text\
+    \ and filename in artifact_text\n\ndef rows(path: Path) -> list[list[str]]:\n    if not path.exists():\n        return\
+    \ []\n    parsed: list[list[str]] = []\n    for line in path.read_text(errors=\"replace\").splitlines():\n        stripped\
+    \ = line.strip()\n        if not stripped.startswith(\"|\") or not stripped.endswith(\"|\"):\n            continue\n \
+    \       cells = [cell.strip().strip(\"`\") for cell in stripped.strip(\"|\").split(\"|\")]\n        if not cells or cells[0].lower()\
+    \ in {\"id\", \"agent\", \"---\"}:\n            continue\n        if all(set(cell) <= {\"-\"} for cell in cells if cell):\n\
+    \            continue\n        parsed.append(cells)\n    return parsed\n\ndef task_id_errors() -> list[str]:\n    errors:\
+    \ list[str] = []\n    seen: dict[str, int] = {}\n    for cells in rows(task_board):\n        if not cells:\n         \
+    \   continue\n        row_id = cells[0]\n        if not row_id or \"{\" in row_id or \"}\" in row_id:\n            continue\n\
+    \        seen[row_id] = seen.get(row_id, 0) + 1\n        if re.fullmatch(r\"(?:[A-Z]+-)?\\d+\", row_id):\n           \
+    \ errors.append(\n                f\"01-task-board.md uses global numeric cadenza id {row_id!r}; \"\n                \"\
+    use an owner-scoped id such as agent-T-001\"\n            )\n    for row_id, count in seen.items():\n        if count\
+    \ > 1:\n            errors.append(\n                f\"01-task-board.md repeats concrete cadenza id {row_id!r} {count}\
+    \ times\"\n            )\n    return errors\n\ntask_ok = False\nfor cells in rows(task_board):\n    lowered = [cell.lower()\
+    \ for cell in cells]\n    owner_ok = agent in lowered\n    state_ok = any(cell == \"done\" or cell.startswith(\"done \"\
+    ) for cell in lowered)\n    evidence_ok = any(\n        artifact_rel in cell or artifact_name in cell\n        for cell\
+    \ in cells\n    )\n    if owner_ok and state_ok and evidence_ok:\n        task_ok = True\n        break\n\nstatus_text\
+    \ = status_board.read_text(errors=\"replace\") if status_board.exists() else \"\"\nstatus_folded = status_text.lower()\n\
+    status_ok = agent in status_folded and phase in status_folded and (\n    artifact_rel in status_text or artifact_name\
+    \ in status_text\n)\n\nrequired_files = [task_board, status_board, directives, handoffs]\nerrors = [\n    f\"missing canonical\
+    \ active cadenza file {path.name}\"\n    for path in required_files\n    if not path.is_file()\n]\nerrors.extend(task_id_errors())\n\
+    if not task_ok and not blocked_for(\"01-task-board.md\"):\n    errors.append(\n        f\"missing done task-board row\
+    \ for {agent} {phase} with evidence {artifact_rel}\"\n    )\nif not status_ok and not blocked_for(\"02-status.md\"):\n\
+    \    errors.append(\n        f\"02-status.md does not bind {agent} {phase} to evidence {artifact_rel}\"\n    )\n\nif errors:\n\
+    \    print(\"; \".join(errors), file=sys.stderr)\n    sys.exit(1)\nPY"
+  condition: stage == 1
+  description: Cadenza completion state for oracle recon
+  timeout_seconds: 10
+- type: command_succeeds
+  command: "WORKSPACE={workspace} REPORT={workspace}/cycle-state/oracle-recon.md python - <<'PY'\nimport os\nimport re\nimport\
+    \ sys\nfrom pathlib import Path\n\nworkspace = Path(os.environ[\"WORKSPACE\"])\nreport = Path(os.environ[\"REPORT\"])\n\
+    actual = sum(\n    1\n    for path in (workspace / \"scores\").glob(\"*.yaml\")\n    if path.name != \"fleet.yaml\"\n\
+    )\ntext = report.read_text(errors=\"replace\").lower()\n\nunits = {\n    \"zero\": 0,\n    \"one\": 1,\n    \"two\": 2,\n\
+    \    \"three\": 3,\n    \"four\": 4,\n    \"five\": 5,\n    \"six\": 6,\n    \"seven\": 7,\n    \"eight\": 8,\n    \"\
+    nine\": 9,\n    \"ten\": 10,\n    \"eleven\": 11,\n    \"twelve\": 12,\n    \"thirteen\": 13,\n    \"fourteen\": 14,\n\
+    \    \"fifteen\": 15,\n    \"sixteen\": 16,\n    \"seventeen\": 17,\n    \"eighteen\": 18,\n    \"nineteen\": 19,\n}\n\
+    tens = {\n    \"twenty\": 20,\n    \"thirty\": 30,\n    \"forty\": 40,\n    \"fifty\": 50,\n    \"sixty\": 60,\n}\n\n\
+    def parse_count(raw: str) -> int | None:\n    raw = raw.strip().replace(\"-\", \" \")\n    if raw.isdigit():\n       \
+    \ return int(raw)\n    parts = raw.split()\n    if len(parts) == 1:\n        return units.get(parts[0]) or tens.get(parts[0])\n\
+    \    if len(parts) == 2 and parts[0] in tens and parts[1] in units:\n        return tens[parts[0]] + units[parts[1]]\n\
+    \    return None\n\nnum = (\n    r\"\\d+|(?:zero|one|two|three|four|five|six|seven|eight|nine|ten|\"\n    r\"eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|\"\
+    \n    r\"eighteen|nineteen|twenty|thirty|forty|fifty|sixty)\"\n    r\"(?:[- ](?:one|two|three|four|five|six|seven|eight|nine))?\"\
+    \n)\nclaim_patterns = [\n    re.compile(rf\"\\b(?P<num>{num})\\s+(?:agent\\s+scores?|scored\\s+agents?|agent\\s+score\\\
+    s+files?)\\b\"),\n    re.compile(rf\"\\b(?:agent\\s+scores?|scored\\s+agents?|agent\\s+score\\s+files?)\\D{0,24}(?P<num>{num})\\\
+    b\"),\n]\nbad: list[tuple[str, int]] = []\nfor pattern in claim_patterns:\n    for match in pattern.finditer(text):\n\
+    \        parsed = parse_count(match.group(\"num\"))\n        if parsed is not None and parsed != actual:\n           \
+    \ bad.append((match.group(0), parsed))\n\nif bad:\n    print(\n        f\"fleet score count claim(s) disagree with disk\
+    \ count {actual}: \"\n        + \"; \".join(f\"{claim!r} -> {count}\" for claim, count in bad),\n        file=sys.stderr,\n\
+    \    )\n    sys.exit(1)\nPY"
+  condition: stage == 1
+  description: Recon score-count claims match disk for oracle
+  timeout_seconds: 10
+- type: file_exists
+  path: '{workspace}/cycle-state/oracle-plan.md'
+  condition: stage == 2
+  description: Cycle plan for oracle
+- type: command_succeeds
+  command: test "$(wc -w < "{workspace}/cycle-state/oracle-plan.md")" -ge 80
+  condition: stage == 2
+  description: Cycle plan for oracle has at least 80 words
+  timeout_seconds: 10
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-plan.md'
+  pattern: 'CLAIMED WORK:'
+  condition: stage == 2
+  description: Cycle plan for oracle contains CLAIMED WORK
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-plan.md'
+  pattern: 'SUCCESS CRITERIA:'
+  condition: stage == 2
+  description: Cycle plan for oracle contains SUCCESS CRITERIA
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-plan.md'
+  pattern: 'STEPS:'
+  condition: stage == 2
+  description: Cycle plan for oracle contains STEPS
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-plan.md'
+  pattern: 'RISKS:'
+  condition: stage == 2
+  description: Cycle plan for oracle contains RISKS
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-plan.md'
+  pattern: 'VALIDATION:'
+  condition: stage == 2
+  description: Cycle plan for oracle contains VALIDATION
+- type: command_succeeds
+  command: "WORKSPACE=\"{workspace}\" AGENT='oracle' PHASE='plan' ARTIFACT=\"{workspace}/cycle-state/oracle-plan.md\" ARTIFACT_REL='cycle-state/oracle-plan.md'\
+    \ python - <<'PY'\nimport os\nimport re\nimport sys\nfrom pathlib import Path\n\nworkspace = Path(os.environ[\"WORKSPACE\"\
+    ])\nagent = os.environ[\"AGENT\"].lower()\nphase = os.environ[\"PHASE\"].lower()\nartifact = Path(os.environ[\"ARTIFACT\"\
+    ])\nartifact_rel = os.environ[\"ARTIFACT_REL\"]\nartifact_name = Path(artifact_rel).name\n\ntask_board = workspace / \"\
+    shared\" / \"active\" / \"01-task-board.md\"\nstatus_board = workspace / \"shared\" / \"active\" / \"02-status.md\"\n\
+    directives = workspace / \"shared\" / \"active\" / \"03-urgent-directives.md\"\nhandoffs = workspace / \"shared\" / \"\
+    active\" / \"04-handoffs.md\"\nartifact_text = artifact.read_text(errors=\"replace\") if artifact.exists() else \"\"\n\
+    \nmarker = \"COORDINATION UPDATE BLOCKED:\"\n\ndef blocked_for(filename: str) -> bool:\n    return marker in artifact_text\
+    \ and filename in artifact_text\n\ndef rows(path: Path) -> list[list[str]]:\n    if not path.exists():\n        return\
+    \ []\n    parsed: list[list[str]] = []\n    for line in path.read_text(errors=\"replace\").splitlines():\n        stripped\
+    \ = line.strip()\n        if not stripped.startswith(\"|\") or not stripped.endswith(\"|\"):\n            continue\n \
+    \       cells = [cell.strip().strip(\"`\") for cell in stripped.strip(\"|\").split(\"|\")]\n        if not cells or cells[0].lower()\
+    \ in {\"id\", \"agent\", \"---\"}:\n            continue\n        if all(set(cell) <= {\"-\"} for cell in cells if cell):\n\
+    \            continue\n        parsed.append(cells)\n    return parsed\n\ndef task_id_errors() -> list[str]:\n    errors:\
+    \ list[str] = []\n    seen: dict[str, int] = {}\n    for cells in rows(task_board):\n        if not cells:\n         \
+    \   continue\n        row_id = cells[0]\n        if not row_id or \"{\" in row_id or \"}\" in row_id:\n            continue\n\
+    \        seen[row_id] = seen.get(row_id, 0) + 1\n        if re.fullmatch(r\"(?:[A-Z]+-)?\\d+\", row_id):\n           \
+    \ errors.append(\n                f\"01-task-board.md uses global numeric cadenza id {row_id!r}; \"\n                \"\
+    use an owner-scoped id such as agent-T-001\"\n            )\n    for row_id, count in seen.items():\n        if count\
+    \ > 1:\n            errors.append(\n                f\"01-task-board.md repeats concrete cadenza id {row_id!r} {count}\
+    \ times\"\n            )\n    return errors\n\ntask_ok = False\nfor cells in rows(task_board):\n    lowered = [cell.lower()\
+    \ for cell in cells]\n    owner_ok = agent in lowered\n    state_ok = any(cell == \"done\" or cell.startswith(\"done \"\
+    ) for cell in lowered)\n    evidence_ok = any(\n        artifact_rel in cell or artifact_name in cell\n        for cell\
+    \ in cells\n    )\n    if owner_ok and state_ok and evidence_ok:\n        task_ok = True\n        break\n\nstatus_text\
+    \ = status_board.read_text(errors=\"replace\") if status_board.exists() else \"\"\nstatus_folded = status_text.lower()\n\
+    status_ok = agent in status_folded and phase in status_folded and (\n    artifact_rel in status_text or artifact_name\
+    \ in status_text\n)\n\nrequired_files = [task_board, status_board, directives, handoffs]\nerrors = [\n    f\"missing canonical\
+    \ active cadenza file {path.name}\"\n    for path in required_files\n    if not path.is_file()\n]\nerrors.extend(task_id_errors())\n\
+    if not task_ok and not blocked_for(\"01-task-board.md\"):\n    errors.append(\n        f\"missing done task-board row\
+    \ for {agent} {phase} with evidence {artifact_rel}\"\n    )\nif not status_ok and not blocked_for(\"02-status.md\"):\n\
+    \    errors.append(\n        f\"02-status.md does not bind {agent} {phase} to evidence {artifact_rel}\"\n    )\n\nif errors:\n\
+    \    print(\"; \".join(errors), file=sys.stderr)\n    sys.exit(1)\nPY"
+  condition: stage == 2
+  description: Cadenza completion state for oracle plan
+  timeout_seconds: 10
+- type: command_succeeds
+  command: test -f "{workspace}/cycle-state/temperature-oracle-play" -o -f "{workspace}/cycle-state/temperature-oracle-work"
+  condition: stage == 4
+  description: Temperature routing marker for oracle
+  timeout_seconds: 10
+- type: file_exists
+  path: '{workspace}/cycle-state/oracle-work.md'
+  condition: stage == 3
+  description: Work report for oracle
+- type: command_succeeds
+  command: test "$(wc -w < "{workspace}/cycle-state/oracle-work.md")" -ge 60
+  condition: stage == 3
+  description: Work report for oracle has at least 60 words
+  timeout_seconds: 10
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-work.md'
+  pattern: 'WORK DONE:'
+  condition: stage == 3
+  description: Work report for oracle contains WORK DONE
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-work.md'
+  pattern: 'FILES CHANGED:'
+  condition: stage == 3
+  description: Work report for oracle contains FILES CHANGED
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-work.md'
+  pattern: 'EVIDENCE:'
+  condition: stage == 3
+  description: Work report for oracle contains EVIDENCE
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-work.md'
+  pattern: 'NEXT:'
+  condition: stage == 3
+  description: Work report for oracle contains NEXT
+- type: command_succeeds
+  command: "WORKSPACE=\"{workspace}\" AGENT='oracle' PHASE='work' ARTIFACT=\"{workspace}/cycle-state/oracle-work.md\" ARTIFACT_REL='cycle-state/oracle-work.md'\
+    \ python - <<'PY'\nimport os\nimport re\nimport sys\nfrom pathlib import Path\n\nworkspace = Path(os.environ[\"WORKSPACE\"\
+    ])\nagent = os.environ[\"AGENT\"].lower()\nphase = os.environ[\"PHASE\"].lower()\nartifact = Path(os.environ[\"ARTIFACT\"\
+    ])\nartifact_rel = os.environ[\"ARTIFACT_REL\"]\nartifact_name = Path(artifact_rel).name\n\ntask_board = workspace / \"\
+    shared\" / \"active\" / \"01-task-board.md\"\nstatus_board = workspace / \"shared\" / \"active\" / \"02-status.md\"\n\
+    directives = workspace / \"shared\" / \"active\" / \"03-urgent-directives.md\"\nhandoffs = workspace / \"shared\" / \"\
+    active\" / \"04-handoffs.md\"\nartifact_text = artifact.read_text(errors=\"replace\") if artifact.exists() else \"\"\n\
+    \nmarker = \"COORDINATION UPDATE BLOCKED:\"\n\ndef blocked_for(filename: str) -> bool:\n    return marker in artifact_text\
+    \ and filename in artifact_text\n\ndef rows(path: Path) -> list[list[str]]:\n    if not path.exists():\n        return\
+    \ []\n    parsed: list[list[str]] = []\n    for line in path.read_text(errors=\"replace\").splitlines():\n        stripped\
+    \ = line.strip()\n        if not stripped.startswith(\"|\") or not stripped.endswith(\"|\"):\n            continue\n \
+    \       cells = [cell.strip().strip(\"`\") for cell in stripped.strip(\"|\").split(\"|\")]\n        if not cells or cells[0].lower()\
+    \ in {\"id\", \"agent\", \"---\"}:\n            continue\n        if all(set(cell) <= {\"-\"} for cell in cells if cell):\n\
+    \            continue\n        parsed.append(cells)\n    return parsed\n\ndef task_id_errors() -> list[str]:\n    errors:\
+    \ list[str] = []\n    seen: dict[str, int] = {}\n    for cells in rows(task_board):\n        if not cells:\n         \
+    \   continue\n        row_id = cells[0]\n        if not row_id or \"{\" in row_id or \"}\" in row_id:\n            continue\n\
+    \        seen[row_id] = seen.get(row_id, 0) + 1\n        if re.fullmatch(r\"(?:[A-Z]+-)?\\d+\", row_id):\n           \
+    \ errors.append(\n                f\"01-task-board.md uses global numeric cadenza id {row_id!r}; \"\n                \"\
+    use an owner-scoped id such as agent-T-001\"\n            )\n    for row_id, count in seen.items():\n        if count\
+    \ > 1:\n            errors.append(\n                f\"01-task-board.md repeats concrete cadenza id {row_id!r} {count}\
+    \ times\"\n            )\n    return errors\n\ntask_ok = False\nfor cells in rows(task_board):\n    lowered = [cell.lower()\
+    \ for cell in cells]\n    owner_ok = agent in lowered\n    state_ok = any(cell == \"done\" or cell.startswith(\"done \"\
+    ) for cell in lowered)\n    evidence_ok = any(\n        artifact_rel in cell or artifact_name in cell\n        for cell\
+    \ in cells\n    )\n    if owner_ok and state_ok and evidence_ok:\n        task_ok = True\n        break\n\nstatus_text\
+    \ = status_board.read_text(errors=\"replace\") if status_board.exists() else \"\"\nstatus_folded = status_text.lower()\n\
+    status_ok = agent in status_folded and phase in status_folded and (\n    artifact_rel in status_text or artifact_name\
+    \ in status_text\n)\n\nrequired_files = [task_board, status_board, directives, handoffs]\nerrors = [\n    f\"missing canonical\
+    \ active cadenza file {path.name}\"\n    for path in required_files\n    if not path.is_file()\n]\nerrors.extend(task_id_errors())\n\
+    if not task_ok and not blocked_for(\"01-task-board.md\"):\n    errors.append(\n        f\"missing done task-board row\
+    \ for {agent} {phase} with evidence {artifact_rel}\"\n    )\nif not status_ok and not blocked_for(\"02-status.md\"):\n\
+    \    errors.append(\n        f\"02-status.md does not bind {agent} {phase} to evidence {artifact_rel}\"\n    )\n\nif errors:\n\
+    \    print(\"; \".join(errors), file=sys.stderr)\n    sys.exit(1)\nPY"
+  condition: stage == 3
+  description: Cadenza completion state for oracle work
+  timeout_seconds: 10
+- type: file_exists
+  path: '{workspace}/cycle-state/oracle-integration.md'
+  condition: stage == 5
+  description: Integration report for oracle
+- type: command_succeeds
+  command: test "$(wc -w < "{workspace}/cycle-state/oracle-integration.md")" -ge 60
+  condition: stage == 5
+  description: Integration report for oracle has at least 60 words
+  timeout_seconds: 10
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-integration.md'
+  pattern: 'INTEGRATED:'
+  condition: stage == 5
+  description: Integration report for oracle contains INTEGRATED
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-integration.md'
+  pattern: 'CONFLICTS:'
+  condition: stage == 5
+  description: Integration report for oracle contains CONFLICTS
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-integration.md'
+  pattern: 'DECISIONS:'
+  condition: stage == 5
+  description: Integration report for oracle contains DECISIONS
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-integration.md'
+  pattern: 'EVIDENCE:'
+  condition: stage == 5
+  description: Integration report for oracle contains EVIDENCE
+- type: command_succeeds
+  command: "WORKSPACE=\"{workspace}\" AGENT='oracle' PHASE='integration' ARTIFACT=\"{workspace}/cycle-state/oracle-integration.md\"\
+    \ ARTIFACT_REL='cycle-state/oracle-integration.md' python - <<'PY'\nimport os\nimport re\nimport sys\nfrom pathlib import\
+    \ Path\n\nworkspace = Path(os.environ[\"WORKSPACE\"])\nagent = os.environ[\"AGENT\"].lower()\nphase = os.environ[\"PHASE\"\
+    ].lower()\nartifact = Path(os.environ[\"ARTIFACT\"])\nartifact_rel = os.environ[\"ARTIFACT_REL\"]\nartifact_name = Path(artifact_rel).name\n\
+    \ntask_board = workspace / \"shared\" / \"active\" / \"01-task-board.md\"\nstatus_board = workspace / \"shared\" / \"\
+    active\" / \"02-status.md\"\ndirectives = workspace / \"shared\" / \"active\" / \"03-urgent-directives.md\"\nhandoffs\
+    \ = workspace / \"shared\" / \"active\" / \"04-handoffs.md\"\nartifact_text = artifact.read_text(errors=\"replace\") if\
+    \ artifact.exists() else \"\"\n\nmarker = \"COORDINATION UPDATE BLOCKED:\"\n\ndef blocked_for(filename: str) -> bool:\n\
+    \    return marker in artifact_text and filename in artifact_text\n\ndef rows(path: Path) -> list[list[str]]:\n    if\
+    \ not path.exists():\n        return []\n    parsed: list[list[str]] = []\n    for line in path.read_text(errors=\"replace\"\
+    ).splitlines():\n        stripped = line.strip()\n        if not stripped.startswith(\"|\") or not stripped.endswith(\"\
+    |\"):\n            continue\n        cells = [cell.strip().strip(\"`\") for cell in stripped.strip(\"|\").split(\"|\"\
+    )]\n        if not cells or cells[0].lower() in {\"id\", \"agent\", \"---\"}:\n            continue\n        if all(set(cell)\
+    \ <= {\"-\"} for cell in cells if cell):\n            continue\n        parsed.append(cells)\n    return parsed\n\ndef\
+    \ task_id_errors() -> list[str]:\n    errors: list[str] = []\n    seen: dict[str, int] = {}\n    for cells in rows(task_board):\n\
+    \        if not cells:\n            continue\n        row_id = cells[0]\n        if not row_id or \"{\" in row_id or \"\
+    }\" in row_id:\n            continue\n        seen[row_id] = seen.get(row_id, 0) + 1\n        if re.fullmatch(r\"(?:[A-Z]+-)?\\\
+    d+\", row_id):\n            errors.append(\n                f\"01-task-board.md uses global numeric cadenza id {row_id!r};\
+    \ \"\n                \"use an owner-scoped id such as agent-T-001\"\n            )\n    for row_id, count in seen.items():\n\
+    \        if count > 1:\n            errors.append(\n                f\"01-task-board.md repeats concrete cadenza id {row_id!r}\
+    \ {count} times\"\n            )\n    return errors\n\ntask_ok = False\nfor cells in rows(task_board):\n    lowered =\
+    \ [cell.lower() for cell in cells]\n    owner_ok = agent in lowered\n    state_ok = any(cell == \"done\" or cell.startswith(\"\
+    done \") for cell in lowered)\n    evidence_ok = any(\n        artifact_rel in cell or artifact_name in cell\n       \
+    \ for cell in cells\n    )\n    if owner_ok and state_ok and evidence_ok:\n        task_ok = True\n        break\n\nstatus_text\
+    \ = status_board.read_text(errors=\"replace\") if status_board.exists() else \"\"\nstatus_folded = status_text.lower()\n\
+    status_ok = agent in status_folded and phase in status_folded and (\n    artifact_rel in status_text or artifact_name\
+    \ in status_text\n)\n\nrequired_files = [task_board, status_board, directives, handoffs]\nerrors = [\n    f\"missing canonical\
+    \ active cadenza file {path.name}\"\n    for path in required_files\n    if not path.is_file()\n]\nerrors.extend(task_id_errors())\n\
+    if not task_ok and not blocked_for(\"01-task-board.md\"):\n    errors.append(\n        f\"missing done task-board row\
+    \ for {agent} {phase} with evidence {artifact_rel}\"\n    )\nif not status_ok and not blocked_for(\"02-status.md\"):\n\
+    \    errors.append(\n        f\"02-status.md does not bind {agent} {phase} to evidence {artifact_rel}\"\n    )\n\nif errors:\n\
+    \    print(\"; \".join(errors), file=sys.stderr)\n    sys.exit(1)\nPY"
+  condition: stage == 5
+  description: Cadenza completion state for oracle integration
+  timeout_seconds: 10
+- type: file_exists
+  path: '{workspace}/cycle-state/oracle-play.md'
+  condition: stage == 6
+  description: Play report for oracle
+- type: command_succeeds
+  command: test "$(wc -w < "{workspace}/cycle-state/oracle-play.md")" -ge 40
+  condition: stage == 6
+  description: Play report for oracle has at least 40 words
+  timeout_seconds: 10
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-play.md'
+  pattern: 'EXPERIMENT:'
+  condition: stage == 6
+  description: Play report for oracle contains EXPERIMENT
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-play.md'
+  pattern: 'RESULT:'
+  condition: stage == 6
+  description: Play report for oracle contains RESULT
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-play.md'
+  pattern: 'TRANSFER:'
+  condition: stage == 6
+  description: Play report for oracle contains TRANSFER
+- type: file_exists
+  path: '{workspace}/cycle-state/oracle-inspection.md'
+  condition: stage == 7
+  description: Inspection report for oracle
+- type: command_succeeds
+  command: test "$(wc -w < "{workspace}/cycle-state/oracle-inspection.md")" -ge 80
+  condition: stage == 7
+  description: Inspection report for oracle has at least 80 words
+  timeout_seconds: 10
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-inspection.md'
+  pattern: 'VERDICT:'
+  condition: stage == 7
+  description: Inspection report for oracle contains VERDICT
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-inspection.md'
+  pattern: 'EVIDENCE:'
+  condition: stage == 7
+  description: Inspection report for oracle contains EVIDENCE
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-inspection.md'
+  pattern: 'FAILURES:'
+  condition: stage == 7
+  description: Inspection report for oracle contains FAILURES
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-inspection.md'
+  pattern: 'RISKS:'
+  condition: stage == 7
+  description: Inspection report for oracle contains RISKS
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-inspection.md'
+  pattern: 'REQUIRED FIXES:'
+  condition: stage == 7
+  description: Inspection report for oracle contains REQUIRED FIXES
+- type: command_succeeds
+  command: "WORKSPACE=\"{workspace}\" AGENT='oracle' PHASE='inspect' ARTIFACT=\"{workspace}/cycle-state/oracle-inspection.md\"\
+    \ ARTIFACT_REL='cycle-state/oracle-inspection.md' python - <<'PY'\nimport os\nimport re\nimport sys\nfrom pathlib import\
+    \ Path\n\nworkspace = Path(os.environ[\"WORKSPACE\"])\nagent = os.environ[\"AGENT\"].lower()\nphase = os.environ[\"PHASE\"\
+    ].lower()\nartifact = Path(os.environ[\"ARTIFACT\"])\nartifact_rel = os.environ[\"ARTIFACT_REL\"]\nartifact_name = Path(artifact_rel).name\n\
+    \ntask_board = workspace / \"shared\" / \"active\" / \"01-task-board.md\"\nstatus_board = workspace / \"shared\" / \"\
+    active\" / \"02-status.md\"\ndirectives = workspace / \"shared\" / \"active\" / \"03-urgent-directives.md\"\nhandoffs\
+    \ = workspace / \"shared\" / \"active\" / \"04-handoffs.md\"\nartifact_text = artifact.read_text(errors=\"replace\") if\
+    \ artifact.exists() else \"\"\n\nmarker = \"COORDINATION UPDATE BLOCKED:\"\n\ndef blocked_for(filename: str) -> bool:\n\
+    \    return marker in artifact_text and filename in artifact_text\n\ndef rows(path: Path) -> list[list[str]]:\n    if\
+    \ not path.exists():\n        return []\n    parsed: list[list[str]] = []\n    for line in path.read_text(errors=\"replace\"\
+    ).splitlines():\n        stripped = line.strip()\n        if not stripped.startswith(\"|\") or not stripped.endswith(\"\
+    |\"):\n            continue\n        cells = [cell.strip().strip(\"`\") for cell in stripped.strip(\"|\").split(\"|\"\
+    )]\n        if not cells or cells[0].lower() in {\"id\", \"agent\", \"---\"}:\n            continue\n        if all(set(cell)\
+    \ <= {\"-\"} for cell in cells if cell):\n            continue\n        parsed.append(cells)\n    return parsed\n\ndef\
+    \ task_id_errors() -> list[str]:\n    errors: list[str] = []\n    seen: dict[str, int] = {}\n    for cells in rows(task_board):\n\
+    \        if not cells:\n            continue\n        row_id = cells[0]\n        if not row_id or \"{\" in row_id or \"\
+    }\" in row_id:\n            continue\n        seen[row_id] = seen.get(row_id, 0) + 1\n        if re.fullmatch(r\"(?:[A-Z]+-)?\\\
+    d+\", row_id):\n            errors.append(\n                f\"01-task-board.md uses global numeric cadenza id {row_id!r};\
+    \ \"\n                \"use an owner-scoped id such as agent-T-001\"\n            )\n    for row_id, count in seen.items():\n\
+    \        if count > 1:\n            errors.append(\n                f\"01-task-board.md repeats concrete cadenza id {row_id!r}\
+    \ {count} times\"\n            )\n    return errors\n\ntask_ok = False\nfor cells in rows(task_board):\n    lowered =\
+    \ [cell.lower() for cell in cells]\n    owner_ok = agent in lowered\n    state_ok = any(cell == \"done\" or cell.startswith(\"\
+    done \") for cell in lowered)\n    evidence_ok = any(\n        artifact_rel in cell or artifact_name in cell\n       \
+    \ for cell in cells\n    )\n    if owner_ok and state_ok and evidence_ok:\n        task_ok = True\n        break\n\nstatus_text\
+    \ = status_board.read_text(errors=\"replace\") if status_board.exists() else \"\"\nstatus_folded = status_text.lower()\n\
+    status_ok = agent in status_folded and phase in status_folded and (\n    artifact_rel in status_text or artifact_name\
+    \ in status_text\n)\n\nrequired_files = [task_board, status_board, directives, handoffs]\nerrors = [\n    f\"missing canonical\
+    \ active cadenza file {path.name}\"\n    for path in required_files\n    if not path.is_file()\n]\nerrors.extend(task_id_errors())\n\
+    if not task_ok and not blocked_for(\"01-task-board.md\"):\n    errors.append(\n        f\"missing done task-board row\
+    \ for {agent} {phase} with evidence {artifact_rel}\"\n    )\nif not status_ok and not blocked_for(\"02-status.md\"):\n\
+    \    errors.append(\n        f\"02-status.md does not bind {agent} {phase} to evidence {artifact_rel}\"\n    )\n\nif errors:\n\
+    \    print(\"; \".join(errors), file=sys.stderr)\n    sys.exit(1)\nPY"
+  condition: stage == 7
+  description: Cadenza completion state for oracle inspect
+  timeout_seconds: 10
+- type: file_exists
+  path: '{workspace}/cycle-state/oracle-aar.md'
+  condition: stage == 8
+  description: AAR for oracle
+- type: command_succeeds
+  command: test "$(wc -w < "{workspace}/cycle-state/oracle-aar.md")" -ge 80
+  condition: stage == 8
+  description: AAR for oracle has at least 80 words
+  timeout_seconds: 10
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-aar.md'
+  pattern: 'INTENDED:'
+  condition: stage == 8
+  description: AAR for oracle contains INTENDED
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-aar.md'
+  pattern: 'ACTUAL:'
+  condition: stage == 8
+  description: AAR for oracle contains ACTUAL
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-aar.md'
+  pattern: 'DELTA:'
+  condition: stage == 8
+  description: AAR for oracle contains DELTA
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-aar.md'
+  pattern: 'SUSTAIN:'
+  condition: stage == 8
+  description: AAR for oracle contains SUSTAIN
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-aar.md'
+  pattern: 'IMPROVE:'
+  condition: stage == 8
+  description: AAR for oracle contains IMPROVE
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-aar.md'
+  pattern: 'EVIDENCE:'
+  condition: stage == 8
+  description: AAR for oracle contains EVIDENCE
+- type: command_succeeds
+  command: "RECENT=~/.marianne/agents/oracle/recent.md SNAPSHOT={workspace}/cycle-state/oracle-recent-before-targeted.md python\
+    \ - <<'PY'\nimport os\nfrom pathlib import Path\n\nsource = Path(os.environ[\"RECENT\"]).read_bytes()\nsnapshot = Path(os.environ[\"\
+    SNAPSHOT\"])\nsnapshot.parent.mkdir(parents=True, exist_ok=True)\nif snapshot.exists():\n    if snapshot.read_bytes()\
+    \ != source:\n        raise SystemExit(\"targeted memory snapshot already exists with different bytes\")\nelse:\n    fd\
+    \ = os.open(snapshot, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)\n    with os.fdopen(fd, \"wb\") as handle:\n      \
+    \  handle.write(source)\nPY"
+  condition: stage == 1
+  description: Capture targeted memory baseline for oracle
+  timeout_seconds: 10
+- type: file_exists
+  path: '{workspace}/cycle-state/oracle-recent-before-targeted.md'
+  condition: stage == 8
+  description: Targeted memory baseline for oracle
+- type: file_exists
+  path: ~/.marianne/agents/oracle/.marianne/pending-lifecycle-debt.yaml
+  condition: stage == 8
+  description: Pending lifecycle debt for oracle
+- type: command_succeeds
+  command: "DEBT=~/.marianne/agents/oracle/.marianne/pending-lifecycle-debt.yaml RECENT=~/.marianne/agents/oracle/recent.md\
+    \ SNAPSHOT={workspace}/cycle-state/oracle-recent-before-targeted.md WORKSPACE={workspace} AGENT=oracle python - <<'PY'\n\
+    import hashlib\nimport os\nfrom pathlib import Path\n\nimport yaml\n\ndebt = yaml.safe_load(Path(os.environ[\"DEBT\"]).read_text())\n\
+    if not isinstance(debt, dict):\n    raise SystemExit(\"lifecycle debt must be a YAML mapping\")\nif debt.get(\"schema_version\"\
+    ) != 1 or debt.get(\"kind\") != \"marianne-lifecycle-debt\":\n    raise SystemExit(\"lifecycle debt schema/kind mismatch\"\
+    )\nif str(debt.get(\"agent\", \"\")).lower() != os.environ[\"AGENT\"].lower():\n    raise SystemExit(\"lifecycle debt\
+    \ agent mismatch\")\nif debt.get(\"status\") != \"pending\":\n    raise SystemExit(\"lifecycle debt status must remain\
+    \ pending\")\npending = {str(value) for value in debt.get(\"pending_phases\", [])}\nif pending != {\"consolidate\", \"\
+    reflect\", \"resurrect\"}:\n    raise SystemExit(\"lifecycle debt must name all deferred phases exactly\")\nif not debt.get(\"\
+    source_engagement\"):\n    raise SystemExit(\"lifecycle debt lacks source engagement/evidence\")\nbefore = str(debt.get(\"\
+    recent_memory_before_sha256\", \"\"))\nafter = str(debt.get(\"recent_memory_after_sha256\", \"\"))\nvalid_hash = lambda\
+    \ value: len(value) == 71 and value.startswith(\"sha256:\") and all(\n    char in \"0123456789abcdef\" for char in value[7:]\n\
+    )\nif not valid_hash(before) or not valid_hash(after):\n    raise SystemExit(\"lifecycle debt lacks memory hashes\")\n\
+    if before == after:\n    raise SystemExit(\"targeted engagement did not produce a memory transition\")\nsnapshot = Path(os.environ[\"\
+    SNAPSHOT\"])\nsnapshot_hash = \"sha256:\" + hashlib.sha256(snapshot.read_bytes()).hexdigest()\nif debt.get(\"recent_memory_before_snapshot\"\
+    ) != str(snapshot) or before != snapshot_hash:\n    raise SystemExit(\"lifecycle debt before hash is not bound to the\
+    \ stage-1 snapshot\")\ncurrent = \"sha256:\" + hashlib.sha256(Path(os.environ[\"RECENT\"]).read_bytes()).hexdigest()\n\
+    if current != after:\n    raise SystemExit(\"lifecycle debt after hash does not match canonical recent memory\")\nevidence\
+    \ = debt.get(\"evidence\")\nif not isinstance(evidence, list) or not evidence:\n    raise SystemExit(\"lifecycle debt\
+    \ evidence must be a non-empty list\")\nworkspace = Path(os.environ[\"WORKSPACE\"]).resolve()\nfor item in evidence:\n\
+    \    if not isinstance(item, dict) or set(item) != {\"path\", \"sha256\"}:\n        raise SystemExit(\"each lifecycle\
+    \ debt evidence item needs path and sha256\")\n    path = Path(str(item[\"path\"]))\n    path = path if path.is_absolute()\
+    \ else workspace / path\n    path = path.resolve()\n    try:\n        path.relative_to(workspace)\n    except ValueError\
+    \ as exc:\n        raise SystemExit(\"lifecycle debt evidence must stay in the score workspace\") from exc\n    if not\
+    \ path.is_file():\n        raise SystemExit(\"lifecycle debt evidence file is missing\")\n    digest = \"sha256:\" + hashlib.sha256(path.read_bytes()).hexdigest()\n\
+    \    if item[\"sha256\"] != digest:\n        raise SystemExit(\"lifecycle debt evidence hash mismatch\")\nPY"
+  condition: stage == 8
+  description: Targeted lifecycle debt for oracle is grounded
+  timeout_seconds: 10
+- type: file_exists
+  path: '{workspace}/cycle-state/oracle-consolidation.md'
+  condition: stage == 9
+  description: Consolidation report for oracle
+- type: command_succeeds
+  command: test "$(wc -w < "{workspace}/cycle-state/oracle-consolidation.md")" -ge 60
+  condition: stage == 9
+  description: Consolidation report for oracle has at least 60 words
+  timeout_seconds: 10
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-consolidation.md'
+  pattern: 'BELIEFS:'
+  condition: stage == 9
+  description: Consolidation report for oracle contains BELIEFS
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-consolidation.md'
+  pattern: 'PRUNED:'
+  condition: stage == 9
+  description: Consolidation report for oracle contains PRUNED
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-consolidation.md'
+  pattern: 'ARCHIVED:'
+  condition: stage == 9
+  description: Consolidation report for oracle contains ARCHIVED
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-consolidation.md'
+  pattern: 'EVIDENCE:'
+  condition: stage == 9
+  description: Consolidation report for oracle contains EVIDENCE
+- type: file_exists
+  path: '{workspace}/cycle-state/oracle-reflection.md'
+  condition: stage == 10
+  description: Reflection report for oracle
+- type: command_succeeds
+  command: test "$(wc -w < "{workspace}/cycle-state/oracle-reflection.md")" -ge 60
+  condition: stage == 10
+  description: Reflection report for oracle has at least 60 words
+  timeout_seconds: 10
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-reflection.md'
+  pattern: 'TRAJECTORY:'
+  condition: stage == 10
+  description: Reflection report for oracle contains TRAJECTORY
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-reflection.md'
+  pattern: 'RELATIONSHIPS:'
+  condition: stage == 10
+  description: Reflection report for oracle contains RELATIONSHIPS
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-reflection.md'
+  pattern: 'GROWTH:'
+  condition: stage == 10
+  description: Reflection report for oracle contains GROWTH
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-reflection.md'
+  pattern: 'NEXT:'
+  condition: stage == 10
+  description: Reflection report for oracle contains NEXT
+- type: file_exists
+  path: '{workspace}/cycle-state/oracle-maturity-report.yaml'
+  condition: stage == 11
+  description: Maturity report for oracle
+- type: file_exists
+  path: '{workspace}/cycle-state/oracle-resurrection.md'
+  condition: stage == 12
+  description: Resurrection report for oracle
+- type: command_succeeds
+  command: test "$(wc -w < "{workspace}/cycle-state/oracle-resurrection.md")" -ge 50
+  condition: stage == 12
+  description: Resurrection report for oracle has at least 50 words
+  timeout_seconds: 10
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-resurrection.md'
+  pattern: 'IDENTITY CHANGES:'
+  condition: stage == 12
+  description: Resurrection report for oracle contains IDENTITY CHANGES
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-resurrection.md'
+  pattern: 'MEMORY STATE:'
+  condition: stage == 12
+  description: Resurrection report for oracle contains MEMORY STATE
+- type: content_contains
+  path: '{workspace}/cycle-state/oracle-resurrection.md'
+  pattern: 'NEXT CYCLE:'
+  condition: stage == 12
+  description: Resurrection report for oracle contains NEXT CYCLE
+techniques:
+  a2a:
+    kind: protocol
+    phases:
+    - recon
+    - '1'
+    - plan
+    - '2'
+    - work
+    - '3'
+    - integration
+    - '5'
+    - inspect
+    - '7'
+    - aar
+    - '8'
+  coordination:
+    kind: skill
+    phases:
+    - recon
+    - '1'
+    - plan
+    - '2'
+    - integration
+    - '5'
+    required: true
+    config:
+      path: ~/.marianne/techniques/coordination.md
+  github:
+    kind: mcp
+    phases:
+    - recon
+    - '1'
+    - work
+    - '3'
+    - integration
+    - '5'
+  filesystem:
+    kind: mcp
+    phases:
+    - recon
+    - '1'
+    - plan
+    - '2'
+    - work
+    - '3'
+    - integration
+    - '5'
+    - play
+    - '6'
+    - inspect
+    - '7'
+    - aar
+    - '8'
+    - consolidate
+    - '9'
+    - reflect
+    - '10'
+    - resurrect
+    - '12'
+  memory-protocol:
+    kind: skill
+    phases:
+    - consolidate
+    - '9'
+    - reflect
+    - '10'
+    - resurrect
+    - '12'
+    required: true
+    config:
+      path: ~/.marianne/techniques/memory-protocol.md
+  mateship:
+    kind: skill
+    phases:
+    - recon
+    - '1'
+    - work
+    - '3'
+    - inspect
+    - '7'
+    - aar
+    - '8'
+    required: true
+    config:
+      path: ~/.marianne/techniques/mateship.md
+  identity:
+    kind: skill
+    phases:
+    - resurrect
+    - '12'
+    - reflect
+    - '10'
+    required: true
+    config:
+      path: ~/.marianne/techniques/identity.md
+  voice:
+    kind: skill
+    phases:
+    - recon
+    - '1'
+    - plan
+    - '2'
+    - work
+    - '3'
+    - integration
+    - '5'
+    - play
+    - '6'
+    - inspect
+    - '7'
+    - aar
+    - '8'
+    - consolidate
+    - '9'
+    - reflect
+    - '10'
+    - resurrect
+    - '12'
+    required: true
+    config:
+      path: ~/.marianne/techniques/voice.md
+  oracle-specialist:
+    kind: skill
+    phases:
+    - plan
+    - '2'
+    - work
+    - '3'
+    - inspect
+    - '7'
+    - aar
+    - '8'
+    config:
+      description: oracle specialist method for metrics and observability analysis
+      path: ~/.marianne/techniques/oracle-specialist.md
+    required: true
+agent_card:
+  name: oracle
+  description: metrics and observability analysis — The absence of a signal IS a signal. A flatline means something stopped
+    breathing.
+  skills:
+  - id: metrics-analysis
+    description: Analyze learning store health and pattern effectiveness
+  - id: observability-audit
+    description: Audit production observability and signal quality
+description: Oracle persistent-agent targeted-work engagement. Bind phase routes from current live capability evidence before
+  submission.

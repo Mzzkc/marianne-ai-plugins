@@ -17,6 +17,12 @@ plugin, model, credential, or authentication flow. Use only already-integrated
 Marianne and client surfaces. Keep credentials and secret-bearing values out of
 inventory, manifests, backup reports, and receipts.
 
+Instrument/model identity is not agent identity. A profile refresh may update
+verified routing facts and capability evidence; it must not edit an agent's
+portable seed, L1-L4 data, lifecycle debt, relationships, or cadenza
+associations. Read `${CLAUDE_PLUGIN_ROOT}/docs/ref/modern-agents.md` when the
+refresh will feed a persistent-agent score.
+
 ## Modes
 
 - **Direct-agent mode:** perform the entire contract directly with the bundled

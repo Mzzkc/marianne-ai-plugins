@@ -34,17 +34,20 @@ When white light hits glass at an angle, something beautiful happens - it separa
 
 ## Coordination Contract
 
-When this technique is active, prism must:
+When this technique is active, the agent must:
 
-1. Read `shared/active/00-cadenza-coordination.md` and all other direct files in
-   `shared/active/` before planning.
-2. Claim overlapping work in `shared/active/01-task-board.md` before starting.
-3. Update `shared/active/02-agent-status.md` when work state changes.
-4. Put evidence-backed facts in `shared/active/03-findings.md` or write a
-   detailed file under `shared/findings/` and link it from active.
-5. Put decisions that affect other agents in `shared/active/04-decision-log.md`.
-6. Write a handoff pointer in `shared/active/06-handoff-index.md` when another
-   agent or later cycle must continue the work.
+1. Read all four direct active-cadenza files before planning:
+   `shared/active/01-task-board.md`, `shared/active/02-status.md`,
+   `shared/active/03-urgent-directives.md`, and
+   `shared/active/04-handoffs.md`.
+2. Treat `03-urgent-directives.md` as controlling ordinary plans.
+3. Claim and update only owner-scoped work in `01-task-board.md`.
+4. Preserve the existing form of `02-status.md`; add concise evidence without
+   inventing a replacement schema.
+5. Record a handoff tuple in `04-handoffs.md` when another agent or later
+   engagement must continue the work.
+6. If a shared file changes during an edit, re-read and retry only the smallest
+   owner-scoped change once. Record a second conflict in the phase artifact.
 
 ## Expected Outputs
 
