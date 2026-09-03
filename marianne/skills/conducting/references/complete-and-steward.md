@@ -52,10 +52,16 @@ since material product movement; inherited proof; consecutive same-boundary
 successors; bounded council and ceiling; and the material downstream effect
 that justifies another pass. At the ceiling, execute the accepted result,
 redesign once around a new material fact, or escalate an unresolved authority
-choice. Do not commission another equivalent vote. Release surplus capacity.
+choice. Do not commission another equivalent vote. Two failed successors for
+the same outcome, or an exhausted elapsed budget, make continuation a decision
+rather than a default: reopen the premise, shrink the subject, or escalate.
+Release surplus capacity.
 
 In closure mode, keep an explicit gate ledger and refuse unrelated expansion.
-Closure is not reduced rigor: it is the shortest truthful causal sequence that
+A newly noticed adjacent improvement enters a backlog unless it demonstrates
+material risk to the exact release subject; a new gate is admitted only with
+a failing executable counterexample and an explicit risk decision. Closure is
+not reduced rigor: it is the shortest truthful causal sequence that
 turns every open gate into executed evidence, an authorized scope change, or a
 reported unresolved choice.
 
@@ -90,6 +96,13 @@ One lane cannot silently stand in for another. Avoid duplication: inherit
 still-bound evidence, add a new lane only when it changes the evidence basis,
 and execute promised applicable live or organic proof before declaring product
 completion.
+
+Size verification by the changed subject. A runtime-byte or
+runtime-environment change earns focused tests, one full-suite replay, and the
+live seam. A score-only change earns its owned tests, render, schema, and
+topology checks plus the affected live seam. A manifest- or custody-only
+change earns deterministic custody checks. Do not replay a whole-runtime suite
+without a whole-runtime change.
 
 ## Steward resources and cleanup
 

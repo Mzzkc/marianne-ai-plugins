@@ -7,6 +7,14 @@ performance:
   intended_work_units: 0
   rendered_sheet_count: 0
   topology_evidence: ""
+  capability_matrix: ""
+  first_vertical_journey: ""
+progress:
+  journeys_green: 0
+  journeys_total: 0
+  critical_path_blocker_age: ""
+  assurance_effort_since_journey_moved: ""
+  next_live_seam_eta: ""
 end_states:
   - id: ""
     outcome: ""
@@ -29,6 +37,10 @@ end_states:
       semantic: ""
       validation: ""
       judgment: ""
+    budget:
+      wall_clock: ""
+      review_waves: ""
+      escalation_trigger: ""
     resources: []
     resource_owner: ""
     cleanup_stop_condition: ""

@@ -66,6 +66,32 @@ Classify each interaction:
 Sequence, isolate, merge, or commission an integration owner for dangerous
 interactions. Do not infer safety because individual jobs are green.
 
+## Make the first graph vertical
+
+Decompose the end state into user-visible capabilities before completing
+subsystems. Name and commission the smallest honest end-to-end journey through
+the highest-uncertainty seams; it may be explicitly non-production, but every
+boundary must execute. Horizontal layers that never meet a user defer contact
+with exactly the risks that matter most. Interpret the composer's quality and
+trust standards iteratively: an honest, explicitly non-final vertical slice
+early, then deepen until the complete trusted lifecycle is proven — not
+silence until every authority layer is complete.
+
+Declare a **capability matrix** before the first large commission: the named
+user-visible capabilities, their weights, and the physically exercised journey
+that proves each. Every progress percentage derives from that denominator.
+Documents, scores, commits, tests, and audits count only as evidence for a
+capability; a conductor's intuitive percentage is not a status metric.
+
+Give each lane an **assurance budget**: wall clock, model-call ceiling,
+allowed review waves, disk, and a named escalation trigger. Limits do not
+silently expand; exceptions are recorded with their reason. Timebox the
+meta-build too: a system that promises fast commissioning is itself developed
+in bounded working sessions with an executable product slice at each milestone.
+Proportionality never relaxes security where data, identity, or authority is
+sensitive — the governor limits assurance by marginal risk reduction and
+journey movement, it does not abolish fail-closed boundaries.
+
 ## Cast for the end state
 
 Choose the smallest orchestra that covers the required expertise, independence,

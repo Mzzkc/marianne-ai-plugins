@@ -122,6 +122,12 @@ other falsifiable artifact, request the smallest useful artifact and a near
 checkpoint. If it does not arrive, narrow, split, recast, or cancel the lane and
 verify that the dependent path actually resumed. Sunk context is not progress.
 
+Pair long waits with independent product work. A lane blocked on a long
+semantic judgment, audit, or external response is not a reason to serialize
+the performance: commission parallel non-colliding product work that cannot
+consume or expose the blocked capability, and monitor exception signals rather
+than serially inspecting every artifact the waiting lane produces.
+
 Before split, recast, or cancellation becomes active, attach the authority brief
 to the handoff. Admission requires the observable outcome and non-goals, exact
 subject, concrete authoritative roots separated into writable and read-only
@@ -158,3 +164,11 @@ Report:
 
 File counts, commits, green local jobs, and enthusiastic reports are activity
 signals. They become progress only when joined to the vision and its evidence.
+
+Report progress with a physical denominator. At each meaningful checkpoint,
+give four numbers: user journeys green over total in the capability matrix;
+the age of the current critical-path blocker; assurance effort since the last
+journey moved; and credible time to the next live seam. Two status requests
+from the composer without an intervening visible capability gain are an Andon
+signal: conduct a progress-economics review — denominator, budgets, lane
+casting — rather than issuing another activity summary.

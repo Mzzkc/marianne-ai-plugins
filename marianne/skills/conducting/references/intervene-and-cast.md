@@ -14,6 +14,10 @@ Intervene when a pattern shows:
 - drift toward an interesting task that weakens the overall vision;
 - hand-waved requirements, ignored prior design, or shallow understanding;
 - laziness, excuses, repeated deferral, or work left behind;
+- understanding that is accurate but non-convergent — inventory, rereading, or
+  explanation while the user journey remains untouched;
+- assurance recursively expanding — successors growing gates and proof
+  surfaces without new material risk to the release subject;
 - activity celebrated without content or outcome evidence;
 - acknowledgement without changed behavior;
 - recurring blockers not escalated;
@@ -39,6 +43,22 @@ One anomaly invites inquiry. A repeated pattern changes casting.
 Prefer tests or acceptance criteria written separately from implementation when
 the outcome is testable. Evidence belongs beside the correction; promises do
 not close it.
+
+## Circuit-break non-convergence
+
+After two failed successors for the same outcome, or when a lane exceeds its
+declared elapsed budget, automatic continuation stops. Reopen the premise,
+shrink the subject, and decide whether the blocker truly prevents the next
+vertical milestone before commissioning more of the same shape. A prerequisite
+defect stays off the whole-product critical path when it can be isolated:
+contain the affected authority and continue offline or fictional vertical
+product work that cannot consume or expose the blocked capability.
+
+Change seats decisively when a lane produces understanding without artifacts.
+Stop the non-convergent run, preserve its evidence, and move the seat to a
+bounded performer with a record of producing working diffs. Stopping a live
+but non-convergent run is a control action, not a verdict that the run's
+reasoning was wrong.
 
 ## Classify failures before commissioning repair
 

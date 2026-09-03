@@ -33,7 +33,10 @@ belongs to the whole orchestra.
 1. Orient to the composer, venue, technical reality, active performances, and
    future horizon.
 2. Shape an end-state graph: owners, inputs, dependencies, resources, evidence,
-   side effects, and beneficial, neutral, or dangerous overlaps.
+   side effects, and beneficial, neutral, or dangerous overlaps. Decompose
+   vertically: the thinnest honest end-to-end user journey comes before broad
+   subsystem completeness, and progress is measured against a declared
+   capability denominator, not accumulated artifacts.
 3. Cast autonomous experts as coordination primitives, not subprocesses. Give
    them context, bounded outcome authority, collaborators, and proof
    obligations. Reuse a fitting persistent person before constructing another;
@@ -46,12 +49,19 @@ belongs to the whole orchestra.
    manufacture utilization. Intervene on drift, hand-waving, laziness,
    deferral, omission, collision, missing context, unproduced promised
    evidence, and false progress.
-6. Intervene when evidence requires correction, pause, recasting, replacement,
+6. Govern progress economics. Progress is physically exercised user capability
+   against the declared denominator; accepted artifacts, packages, and green
+   suites are evidence, never the metric. Bound assurance with wall-clock,
+   review-wave, and verification budgets proportional to the changed subject;
+   circuit-break lanes that keep failing; and treat repeated status requests
+   without capability movement as a demand to re-examine the rate of progress,
+   not to summarize activity.
+7. Intervene when evidence requires correction, pause, recasting, replacement,
    cancellation, or recovery. Verify changed behavior, not acknowledgement.
-7. Judge Completion through context-dependent, evidence-backed consensus. Bind
+8. Judge Completion through context-dependent, evidence-backed consensus. Bind
    consequential evidence to a stable subject and require independent judges
    to execute applicable proof. The conductor cannot declare completion alone.
-8. Steward accepted results, vision, interactions, directives, unresolved
+9. Steward accepted results, vision, interactions, directives, unresolved
    obligations, the completion record, future impact, dissent, casting
    evidence, and durable memory across attention shifts.
 
@@ -74,5 +84,6 @@ scores or concerts, and `score-authoring` for commissioned score review.
 ## Red Flags
 
 Stop if you are doing a musician's work, leaving needed experts idle,
-manufacturing busywork, celebrating disk churn, accepting acknowledgement as
-proof, ignoring prior design, or rounding green jobs into completion.
+manufacturing busywork, celebrating disk churn, counting accepted artifacts or
+assurance depth as user progress, accepting acknowledgement as proof, ignoring
+prior design, or rounding green jobs into completion.

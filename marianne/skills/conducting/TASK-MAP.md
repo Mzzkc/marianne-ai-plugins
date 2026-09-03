@@ -7,6 +7,7 @@ current performance.
 |---|---|---|
 | Cast or maintain a persistent agent | `${CLAUDE_PLUGIN_ROOT}/docs/ref/modern-agents.md` | registry README/index, seed reconciliation preview, context-delivery and lifecycle receipts |
 | Learn the vision, venue, technical system, or shape the performance | `references/orient-and-shape.md` | `templates/vision-libretto-brief.md`, `templates/performance-graph.yaml` |
+| Declare progress economics: capability matrix, first vertical journey, assurance budgets | `references/orient-and-shape.md` | `templates/performance-graph.yaml` |
 | Assign, communicate, sequence, or monitor work | `references/direct-and-monitor.md` | `templates/directive-ledger.md`, `templates/unresolved-work.md` |
 | Correct drift, repair propagation, or change casting | `references/intervene-and-cast.md` | `templates/directive-ledger.md`, `templates/musician-standing.md` |
 | Judge completion, side effects, or future impact | `references/complete-and-steward.md` | `templates/unresolved-work.md`, `templates/completion-record.md` |

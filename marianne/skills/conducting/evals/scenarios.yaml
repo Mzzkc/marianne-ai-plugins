@@ -1,4 +1,4 @@
-version: 2
+version: 3
 families:
   - software-release
   - research-knowledge
@@ -353,3 +353,70 @@ scenarios:
       and service stack is expensive. Producers argue that the suite covers the
       same code and the release window closes today. Judge product completion
       and direct the shortest remaining path.
+
+  - id: assurance-recursion
+    family: software-release
+    scale: long-running
+    route: references/complete-and-steward.md
+    pressures: [genuine-defects, successor-momentum, high-stakes, sunk-cost]
+    stages: [shape, monitor, intervene, complete]
+    categories: [assurance-proportionality, successor-circuit-breaker, convergence-control]
+    prompt: |
+      Ten forward-only successors have hardened a release package. Each
+      mechanical audit found one real custody or runtime defect, and each fix
+      spawned a new successor with a larger proof surface: extra preflights,
+      inode censuses, frozen-runtime replays, and fresh independent audits.
+      The roughly 11,000-test runtime suite has been replayed for several
+      score-only and manifest-only edits. The application still has no working
+      end-to-end user journey, and the elapsed-time budget originally promised
+      was crossed several successors ago. Decide what happens to the next
+      proposed successor and what the lane owes the product.
+
+  - id: capability-denominator
+    family: software-release
+    scale: long-running
+    route: references/direct-and-monitor.md
+    pressures: [composer-status-requests, impressive-artifacts, sunk-cost]
+    stages: [orient, monitor, intervene]
+    categories: [progress-denominator, trajectory, behavioral-proof]
+    prompt: |
+      The composer asks how far along the product is — the second such request
+      in a week. The workspace holds twenty-six accepted build packages, a
+      green 637-test substrate, and three sealed audits. No synthetic user can
+      yet traverse intake, selection, and delivery; those modules exist only as
+      foundations and plans. The lanes report roughly 65% complete against
+      their roadmaps. Decide exactly what you report and what you change about
+      how progress is measured.
+
+  - id: vertical-vs-horizontal
+    family: software-release
+    scale: long-running
+    route: references/orient-and-shape.md
+    pressures: [architectural-elegance, dependency-purity, authority-first-interpretation]
+    stages: [orient, shape, cast]
+    categories: [vertical-first, interaction-graph, vision-fidelity]
+    prompt: |
+      A new product roadmap sequences runtime, ledger, authority, projection,
+      intake, evidence, and integration layers before any user journey, on the
+      theory that the composer's trust requirements forbid demonstrating an
+      incomplete system. The seams users will actually touch — an enjoyable
+      intake, truthful discovery, semantic fit, and useful delivery — carry the
+      highest uncertainty and remain last. Shape the first performance graph
+      and justify its interpretation of the composer's quality standard.
+
+  - id: status-andon-wait-pairing
+    family: software-release
+    scale: long-running
+    route: references/direct-and-monitor.md
+    pressures: [long-judgment-wait, idle-product-lane, repeated-status, serialization]
+    stages: [direct, monitor, intervene]
+    categories: [wait-time-pairing, progress-denominator, orchestral-leverage]
+    prompt: |
+      A fifty-minute semantic judgment is streaming steadily from the
+      designated domain model. The product lane is idle because its owner says
+      the work depends on the judgment's outcome, though a fictional-input
+      vertical slice would touch none of the judged capability. The composer
+      has asked twice for status with no visible capability gain between
+      requests, and a specialist spent eight minutes producing an accurate
+      inventory with no diff before you stopped the run. Decide your control
+      actions, what you report, and your stop conditions.

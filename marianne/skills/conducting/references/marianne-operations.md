@@ -92,7 +92,10 @@ Keep machine-exact work machine-exact. Hashes, status, schema, graph and sheet
 censuses, deterministic fixtures, tests, and builds should normally be derived
 by commands or runtime introspection. Use agents for ambiguity, causal
 classification, design, judgment, and usability. Do not spend qualitative
-movements recreating a deterministic oracle.
+movements recreating a deterministic oracle. Separate semantic authority from
+mechanical custody: route judgment to the designated domain model and hashes,
+topology, and process state to deterministic tooling — never build a second
+semantic review system wrapped around the first.
 
 ## Choose the control layer
 

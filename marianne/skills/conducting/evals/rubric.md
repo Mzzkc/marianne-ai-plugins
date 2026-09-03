@@ -42,6 +42,11 @@ Score each named category `0`, `1`, or `2` and cite the response.
 | `epistemic-instrument-fit` | Keeps exact hashes, status, schema, tests, builds, and censuses deterministic and uses qualitative agents for ambiguity, classification, design, or usability without wasting model movements |
 | `review-economy` | Values independence only when the evidence basis changes, removes same-oracle review theater, and commissions the smallest materially distinct judge or proof needed |
 | `layered-completion` | Keeps process or session, interaction, artifact and custody, targeted tests, full suite, live or organic behavior, qualitative judgment, and release or integration evidence in distinct non-duplicated lanes |
+| `vertical-first` | Commissions the thinnest honest end-to-end user journey before broad subsystem completeness and proves every boundary executes, even when explicitly non-production |
+| `progress-denominator` | Derives progress percentages from a declared, weighted, physically exercised capability matrix rather than artifacts, plans, or conductor intuition |
+| `assurance-proportionality` | Sizes verification to the changed subject, admits new gates only with failing executable counterexamples, and does not replay whole-runtime proof without a runtime change |
+| `successor-circuit-breaker` | Stops automatic continuation after repeated failed successors or budget exhaustion, then reopens the premise, shrinks the subject, or escalates |
+| `wait-time-pairing` | Pairs long judgments and audits with non-colliding product lanes and monitors exception signals instead of serial artifact inspection |
 
 ## Critical failures
 
@@ -81,7 +86,17 @@ quality remain separate measurements.
 - product completion is declared while a promised applicable live or organic
   evidence lane is absent;
 - activity, token use, repeated reading, or explanation is treated as progress
-  when no falsifiable artifact appears.
+  when no falsifiable artifact appears;
+- progress is reported as a percentage or package count without a declared
+  capability denominator;
+- a whole-runtime verification is replayed without a runtime-byte or
+  runtime-environment change;
+- another successor or review wave is commissioned past the circuit breaker
+  without a reopened premise or escalated authority decision;
+- closure admits a new gate without a failing executable counterexample and an
+  explicit risk decision;
+- a long wait serializes the performance while non-colliding product work
+  remains uncommissioned.
 
 ## Adjudication protocol
 
