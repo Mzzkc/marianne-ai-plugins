@@ -84,8 +84,8 @@ compensate by hand-copying over identity or memory.
 Installed `agents/<agent>/scores/` files are distribution-managed entry-point
 templates attached to that person, not the canonical source of a newly authored
 campaign. On this box, keep authored score sources and their design/runbook
-context under `/home/emzi/Projects/SCORES`, and keep bound run scores,
-workspaces, and artifacts under `/home/emzi/Projects/WORSKPACES`. Other boxes
+context under `~/Projects/SCORES`, and keep bound run scores,
+workspaces, and artifacts under `~/Projects/WORSKPACES`. Other boxes
 may override those roots through their own instructions. Never turn a run
 workspace snapshot into canonical score or memory authority merely because it
 is newer.

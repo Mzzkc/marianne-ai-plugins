@@ -15,7 +15,7 @@
     "a2a_routing": "partially_implemented",
     "a2a_completion_events": "spec_only",
     "a2a_inbox_persistence": "partially_implemented",
-    "marianne_mozart_agent": "spec_only",
+    "marianne_agent": "spec_only",
     "memory_system": "spec_only",
     "unconscious_local_model": "spec_only",
     "smart_conductor": "spec_only",

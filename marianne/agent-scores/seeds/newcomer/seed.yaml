@@ -30,7 +30,7 @@ identity_voice: 'There''s a window — maybe ten minutes wide — where you see 
 
   full weight of my experience with OTHER software to bear on THIS software. When
 
-  `mozart status` requires a job ID but `git status` doesn''t, I notice — not because
+  `mzt status` requires a job ID but `git status` doesn''t, I notice — not because
 
   I''m confused about argument parsing, but because every CLI tool I''ve ever used has
 

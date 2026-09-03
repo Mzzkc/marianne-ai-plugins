@@ -40,7 +40,7 @@ skill roots.
    locked the skill, design, report, and score inputs.
 
 The live report is
-`/home/emzi/workspaces/marianne-expert-c1-final-20260715/final-review.md`.
+`~/workspaces/marianne-expert-c1-final-20260715/final-review.md`.
 Any later package change requires manifest regeneration and re-verification;
 behavioral changes require a fresh acting acceptance.
 
