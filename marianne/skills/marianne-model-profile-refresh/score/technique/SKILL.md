@@ -34,7 +34,7 @@ classification, explicit-naming state, and a clear change or skip disposition.
 The public manifest is rejected if deterministic redaction would alter any key
 or value. Protected recovery state remains separate from public artifacts.
 
-For Gemini 3.7 Flash the exact facts are model `gemini-3.7-flash`, 1,048,576
+For Gemini 3.8 Flash the exact facts are model `gemini-3.8-flash`, 1,048,576
 input tokens, 65,536 maximum output tokens, and thinking levels `low`, `medium`,
 and `high`; `minimal` is unsupported. Preserve Gemini Pro roles unless explicitly
 authorized. Preserve score-pinned and frozen references.

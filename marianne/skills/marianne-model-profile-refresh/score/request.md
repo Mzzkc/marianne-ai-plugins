@@ -6,9 +6,9 @@ web research for unstable facts, classify every candidate before mutation, and
 preserve pinned, frozen, retired, archived, migration-versioned, historical,
 and unknown references unless this request explicitly names one.
 
-For Gemini Flash, apply the stable Gemini 3.7 Flash treatment when relevant:
+For Gemini Flash, apply the stable Gemini 3.8 Flash treatment when relevant:
 
-- model ID `gemini-3.7-flash`;
+- model ID `gemini-3.8-flash`;
 - input context 1,048,576 tokens;
 - maximum output 65,536 tokens;
 - thinking profiles low, medium, and high (never minimal);

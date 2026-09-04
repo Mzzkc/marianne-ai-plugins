@@ -159,14 +159,14 @@ def validate_manifest(data: dict) -> list[str]:
         facts = {}
     if mode == "broad" and not facts.get("evidence_urls"):
         errors.append("broad mode requires evidence_urls")
-    if facts.get("model") == "gemini-3.7-flash":
+    if facts.get("model") == "gemini-3.8-flash":
         if facts.get("context_window") != 1_048_576:
-            errors.append("gemini-3.7-flash context_window must be 1048576")
+            errors.append("gemini-3.8-flash context_window must be 1048576")
         if facts.get("max_output_tokens") != 65_536:
-            errors.append("gemini-3.7-flash max_output_tokens must be 65536")
+            errors.append("gemini-3.8-flash max_output_tokens must be 65536")
         levels = facts.get("thinking_levels")
         if not isinstance(levels, list) or set(levels) != {"low", "medium", "high"}:
-            errors.append("gemini-3.7-flash thinking_levels must be low, medium, high (minimal is unsupported)")
+            errors.append("gemini-3.8-flash thinking_levels must be low, medium, high (minimal is unsupported)")
     if _has_secret_key(data.get("report", {})):
         errors.append("manifest report fields must not contain secret-looking keys")
     if redact(data) != data:

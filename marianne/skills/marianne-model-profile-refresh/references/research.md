@@ -23,7 +23,7 @@ contradiction instead of guessing. Block the contradicted target while allowing
 unrelated well-supported targets to proceed only when the transaction remains
 independently compensable.
 
-For Gemini 3.7 Flash, accept exactly model `gemini-3.7-flash`, input context
+For Gemini 3.8 Flash, accept exactly model `gemini-3.8-flash`, input context
 1,048,576, maximum output 65,536, and thinking levels `low`, `medium`, and
 `high`. Reject `minimal`. Do not replace Gemini Pro roles without explicit
 authority.
