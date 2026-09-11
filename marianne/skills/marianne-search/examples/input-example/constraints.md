@@ -1,0 +1,1 @@
+Constraints:\n- No server processes (so no plain Redis). SQLite-backed or file-backed candidates are in scope.\n- Must tolerate concurrent CLI invocations on one machine (Linux/macOS).\n- Permissive license strongly preferred (MIT/Apache/BSD/PSF).\n- Report access dates for every source.
