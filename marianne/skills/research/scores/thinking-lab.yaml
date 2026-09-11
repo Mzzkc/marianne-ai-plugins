@@ -1,0 +1,121 @@
+name: thinking-lab
+description: Independent review; caller-owned synthesis
+workspace_lifecycle:
+  archive_on_fresh: true
+instrument: codex-cli
+instruments:
+  reviewer-1:
+    profile: antigravity
+    config:
+      timeout_seconds: 600
+      model: claude-sonnet-4-6
+  reviewer-2:
+    profile: antigravity
+    config:
+      timeout_seconds: 600
+      model: gemini-3.8-flash-high
+retry:
+  max_retries: 0
+  max_completion_attempts: 0
+movements:
+  1:
+    name: prepare
+    instrument: cli
+  2:
+    name: reviewer-1
+    instrument: reviewer-1
+  3:
+    name: reviewer-2
+    instrument: reviewer-2
+  4:
+    name: delivery-check
+    instrument: cli
+sheet:
+  size: 1
+  total_items: 4
+  dependencies:
+    2:
+    - 1
+    3:
+    - 1
+    4:
+    - 2
+    - 3
+  per_sheet_fallbacks:
+    1: []
+    2: []
+    3: []
+    4: []
+  cadenzas:
+    2:
+    - directory: '{{ workspace }}/input-snapshot'
+      as: context
+      required: true
+    - file: '{{ workspace }}/input-snapshot/prompt.md'
+      as: context
+      required: true
+    - file: '{{ workspace }}/run-receipt.json'
+      as: context
+      required: true
+    - file: '{{ score_dir }}/../prompts/contracts.md'
+      as: context
+      required: true
+    3:
+    - directory: '{{ workspace }}/input-snapshot'
+      as: context
+      required: true
+    - file: '{{ workspace }}/input-snapshot/prompt.md'
+      as: context
+      required: true
+    - file: '{{ workspace }}/run-receipt.json'
+      as: context
+      required: true
+    - file: '{{ score_dir }}/../prompts/contracts.md'
+      as: context
+      required: true
+parallel:
+  enabled: true
+  max_concurrent: 2
+prompt:
+  variables:
+    input_dir: ~/workspaces/thinking-lab-input
+    max_input_bytes: '262144'
+    resources: '{{ score_dir }}/..'
+  template: "{% macro sq(v) -%}'{{ v | replace(\"'\", \"'\\\\''\") }}'{%- endmacro\
+    \ -%}\n{% set resources = score_dir ~ '/..' %}\n{% if stage == 1 %}\nset -euo\
+    \ pipefail\n{% if not input_dir %}\necho 'research: input_dir required; supply\
+    \ --var input_dir=/absolute/flat/context' >&2\nexit 2\n{% endif %}\ncp {{ sq(resources)\
+    \ }}/scripts/research.py {{ sq(workspace) }}/research.py\ncp {{ sq(resources)\
+    \ }}/scripts/snapshot.py {{ sq(workspace) }}/snapshot.py\npython3 {{ sq(workspace)\
+    \ }}/research.py prepare --workspace {{ sq(workspace) }} --input-dir {{ sq(input_dir)\
+    \ }} --roster {{ sq(score_dir) }}/roster.json --mode lab --max-bytes {{ max_input_bytes\
+    \ | int }}\n\n{% elif stage == 2 %}\nIndependent supplied-context review. Read\
+    \ ALL original context and the current receipt.\nDo not see other reviewers' unfinished\
+    \ work. No mandatory internet research. Address the\ncaller's question, constraints,\
+    \ concrete defects, tradeoffs and uncertainties. Do not\nmodify application code\
+    \ or launch jobs. Caller owns synthesis; model votes are not truth.\nWrite {{\
+    \ workspace }}/review-1.md. Then write {{ workspace }}/review-1.json:\n{\"schema_version\"\
+    :1,\"kind\":\"research-review\",\"run_id\":\"COPY_CURRENT_RECEIPT\",\n \"review\"\
+    :\"review-1\",\"sha256\":\"SHA256_OF_EXACT_review-1_MD_BYTES\"}.\nCompute the\
+    \ hash with a local tool, not mental arithmetic.\n\n{% elif stage == 3 %}\nIndependent\
+    \ supplied-context review. Read ALL original context and the current receipt.\n\
+    Do not see other reviewers' unfinished work. No mandatory internet research. Address\
+    \ the\ncaller's question, constraints, concrete defects, tradeoffs and uncertainties.\
+    \ Do not\nmodify application code or launch jobs. Caller owns synthesis; model\
+    \ votes are not truth.\nWrite {{ workspace }}/review-2.md. Then write {{ workspace\
+    \ }}/review-2.json:\n{\"schema_version\":1,\"kind\":\"research-review\",\"run_id\"\
+    :\"COPY_CURRENT_RECEIPT\",\n \"review\":\"review-2\",\"sha256\":\"SHA256_OF_EXACT_review-2_MD_BYTES\"\
+    }.\nCompute the hash with a local tool, not mental arithmetic.\n\n{% elif stage\
+    \ == 4 %}\nset -euo pipefail\npython3 {{ sq(workspace) }}/research.py deliver\
+    \ --workspace {{ sq(workspace) }}\n\n{% endif %}\n"
+validations:
+- type: command_succeeds
+  command: python3 {workspace}/research.py validate --workspace {workspace} --role
+    review-1
+  condition: sheet_num == 2
+  retry_count: 0
+- type: command_succeeds
+  command: python3 {workspace}/research.py validate --workspace {workspace} --role
+    review-2
+  condition: sheet_num == 3
+  retry_count: 0

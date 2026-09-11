@@ -1,4 +1,7 @@
-"""Focused behavioral tests for the marianne-search helper.
+"""Historical collector and retained snapshot/shell regression tests.
+
+Public research routing is tested by test_research.py. These legacy scores are
+fixtures, not runnable public defaults; no old contract tests were deleted.
 
 Covers: valid results; causal rejection of missing/empty input, nesting,
 binary/oversized inputs, input inside the workspace; malformed, empty,
@@ -23,9 +26,9 @@ HELPER = (
     PLUGIN_ROOT
     / "marianne"
     / "skills"
-    / "marianne-search"
+    / "research"
     / "scripts"
-    / "marianne_search.py"
+    / "snapshot.py"
 )
 
 _spec = importlib.util.spec_from_file_location("marianne_search_helper", HELPER)
@@ -536,9 +539,9 @@ class ShellSafetyTests(unittest.TestCase):
 
     SCORE = (
         PLUGIN_ROOT
-        / "marianne"
-        / "skills"
-        / "marianne-search"
+        / "tests"
+        / "fixtures"
+        / "legacy-search"
         / "scores"
         / "marianne-search.yaml"
     )
@@ -636,9 +639,9 @@ class TwoLaneRoutingTests(unittest.TestCase):
 
     TWO_LANE = (
         PLUGIN_ROOT
-        / "marianne"
-        / "skills"
-        / "marianne-search"
+        / "tests"
+        / "fixtures"
+        / "legacy-search"
         / "scores"
         / "marianne-search-two-lane.yaml"
     )

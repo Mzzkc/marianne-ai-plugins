@@ -282,7 +282,7 @@ Open-source-first ranking. `→` = fallback ladder.
 
 ### Cross-vendor review (subtle)
 
-Use `scores/prep/thinking-lab.yaml` for full 5-vendor fan-out. Typical pairs:
+Use `skills/research/scores/thinking-lab.yaml` for independent review with the configured distinct-family roster; see the research skill for isolated input and concert binding. Typical pairs:
 
 - `claude-opus-4-7` ↔ `gpt-5.6-terra`, `gemini-3.1-pro-preview`, **`glm-5.3`**
 - `gpt-5.6-terra` ↔ `claude-opus-4-7`, `glm-5.3`
@@ -353,7 +353,7 @@ The catalog is a snapshot. Run `scores/instrument-catalog-refresh.yaml`:
 1. Probe currently-installed instruments (`mzt doctor`)
 2. Web-research vendor releases since `last_verified`
 3. Scan OpenRouter / Hugging Face for new free-tier models
-4. Run thinking-lab cross-rating on the changeset (with chunking guidance for GLM)
+4. Run research independent-review mode on the changeset with the configured qualified roster and complete original context
 5. Diff against current catalog
 6. Write a versioned update with citations
 

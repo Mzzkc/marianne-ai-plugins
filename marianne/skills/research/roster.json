@@ -1,0 +1,36 @@
+{
+  "seats": [
+    {
+      "id": "search-1",
+      "family": "anthropic-sonnet",
+      "profile": "antigravity",
+      "model": "claude-sonnet-4-6"
+    },
+    {
+      "id": "search-2",
+      "family": "gemini",
+      "profile": "antigravity",
+      "model": "gemini-3.8-flash-high"
+    }
+  ],
+  "strategist": {
+    "profile": "antigravity",
+    "model": "gemini-3.8-flash-high"
+  },
+  "synthesizer": {
+    "profile": "codex-cli",
+    "model": "gpt-5.6-terra"
+  },
+  "challenger": {
+    "profile": "antigravity",
+    "model": "gemini-3.8-flash-high"
+  },
+  "budgets": {
+    "strategist": 300,
+    "search": 600,
+    "synthesizer": 360,
+    "challenger": 360,
+    "review": 600
+  },
+  "qualification": "Default search cast: Antigravity claude-sonnet-4-6 and gemini-3.8-flash-high. AGY exposes the Gemini high tier as that complete model ID; do not add invented effort config. Gemini high has prior real search-and-fetch evidence. Sonnet has a successful primary-page fetch, but its native search returned GenerateContent with no summary, model metadata was absent, and the fetch was cached; it remains UNQUALIFIED until conductor qualification proves actual search and primary retrieval. Synthesis is explicit codex-cli gpt-5.6-terra. Probe/freeze actual model, family, search, retrieval, authentication and quota; keep corresponding A/B bindings identical. Monetary cost is unknown; subscription or paid entitlement is not free service."
+}

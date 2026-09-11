@@ -1,0 +1,432 @@
+"""Provider-free causal contracts; native runtime imports must be source-bound."""
+import importlib.util
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+ASSETS = ROOT / 'marianne/skills/research'
+sys.path.insert(0, str(ASSETS / 'scripts'))
+import research
+
+def test_unknown_seat_and_unowned_questions_refused():
+    receipt = {'run_id': 'current', 'mode': 'A', 'roster': {'seats': [
+        {'id': 'search-1', 'family': 'one', 'profile': 'one', 'model': 'one'},
+        {'id': 'search-2', 'family': 'two', 'profile': 'two', 'model': 'two'}]}}
+    strategy = {'schema_version':1, 'kind':'research-strategy', 'run_id': 'current', 'requirements': [{'id':'R1', 'text':'Needed', 'mandatory':True}],
+                'questions': [{'id':'Q1','text':'Decisive?', 'requirement_ids':['R1'], 'mandatory':True,
+                'evidence_goal':'primary implementation', 'queries':['capability'], 'priority':'high'}],
+                'assignments': {'search-1':['Q1'], 'search-2':['Q1']}}
+    research.validate_strategy(strategy, receipt)
+    import pytest
+    strategy['assignments']['search-2'] = ['missing']
+    with pytest.raises(research.ContractError):
+        research.validate_strategy(strategy, receipt)
+
+import copy
+import hashlib
+import json
+import subprocess
+import concurrent.futures
+import pytest
+import yaml
+import configure
+import concert
+import check_graph
+from marianne.core.config import JobConfig
+from marianne.core.sheet import build_sheets
+from marianne.daemon.baton.prompt import PromptRenderer
+from marianne.daemon.baton.state import AttemptContext, AttemptMode
+
+import os
+EVIDENCE = Path(os.environ.get('RESEARCH_TEST_EVIDENCE', '/tmp/research-native-context-fixtures'))
+ROSTER = json.loads((ASSETS/'roster.json').read_text())
+
+def put(path, value):
+    path.parent.mkdir(parents=True,exist_ok=True)
+    path.write_text(json.dumps(value) if isinstance(value,dict) else value)
+    return path
+
+def env(kind, receipt):
+    return {'schema_version':1,'kind':'research-'+kind,'run_id':receipt['run_id']}
+
+def prepare(tmp,mode='A',roster=None):
+    inp=tmp/'input'; ws=tmp/'workspace'
+    put(inp/'prompt.md','BENIGN_ORIGINAL_PROMPT: compare synthetic widgets.\n')
+    put(inp/'context.txt','BENIGN_SECOND_CONTEXT: retain the blue constraint.\n')
+    receipt=research.prepare(ws,inp,roster or copy.deepcopy(ROSTER),mode)
+    return inp,ws,receipt
+
+def strategy(receipt):
+    seats=receipt['roster']['seats']
+    v={**env('strategy',receipt),'requirements':[{'id':'R1','text':'blue constraint','mandatory':True}],
+       'questions':[{'id':f'Q{i+1}','text':f'Piece {i+1}?','mandatory':True,'requirement_ids':['R1'],'evidence_goal':'inspect primary source','queries':['synthetic widget'],'priority':'high'} for i in range(len(seats))],
+       'assignments':{s['id']:[f'Q{i+1}'] for i,s in enumerate(seats)}}
+    if receipt['mode']=='B':
+        v.update(cross_component=True,integration_question_ids=['Q1'],verification_plan=[{'question_ids':['Q1'],'primary_evidence':'implementation','different_source_type':'release history','blind_spot':'native option'}])
+        v['assignments']['search-2'].append('Q1')
+    return v
+
+def search(receipt,st,sid,status='complete'):
+    no=status=='no_web'
+    return {**env('search',receipt),'seat':sid,'status':status,'scope':'Synthetic test evidence only; not live research','tool_evidence':'BENIGN fixture simulated search/fetch for contract exercise',
+            'queries':[] if no else [{'query':'synthetic','tool':'fixture'}],
+            'sources':[] if no else [{'id':'S1','title':'Fixture primary','url':'https://docs.python.org/3/library/','accessed_at':'2026-09-11T12:00:00Z','supported_claim':'BENIGN fixture claim, not a live finding','source_type':'docs'}],
+            'candidates':[] if no else [{'id':sid+':C1','name':'Synthetic widget','canonical_identity':'synthetic-widget','integration':'adapter needed','remaining_custom_work':'blue adapter','fit':{'R1':{'status':'supported','reason':'fixture assertion','source_ids':['S1']}}}],
+            'question_accounts':[{'id':q,'status':'unknown' if no else 'answered','finding':'unavailable' if no else 'fixture evidence','candidate_ids':[] if no else [sid+':C1'],'source_ids':[] if no else ['S1']} for q in st['assignments'][sid]],
+            'rejected_alternatives':[],'uncovered_questions':st['assignments'][sid] if no else [],'reason':'fixture unavailable route' if status!='complete' else ''}
+
+def complete(ws,r,status='complete'):
+    st=strategy(r); put(ws/'strategy.json',st); research.assignments(ws)
+    for row in r['roster']['seats']: put(ws/(row['id']+'.json'),search(r,st,row['id'],status if row['id']=='search-1' else 'complete'))
+    if r['mode']=='B': put(ws/'challenge.json',{**env('challenge',r),'status':'complete','summary':'Fixture evidence settled; no targets','sources':[],'new_candidates':[],'targets':[]})
+    sy={**env('synthesis',r),'status':'complete' if status=='complete' else 'partial','recommendation':'adapt','summary':'BENIGN_CURRENT_SYNTHESIS: use synthetic widget conditionally','ranking_rationale':'blue constraint first','strongest_alternative':'another synthetic widget','remaining_custom_work':'adapter','unresolved_gaps':[],'contradictions':[],
+        'ranked_approaches':[{'id':'A1','candidate_ids':['search-2:C1'],'rationale':'fixture fit','counterarguments':'adapter effort','integration':'compose adapter','remaining_custom_work':'blue adapter','constraint_matrix':{'R1':{'status':'supported','reason':'fixture primary','source_ids':['search-2:S1']}}}]}
+    if r['mode']=='B': sy.update(challenge_effect='none',challenge_dispositions={})
+    put(ws/'synthesis.json',sy)
+    return st,sy
+
+def native(path,ws,inp):
+    cfg=JobConfig.from_yaml(path)
+    cfg.workspace=ws
+    cfg.prompt.variables['input_dir']=str(inp)
+    sheets=build_sheets(cfg)
+    renderer=PromptRenderer(cfg.prompt,len(sheets),cfg.sheet.total_items,cfg.parallel.enabled)
+    return cfg,sheets,renderer
+
+def render(renderer,s,attempt=1):
+    return renderer.render(s,AttemptContext(attempt_number=attempt,mode=AttemptMode.NORMAL),raw_prompt=s.instrument_name=='cli')
+
+@pytest.mark.parametrize('mode',['A','B','lab'])
+def test_native_runtime_all_stage_context_and_dag(tmp_path,mode):
+    inp,ws,r=prepare(tmp_path,mode)
+    if mode!='lab': complete(ws,r)
+    else:
+        for i in range(len(r['roster']['seats'])):
+            name=f'review-{i+1}'; put(ws/(name+'.md'),'Independent benign review')
+            put(ws/(name+'.json'),{**env('review',r),'review':name,'sha256':research.digest(ws/(name+'.md'))})
+    filename='thinking-lab.yaml' if mode=='lab' else f'research-{mode.lower()}.yaml'
+    cfg,sheets,renderer=native(ASSETS/'scores'/filename,ws,inp)
+    graph=check_graph.check(cfg,r['roster'])
+    manifests=[]
+    for s in sheets:
+        rp=render(renderer,s)
+        if s.instrument_name=='cli':
+            assert subprocess.run(['bash','-n'],input=rp.prompt,text=True,capture_output=True).returncode==0
+            continue
+        assert 'BENIGN_ORIGINAL_PROMPT' in rp.prompt and 'BENIGN_SECOND_CONTEXT' in rp.prompt
+        assert r['run_id'] in rp.prompt
+        originals=[x for x in rp.context_manifest if x['source']=='cadenza' and x['category']=='context' and x['delivery_kind']=='directory-inline' and Path(x['resolved_path']).parent==ws/'input-snapshot']
+        assert {Path(x['resolved_path']).name:x['source_sha256'].removeprefix('sha256:') for x in originals}=={x['name']:x['sha256'] for x in r['files']}
+        again=render(renderer,s,2)
+        assert again.context_manifest==rp.context_manifest
+        manifests.append({'sheet':s.num,'instrument':s.instrument_name,'manifest':rp.context_manifest})
+    EVIDENCE.mkdir(parents=True,exist_ok=True)
+    put(EVIDENCE/(mode+'-receipt.json'),{'label':'BENIGN PROVIDER-FREE FIXTURES; not a release lock or live run','runtime_source':str(Path(sys.modules['marianne'].__file__).resolve()),'graph':graph,'original_manifest':r['files'],'stages':manifests})
+    assert research.deliver(ws)==0
+
+@pytest.mark.parametrize('mode',['A','B'])
+def test_rendered_prepare_shell_metacharacters(tmp_path,mode):
+    inp=tmp_path/"in 'q $(touch INJECTED) `id`; dir"; ws=tmp_path/"ws 'q $(touch WS_INJECTED) `id` & dir"; ws.mkdir()
+    put(inp/'prompt.md','benign task'); put(inp/'second.txt','benign context')
+    cfg,sheets,renderer=native(ASSETS/'scores'/f'research-{mode.lower()}.yaml',ws,inp)
+    script=render(renderer,sheets[0]).prompt
+    result=subprocess.run(['bash','-c',script],cwd=tmp_path,text=True,capture_output=True)
+    assert result.returncode==0,result.stderr
+    assert not (tmp_path/'INJECTED').exists() and not (tmp_path/'WS_INJECTED').exists()
+    assert research.current(ws)['input_dir']==str(inp)
+
+@pytest.mark.parametrize('change',['seat','owner','requirement','question','empty_seat','duplicate','stale','integration'])
+def test_strategy_causal_controls(tmp_path,change):
+    _,ws,r=prepare(tmp_path,'B'); st=strategy(r)
+    research.validate_strategy(st,r)
+    if change=='seat': st['assignments']['unknown']=st['assignments'].pop('search-1')
+    elif change=='owner': st['assignments'][r['roster']['seats'][-1]['id']]=['Q2']
+    elif change=='requirement': st['questions'][0]['requirement_ids']=['missing']
+    elif change=='question': st['assignments']['search-1']=['missing']
+    elif change=='empty_seat': st['assignments']['search-1']=[]
+    elif change=='duplicate': st['questions'].append(copy.deepcopy(st['questions'][0]))
+    elif change=='stale': st['run_id']='earlier'
+    elif change=='integration': st['assignments']['search-2']=['Q2']
+    with pytest.raises(research.ContractError): research.validate_strategy(st,r)
+
+@pytest.mark.parametrize('change',['family','route','account','candidate_join','source_join','unknown_fit','stale','no_web_claim','bad_schema'])
+def test_research_joins_and_routing_controls(tmp_path,change):
+    _,ws,r=prepare(tmp_path); st=strategy(r); p=search(r,st,'search-1')
+    research.validate_search(p,r,st,'search-1')
+    if change in ('family','route'):
+        roster=copy.deepcopy(ROSTER)
+        if change=='family': roster['seats'][1]['family']=roster['seats'][0]['family']
+        else: roster['seats'][1].update(profile=roster['seats'][0]['profile'],model=roster['seats'][0]['model'])
+        with pytest.raises(research.ContractError): research.validate_roster(roster,'A')
+        return
+    if change=='account': p['question_accounts']=[]
+    elif change=='candidate_join': p['question_accounts'][0]['candidate_ids']=['missing']
+    elif change=='source_join': p['candidates'][0]['fit']['R1']['source_ids']=['missing']
+    elif change=='unknown_fit': p['candidates'][0]['fit']['R1']['status']='yes'
+    elif change=='stale': p['run_id']='prior'
+    elif change=='no_web_claim': p['status']='no_web'
+    elif change=='bad_schema': p['schema_version']=42
+    with pytest.raises(research.ContractError): research.validate_search(p,r,st,'search-1')
+
+@pytest.mark.parametrize('count',[2,4])
+def test_changed_musician_and_cardinality_native(tmp_path,count):
+    roster=copy.deepcopy(ROSTER)
+    if count==2: roster['seats']=roster['seats'][:2]
+    else: roster['seats'].extend([
+        {'id':'search-3','family':'fixture-three','profile':'fixture-native-three','model':'fixture-three'},
+        {'id':'search-4','family':'fixture-four','profile':'fixture-native-four','model':'fixture-four'},
+    ])
+    roster['seats'][0].update(profile='fixture-substitute',model='fixture-model',family='fixture-family')
+    for mode in ('A','B','lab'):
+        inp,ws,r=prepare(tmp_path/mode,mode,roster)
+        if mode!='lab': complete(ws,r)
+        cfgdict=configure.score(mode,roster,ASSETS)
+        path=put(tmp_path/mode/'score.yaml',yaml.safe_dump(cfgdict))
+        cfg,sheets,renderer=native(path,ws,inp)
+        check_graph.check(cfg,roster)
+        for s in sheets:
+            if s.instrument_name!='cli':
+                assert 'BENIGN_SECOND_CONTEXT' in render(renderer,s).prompt
+        assert len([s for s in sheets if s.instrument_name!='cli']) == (count if mode=='lab' else count+2+(mode=='B'))
+
+@pytest.mark.parametrize('change',['directory','receipt','only_summary','new_ai','missing_prompt'])
+def test_missing_original_context_fails_causally(tmp_path,change):
+    inp,ws,r=prepare(tmp_path); complete(ws,r)
+    cfg,sheets,renderer=native(ASSETS/'scores/research-a.yaml',ws,inp)
+    if change=='missing_prompt':
+        (ws/'input-snapshot/prompt.md').unlink()
+        with pytest.raises((OSError,ValueError)): render(renderer,sheets[1])
+        return
+    if change=='directory':
+        import shutil; shutil.rmtree(ws/'input-snapshot')
+        with pytest.raises((OSError,ValueError)): render(renderer,sheets[1])
+        return
+    if change=='receipt':
+        (ws/'run-receipt.json').unlink()
+        with pytest.raises((OSError,ValueError)): render(renderer,sheets[1])
+        return
+    if change=='only_summary':
+        cfg.sheet.cadenzas[2]=[x for x in cfg.sheet.cadenzas[2] if not x.directory]
+    else:
+        cfg.movements[1].instrument='codex-cli'
+    with pytest.raises(research.ContractError): check_graph.check(cfg,r['roster'])
+
+@pytest.mark.parametrize('status',['partial','no_web'])
+def test_partial_delivery_refuses_success_chaining(tmp_path,status):
+    _,ws,r=prepare(tmp_path); complete(ws,r,status)
+    assert research.deliver(ws)==4
+    assert research.read(ws/'delivery/status.json')['status']=='partial'
+    assert (ws/'delivery/report.md').exists()
+    with pytest.raises(research.ContractError): concert.consumer(ws,tmp_path/'child',ASSETS)
+
+@pytest.mark.parametrize('change',['missing_search','missing_synthesis','stale_synthesis','bad_source_join','missing_challenge','over_three_targets'])
+def test_delivery_gate_and_challenge_controls(tmp_path,change):
+    _,ws,r=prepare(tmp_path,'B'); st,sy=complete(ws,r)
+    if change=='missing_search': (ws/(r['roster']['seats'][-1]['id']+'.json')).unlink()
+    elif change=='missing_synthesis': (ws/'synthesis.json').unlink()
+    elif change=='stale_synthesis': sy['run_id']='old'; put(ws/'synthesis.json',sy)
+    elif change=='bad_source_join': sy['ranked_approaches'][0]['constraint_matrix']['R1']['source_ids']=['search-2:missing']; put(ws/'synthesis.json',sy)
+    elif change=='missing_challenge': (ws/'challenge.json').unlink()
+    else:
+        ch=research.read(ws/'challenge.json'); ch['targets']=[{'id':f'T{i}'} for i in range(4)]; put(ws/'challenge.json',ch)
+    assert research.deliver(ws)==4
+    assert research.read(ws/'status.json')['status']=='partial'
+
+
+def test_two_requests_freshness_and_concurrent_boundary(tmp_path):
+    with concurrent.futures.ThreadPoolExecutor(2) as pool:
+        a,b=list(pool.map(lambda p:prepare(p),[tmp_path/'one',tmp_path/'two']))
+    assert a[2]['run_id']!=b[2]['run_id']
+    inp,ws,r=a; complete(ws,r); assert research.deliver(ws)==0
+    old=research.read(ws/'synthesis.json')
+    put(inp/'prompt.md','CHANGED_SECOND_REQUEST')
+    new=research.prepare(ws,inp,ROSTER,'A')
+    assert new['run_id']!=r['run_id'] and new['input_sha256']!=r['input_sha256']
+    assert not (ws/'delivery').exists() and not (ws/'synthesis.json').exists()
+    complete(ws,new); put(ws/'synthesis.json',old)
+    assert research.deliver(ws)==4
+
+
+def test_direct_and_concert_original_hashes_and_synthesis(tmp_path):
+    inp,ws,r=prepare(tmp_path)
+    # Names that collide with report/status and transport originals are accepted.
+    for name in ['report.md','status.json','run-receipt.json','original-0001.txt']:
+        put(inp/name,'ORIGINAL_COLLISION_'+name)
+    r=research.prepare(ws,inp,ROSTER,'A'); complete(ws,r)
+    assert research.deliver(ws)==0
+    manifest=research.verify_delivery(ws/'delivery',ws/'input-snapshot',r['run_id'])
+    assert len(manifest['originals'])==6
+    cfgdict=concert.consumer(ws,tmp_path/'child',ASSETS)
+    path=put(tmp_path/'consumer.yaml',yaml.safe_dump(cfgdict)); cfg,sheets,renderer=native(path,tmp_path/'child',inp)
+    check_graph.check(cfg,original=str(ws/'input-snapshot'),receipt=str(ws/'run-receipt.json'))
+    # Execute the real deterministic consumer preflight, not an imagined hook.
+    result=subprocess.run(['bash','-c',render(renderer,sheets[0]).prompt],text=True,capture_output=True)
+    assert result.returncode==0,result.stderr
+    rp=render(renderer,sheets[1]); assert 'BENIGN_CURRENT_SYNTHESIS' in rp.prompt and 'BENIGN_SECOND_CONTEXT' in rp.prompt
+    original_receipts={Path(x['resolved_path']).name:x['source_sha256'].removeprefix('sha256:') for x in rp.context_manifest if x.get('delivery_kind')=='directory-inline' and Path(x['resolved_path']).parent==ws/'input-snapshot'}
+    assert original_receipts=={x['name']:x['sha256'] for x in r['files']}
+    EVIDENCE.mkdir(parents=True,exist_ok=True); put(EVIDENCE/'consumer-receipt.json',{'label':'BENIGN provider-free consumer assembly; no child job submitted','manifest':rp.context_manifest,'parent_original_manifest':r['files']})
+    parent=concert.wrapper(ASSETS/'scores/research-a.yaml',ws,tmp_path/'child',inp,tmp_path/'wrappers',ASSETS)
+    loaded=JobConfig.from_yaml(parent)
+    assert (parent.parent / loaded.on_success[0].job_path).resolve() == (parent.parent / 'consumer.yaml').resolve()
+    assert loaded.on_success[0].fresh
+    with pytest.raises(research.ContractError): research.verify_delivery(ws/'delivery',ws/'input-snapshot','old-run')
+    put(ws/'delivery/report.md','tampered')
+    with pytest.raises(research.ContractError): research.verify_delivery(ws/'delivery',ws/'input-snapshot',r['run_id'])
+
+
+def test_complete_challenger_ledger_and_disposition_joins(tmp_path):
+    _,ws,r=prepare(tmp_path,'B'); st,sy=complete(ws,r)
+    discovery=research.read(ws/'search-1.json')
+    ch={**env('challenge',r),'status':'complete','summary':'Corrected fixture target','sources':discovery['sources'],'new_candidates':[],
+        'targets':[{'id':'T1','question_ids':['Q1'],'candidate_ids':['search-1:C1'],'reason':'fixture decisive conflict','decision_consequence':'confidence changes','source_type_rationale':'code instead of docs','disposition':'corrected','source_ids':['S1']}]}
+    put(ws/'challenge.json',ch)
+    sy.update(challenge_effect='confidence',challenge_dispositions={'T1':'Accept correction conditional on fixture evidence'})
+    put(ws/'synthesis.json',sy); assert research.deliver(ws)==0
+    sy['challenge_dispositions']={}; put(ws/'synthesis.json',sy)
+    assert research.deliver(ws)==4
+    sy['challenge_dispositions']={'T1':'accepted'}; put(ws/'synthesis.json',sy)
+    ch['targets'][0]['candidate_ids']=['missing']; put(ws/'challenge.json',ch)
+    assert research.deliver(ws)==4
+
+
+def test_assignment_mutation_refused(tmp_path):
+    _,ws,r=prepare(tmp_path); complete(ws,r)
+    p=research.read(ws/'assignment-search-1.json'); p['strategy_sha256']='old'; put(ws/'assignment-search-1.json',p)
+    with pytest.raises(research.ContractError): research.validate_file(ws,'search-1')
+
+
+def test_changed_actual_native_routing_disagrees_with_roster(tmp_path):
+    cfg=JobConfig.from_yaml(ASSETS/'scores/research-a.yaml')
+    cfg.instruments['search-2'].profile='opencode'
+    with pytest.raises(research.ContractError): check_graph.check(cfg,ROSTER)
+
+
+def test_default_roster_uses_two_qualified_search_routes_and_midsize_synthesis():
+    assert [(row['profile'], row['model']) for row in ROSTER['seats']] == [
+        ('antigravity', 'claude-sonnet-4-6'),
+        ('antigravity', 'gemini-3.8-flash-high'),
+    ]
+    assert ROSTER['strategist'] == ROSTER['challenger'] == {
+        'profile': 'antigravity', 'model': 'gemini-3.8-flash-high'
+    }
+    assert ROSTER['synthesizer'] == {'profile': 'codex-cli', 'model': 'gpt-5.6-terra'}
+    for mode, calls in [('A', 4), ('B', 5), ('lab', 2)]:
+        assert len([row for row in configure.score(mode, ROSTER, ASSETS)['movements'].values()
+                    if row['instrument'] != 'cli']) == calls
+
+
+def test_legacy_lab_invocation_resolves_canonical_score(tmp_path):
+    inp,ws,r=prepare(tmp_path,'lab')
+    for path in [ROOT/'marianne/scores/prep/thinking-lab.yaml',ROOT/'marianne/scores/thinking-lab.yaml']:
+        cfg,sheets,renderer=native(path,ws,inp)
+        assert cfg.source_path== (ASSETS/'scores/thinking-lab.yaml').resolve()
+        assert 'BENIGN_SECOND_CONTEXT' in render(renderer,sheets[1]).prompt
+
+
+def test_concert_generated_parent_executes_binding_after_delivery(tmp_path):
+    inp,ws,r=prepare(tmp_path); complete(ws,r)
+    wrappers=tmp_path/"scores 'q $(touch CHAIN_INJECTED)"
+    parent=concert.wrapper(ASSETS/'scores/research-a.yaml',ws,tmp_path/'child',inp,wrappers,ASSETS)
+    cfg,sheets,renderer=native(parent,ws,inp)
+    # Execute native preparation, then stage explicitly BENIGN performer outputs.
+    prep=subprocess.run(['bash','-c',render(renderer,sheets[0]).prompt],text=True,capture_output=True,cwd=tmp_path)
+    assert prep.returncode==0,prep.stderr
+    r=research.current(ws); complete(ws,r)
+    # Execute final deterministic delivery plus actual child YAML generation.
+    result=subprocess.run(['bash','-c',render(renderer,sheets[-1]).prompt],text=True,capture_output=True,cwd=tmp_path)
+    assert result.returncode==0,result.stderr
+    assert not (tmp_path/'CHAIN_INJECTED').exists()
+    child=JobConfig.from_yaml(wrappers/'consumer.yaml')
+    assert child.prompt.variables['parent_run_id']==r['run_id']
+    # Reusing a bound consumer after parent preparation must fail before its AI call.
+    cs=build_sheets(child); cr=PromptRenderer(child.prompt,len(cs),2,False)
+    research.prepare(ws,inp,ROSTER,'A')
+    result=subprocess.run(['bash','-c',render(cr,cs[0]).prompt],text=True,capture_output=True)
+    assert result.returncode!=0
+
+
+def test_new_gates_execute_with_hostile_workspace_and_validation_engine(tmp_path):
+    inp=tmp_path/'input'; put(inp/'prompt.md','benign task'); put(inp/'context.txt','second sentinel')
+    ws=tmp_path/"ws 'q $(touch GATE_INJECTED) `id`; dir"
+    r=research.prepare(ws,inp,ROSTER,'A'); complete(ws,r)
+    import shutil
+    for script in ['research.py','snapshot.py']: shutil.copyfile(ASSETS/'scripts'/script,ws/script)
+    cfg,sheets,renderer=native(ASSETS/'scores/research-a.yaml',ws,inp)
+    for index in [2,-1]:
+        result=subprocess.run(['bash','-c',render(renderer,sheets[index]).prompt],cwd=tmp_path,text=True,capture_output=True)
+        assert result.returncode==0,result.stderr
+    # Use the current validation engine's actual command substitution path.
+    from marianne.execution.validation.engine import ValidationEngine
+    import asyncio
+    engine=ValidationEngine(ws,{'workspace':str(ws),'sheet_num':4})
+    rule=next(v for v in cfg.validations if v.condition=='sheet_num == 4')
+    result=asyncio.run(engine._check_command_succeeds(rule))
+    assert result.passed,result
+    assert not (tmp_path/'GATE_INJECTED').exists()
+
+
+@pytest.mark.parametrize('change',['extra_original','parent_receipt'])
+def test_consumer_refuses_changed_parent_context(tmp_path,change):
+    _,ws,r=prepare(tmp_path); complete(ws,r); assert research.deliver(ws)==0
+    if change=='extra_original': put(ws/'input-snapshot/forbidden-prior-report.md','extra injected context')
+    else:
+        active=research.read(ws/'run-receipt.json'); active['run_id']='other-run'; put(ws/'run-receipt.json',active)
+    with pytest.raises(research.ContractError): research.verify_delivery(ws/'delivery',ws/'input-snapshot',r['run_id'])
+
+
+@pytest.mark.parametrize('change',['missing_digests','untyped_manifest','partial_result'])
+def test_consumer_typed_manifest_consistency(tmp_path,change):
+    _,ws,r=prepare(tmp_path); complete(ws,r); assert research.deliver(ws)==0
+    path=ws/'delivery/status.json'; manifest=research.read(path)
+    if change=='missing_digests': manifest['artifacts']={}
+    elif change=='untyped_manifest': manifest.pop('schema_version')
+    else:
+        result=research.read(ws/'delivery/result.json'); result['status']='partial'; put(ws/'delivery/result.json',result)
+        manifest['artifacts']['result.json']=research.digest(ws/'delivery/result.json')
+    put(path,manifest)
+    with pytest.raises(research.ContractError): research.verify_delivery(ws/'delivery',ws/'input-snapshot',r['run_id'])
+
+
+@pytest.mark.parametrize('mode', ['A', 'B'])
+@pytest.mark.parametrize('mandatory', [True, False])
+def test_delivered_report_defines_requirements_and_candidate_identities(tmp_path, mode, mandatory):
+    _, ws, receipt = prepare(tmp_path, mode)
+    st, synthesis = complete(ws, receipt)
+    st['requirements'][0].update(text='Distinctive amber retention requirement', mandatory=mandatory)
+    put(ws/'strategy.json', st)
+    research.assignments(ws)
+    search_record = research.read(ws/'search-2.json')
+    search_record['candidates'][0].update(name='Distinctive Copper Candidate', canonical_identity='urn:fixture:copper-project')
+    put(ws/'search-2.json', search_record)
+    if mode == 'B':
+        new_candidate = copy.deepcopy(search_record['candidates'][0])
+        new_candidate.update(id='challenge:C7', name='Distinctive Violet Candidate', canonical_identity='urn:fixture:violet-project')
+        challenge = {**env('challenge', receipt), 'status':'complete', 'summary':'Benign new-candidate fixture',
+                     'sources':search_record['sources'], 'new_candidates':[new_candidate],
+                     'targets':[{'id':'T7','question_ids':['Q2'],'candidate_ids':['challenge:C7'],
+                                 'reason':'Benign omission','decision_consequence':'Fixture alternative',
+                                 'source_type_rationale':'Fixture primary evidence','disposition':'confirmed','source_ids':['S1']}]}
+        put(ws/'challenge.json', challenge)
+        synthesis['ranked_approaches'][0]['candidate_ids'].append('challenge:C7')
+        synthesis.update(challenge_effect='ranking', challenge_dispositions={'T7':'Include the fixture alternative'})
+        put(ws/'synthesis.json', synthesis)
+    research.validate_file(ws, 'synthesis')
+    original_hashes = {p.name:research.digest(p) for p in (ws/'input-snapshot').iterdir()}
+    assert research.deliver(ws) == 0
+    report = (ws/'delivery/report.md').read_text()
+    assert 'R1' in report and 'Distinctive amber retention requirement' in report
+    assert ('Mandatory' if mandatory else 'Preference') in report
+    assert 'search-2:C1' in report and 'Distinctive Copper Candidate' in report
+    assert 'urn:fixture:copper-project' in report
+    if mode == 'B':
+        assert 'challenge:C7' in report and 'Distinctive Violet Candidate' in report
+        assert 'urn:fixture:violet-project' in report
+    assert research.read(ws/'delivery/strategy.json') == st
+    manifest = research.verify_delivery(ws/'delivery', ws/'input-snapshot', receipt['run_id'])
+    assert manifest['artifacts']['strategy.json'] == research.digest(ws/'strategy.json')
+    assert research.read(ws/'delivery/result.json') == synthesis  # presentation cannot change judgments
+    assert {p.name:research.digest(p) for p in (ws/'input-snapshot').iterdir()} == original_hashes
+    (ws/'delivery/strategy.json').write_text('{}')
+    with pytest.raises(research.ContractError):
+        research.verify_delivery(ws/'delivery', ws/'input-snapshot', receipt['run_id'])

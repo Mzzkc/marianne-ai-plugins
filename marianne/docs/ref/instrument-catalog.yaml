@@ -7,7 +7,7 @@
 # ║  so future tag-based intersection routing can consume this file directly.  ║
 # ║                                                                             ║
 # ║  Refresh: the catalog-refresh.yaml score runs this catalog through the     ║
-# ║  thinking-lab (4-vendor cross-rating) and applies vendor research diffs.   ║
+# ║  thinking-lab (configured cross-rating) and applies vendor research diffs.   ║
 # ║  See `last_verified` on every musician to detect staleness.                ║
 # ║                                                                             ║
 # ║  Open-source-first vision: open-weights models are the DEFAULT primary in  ║
@@ -2198,7 +2198,7 @@ use_case_chains:
 
   cross_vendor_review:
     description: "Adversarial verification — review primary work with a different vendor's eyes"
-    pattern: "Use the thinking-lab.yaml score to fan out to all five vendor families simultaneously"
+    pattern: "Use skills/research/scores/thinking-lab.yaml for independent reviews from the configured distinct-family roster"
     typical_pairs:
       - { primary: claude-opus-4-7,        reviewer: gpt-5.6-terra }
       - { primary: claude-opus-4-7,        reviewer: gemini-3.1-pro-preview }
@@ -2302,5 +2302,5 @@ use_case_chains:
 freshness:
   catalog_check_interval_days: 30
   musician_stale_threshold_days: 90
-  on_stale: "catalog-refresh.yaml run; thinking-lab cross-rating refresh; vendor research diff"
+  on_stale: "catalog-refresh.yaml run; research independent-review mode with configured roster; vendor research diff"
   refresh_score: "scores/instrument-catalog-refresh.yaml"
