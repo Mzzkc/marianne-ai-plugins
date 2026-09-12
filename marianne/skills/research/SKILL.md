@@ -102,12 +102,23 @@ have identical model, effort, timeout and source-access allowances.
 
 ## Direct use and conducting
 
-From this skill directory, with a dedicated workspace:
+Copy this entire resource bundle under a request directory in SCORES, preserving
+its `scores/`, `scripts/`, `prompts/` and roster layout. Set each copied score's
+top-level `workspace:` to its dedicated absolute WORKSPACES path before running
+it. `mzt run` takes no `--workspace` option.
+
+For example, in `/absolute/SCORES/request/scores/research-a.yaml`:
+
+```yaml
+workspace: /absolute/WORKSPACES/request-a
+```
+
+After assigning separate workspace paths to the other scores:
 
 ```bash
-mzt run scores/research-a.yaml --fresh --workspace /absolute/WORKSPACES/research-a --var input_dir=/absolute/context
-mzt run scores/research-b.yaml --fresh --workspace /absolute/WORKSPACES/research-b --var input_dir=/absolute/context
-mzt run scores/thinking-lab.yaml --fresh --workspace /absolute/WORKSPACES/review --var input_dir=/absolute/context
+mzt run /absolute/SCORES/request/scores/research-a.yaml --fresh --var input_dir=/absolute/context
+mzt run /absolute/SCORES/request/scores/research-b.yaml --fresh --var input_dir=/absolute/context
+mzt run /absolute/SCORES/request/scores/thinking-lab.yaml --fresh --var input_dir=/absolute/context
 ```
 
 The lab retains `~/workspaces/thinking-lab-input` as its legacy input default;
