@@ -49,6 +49,30 @@ def put(path, value):
 def env(kind, receipt):
     return {'schema_version':1,'kind':'research-'+kind,'run_id':receipt['run_id']}
 
+def statement(kind, value, source_ids=(), requirement_ids=()):
+    return {'kind':kind, 'text':value, 'source_ids':list(source_ids), 'requirement_ids':list(requirement_ids)}
+
+
+def test_atomic_fact_statement_requires_a_validated_source():
+    with pytest.raises(research.ContractError, match='fact requires source_ids'):
+        research.validate_statement(
+            {'kind':'fact', 'text':'Fixture claim', 'source_ids':[]},
+            {'S1'},
+            set(),
+            'fixture statement',
+        )
+
+
+def test_statement_renderer_links_every_validated_source():
+    rendered = research.render_statement(
+        {'kind':'inference', 'text':'Fixture conclusion', 'source_ids':['search-1:S1','search-2:S2']},
+        {
+            'search-1:S1': {'title':'First source', 'url':'https://example.test/one'},
+            'search-2:S2': {'title':'Second source', 'url':'https://example.test/two'},
+        },
+    )
+    assert rendered == 'Inference: Fixture conclusion ([First source](https://example.test/one); [Second source](https://example.test/two))'
+
 def prepare(tmp,mode='A',roster=None):
     inp=tmp/'input'; ws=tmp/'workspace'
     put(inp/'prompt.md','BENIGN_ORIGINAL_PROMPT: compare synthetic widgets.\n')
@@ -71,16 +95,17 @@ def search(receipt,st,sid,status='complete'):
     return {**env('search',receipt),'seat':sid,'status':status,'scope':'Synthetic test evidence only; not live research','tool_evidence':'BENIGN fixture simulated search/fetch for contract exercise',
             'queries':[] if no else [{'query':'synthetic','tool':'fixture'}],
             'sources':[] if no else [{'id':'S1','title':'Fixture primary','url':'https://docs.python.org/3/library/','accessed_at':'2026-09-11T12:00:00Z','supported_claim':'BENIGN fixture claim, not a live finding','source_type':'docs'}],
-            'candidates':[] if no else [{'id':sid+':C1','name':'Synthetic widget','canonical_identity':'synthetic-widget','integration':'adapter needed','remaining_custom_work':'blue adapter','fit':{'R1':{'status':'supported','reason':'fixture assertion','source_ids':['S1']}}}],
-            'question_accounts':[{'id':q,'status':'unknown' if no else 'answered','finding':'unavailable' if no else 'fixture evidence','candidate_ids':[] if no else [sid+':C1'],'source_ids':[] if no else ['S1']} for q in st['assignments'][sid]],
-            'rejected_alternatives':[],'uncovered_questions':st['assignments'][sid] if no else [],'reason':'fixture unavailable route' if status!='complete' else ''}
+            'candidates':[] if no else [{'id':sid+':C1','name':'Synthetic widget','canonical_identity':'synthetic-widget','identity':statement('fact','Fixture source identifies this candidate',['S1']),'integration':statement('proposal','adapter needed'),'remaining_custom_work':statement('proposal','blue adapter'),'fit':{'R1':{'status':'supported','reason':statement('fact','fixture assertion',['S1'])}}}],
+            'question_accounts':[{'id':q,'status':'unknown' if no else 'answered','finding':statement('unknown','unavailable') if no else statement('fact','fixture evidence',['S1']),'candidate_ids':[] if no else [sid+':C1']} for q in st['assignments'][sid]],
+            'rejected_alternatives':[],'uncovered_questions':st['assignments'][sid] if no else [],'reason':statement('unknown','fixture unavailable route') if status!='complete' else ''}
 
 def complete(ws,r,status='complete'):
     st=strategy(r); put(ws/'strategy.json',st); research.assignments(ws)
     for row in r['roster']['seats']: put(ws/(row['id']+'.json'),search(r,st,row['id'],status if row['id']=='search-1' else 'complete'))
-    if r['mode']=='B': put(ws/'challenge.json',{**env('challenge',r),'status':'complete','summary':'Fixture evidence settled; no targets','sources':[],'new_candidates':[],'targets':[]})
-    sy={**env('synthesis',r),'status':'complete' if status=='complete' else 'partial','recommendation':'adapt','summary':'BENIGN_CURRENT_SYNTHESIS: use synthetic widget conditionally','ranking_rationale':'blue constraint first','strongest_alternative':'another synthetic widget','remaining_custom_work':'adapter','unresolved_gaps':[],'contradictions':[],
-        'ranked_approaches':[{'id':'A1','candidate_ids':['search-2:C1'],'rationale':'fixture fit','counterarguments':'adapter effort','integration':'compose adapter','remaining_custom_work':'blue adapter','constraint_matrix':{'R1':{'status':'supported','reason':'fixture primary','source_ids':['search-2:S1']}}}]}
+    if r['mode']=='B': put(ws/'challenge.json',{**env('challenge',r),'status':'complete','summary':statement('unknown','Fixture evidence settled; no targets'),'sources':[],'new_candidates':[],'targets':[]})
+    cited=['search-2:S1']
+    sy={**env('synthesis',r),'status':'complete' if status=='complete' else 'partial','recommendation':'adapt','summary':statement('recommendation','BENIGN_CURRENT_SYNTHESIS: use synthetic widget conditionally',cited),'ranking_rationale':statement('inference','blue constraint first',cited),'strongest_alternative':statement('inference','another synthetic widget',cited),'remaining_custom_work':statement('proposal','adapter'),'unresolved_gaps':[],'contradictions':[],
+        'ranked_approaches':[{'id':'A1','candidate_ids':['search-2:C1'],'rationale':statement('inference','fixture fit',cited),'counterarguments':statement('inference','adapter effort',cited),'integration':statement('proposal','compose adapter'),'remaining_custom_work':statement('proposal','blue adapter'),'constraint_matrix':{'R1':{'status':'supported','reason':statement('fact','fixture primary',cited)}}}]}
     if r['mode']=='B': sy.update(challenge_effect='none',challenge_dispositions={})
     put(ws/'synthesis.json',sy)
     return st,sy
@@ -214,6 +239,8 @@ def test_missing_original_context_fails_causally(tmp_path,change):
 @pytest.mark.parametrize('status',['partial','no_web'])
 def test_partial_delivery_refuses_success_chaining(tmp_path,status):
     _,ws,r=prepare(tmp_path); complete(ws,r,status)
+    if status == 'no_web':
+        assert research.validate_search(research.read(ws/'search-1.json'), r, strategy(r), 'search-1') == {}
     assert research.deliver(ws)==4
     assert research.read(ws/'delivery/status.json')['status']=='partial'
     assert (ws/'delivery/report.md').exists()
@@ -278,10 +305,10 @@ def test_direct_and_concert_original_hashes_and_synthesis(tmp_path):
 def test_complete_challenger_ledger_and_disposition_joins(tmp_path):
     _,ws,r=prepare(tmp_path,'B'); st,sy=complete(ws,r)
     discovery=research.read(ws/'search-1.json')
-    ch={**env('challenge',r),'status':'complete','summary':'Corrected fixture target','sources':discovery['sources'],'new_candidates':[],
-        'targets':[{'id':'T1','question_ids':['Q1'],'candidate_ids':['search-1:C1'],'reason':'fixture decisive conflict','decision_consequence':'confidence changes','source_type_rationale':'code instead of docs','disposition':'corrected','source_ids':['S1']}]}
+    ch={**env('challenge',r),'status':'complete','summary':statement('fact','Corrected fixture target',['S1']),'sources':discovery['sources'],'new_candidates':[],
+        'targets':[{'id':'T1','question_ids':['Q1'],'candidate_ids':['search-1:C1'],'reason':statement('fact','fixture decisive conflict',['S1']),'decision_consequence':statement('recommendation','confidence changes',['S1']),'source_type_rationale':statement('inference','code instead of docs',['S1']),'disposition':'corrected','source_ids':['S1']}]}
     put(ws/'challenge.json',ch)
-    sy.update(challenge_effect='confidence',challenge_dispositions={'T1':'Accept correction conditional on fixture evidence'})
+    sy.update(challenge_effect='confidence',challenge_dispositions={'T1':statement('recommendation','Accept correction conditional on fixture evidence',['challenge:S1'])})
     put(ws/'synthesis.json',sy); assert research.deliver(ws)==0
     sy['challenge_dispositions']={}; put(ws/'synthesis.json',sy)
     assert research.deliver(ws)==4
@@ -402,14 +429,14 @@ def test_delivered_report_defines_requirements_and_candidate_identities(tmp_path
     if mode == 'B':
         new_candidate = copy.deepcopy(search_record['candidates'][0])
         new_candidate.update(id='challenge:C7', name='Distinctive Violet Candidate', canonical_identity='urn:fixture:violet-project')
-        challenge = {**env('challenge', receipt), 'status':'complete', 'summary':'Benign new-candidate fixture',
-                     'sources':search_record['sources'], 'new_candidates':[new_candidate],
-                     'targets':[{'id':'T7','question_ids':['Q2'],'candidate_ids':['challenge:C7'],
-                                 'reason':'Benign omission','decision_consequence':'Fixture alternative',
-                                 'source_type_rationale':'Fixture primary evidence','disposition':'confirmed','source_ids':['S1']}]}
+        challenge = {**env('challenge', receipt), 'status':'complete', 'summary':statement('fact','Benign new-candidate fixture',['S1']),
+                         'sources':search_record['sources'], 'new_candidates':[new_candidate],
+                         'targets':[{'id':'T7','question_ids':['Q2'],'candidate_ids':['challenge:C7'],
+                                     'reason':statement('fact','Benign omission',['S1']),'decision_consequence':statement('recommendation','Fixture alternative',['S1']),
+                                     'source_type_rationale':statement('inference','Fixture primary evidence',['S1']),'disposition':'confirmed','source_ids':['S1']}]}
         put(ws/'challenge.json', challenge)
         synthesis['ranked_approaches'][0]['candidate_ids'].append('challenge:C7')
-        synthesis.update(challenge_effect='ranking', challenge_dispositions={'T7':'Include the fixture alternative'})
+        synthesis.update(challenge_effect='ranking', challenge_dispositions={'T7':statement('recommendation','Include the fixture alternative',['challenge:S1'])})
         put(ws/'synthesis.json', synthesis)
     research.validate_file(ws, 'synthesis')
     original_hashes = {p.name:research.digest(p) for p in (ws/'input-snapshot').iterdir()}

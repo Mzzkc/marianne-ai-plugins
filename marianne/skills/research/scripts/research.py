@@ -53,6 +53,54 @@ def refs(value, known, label, nonempty=False):
     require(set(value) <= set(known), f'{label}: nonexistent references {set(value)-set(known)}')
     return set(value)
 
+STATEMENT_KINDS = {'fact', 'inference', 'recommendation', 'requirement', 'proposal', 'unknown'}
+CITED_STATEMENT_KINDS = {'fact', 'inference', 'recommendation'}
+
+def validate_statement(value, source_ids, requirement_ids, label):
+    require(isinstance(value, dict), f'{label}: atomic statement object required')
+    kind = value.get('kind')
+    require(kind in STATEMENT_KINDS, f'{label}: invalid statement kind')
+    text(value.get('text'), label + '.text')
+    cited = refs(value.get('source_ids'), source_ids, label + '.source_ids')
+    requirements = refs(value.get('requirement_ids', []), requirement_ids, label + '.requirement_ids')
+    if kind in CITED_STATEMENT_KINDS:
+        require(bool(cited), f'{label}: {kind} requires source_ids')
+    else:
+        require(not cited, f'{label}: {kind} must not claim external sources')
+    if kind == 'requirement':
+        require(bool(requirements), f'{label}: requirement requires requirement_ids')
+    else:
+        require(not requirements, f'{label}: only requirement statements may reference requirement_ids')
+    return value
+
+def validate_statements(value, source_ids, requirement_ids, label):
+    rows = value if isinstance(value, list) else [value]
+    require(bool(rows), f'{label}: at least one atomic statement required')
+    return [validate_statement(row, source_ids, requirement_ids, f'{label}[{index}]') for index, row in enumerate(rows)]
+
+def validate_fit_statement(value, status, source_ids, requirement_ids, label):
+    rows = validate_statements(value, source_ids, requirement_ids, label)
+    if status == 'unknown':
+        require(all(row['kind'] == 'unknown' for row in rows), f'{label}: unknown fit requires unknown statements')
+    else:
+        require(all(row['kind'] in CITED_STATEMENT_KINDS for row in rows), f'{label}: {status} fit requires cited statements')
+    return rows
+
+def render_statement(value, source_map, requirement_ids=()):
+    label = value['kind'].capitalize()
+    citations = citation_links(value, source_map)
+    requirements = [f"[{rid}](#requirement-{rid})" for rid in value.get('requirement_ids', [])]
+    links = citations + requirements
+    return f"{label}: {value['text']}" + (f" ({'; '.join(links)})" if links else '')
+
+def citation_links(value, source_map):
+    rows = value if isinstance(value, list) else [value]
+    return [f"[{source_map[s]['title']}]({source_map[s]['url']})" for row in rows for s in row['source_ids']]
+
+def render_statements(value, source_map, requirement_ids=()):
+    rows = value if isinstance(value, list) else [value]
+    return ' '.join(render_statement(row, source_map, requirement_ids) for row in rows)
+
 def binding(row):
     return (row['profile'], row.get('model', 'default'))
 
@@ -130,14 +178,17 @@ def candidate_rows(rows, reqs, source_ids, prefix=None):
     result = indexed(rows, 'candidates', False)
     for cid, row in result.items():
         require(prefix is None or cid.startswith(prefix + ':'), 'candidate ID must be seat-prefixed')
-        for key in ('canonical_identity', 'name', 'integration', 'remaining_custom_work'):
+        for key in ('canonical_identity', 'name'):
             text(row.get(key), cid + '.' + key)
+        validate_statements(row.get('identity'), source_ids, set(reqs), cid + '.identity')
+        for key in ('integration', 'remaining_custom_work'):
+            validate_statements(row.get(key), source_ids, set(reqs), cid + '.' + key)
         fit = row.get('fit')
         require(isinstance(fit, dict) and set(fit) == set(reqs), cid + ': account for every requirement (unknown allowed)')
         for rid, cell in fit.items():
             require(isinstance(cell, dict) and cell.get('status') in ('supported','contradicted','unknown'), 'invalid fit cell')
-            text(cell.get('reason'), cid + '.' + rid)
-            refs(cell.get('source_ids'), source_ids, cid + '.' + rid, cell['status'] != 'unknown')
+            require('source_ids' not in cell, cid + '.' + rid + ': cite through reason statements, not a duplicate source_ids field')
+            validate_fit_statement(cell.get('reason'), cell['status'], source_ids, set(reqs), cid + '.' + rid)
     return result
 
 def validate_search(payload, receipt, strategy, sid):
@@ -145,23 +196,25 @@ def validate_search(payload, receipt, strategy, sid):
     reqs, questions = validate_strategy(strategy, receipt)
     require(payload.get('seat') == sid, 'wrong search seat')
     require(payload.get('status') in ('complete','partial','no_web'), 'invalid search status')
+    evidence = sources(payload.get('sources'))
     accounts = indexed(payload.get('question_accounts'), 'question_accounts')
     require(set(accounts) == set(strategy['assignments'][sid]), 'search must account for exactly assigned questions')
     for row in accounts.values():
         require(row.get('status') in ('answered','unknown'), 'invalid question outcome')
-        text(row.get('finding'), 'question finding')
-    evidence = sources(payload.get('sources'))
+        require('source_ids' not in row, 'question finding: cite through finding statements, not a duplicate source_ids field')
+        validate_fit_statement(row.get('finding'), 'supported' if row['status']=='answered' else 'unknown', evidence, set(reqs), 'question finding')
     candidates = candidate_rows(payload.get('candidates'), reqs, evidence, sid)
     for row in accounts.values():
         refs(row.get('candidate_ids'), candidates, 'question candidate IDs')
-        refs(row.get('source_ids'), evidence, 'question source IDs', row['status'] == 'answered')
     for key in ('scope', 'tool_evidence'):
         text(payload.get(key), key)
     require(isinstance(payload.get('queries'), list), 'queries required')
     for row in objects(payload['queries'], 'queries'):
         text(row.get('query'), 'query'); text(row.get('tool'), 'query tool')
-    for key in ('rejected_alternatives','uncovered_questions'):
-        require(isinstance(payload.get(key), list), key + ' array required')
+    rejected = objects(payload.get('rejected_alternatives'), 'rejected_alternatives')
+    for index, row in enumerate(rejected):
+        validate_statements(row.get('statement'), evidence, set(reqs), f'rejected_alternatives[{index}]')
+    require(isinstance(payload.get('uncovered_questions'), list), 'uncovered_questions array required')
     uncovered=refs(payload['uncovered_questions'], questions, 'uncovered_questions')
     require({k for k,v in accounts.items() if v['status']=='unknown'} <= uncovered, 'unknown accounts must appear in uncovered_questions')
     if payload['status'] == 'no_web':
@@ -169,7 +222,7 @@ def validate_search(payload, receipt, strategy, sid):
     else:
         require(bool(payload['queries']), 'actual search queries required')
     if payload['status'] != 'complete':
-        text(payload.get('reason'), 'partial/no_web reason')
+        validate_statements(payload.get('reason'), evidence, set(reqs), 'partial/no_web reason')
     return candidates
 
 def discoveries(workspace, receipt, strategy):
@@ -192,12 +245,12 @@ def validate_challenge(payload, receipt, strategy, candidates):
         refs(row.get('question_ids'), {x['id'] for x in strategy['questions']}, 'target questions', True)
         refs(row.get('candidate_ids'), set(candidates)|set(new), 'target candidates')
         require(row.get('disposition') in ('confirmed','corrected','unresolved'), 'target disposition required')
-        for key in ('reason', 'decision_consequence', 'source_type_rationale'):
-            text(row.get(key), key)
         refs(row.get('source_ids'), evidence, 'target evidence', row['disposition'] != 'unresolved')
-    text(payload.get('summary'), 'challenge summary/no-targets reason')
+        for key in ('reason', 'decision_consequence', 'source_type_rationale'):
+            validate_statements(row.get(key), evidence, {x['id'] for x in strategy['requirements']}, key)
+    validate_statements(payload.get('summary'), evidence, {x['id'] for x in strategy['requirements']}, 'challenge summary/no-targets reason')
     if payload['status'] != 'complete':
-        text(payload.get('reason'), 'challenge partial reason')
+        validate_statements(payload.get('reason'), evidence, {x['id'] for x in strategy['requirements']}, 'challenge partial reason')
     if payload['status'] == 'no_web':
         require(not evidence and not new and all(t['disposition']=='unresolved' for t in targets.values()), 'no_web challenge claims forbidden')
     require(all(any(cid in t['candidate_ids'] for t in targets.values()) for cid in new), 'new candidate needs bounded target')
@@ -207,34 +260,38 @@ def validate_synthesis(payload, receipt, strategy, candidates, reports, challeng
     envelope(payload, receipt, 'research-synthesis')
     require(payload.get('status') in ('complete','partial'), 'invalid synthesis status')
     require(payload.get('recommendation') in ('reuse','adapt','build','undetermined'), 'invalid recommendation')
-    for key in ('summary','ranking_rationale','strongest_alternative','remaining_custom_work'):
-        text(payload.get(key), key)
     reqs = {x['id']: x for x in strategy['requirements']}
     all_sources = {r['seat']+':'+s['id'] for r in reports for s in r['sources']}
     if challenge:
         all_sources |= {'challenge:'+s['id'] for s in challenge['sources']}
+    for key in ('summary','ranking_rationale','strongest_alternative','remaining_custom_work'):
+        validate_statements(payload.get(key), all_sources, reqs, key)
     approaches = indexed(payload.get('ranked_approaches'), 'ranked_approaches', False)
     for row in approaches.values():
         refs(row.get('candidate_ids'), candidates, 'approach candidate references', True)
         for key in ('rationale','counterarguments','integration','remaining_custom_work'):
-            text(row.get(key), key)
+            validate_statements(row.get(key), all_sources, reqs, key)
         require(isinstance(row.get('constraint_matrix'), dict) and set(row['constraint_matrix']) == set(reqs), 'approach must cover every requirement')
         for cell in row['constraint_matrix'].values():
             require(isinstance(cell,dict) and cell.get('status') in ('supported','contradicted','unknown'), 'invalid matrix fit')
-            text(cell.get('reason'), 'matrix reason')
-            refs(cell.get('source_ids'), all_sources, 'matrix source join', cell['status'] != 'unknown')
+            require('source_ids' not in cell, 'matrix reason: cite through reason statements, not a duplicate source_ids field')
+            validate_fit_statement(cell.get('reason'), cell['status'], all_sources, reqs, 'matrix reason')
     require(bool(approaches) or payload['recommendation']=='undetermined', 'no ranked evidence requires undetermined recommendation')
-    require(isinstance(payload.get('unresolved_gaps'),list), 'unresolved_gaps required')
+    gaps = objects(payload.get('unresolved_gaps'), 'unresolved_gaps')
+    for index, row in enumerate(gaps):
+        statements = validate_statements(row, all_sources, reqs, f'unresolved_gaps[{index}]')
+        require(all(statement['kind'] == 'unknown' for statement in statements), 'unresolved gaps must be unknown statements')
     require(isinstance(payload.get('contradictions'),list), 'contradictions required')
     for row in objects(payload['contradictions'], 'contradictions'):
-        text(row.get('claim'), 'contradiction claim'); text(row.get('resolution'), 'contradiction resolution/condition')
+        validate_statements(row.get('claim'), all_sources, reqs, 'contradiction claim')
+        validate_statements(row.get('resolution'), all_sources, reqs, 'contradiction resolution/condition')
         refs(row.get('candidate_ids'), candidates, 'contradiction candidates', True)
-        refs(row.get('source_ids'), all_sources, 'contradiction sources')
     if challenge is not None:
         require(payload.get('challenge_effect') in ('eligibility','ranking','confidence','none','unresolved'), 'B incremental effect required')
         dispositions = payload.get('challenge_dispositions')
         require(isinstance(dispositions,dict) and set(dispositions)=={x['id'] for x in challenge['targets']}, 'dispose every challenge target')
-        for val in dispositions.values(): text(val, 'synthesis target resolution')
+        for target, val in dispositions.items():
+            validate_statements(val, all_sources, reqs, f'synthesis target resolution {target}')
     if any(x['status'] != 'complete' for x in reports) or (challenge and challenge['status']!='complete'):
         require(payload['status']=='partial', 'incomplete coverage cannot be complete synthesis')
 
@@ -294,21 +351,47 @@ def assignments(workspace):
     for sid,ids in strategy['assignments'].items():
         write(workspace/('assignment-'+sid+'.json'),{'schema_version':1,'kind':'research-assignment','run_id':receipt['run_id'],'seat':sid,'question_ids':ids,'strategy_sha256':digest(workspace/'strategy.json')})
 
-def markdown(result, strategy, candidates):
-    lines=['# Research decision', '', result['summary'], '', '**Recommendation:** '+result['recommendation'], '', result['ranking_rationale']]
+def source_map(reports, challenge=None):
+    result = {r['seat']+':'+s['id']:s for r in reports for s in r['sources']}
+    if challenge:
+        result.update({'challenge:'+s['id']:s for s in challenge['sources']})
+    return result
+
+def markdown(result, strategy, candidates, reports, challenge=None):
+    evidence = source_map(reports, challenge)
+    requirement_ids = {row['id'] for row in strategy['requirements']}
+    local_evidence = {report['seat']:{source['id']:source for source in report['sources']} for report in reports}
+    if challenge:
+        local_evidence['challenge'] = {source['id']:source for source in challenge['sources']}
+    lines=['# Research decision', '', render_statements(result['summary'], evidence), '', '**Recommendation:** '+result['recommendation'], '', render_statements(result['ranking_rationale'], evidence)]
     lines += ['', '## Requirements']
     for row in strategy['requirements']:
         classification = 'Mandatory' if row['mandatory'] else 'Preference'
-        lines += ['', f"### {row['id']} — {classification}", row['text']]
+        lines += ['', f"### <a id=\"requirement-{row['id']}\"></a>{row['id']} — {classification}", 'Original requirement: '+row['text']]
     lines += ['', '## Candidate identities']
     for cid, row in candidates.items():
-        lines += ['', f"### {cid}", 'Name: '+row['name'], '', 'Canonical identity: '+row['canonical_identity']]
+        identity_sources = '; '.join(citation_links(row['identity'], local_evidence[cid.split(':', 1)[0]]))
+        lines += ['', f"### {cid}", 'Name: '+row['name']+f' ({identity_sources})', '', 'Canonical identity: '+row['canonical_identity']+f' ({identity_sources})']
+    lines += ['', '## Search findings']
+    for report in reports:
+        lines += ['', f"### {report['seat']}"]
+        for account in report['question_accounts']:
+            lines += [f"- {account['id']}: {render_statements(account['finding'], local_evidence[report['seat']])}"]
+    if challenge:
+        lines += ['', '## Challenge findings', render_statements(challenge['summary'], local_evidence['challenge'])]
+        for target in challenge['targets']:
+            lines += [f"- {target['id']}: {render_statements(target['reason'], local_evidence['challenge'])}", f"  Consequence: {render_statements(target['decision_consequence'], local_evidence['challenge'])}"]
     for rank,row in enumerate(result['ranked_approaches'],1):
-        lines += ['', f"## {rank}. {row['id']}", row['rationale'], '', 'Candidates: '+', '.join(row['candidate_ids']), '', row['integration'], '', 'Counterarguments: '+row['counterarguments'], '', 'Remaining custom work: '+row['remaining_custom_work'], '', '| Requirement | Fit | Evidence / reason |','|---|---|---|']
-        for rid,cell in row['constraint_matrix'].items(): lines += [f"| {rid} | {cell['status']} | {cell['reason']} ({', '.join(cell['source_ids'])}) |"]
-    lines += ['', '## Strongest alternative', result['strongest_alternative'], '', '## Remaining custom work', result['remaining_custom_work'], '', '## Unresolved gaps'] + ['- '+str(x) for x in result['unresolved_gaps']]
-    lines += ['', '## Contradictions'] + [json.dumps(x,ensure_ascii=False) for x in result['contradictions']]
-    if 'challenge_effect' in result: lines += ['', '## Verification effect', result['challenge_effect'], json.dumps(result['challenge_dispositions'],ensure_ascii=False)]
+        lines += ['', f"## {rank}. {row['id']}", render_statements(row['rationale'], evidence), '', 'Candidates: '+', '.join(row['candidate_ids']), '', render_statements(row['integration'], evidence), '', 'Counterarguments: '+render_statements(row['counterarguments'], evidence), '', 'Remaining custom work: '+render_statements(row['remaining_custom_work'], evidence), '', '| Requirement | Fit | Evidence / reason |','|---|---|---|']
+        for rid,cell in row['constraint_matrix'].items(): lines += [f"| {rid} | {cell['status']} | {render_statements(cell['reason'], evidence)} |"]
+    lines += ['', '## Strongest alternative', render_statements(result['strongest_alternative'], evidence), '', '## Remaining custom work', render_statements(result['remaining_custom_work'], evidence), '', '## Unresolved gaps'] + ['- '+render_statements(x, evidence) for x in result['unresolved_gaps']]
+    lines += ['', '## Contradictions']
+    for row in result['contradictions']:
+        lines += ['- Claim: '+render_statements(row['claim'], evidence), '  Resolution: '+render_statements(row['resolution'], evidence)]
+    if 'challenge_effect' in result:
+        lines += ['', '## Verification effect', result['challenge_effect']]
+        for target, disposition in result['challenge_dispositions'].items():
+            lines += [f"- {target}: {render_statements(disposition, evidence, requirement_ids)}"]
     return '\n'.join(lines)+'\n'
 
 def deliver(workspace):
@@ -325,7 +408,7 @@ def deliver(workspace):
             candidates, reports=discoveries(workspace,receipt,strategy_for_delivery)
             if mode=='B':
                 candidates.update(validate_challenge(read(workspace/'challenge.json'),receipt,strategy_for_delivery,candidates))
-            report=markdown(result,strategy_for_delivery,candidates)
+            report=markdown(result,strategy_for_delivery,candidates,reports,read(workspace/'challenge.json') if mode=='B' else None)
             for row in receipt['roster']['seats']:
                 p=read(workspace/(row['id']+'.json'))
                 report+='\n## Sources: '+row['id']+'\n'+''.join(f"- {s['id']}: [{s['title']}]({s['url']}) — {s['supported_claim']} ({s['accessed_at']})\n" for s in p['sources'])

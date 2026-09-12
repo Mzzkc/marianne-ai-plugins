@@ -36,6 +36,14 @@ Each new request needs its own workspace and `--fresh`; never run two requests i
 the same workspace. All modes use required directory cadenzas for complete
 original context, plus the current run receipt, at EVERY AI stage.
 
+Research delivery uses atomic citation statements for narrative findings and
+synthesis. Facts, inferences and recommendations cite validated source IDs and
+render clickable links inline; unknowns and proposed work are visibly labelled,
+and original requirements retain their IDs. The automated contract proves source
+linkage only: a reviewer must still judge relevance and semantic entailment.
+Citation-free legacy reports fail current delivery and are not rewritten; archived
+runs remain readable as-is.
+
 `roster.json` is the authoring surface for research/review musician bindings,
 model names, backend-supported config settings, role budgets and seat count.
 Config transports only settings actually honored by the selected backend. Native

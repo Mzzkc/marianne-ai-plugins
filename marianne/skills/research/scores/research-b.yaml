@@ -278,6 +278,13 @@ prompt:
     Include integration implications, rejected attractive alternatives and uncovered
     questions.
 
+    Use atomic citation statement(s) for every finding, fit reason and narrative claim.
+
+    Cited facts, inferences and recommendations need exact source IDs; unknowns and
+    proposed
+
+    work are labelled without invented citations.
+
     Do not read other search outputs, prior reports or evaluator materials. No package
     adoption,
 
@@ -315,6 +322,13 @@ prompt:
 
     Include integration implications, rejected attractive alternatives and uncovered
     questions.
+
+    Use atomic citation statement(s) for every finding, fit reason and narrative claim.
+
+    Cited facts, inferences and recommendations need exact source IDs; unknowns and
+    proposed
+
+    work are labelled without invented citations.
 
     Do not read other search outputs, prior reports or evaluator materials. No package
     adoption,
@@ -363,6 +377,11 @@ prompt:
     why. Do not invent targets to justify this stage. No recursive loop or final-prose
     critic.
 
+    Use atomic citation statement(s) for every challenge narrative field; do not put
+    uncited
+
+    free prose beside the structured result.
+
     Write {{ workspace }}/challenge.json following research-challenge.
 
 
@@ -385,6 +404,14 @@ prompt:
 
     no_web, report partial. Research recommends; it does not authorize dependency
     adoption.
+
+    Write all synthesis narrative and matrix reasons as atomic citation statement(s);
+    cite facts,
+
+    inferences and recommendations beside the exact claim, label unknowns/proposals,
+    and retain
+
+    original requirement ID joins instead of fabricating external citations.
 
     Incorporate challenge ledger; dispose EVERY target explicitly and identify whether
     the
