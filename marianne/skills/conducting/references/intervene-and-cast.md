@@ -44,6 +44,12 @@ Prefer tests or acceptance criteria written separately from implementation when
 the outcome is testable. Evidence belongs beside the correction; promises do
 not close it.
 
+When the defect, accountable owner, bounded correction shape, and consequential
+boundary are already known, reuse the admitted commission: make the correction,
+exercise that boundary, then obtain the applicable independent review. Another
+design, explanation, or receipt-only vote needs a new decision-changing premise.
+This does not waive proof for the consequential mutation.
+
 ## Circuit-break non-convergence
 
 After two failed successors for the same outcome, or when a lane exceeds its
@@ -127,16 +133,20 @@ and retained authoritative workspaces.
 The lifecycle owner must measure reclamation after cleanup and recheck surviving
 agents, memory, workspaces, and evidence before closing stewardship.
 
-Persistent casting is not admitted until an authority receipt names the exact versioned recurring subject,
-concrete authoritative and memory roots, writable and read-only authority,
-exact immutable input identities, known disagreements,
-proof and refusal conditions, downstream consumer, and reevaluation path. Hold
-casting when those governed identities are not yet available.
+Persistent casting is not admitted until a complete authority brief names the
+exact versioned recurring subject, concrete authoritative and memory roots,
+writable and read-only authority, immutable input identities, known
+disagreements, proof and refusal conditions, downstream consumer, and
+reevaluation path. Hold first admission when those governed identities are not
+available.
 Conceptual root names are not enough; cite concrete paths, identifiers, or
 hashes, or record their absence as an admission blocker with an owner.
-Every response proposing persistent casting must render the authority receipt.
-Use `unknown — lifecycle owner` for each unavailable identity; do not replace
-concrete identities with conceptual root names or defer the fields to later.
+For a still-bound persistent person, check that the complete brief remains
+applicable, then cite it and state the changed role, memory/context delivery,
+new unknown, next artifact, and adoption check. Bind a snapshot or hash only
+when material drift could change authority during transfer or use. Use
+`unknown — lifecycle owner` only where the missing identity blocks the next
+action; do not replace required concrete identities with conceptual root names.
 
 - **Coach** when the gap is specific and the musician responds to evidence.
 - **Narrow** scope when reliability is adequate only for simpler or lower-risk

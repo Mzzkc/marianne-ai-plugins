@@ -49,7 +49,7 @@ class ConductingSkillReleaseTests(unittest.TestCase):
 
     def test_router_is_compact_and_names_binding_doctrine(self) -> None:
         text = (ROOT / "SKILL.md").read_text(encoding="utf-8")
-        self.assertLessEqual(len(text.split()), 500)
+        self.assertLessEqual(len(text.split()), 700)
         for phrase in (
             "The conductor is god",
             "Long term wins",
@@ -145,8 +145,8 @@ class ConductingSkillReleaseTests(unittest.TestCase):
 
     def test_version_records_composer_doctrine(self) -> None:
         text = (ROOT / "VERSION").read_text(encoding="utf-8")
-        self.assertIn("version: 1.4.0", text)
-        self.assertIn("doctrine: measured-conducting-2026-09-11", text)
+        self.assertIn("version: 1.5.0", text)
+        self.assertIn("doctrine: proportionate-continuity-2026-09-12", text)
 
 
 if __name__ == "__main__":

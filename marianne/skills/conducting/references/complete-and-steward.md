@@ -118,6 +118,13 @@ commands must satisfy their declared result contracts; an all-exits-zero rule
 must not suppress useful failure evidence. Save a minimal substantive verdict
 with executed checks before optional additional investigation.
 
+A settled partial is not baton coverage. After answering an additive side
+question or status request, continue supervising the existing authorized
+objective. Record the remaining obligation, next owner when known, and exact
+blocker; advance independent admissible work. Do not manufacture a successor
+where authority or evidence is absent, and do not treat a finite job or saved
+plan as future coverage.
+
 For already-correct behavior, preserve baseline GREEN and prove assertions are
 non-vacuous; do not manufacture a RED. A collection failure is not an exercised
 behavioral assertion. Exact final-test replay supports causal evidence, but does

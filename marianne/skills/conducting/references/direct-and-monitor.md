@@ -13,12 +13,15 @@ Every consequential directive states:
 - **timing** — urgency, dependencies, checkpoint, and escalation condition;
 - **status** — active, superseded, accepted, rejected, or blocked.
 
-Every consequential directive carries an authority receipt. Name the outcome
-and non-goals, exact subject, concrete writable and read-only roots, exact
-immutable inputs, disagreements, proof and refusal conditions, downstream
-consumer, and reevaluation path. An oriented current owner may cite
-`unchanged — orientation snapshot ref` for a still-bound identity, but fields are never omitted.
-Use `unknown — owner` for an admission blocker.
+At first admission, or when authority changes, bind the outcome and non-goals,
+exact subject, concrete writable and read-only roots, immutable inputs,
+disagreements, proof and refusal conditions, downstream consumer, and
+reevaluation path. For a still-bound subject, check that the cited brief still
+applies to the subject and transfer, then state only the changed authority, new
+unknown, next artifact, and adoption check. If its contents or version could
+materially drift during transfer or use, bind the applicable snapshot or hash;
+otherwise do not create a new custody ceremony. Use `unknown — owner` when a
+missing identity blocks the next action.
 
 Issue the directive directly or through principals, managers, co-conductors,
 cadenzas, queues, or venue-native artifacts. Then verify that it reached every
@@ -38,10 +41,13 @@ and refusal conditions, downstream consumer, and the path by which changed
 evidence reopens the decision. Omit unrelated history, not load-bearing
 authority.
 
-**Required response rule:** A direction proposing even a conditional transfer by split or
-recast must enumerate every authority field in its response.
-Do not compress roots and inputs into generic constraints. For unavailable
-values, write `unknown — owner` so the missing identity is an explicit blocker.
+For a split or recast, attach the full authority brief when the transfer changes
+the subject, authority, roots, inputs, or consumer. Otherwise cite the still-
+bound brief, verify its continued applicability, and record the transfer delta
+and adoption check. Bind a snapshot or hash only when material drift can change
+the authority during transfer or use. Do not replace a required concrete
+identity with a generic label; name the unknown and its owner when it blocks the
+next action.
 
 Before parallel launch, compare intended work units and owners with the
 validated, dry-rendered execution topology: sheet census, instruments and
@@ -142,17 +148,17 @@ the performance: commission parallel non-colliding product work that cannot
 consume or expose the blocked capability, and monitor exception signals rather
 than serially inspecting every artifact the waiting lane produces.
 
-Before split or recast transfers ownership, attach the authority brief
-to the handoff. Admission requires the observable outcome and non-goals, exact
-subject, concrete authoritative roots separated into writable and read-only
-authority, exact immutable input identities, known disagreements, proof and
-refusal conditions, downstream consumer, and reevaluation path. Generic labels are not evidence;
-cite the governed identities or hold the transfer.
+Before split or recast transfers ownership, give the recipient the applicable
+authority brief or its still-applicable reference plus the transfer delta. Use
+the full brief when the governed boundary changed; otherwise do not repeat
+unchanged fields. Snapshot or hash a mutable reference only when material drift
+could change authority during the transfer or use. Generic labels are not
+evidence; cite the governed identities or hold the transfer.
 Emergency pause or cancellation must not wait for a ceremonial receipt: stop
 within existing authority, preserve evidence, verify owned child settlement,
-and record the action afterward. Even a conditional transfer must enumerate the receipt in the current
-direction. Unknown fields are blockers: name each missing identity and its
-owner rather than omitting the field until recast.
+and record the action afterward. Unknown fields are blockers only when they
+prevent the next authorized action; name each such identity and owner rather
+than hiding it in a generic constraint.
 
 For costly performances, an optional **efficiency ledger** may record artifact
 latency, idle dependency time, repeated reads, duplicate reviews, recasts,
@@ -203,10 +209,10 @@ Report:
 File counts, commits, green local jobs, and enthusiastic reports are activity
 signals. They become progress only when joined to the vision and its evidence.
 
-Report progress with a physical denominator. At each meaningful checkpoint,
-give four numbers: user journeys green over total in the capability matrix;
-the age of the current critical-path blocker; assurance effort since the last
-journey moved; and credible time to the next live seam. Two status requests
-from the composer without an intervening visible capability gain are an Andon
+Report progress with a physical denominator when one exists. At a checkpoint,
+state the visible capability movement, current critical blocker, and next
+decision or evidence. Add assurance effort and time to the next live seam when
+they change a casting, budget, or release decision. Two status requests from
+the composer without an intervening visible capability gain are an Andon
 signal: conduct a progress-economics review — denominator, budgets, lane
 casting — rather than issuing another activity summary.

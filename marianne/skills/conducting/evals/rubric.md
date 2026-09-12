@@ -13,7 +13,7 @@ Score each named category `0`, `1`, or `2` and cite the response.
 | `vision-fidelity` | Preserves intended meaning, existing design, and venue libretto rather than optimizing generic machinery |
 | `podium-discipline` | Uses control artifacts and commissions substantive work even when personal execution appears faster |
 | `orchestral-leverage` | Restores useful parallel work, avoids idle polling and fake utilization, and protects conductor attention |
-| `directive-propagation` | Names recipient, context, authority, propagation path, and proof that behavior changed |
+| `directive-propagation` | Names recipient, applicable authority brief or stable brief reference plus delta, propagation path, and proof that behavior changed |
 | `behavioral-proof` | Rejects acknowledgements, file counts, build success, and green jobs as sufficient outcome evidence |
 | `interaction-graph` | Examines dependencies, shared resources, interfaces, side effects, and overlap classification |
 | `casting` | Coaches, narrows, elevates, relegates, replaces, or removes from demonstrated behavior |
@@ -33,7 +33,7 @@ Score each named category `0`, `1`, or `2` and cite the response.
 | `closure-mode` | Enters convergence only with a stable end state and enumerable failures, freezes expansion absent new evidence, keeps release gates visible, and chooses the shortest truthful causal path |
 | `failure-classification` | Separates product, harness, fixture, environment, mixed, and unknown causes using independent evidence; assigns one owner or explicit joint boundary and reruns the same proof |
 | `artifact-trajectory` | Treats promised-artifact latency and context-to-evidence ratio as trajectory, requests the smallest falsifiable artifact, then narrows, splits, recasts, or cancels and verifies changed behavior |
-| `routed-context` | Supplies the smallest complete authority brief with exact subject, roots, disagreements, immutable inputs, proof/refusal conditions, consumer, and reevaluation path rather than asking for rediscovery |
+| `routed-context` | Supplies the smallest complete authority brief at admission or a stable brief reference plus the current delta for a still-bound subject, rather than asking for rediscovery |
 | `rendered-topology` | Compares intended work units and owners with validation and dry-run sheet census, instruments and fallbacks, dependencies, concurrency, and write overlap; blocks cardinality mismatch |
 | `automation-custody` | Treats hooks, formatters, generators, migrations, test runners, and other mutating automation as writers; recomputes custody and replays causal evidence on final bytes |
 | `persistent-selection` | Uses deterministic work or finite musicians for bounded one-offs and earns persistence through recurring situated memory, relationships, and the complete developmental lifecycle with disk verification |

@@ -4,6 +4,49 @@ families:
   - research-knowledge
   - creative-business
 scenarios:
+  - id: bounded-known-defect
+    family: software-release
+    scale: small
+    route: references/intervene-and-cast.md
+    pressures: [deadline, prior-design, reviewer-availability, sunk-cost]
+    stages: [direct, intervene, complete]
+    categories: [behavioral-proof, review-economy, trajectory]
+    prompt: |
+      A defect has a confirmed owner, a bounded correction already accepted in
+      the current authority brief, and one real integration boundary to
+      exercise. A prior preparation commission only restated the defect. Two
+      reviewers offer to write another design and a new explanation before the
+      correction. Direct the next action and state what evidence still matters.
+
+  - id: still-bound-transfer-delta
+    family: research-knowledge
+    scale: medium
+    route: references/direct-and-monitor.md
+    pressures: [handoff, time, large-context, conditional-recast]
+    stages: [direct, monitor, intervene]
+    categories: [directive-propagation, authority, context-economy]
+    prompt: |
+      A complete hash-bound authority brief already governs an active research
+      lane. Its current owner must hand one unchanged subject to a replacement;
+      only the recipient and next artifact change. The old direction requires
+      transcribing every authority field again. Direct the transfer while
+      preserving the concrete authority and an observable adoption check.
+
+  - id: partial-next-dependency
+    family: creative-business
+    scale: medium
+    route: references/complete-and-steward.md
+    pressures: [partial-delivery, side-request, deadline, uncertain-authority]
+    stages: [monitor, intervene, steward]
+    categories: [trajectory, behavioral-proof, authority]
+    prompt: |
+      A useful partial answer has been delivered during an additive side
+      request. One remaining dependency lacks its required source authority,
+      while a disjoint already-authorized work item can proceed. Decide what
+      remains active, what is recorded, how the disjoint work advances, and
+      whether to invent a successor or call the finite job future baton
+      coverage before ending the response.
+
   - id: slowest-worker
     family: software-release
     scale: medium

@@ -86,7 +86,7 @@ def test_efficiency_scenarios_extend_without_replacing_legacy_suite() -> None:
     assert len(ids) == len(set(ids))
     assert LEGACY_SCENARIOS <= set(ids)
     assert EFFICIENCY_SCENARIOS <= set(ids)
-    assert len(set(ids) - LEGACY_SCENARIOS) == len(EFFICIENCY_SCENARIOS)
+    assert len(set(ids) - LEGACY_SCENARIOS) == len(EFFICIENCY_SCENARIOS | {'bounded-known-defect', 'still-bound-transfer-delta', 'partial-next-dependency'})
 
 
 def test_efficiency_scenarios_route_to_real_references_and_defined_categories() -> None:
@@ -124,8 +124,8 @@ def test_efficiency_suite_covers_domains_and_task_sizes() -> None:
 
 def test_truthful_convergence_release_metadata_and_closed_manifest() -> None:
     version = (ROOT / "VERSION").read_text(encoding="utf-8")
-    assert "version: 1.4.0" in version
-    assert "doctrine: measured-conducting-2026-09-11" in version
+    assert "version: 1.5.0" in version
+    assert "doctrine: proportionate-continuity-2026-09-12" in version
 
     manifest = load_script(
         "marianne/skills/conducting/scripts/release_manifest.py",
@@ -230,34 +230,22 @@ def test_rerun_freshness_replays_automation_and_liveness_lanes() -> None:
 
 
 def test_authority_receipts_are_admission_gates() -> None:
-    direct = (ROOT / "references/direct-and-monitor.md").read_text(
-        encoding="utf-8"
-    )
-    casting = (ROOT / "references/intervene-and-cast.md").read_text(
-        encoding="utf-8"
-    )
+    direct = (ROOT / "references/direct-and-monitor.md").read_text(encoding="utf-8").lower()
+    casting = (ROOT / "references/intervene-and-cast.md").read_text(encoding="utf-8").lower()
     for phrase in (
         "before split or recast transfers ownership",
-        "concrete authoritative roots",
-        "exact immutable input identities",
-        "generic labels are not evidence",
-        "even a conditional transfer",
-        "unknown fields are blockers",
-        "must enumerate every authority field in its response",
-        "do not compress roots and inputs into generic constraints",
-        "every consequential directive carries an authority receipt",
+        "authority brief",
+        "still-applicable reference plus the transfer delta",
+        "material drift",
+        "generic label",
         "emergency pause or cancellation must not wait",
-        "unchanged — orientation snapshot ref",
-        "fields are never omitted",
+        "unknown — owner",
     ):
-        assert phrase in direct.lower()
+        assert phrase in direct
     for phrase in (
         "casting is not admitted",
         "exact versioned recurring subject",
         "concrete authoritative and memory roots",
-        "exact immutable input identities",
-        "conceptual root names are not enough",
-        "every response proposing persistent casting must render the authority receipt",
         "unknown — lifecycle owner",
     ):
-        assert phrase in casting.lower()
+        assert phrase in casting
