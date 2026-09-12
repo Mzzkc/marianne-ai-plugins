@@ -579,3 +579,25 @@ def test_indexed_sparse_candidate_fit_requires_real_applicable_requirement(tmp_p
     for fit in ({}, {'R404':{'status':'unknown','reason':statement('unknown','not applicable')}}):
         record['candidates'][0]['fit']=fit; put(ws/'search-1.json',record)
         with pytest.raises(research.ContractError): research.validate_file(ws,'search-1')
+
+def test_delivery_renders_adopted_synthesis_not_raw_search_prose(tmp_path):
+    _, ws, receipt = prepare(tmp_path)
+    _, synthesis = complete(ws, receipt)
+    raw = research.read(ws/'search-1.json')
+    raw['question_accounts'][0]['finding'] = statement('fact', 'INVALIDATED_UPSTREAM_ASSERTION', ['S1'])
+    raw['sources'][0]['supported_claim'] = 'RAW_SUPPORTED_CLAIM_MUST_NOT_RENDER'
+    raw['sources'][0]['accessed_at'] = '2020-01-02T03:04:05+00:00'
+    put(ws/'search-1.json', raw)
+    synthesis['summary'] = statement('recommendation', 'ADOPTED_SYNTHESIS_ASSERTION', ['search-2:S1'])
+    put(ws/'synthesis.json', synthesis)
+    raw_before = research.digest(ws/'search-1.json')
+
+    assert research.deliver(ws) == 0
+
+    report = (ws/'delivery/report.md').read_text()
+    assert 'ADOPTED_SYNTHESIS_ASSERTION' in report
+    assert '[Fixture primary](https://docs.python.org/3/library/)' in report
+    assert 'INVALIDATED_UPSTREAM_ASSERTION' not in report
+    assert 'RAW_SUPPORTED_CLAIM_MUST_NOT_RENDER' not in report
+    assert '2020-01-02T03:04:05+00:00' not in report
+    assert research.digest(ws/'search-1.json') == raw_before

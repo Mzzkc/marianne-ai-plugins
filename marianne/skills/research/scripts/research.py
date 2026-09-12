@@ -404,8 +404,7 @@ def source_map(reports, originals, challenge=None, input_link_prefix=''):
     return result
 
 def bibliography_line(source):
-    accessed = f" ({source['accessed_at']})" if 'accessed_at' in source else ''
-    return f"- {source['id']}: [{source['title']}]({source['url']}) — {source['supported_claim']}{accessed}\n"
+    return f"- {source['id']}: [{source['title']}]({source['url']})\n"
 
 def markdown(result, strategy, candidates, reports, originals, challenge=None, input_link_prefix=''):
     evidence = source_map(reports, originals, challenge, input_link_prefix)
@@ -422,15 +421,6 @@ def markdown(result, strategy, candidates, reports, originals, challenge=None, i
     for cid, row in candidates.items():
         identity_sources = '; '.join(citation_links(row['identity'], local_evidence[cid.split(':', 1)[0]]))
         lines += ['', f"### {cid}", 'Name: '+row['name']+f' ({identity_sources})', '', 'Canonical identity: '+row['canonical_identity']+f' ({identity_sources})']
-    lines += ['', '## Search findings']
-    for report in reports:
-        lines += ['', f"### {report['seat']}"]
-        for account in report['question_accounts']:
-            lines += [f"- {account['id']}: {render_statements(account['finding'], local_evidence[report['seat']])}"]
-    if challenge:
-        lines += ['', '## Challenge findings', render_statements(challenge['summary'], local_evidence['challenge'])]
-        for target in challenge['targets']:
-            lines += [f"- {target['id']}: {render_statements(target['reason'], local_evidence['challenge'])}", f"  Consequence: {render_statements(target['decision_consequence'], local_evidence['challenge'])}"]
     for rank,row in enumerate(result['ranked_approaches'],1):
         lines += ['', f"## {rank}. {row['id']}", render_statements(row['rationale'], evidence), '', 'Candidates: '+', '.join(row['candidate_ids']), '', render_statements(row['integration'], evidence), '', 'Counterarguments: '+render_statements(row['counterarguments'], evidence), '', 'Remaining custom work: '+render_statements(row['remaining_custom_work'], evidence), '', '| Requirement | Fit | Evidence / reason |','|---|---|---|']
         for rid,cell in row['constraint_matrix'].items(): lines += [f"| {rid} | {cell['status']} | {render_statements(cell['reason'], evidence)} |"]
