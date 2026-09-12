@@ -117,7 +117,7 @@ def complete(ws,r,status='complete'):
     for row in r['roster']['seats']: put(ws/(row['id']+'.json'),search(r,st,row['id'],status if row['id']=='search-1' else 'complete'))
     if r['mode']=='B': put(ws/'challenge.json',{**env('challenge',r),'status':'complete','summary':statement('unknown','Fixture evidence settled; no targets'),'sources':[],'new_candidates':[],'targets':[]})
     cited=['search-2:S1']
-    sy={**env('synthesis',r),'status':'complete' if status=='complete' else 'partial','recommendation':'adapt','summary':statement('recommendation','BENIGN_CURRENT_SYNTHESIS: use synthetic widget conditionally',cited),'ranking_rationale':statement('inference','blue constraint first',cited),'strongest_alternative':statement('inference','another synthetic widget',cited),'remaining_custom_work':statement('proposal','adapter'),'unresolved_gaps':[],'contradictions':[],
+    sy={**env('synthesis',r),'status':'complete' if status=='complete' else 'partial','recommendation':'adapt','answer':{'title':'Synthetic widget answer','sections':[{'heading':'','paragraphs':[statement('recommendation','Use the synthetic widget conditionally',cited)]},{'heading':'Evidence and limits','paragraphs':[[statement('fact','The fixture source supports this option',cited),statement('proposal','Test the adapter before adoption')]]}]},'summary':statement('recommendation','BENIGN_CURRENT_SYNTHESIS: use synthetic widget conditionally',cited),'ranking_rationale':statement('inference','blue constraint first',cited),'strongest_alternative':statement('inference','another synthetic widget',cited),'remaining_custom_work':statement('proposal','adapter'),'unresolved_gaps':[],'contradictions':[],
         'ranked_approaches':[{'id':'A1','candidate_ids':['search-2:C1'],'rationale':statement('inference','fixture fit',cited),'counterarguments':statement('inference','adapter effort',cited),'integration':statement('proposal','compose adapter'),'remaining_custom_work':statement('proposal','blue adapter'),'constraint_matrix':{'R1':{'status':'supported','reason':statement('fact','fixture primary',cited)}}}]}
     if r['mode']=='B': sy.update(challenge_effect='none',challenge_dispositions={})
     put(ws/'synthesis.json',sy)
@@ -489,7 +489,7 @@ def test_consumer_typed_manifest_consistency(tmp_path,change):
 
 @pytest.mark.parametrize('mode', ['A', 'B'])
 @pytest.mark.parametrize('mandatory', [True, False])
-def test_delivered_report_defines_requirements_and_candidate_identities(tmp_path, mode, mandatory):
+def test_delivered_report_excludes_private_requirements_and_candidates(tmp_path, mode, mandatory):
     _, ws, receipt = prepare(tmp_path, mode)
     st, synthesis = complete(ws, receipt)
     st['requirements'][0].update(text='Distinctive amber retention requirement', mandatory=mandatory)
@@ -514,13 +514,14 @@ def test_delivered_report_defines_requirements_and_candidate_identities(tmp_path
     original_hashes = {p.name:research.digest(p) for p in (ws/'input-snapshot').iterdir()}
     assert research.deliver(ws) == 0
     report = (ws/'delivery/report.md').read_text()
-    assert 'R1' in report and 'Distinctive amber retention requirement' in report
-    assert ('Mandatory' if mandatory else 'Preference') in report
-    assert 'search-2:C1' in report and 'Distinctive Copper Candidate' in report
-    assert 'urn:fixture:copper-project' in report
+    assert 'Synthetic widget answer' in report
+    assert 'Distinctive amber retention requirement' not in report
+    assert ('Mandatory' if mandatory else 'Preference') not in report
+    assert 'search-2:C1' not in report and 'Distinctive Copper Candidate' not in report
+    assert 'urn:fixture:copper-project' not in report
     if mode == 'B':
-        assert 'challenge:C7' in report and 'Distinctive Violet Candidate' in report
-        assert 'urn:fixture:violet-project' in report
+        assert 'challenge:C7' not in report and 'Distinctive Violet Candidate' not in report
+        assert 'urn:fixture:violet-project' not in report
     assert research.read(ws/'delivery/strategy.json') == st
     manifest = research.verify_delivery(ws/'delivery', ws/'input-snapshot', receipt['run_id'])
     assert manifest['artifacts']['strategy.json'] == research.digest(ws/'strategy.json')
@@ -588,7 +589,7 @@ def test_delivery_renders_adopted_synthesis_not_raw_search_prose(tmp_path):
     raw['sources'][0]['supported_claim'] = 'RAW_SUPPORTED_CLAIM_MUST_NOT_RENDER'
     raw['sources'][0]['accessed_at'] = '2020-01-02T03:04:05+00:00'
     put(ws/'search-1.json', raw)
-    synthesis['summary'] = statement('recommendation', 'ADOPTED_SYNTHESIS_ASSERTION', ['search-2:S1'])
+    synthesis['answer']['sections'][0]['paragraphs'] = [statement('recommendation', 'ADOPTED_SYNTHESIS_ASSERTION', ['search-2:S1'])]
     put(ws/'synthesis.json', synthesis)
     raw_before = research.digest(ws/'search-1.json')
 
@@ -600,4 +601,44 @@ def test_delivery_renders_adopted_synthesis_not_raw_search_prose(tmp_path):
     assert 'INVALIDATED_UPSTREAM_ASSERTION' not in report
     assert 'RAW_SUPPORTED_CLAIM_MUST_NOT_RENDER' not in report
     assert '2020-01-02T03:04:05+00:00' not in report
+    assert research.digest(ws/'search-1.json') == raw_before
+
+
+@pytest.mark.parametrize('change', ['missing', 'empty_sections', 'uncited_fact', 'requirement', 'late_empty_heading'])
+def test_synthesis_answer_contract_rejects_malformed_or_uncited_content(tmp_path, change):
+    _, ws, receipt = prepare(tmp_path)
+    _, synthesis = complete(ws, receipt)
+    if change == 'missing':
+        synthesis.pop('answer')
+    elif change == 'empty_sections':
+        synthesis['answer']['sections'] = []
+    elif change == 'uncited_fact':
+        synthesis['answer']['sections'][0]['paragraphs'] = [statement('fact', 'Uncited assertion')]
+    elif change == 'late_empty_heading':
+        synthesis['answer']['sections'].append({'heading':'', 'paragraphs':[statement('proposal', 'Late unnamed section.')]})
+    else:
+        synthesis['answer']['sections'][0]['paragraphs'] = [statement('requirement', 'Private requirement', requirement_ids=['R1'])]
+    put(ws/'synthesis.json', synthesis)
+    with pytest.raises(research.ContractError):
+        research.validate_file(ws, 'synthesis')
+
+def test_natural_answer_renders_only_cited_answer_and_flat_works_cited(tmp_path):
+    _, ws, receipt = prepare(tmp_path)
+    _, synthesis = complete(ws, receipt)
+    synthesis['answer'] = {'title':'Natural answer title','sections':[{'heading':'','paragraphs':[statement('fact','Natural factual answer', ['search-1:S1', 'search-2:S1'])]},{'heading':'Practical next step','paragraphs':[[statement('recommendation','Try the cited option first', ['search-2:S1']),statement('proposal','Then test the adapter.')]]}]}
+    synthesis['ranked_approaches'][0]['id'] = 'PRIVATE_MATRIX_APPROACH'
+    raw = research.read(ws/'search-1.json')
+    raw['sources'].append({'id':'S2','title':'Unused source','url':'https://example.test/unused','accessed_at':'2026-09-11T12:00:00Z','supported_claim':'Unreferenced fixture source','source_type':'docs'})
+    put(ws/'search-1.json', raw)
+    put(ws/'synthesis.json', synthesis)
+    raw_before = research.digest(ws/'search-1.json')
+    assert research.deliver(ws) == 0
+    report = (ws/'delivery/report.md').read_text()
+    assert '# Natural answer title' in report
+    assert 'Natural factual answer ([Fixture primary](https://docs.python.org/3/library/))' in report
+    assert 'Then test the adapter.' in report and 'Fact:' not in report and 'Proposal:' not in report
+    assert '## Works cited' in report and report.count('Fixture primary') == 3
+    assert report[report.index('## Works cited'):].count('- [Fixture primary]') == 1
+    assert 'Unused source' not in report
+    assert 'search-2:S1' not in report and 'PRIVATE_MATRIX_APPROACH' not in report and 'R1' not in report
     assert research.digest(ws/'search-1.json') == raw_before

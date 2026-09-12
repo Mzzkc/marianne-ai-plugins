@@ -35,8 +35,10 @@ not an implemented score-wide timeout. On native stage failure, initial partial
 status and useful artifacts survive; explicit `deliver` packages partial evidence
 with nonzero exit, so it cannot success-chain.
 
-Bounded delivery correction: human reports now render validated requirement and
-candidate identity legends and include hashed strategy.json for search. The default
+Bounded natural-answer migration: human reports now render only a validated, cited
+reader-facing answer plus a flat Works cited list. Requirements, candidate identity legends,
+matrices, challenge effects, and receipts remain internal analysis; strategy.json is still hashed
+in the delivery for custody. The default
 two-seat cast is OpenCode `zai-coding-plan/glm-5.3-flash` plus Antigravity
 `gemini-3.8-flash-high`; Gemini Flash also owns strategy/challenge, while explicit
 `codex-cli` `gpt-5.6-terra` owns synthesis. The Gemini high tier is part of its

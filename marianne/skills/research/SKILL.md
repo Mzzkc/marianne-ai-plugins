@@ -40,13 +40,23 @@ live-stage/output/contract directive after them. Originals may contain archived
 instructions or reports as context leads; they do not authorize filesystem hunting
 for old fixtures, evaluators, or comparisons.
 
-Research delivery uses atomic citation statements for narrative findings and
-synthesis. Facts, inferences and recommendations cite validated source IDs and
-render clickable links inline; unknowns and proposed work are visibly labelled,
-and original requirements retain their IDs. The automated contract proves source
-linkage only: a reviewer must still judge relevance and semantic entailment.
-Citation-free legacy reports fail current delivery and are not rewritten; archived
-runs remain readable as-is.
+Research delivery answers the user's question directly. Strategy requirements
+and questions are private aids for finding relevant existing solutions, not an
+acceptance dossier; supplied commissioning machinery does not displace the
+research question or turn the answer into a receipt/status report. New synthesis
+must contain a reader-facing natural `answer` with cited atomic statements. Lead with
+the named off-the-shelf component, its source-supported capability, and concrete
+work it saves; make evidence-supported comparisons and put material compatibility
+caveats next to the affected tool. Do not substitute generic commissioning/adoption
+protocols, project-governance steps, or supplied-plan echoes for an answer. Original
+context constrains relevance; the research question selects what belongs in the
+answer. Facts, inferences and recommendations render clickable links inline;
+authors phrase unknowns and proposals naturally. The final report contains that
+answer and a flat Works cited list only; candidate IDs, matrices, requirement IDs,
+challenge effects, and raw research prose remain audit machinery. The automated contract
+proves source linkage only: a reviewer must still judge relevance, source quality,
+and semantic entailment. Citation-free or answer-free legacy reports fail current
+delivery and are not rewritten; archived runs remain readable as-is.
 
 Provided original context may be cited as `source_type: input` only when its exact
 filename and SHA-256 join the current run receipt. Delivery renders that evidence

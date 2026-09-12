@@ -120,16 +120,23 @@ free prose beside the structured result.
 Write {{ workspace }}/challenge.json following research-challenge.
 ''',search_stages,upstream,role='challenge',output='challenge.json',contract='research-challenge')
             final_deps=[challenge]; upstream=upstream+['challenge.json']
-        synth=add('synthesis','synthesizer','''Read ALL original context, full strategy and EVERY discovery output. Merge duplicate
-canonical projects; rank complete approaches against hard constraints then preferences.
-Resolve contradictions using source provenance, not voting or citation counts. Preserve
-unresolved decisive gaps as conditional recommendations. Explain actionable reuse/adapt/build,
-integration boundaries and remaining custom work, with a constraint matrix and evidence links.
-Name strongest alternative and counterarguments. If required model coverage is partial or
-no_web, report partial. Research recommends; it does not authorize dependency adoption.
-Write all synthesis narrative and matrix reasons as atomic citation statement(s); cite facts,
-inferences and recommendations beside the exact claim, label unknowns/proposals, and retain
-original requirement ID joins instead of fabricating external citations.
+        synth=add('synthesis','synthesizer','''Read the supplied current context, full strategy and EVERY discovery output. Strategy
+requirements/questions, candidate joins, matrices and receipts are private aids: answer the
+user's actual question directly. In `answer`, lead with each named off-the-shelf tool, what
+cited evidence says it actually does, and concrete development work it saves. Compare capabilities
+only when the evidence warrants it; place material compatibility caveats beside the affected tool.
+Do not prescribe generic commissioning/adoption protocols, project-governance steps, echo supplied
+plans, or turn a matrix into prose. Original context constrains relevance but does not choose the
+answer. Merge duplicate canonical projects; rank internally against hard constraints then preferences.
+Resolve contradictions using source provenance, not voting or citation counts.
+Preserve unresolved decisive gaps as conditional recommendations. If required model coverage is
+partial or no_web, report partial internally. Research recommends; it does not authorize adoption.
+Write REQUIRED `answer`: {title, sections:[{heading, paragraphs:[atomic statement or statement
+array]}]}. This is the only reader-facing result. Cite facts, inferences and recommendations at
+the exact natural claim; write unknowns/proposals naturally without labels or source IDs; never
+put requirement statements, IDs, matrices, candidate legends, challenge effects, or process
+status in `answer`. Keep all internal narrative/matrix reasons as atomic citation statements and
+retain requirement joins without fabricating external citations.
 '''+('Incorporate challenge ledger; dispose EVERY target explicitly and identify whether the\nextra phase changed eligibility, ranking, confidence, nothing, or remains unresolved.\n' if mode=='B' else '')+'''Write {{ workspace }}/synthesis.json following research-synthesis. The deterministic delivery
 stage renders the Markdown from your structured judgment; it does not synthesize for you.
 ''',final_deps,upstream,role='synthesis',output='synthesis.json',contract='research-synthesis')

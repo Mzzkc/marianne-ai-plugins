@@ -270,6 +270,41 @@ def validate_challenge(payload, receipt, strategy, candidates):
     require(all(any(cid in t['candidate_ids'] for t in targets.values()) for cid in new), 'new candidate needs bounded target')
     return new
 
+def validate_answer(answer, source_ids, requirement_ids):
+    require(isinstance(answer, dict), 'answer: object required')
+    text(answer.get('title'), 'answer.title')
+    sections = objects(answer.get('sections'), 'answer.sections', True)
+    for section_index, section in enumerate(sections):
+        heading = section.get('heading')
+        require(isinstance(heading, str), f'answer.sections[{section_index}].heading: string required')
+        require(bool(heading) or section_index == 0, 'answer: empty heading is permitted only for the opening section')
+        paragraphs = section.get('paragraphs')
+        require(isinstance(paragraphs, list) and bool(paragraphs), f'answer.sections[{section_index}].paragraphs: nonempty array required')
+        for paragraph_index, paragraph in enumerate(paragraphs):
+            statements = validate_statements(paragraph, source_ids, requirement_ids, f'answer.sections[{section_index}].paragraphs[{paragraph_index}]')
+            require(all(statement['kind'] != 'requirement' for statement in statements), 'answer: requirement statements are private analysis')
+    return answer
+
+def answer_statement(value, source_map):
+    citations = []
+    seen_urls = set()
+    for source_id in value['source_ids']:
+        source = source_map[source_id]
+        if source['url'] not in seen_urls:
+            citations.append(f"[{source['title']}]({source['url']})")
+            seen_urls.add(source['url'])
+    return value['text'] + (f" ({'; '.join(citations)})" if citations else '')
+
+def answer_paragraph(value, source_map):
+    rows = value if isinstance(value, list) else [value]
+    return ' '.join(answer_statement(row, source_map) for row in rows)
+
+def answer_source_ids(answer):
+    for section in answer['sections']:
+        for paragraph in section['paragraphs']:
+            for statement in (paragraph if isinstance(paragraph, list) else [paragraph]):
+                yield from statement['source_ids']
+
 def validate_synthesis(payload, receipt, strategy, candidates, reports, challenge=None):
     envelope(payload, receipt, 'research-synthesis')
     require(payload.get('status') in ('complete','partial'), 'invalid synthesis status')
@@ -278,6 +313,7 @@ def validate_synthesis(payload, receipt, strategy, candidates, reports, challeng
     all_sources = {r['seat']+':'+s['id'] for r in reports for s in r['sources']}
     if challenge:
         all_sources |= {'challenge:'+s['id'] for s in challenge['sources']}
+    validate_answer(payload.get('answer'), all_sources, reqs)
     for key in ('summary','ranking_rationale','strongest_alternative','remaining_custom_work'):
         validate_statements(payload.get(key), all_sources, reqs, key)
     approaches = indexed(payload.get('ranked_approaches'), 'ranked_approaches', False)
@@ -404,35 +440,26 @@ def source_map(reports, originals, challenge=None, input_link_prefix=''):
     return result
 
 def bibliography_line(source):
-    return f"- {source['id']}: [{source['title']}]({source['url']})\n"
+    return f"- [{source['title']}]({source['url']})\n"
 
 def markdown(result, strategy, candidates, reports, originals, challenge=None, input_link_prefix=''):
     evidence = source_map(reports, originals, challenge, input_link_prefix)
-    requirement_ids = {row['id'] for row in strategy['requirements']}
-    local_evidence = {report['seat']:{source['id']:resolved_source(source, originals, input_link_prefix) for source in report['sources']} for report in reports}
-    if challenge:
-        local_evidence['challenge'] = {source['id']:resolved_source(source, originals, input_link_prefix) for source in challenge['sources']}
-    lines=['# Research decision', '', render_statements(result['summary'], evidence), '', '**Recommendation:** '+result['recommendation'], '', render_statements(result['ranking_rationale'], evidence)]
-    lines += ['', '## Requirements']
-    for row in strategy['requirements']:
-        classification = 'Mandatory' if row['mandatory'] else 'Preference'
-        lines += ['', f"### <a id=\"requirement-{row['id']}\"></a>{row['id']} — {classification}", 'Original requirement: '+row['text']]
-    lines += ['', '## Candidate identities']
-    for cid, row in candidates.items():
-        identity_sources = '; '.join(citation_links(row['identity'], local_evidence[cid.split(':', 1)[0]]))
-        lines += ['', f"### {cid}", 'Name: '+row['name']+f' ({identity_sources})', '', 'Canonical identity: '+row['canonical_identity']+f' ({identity_sources})']
-    for rank,row in enumerate(result['ranked_approaches'],1):
-        lines += ['', f"## {rank}. {row['id']}", render_statements(row['rationale'], evidence), '', 'Candidates: '+', '.join(row['candidate_ids']), '', render_statements(row['integration'], evidence), '', 'Counterarguments: '+render_statements(row['counterarguments'], evidence), '', 'Remaining custom work: '+render_statements(row['remaining_custom_work'], evidence), '', '| Requirement | Fit | Evidence / reason |','|---|---|---|']
-        for rid,cell in row['constraint_matrix'].items(): lines += [f"| {rid} | {cell['status']} | {render_statements(cell['reason'], evidence)} |"]
-    lines += ['', '## Strongest alternative', render_statements(result['strongest_alternative'], evidence), '', '## Remaining custom work', render_statements(result['remaining_custom_work'], evidence), '', '## Unresolved gaps'] + ['- '+render_statements(x, evidence) for x in result['unresolved_gaps']]
-    lines += ['', '## Contradictions']
-    for row in result['contradictions']:
-        lines += ['- Claim: '+render_statements(row['claim'], evidence), '  Resolution: '+render_statements(row['resolution'], evidence)]
-    if 'challenge_effect' in result:
-        lines += ['', '## Verification effect', result['challenge_effect']]
-        for target, disposition in result['challenge_dispositions'].items():
-            lines += [f"- {target}: {render_statements(disposition, evidence, requirement_ids)}"]
-    return '\n'.join(lines)+'\n'
+    answer = result['answer']
+    lines = ['# ' + answer['title']]
+    for section in answer['sections']:
+        if section['heading']:
+            lines += ['', '## ' + section['heading']]
+        for paragraph in section['paragraphs']:
+            lines += ['', answer_paragraph(paragraph, evidence)]
+    cited = []
+    for source_id in answer_source_ids(answer):
+        source = evidence[source_id]
+        if source['url'] not in {x['url'] for x in cited}:
+            cited.append(source)
+    if cited:
+        lines += ['', '## Works cited', '']
+        lines += [bibliography_line(source).rstrip() for source in cited]
+    return '\n'.join(lines) + '\n'
 
 def deliver(workspace):
     receipt=current(workspace); originals=delivery_originals(receipt); mode=receipt['mode']; status='partial'; reason=''; result=None; strategy_for_delivery=None
@@ -450,13 +477,7 @@ def deliver(workspace):
                 candidates.update(validate_challenge(read(workspace/'challenge.json'),receipt,strategy_for_delivery,candidates))
             challenge = read(workspace/'challenge.json') if mode=='B' else None
             def render_report(input_link_prefix):
-                rendered = markdown(result, strategy_for_delivery, candidates, reports, originals, challenge, input_link_prefix)
-                for row in receipt['roster']['seats']:
-                    payload = read(workspace/(row['id']+'.json'))
-                    rendered += '\n## Sources: '+row['id']+'\n'+''.join(bibliography_line(resolved_source(source, originals, input_link_prefix)) for source in payload['sources'])
-                if challenge:
-                    rendered += '\n## Challenge sources\n'+''.join(bibliography_line(resolved_source(source, originals, input_link_prefix)) for source in challenge['sources'])
-                return rendered
+                return markdown(result, strategy_for_delivery, candidates, reports, originals, challenge, input_link_prefix)
             report = render_report('')
             (workspace/'synthesis.md').write_text(render_report('delivery/'))
         status=result['status']; reason='validated' if status=='complete' else 'incomplete required coverage'

@@ -466,31 +466,53 @@ prompt:
     Write only the authoritative current-run output named above.
 
 
-    Read ALL original context, full strategy and EVERY discovery output. Merge duplicate
+    Read the supplied current context, full strategy and EVERY discovery output. Strategy
 
-    canonical projects; rank complete approaches against hard constraints then preferences.
+    requirements/questions, candidate joins, matrices and receipts are private aids:
+    answer the
+
+    user''s actual question directly. In `answer`, lead with each named off-the-shelf
+    tool, what
+
+    cited evidence says it actually does, and concrete development work it saves.
+    Compare capabilities
+
+    only when the evidence warrants it; place material compatibility caveats beside
+    the affected tool.
+
+    Do not prescribe generic commissioning/adoption protocols, project-governance
+    steps, echo supplied
+
+    plans, or turn a matrix into prose. Original context constrains relevance but
+    does not choose the
+
+    answer. Merge duplicate canonical projects; rank internally against hard constraints
+    then preferences.
 
     Resolve contradictions using source provenance, not voting or citation counts.
-    Preserve
 
-    unresolved decisive gaps as conditional recommendations. Explain actionable reuse/adapt/build,
+    Preserve unresolved decisive gaps as conditional recommendations. If required
+    model coverage is
 
-    integration boundaries and remaining custom work, with a constraint matrix and
-    evidence links.
+    partial or no_web, report partial internally. Research recommends; it does not
+    authorize adoption.
 
-    Name strongest alternative and counterarguments. If required model coverage is
-    partial or
+    Write REQUIRED `answer`: {title, sections:[{heading, paragraphs:[atomic statement
+    or statement
 
-    no_web, report partial. Research recommends; it does not authorize dependency
-    adoption.
+    array]}]}. This is the only reader-facing result. Cite facts, inferences and recommendations
+    at
 
-    Write all synthesis narrative and matrix reasons as atomic citation statement(s);
-    cite facts,
+    the exact natural claim; write unknowns/proposals naturally without labels or
+    source IDs; never
 
-    inferences and recommendations beside the exact claim, label unknowns/proposals,
-    and retain
+    put requirement statements, IDs, matrices, candidate legends, challenge effects,
+    or process
 
-    original requirement ID joins instead of fabricating external citations.
+    status in `answer`. Keep all internal narrative/matrix reasons as atomic citation
+    statements and
+
+    retain requirement joins without fabricating external citations.
 
     Incorporate challenge ledger; dispose EVERY target explicitly and identify whether
     the

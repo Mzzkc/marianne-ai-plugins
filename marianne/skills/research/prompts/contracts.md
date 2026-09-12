@@ -114,6 +114,23 @@ same mandatory criteria as discoveries. No invented concern to justify a call.
 do not carry duplicate outer source IDs. Supported/contradicted matrix reasons
 require cited statement kinds; unknown rows require unknown statement kinds.
 
+`answer` is REQUIRED for every new synthesis and is the only reader-facing
+result: {`title`: nonempty string, `sections`: nonempty [{`heading`: string (empty
+only for an opening section), `paragraphs`: nonempty [atomic statement or atomic
+statement array]}]}. Write a directly useful natural-language answer to the
+user's question. Lead with a named off-the-shelf tool, what the cited source says it
+actually does, and the concrete development work it can save; compare capabilities
+only where the evidence warrants it and place a material compatibility caveat beside
+the relevant tool. For example, write “The cited parser reads format X and exports
+Y, so an existing importer can consume its files directly ([source])” only when the
+source supports those premises. Do not prescribe generic commissioning/adoption
+protocols, step-by-step project governance, echo supplied plans, or turn a private
+matrix into prose. Original context constrains relevance but does not choose the
+answer. Facts, inferences, and recommendations cite exact qualified source IDs;
+unknowns and proposals are plain natural wording with no source IDs. Requirement statements are forbidden
+in `answer`; strategy requirements/questions, candidate IDs, matrices, challenge
+effects, and process/receipt status remain private analytical aids.
+
 `status`: complete/partial; `recommendation`: reuse/adapt/build/undetermined;
 `summary`, `ranking_rationale`, `strongest_alternative`, and
 `remaining_custom_work`: atomic statement(s); `unresolved_gaps`: unknown
@@ -135,7 +152,7 @@ The deterministic renderer adds URLs from the same validated source joins.
 Small valid no-evidence synthesis shape (replace `RUN` with the current ID):
 
 ```json
-{"schema_version":1,"kind":"research-synthesis","run_id":"RUN","status":"partial","recommendation":"undetermined","summary":{"kind":"unknown","text":"No complete evidence","source_ids":[],"requirement_ids":[]},"ranking_rationale":{"kind":"unknown","text":"No ranking","source_ids":[],"requirement_ids":[]},"strongest_alternative":{"kind":"unknown","text":"No alternative established","source_ids":[],"requirement_ids":[]},"remaining_custom_work":{"kind":"proposal","text":"Gather evidence","source_ids":[],"requirement_ids":[]},"unresolved_gaps":[{"kind":"unknown","text":"Primary evidence missing","source_ids":[],"requirement_ids":[]}],"contradictions":[],"ranked_approaches":[]}
+{"schema_version":1,"kind":"research-synthesis","run_id":"RUN","status":"partial","recommendation":"undetermined","answer":{"title":"Research answer","sections":[{"heading":"","paragraphs":[{"kind":"unknown","text":"The retained evidence does not establish an answer yet.","source_ids":[],"requirement_ids":[]}]}]},"summary":{"kind":"unknown","text":"No complete evidence","source_ids":[],"requirement_ids":[]},"ranking_rationale":{"kind":"unknown","text":"No ranking","source_ids":[],"requirement_ids":[]},"strongest_alternative":{"kind":"unknown","text":"No alternative established","source_ids":[],"requirement_ids":[]},"remaining_custom_work":{"kind":"proposal","text":"Gather evidence","source_ids":[],"requirement_ids":[]},"unresolved_gaps":[{"kind":"unknown","text":"Primary evidence missing","source_ids":[],"requirement_ids":[]}],"contradictions":[],"ranked_approaches":[]}
 ```
 
 The provider-free fixtures in `tests/test_research.py` validate these no-web and
