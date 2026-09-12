@@ -190,3 +190,14 @@ release lock. The generic release checker cannot pre-resolve run-generated input
 and currently omits score_dir in its injection context; record its failure rather
 than precreating pretend research artifacts. Root owns exact-source acceptance,
 live all-stage receipts, comparative evaluation, publication and propagation.
+
+## Indexed context mode
+
+`roster.json` may opt into `context.mode: indexed` with caller-supplied
+`shared_context_files`. This preserves the default full original-context mode.
+Indexed mode delivers the listed complete originals, current receipt, hash-bound
+all-original index, strategy after it exists, and role evidence to each AI stage;
+it does not inject the entire raw snapshot or replace it with an AI summary. The
+snapshot and delivery still prove every original byte/hash. Sparse candidate fits
+may omit inapplicable requirements, while mandatory question and synthesis
+coverage remain explicit.

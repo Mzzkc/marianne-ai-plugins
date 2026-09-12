@@ -529,3 +529,53 @@ def test_delivered_report_defines_requirements_and_candidate_identities(tmp_path
     (ws/'delivery/strategy.json').write_text('{}')
     with pytest.raises(research.ContractError):
         research.verify_delivery(ws/'delivery', ws/'input-snapshot', receipt['run_id'])
+
+@pytest.mark.parametrize('mode',['A','B','lab'])
+def test_indexed_context_preserves_all_originals_and_delivers_only_shared_core(tmp_path,mode):
+    roster=copy.deepcopy(ROSTER)
+    roster['context']={'mode':'indexed','shared_context_files':['prompt.md','context.txt']}
+    inp,ws,receipt=prepare(tmp_path,mode,roster)
+    put(inp/'unindexed.txt','BENIGN_UNINDEXED_ORIGINAL')
+    receipt=research.prepare(ws,inp,roster,mode)
+    if mode == 'lab':
+        for i in range(len(roster['seats'])):
+            name=f'review-{i+1}'; put(ws/(name+'.md'),'Independent benign review')
+            put(ws/(name+'.json'),{**env('review',receipt),'review':name,'sha256':research.digest(ws/(name+'.md'))})
+    else:
+        complete(ws,receipt)
+    score_path=tmp_path/'indexed.yaml'; score_path.write_text(yaml.safe_dump(configure.score(mode,roster,ASSETS),sort_keys=False))
+    cfg,sheets,renderer=native(score_path,ws,inp)
+    assert check_graph.check(cfg,roster)['context_mode']=='indexed'
+    assert research.read(ws/'context-index.json')['shared_context_files']==['prompt.md','context.txt']
+    assert {x['name']:x['sha256'] for x in research.read(ws/'context-index.json')['files']}=={x['name']:x['sha256'] for x in receipt['files']}
+    for sheet in sheets:
+        if sheet.instrument_name=='cli': continue
+        prompt=render(renderer,sheet).prompt
+        assert 'BENIGN_ORIGINAL_PROMPT' in prompt and 'BENIGN_SECOND_CONTEXT' in prompt
+        assert 'BENIGN_UNINDEXED_ORIGINAL' not in prompt
+        files=[Path(x['resolved_path']).name for x in render(renderer,sheet).context_manifest if x['source']=='cadenza' and x['category']=='context']
+        assert 'context-index.json' in files and 'run-receipt.json' in files
+        assert 'unindexed.txt' not in files
+    assert research.deliver(ws)==0
+
+
+def test_indexed_context_refuses_tampered_index_hash_or_path(tmp_path):
+    roster=copy.deepcopy(ROSTER); roster['context']={'mode':'indexed','shared_context_files':['prompt.md']}
+    _,ws,_=prepare(tmp_path,'A',roster)
+    for field,value in [('sha256','0'*64),('snapshot_path','input-snapshot/../escape.md')]:
+        index=research.read(ws/'context-index.json'); index['files'][0][field]=value; put(ws/'context-index.json',index)
+        with pytest.raises(research.ContractError): research.current(ws)
+        research.prepare(ws,tmp_path/'input',roster,'A')
+
+
+def test_indexed_sparse_candidate_fit_requires_real_applicable_requirement(tmp_path):
+    roster=copy.deepcopy(ROSTER); roster['context']={'mode':'indexed','shared_context_files':['prompt.md']}
+    _,ws,receipt=prepare(tmp_path,'A',roster); st=strategy(receipt)
+    st['requirements'].append({'id':'R2','text':'secondary preference','mandatory':False})
+    put(ws/'strategy.json',st); research.assignments(ws)
+    record=search(receipt,st,'search-1'); record['candidates'][0]['fit']={'R1':{'status':'supported','reason':statement('fact','applicable fixture',['S1'])}}
+    put(ws/'search-1.json',record)
+    assert research.validate_file(ws,'search-1')
+    for fit in ({}, {'R404':{'status':'unknown','reason':statement('unknown','not applicable')}}):
+        record['candidates'][0]['fit']=fit; put(ws/'search-1.json',record)
+        with pytest.raises(research.ContractError): research.validate_file(ws,'search-1')

@@ -9,11 +9,20 @@ from research import ContractError, require, binding
 
 def check(config, roster=None, original='{{ workspace }}/input-snapshot', receipt='{{ workspace }}/run-receipt.json'):
     sheets=build_sheets(config); ai=[s for s in sheets if s.instrument_name!='cli']
+    context=(roster or {}).get('context', {})
+    indexed=context.get('mode','full') == 'indexed'
+    shared=context.get('shared_context_files', [])
     for s in sheets:
         require(not s.instrument_fallbacks, f'sheet {s.num}: no fallback allowed')
         if s.instrument_name=='cli': continue
-        require(any(i.directory==original and i.required and i.as_.value=='context' for i in s.cadenza), f'sheet {s.num}: required complete original directory missing')
-        require(any(i.file==receipt and i.required and i.as_.value=='context' for i in s.cadenza), f'sheet {s.num}: required current receipt missing')
+        files={i.file for i in s.cadenza if i.required and i.as_.value=='context' and i.file}
+        if indexed:
+            require(not any(i.directory==original for i in s.cadenza), f'sheet {s.num}: indexed mode must not inject raw original directory')
+            require({'{{ workspace }}/input-snapshot/'+name for name in shared} <= files, f'sheet {s.num}: indexed shared context missing')
+            require('{{ workspace }}/context-index.json' in files, f'sheet {s.num}: indexed original manifest missing')
+        else:
+            require(any(i.directory==original and i.required and i.as_.value=='context' for i in s.cadenza), f'sheet {s.num}: required complete original directory missing')
+        require(receipt in files, f'sheet {s.num}: required current receipt missing')
     if roster and config.name!='thinking-lab':
         # Movement metadata owns role names.
         search=[s for s in sheets if config.movements[s.movement].name.startswith('search-')]
@@ -36,7 +45,7 @@ def check(config, roster=None, original='{{ workspace }}/input-snapshot', receip
             upstream.add('{{ workspace }}/challenge.json')
         require(config.sheet.dependencies.get(synth)==([synth-1] if mode=='B' else searches), 'synthesis dependency mismatch')
         require(upstream <= {i.file for i in sheets[synth-1].cadenza if i.required},'synthesis missing all upstream')
-    return {'score':config.name,'sheets':len(sheets),'ai_calls':len(ai),'all_ai_original_context':True}
+    return {'score':config.name,'sheets':len(sheets),'ai_calls':len(ai),'context_mode':'indexed' if indexed else 'full','all_ai_original_context':True}
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(); p.add_argument('score',type=Path); a=p.parse_args()

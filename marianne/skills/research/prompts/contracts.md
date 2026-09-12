@@ -148,3 +148,14 @@ Write review-N.md (independent supplied-context analysis) and review-N.json:
 `review`: "review-N", `sha256`: computed SHA256 of exact review-N.md bytes}.
 No forced web search or automatic implementation. Caller owns synthesis unless
 an explicitly configured downstream consumer is commissioned.
+
+## Indexed context mode
+
+A caller may configure `context.mode: indexed` with a nonempty, safe
+`shared_context_files` list. Every AI stage receives those complete caller-named
+originals, the current receipt, the deterministic `context-index.json`, and its
+required upstream evidence; the full snapshot remains hash-validated and is
+available only by an exact index path. The index is not a summary. In this mode,
+candidate `fit` maps may omit inapplicable requirement IDs. Any supplied ID must
+be a current strategy requirement; mandatory question accounts and synthesis
+constraint coverage remain complete.

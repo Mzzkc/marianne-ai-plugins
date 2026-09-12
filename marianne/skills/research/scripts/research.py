@@ -117,6 +117,12 @@ def validate_roster(roster, mode):
         row = roster.get(role)
         require(isinstance(row, dict), f'roster.{role} required')
         text(row.get('profile'), role + '.profile')
+    context = roster.get('context', {'mode':'full'})
+    require(isinstance(context, dict) and context.get('mode','full') in ('full','indexed'), 'context mode')
+    shared = context.get('shared_context_files', [])
+    require(isinstance(shared, list) and all(isinstance(x, str) and x and Path(x).name == x for x in shared), 'shared context filenames')
+    require(len(shared) == len(set(shared)), 'duplicate shared context filenames')
+    require(context.get('mode','full') != 'indexed' or bool(shared), 'indexed mode requires shared context filenames')
     return seats
 
 def envelope(payload, receipt, kind):
@@ -182,7 +188,7 @@ def sources(rows, receipt):
                 raise ContractError('accessed_at must be an ISO datetime') from exc
     return result
 
-def candidate_rows(rows, reqs, source_ids, prefix=None):
+def candidate_rows(rows, reqs, source_ids, prefix=None, sparse=False):
     result = indexed(rows, 'candidates', False)
     for cid, row in result.items():
         require(prefix is None or cid.startswith(prefix + ':'), 'candidate ID must be seat-prefixed')
@@ -192,7 +198,7 @@ def candidate_rows(rows, reqs, source_ids, prefix=None):
         for key in ('integration', 'remaining_custom_work'):
             validate_statements(row.get(key), source_ids, set(reqs), cid + '.' + key)
         fit = row.get('fit')
-        require(isinstance(fit, dict) and set(fit) == set(reqs), cid + ': account for every requirement (unknown allowed)')
+        require(isinstance(fit, dict) and bool(fit) and (set(fit) <= set(reqs) if sparse else set(fit) == set(reqs)), cid + ': invalid requirement fit map')
         for rid, cell in fit.items():
             require(isinstance(cell, dict) and cell.get('status') in ('supported','contradicted','unknown'), 'invalid fit cell')
             require('source_ids' not in cell, cid + '.' + rid + ': cite through reason statements, not a duplicate source_ids field')
@@ -211,7 +217,7 @@ def validate_search(payload, receipt, strategy, sid):
         require(row.get('status') in ('answered','unknown'), 'invalid question outcome')
         require('source_ids' not in row, 'question finding: cite through finding statements, not a duplicate source_ids field')
         validate_fit_statement(row.get('finding'), 'supported' if row['status']=='answered' else 'unknown', evidence, set(reqs), 'question finding')
-    candidates = candidate_rows(payload.get('candidates'), reqs, evidence, sid)
+    candidates = candidate_rows(payload.get('candidates'), reqs, evidence, sid, receipt['roster'].get('context',{}).get('mode','full') == 'indexed')
     for row in accounts.values():
         refs(row.get('candidate_ids'), candidates, 'question candidate IDs')
     for key in ('scope', 'tool_evidence'):
@@ -245,7 +251,7 @@ def validate_challenge(payload, receipt, strategy, candidates):
     envelope(payload, receipt, 'research-challenge')
     require(payload.get('status') in ('complete','partial','no_web'), 'invalid challenge status')
     evidence = sources(payload.get('sources'), receipt)
-    new = candidate_rows(payload.get('new_candidates'), {x['id']:x for x in strategy['requirements']}, evidence, 'challenge')
+    new = candidate_rows(payload.get('new_candidates'), {x['id']:x for x in strategy['requirements']}, evidence, 'challenge', receipt['roster'].get('context',{}).get('mode','full') == 'indexed')
     require(not set(new)&set(candidates), 'duplicate challenge candidate')
     targets = indexed(payload.get('targets'), 'targets', False)
     require(len(targets) <= 3, 'challenge limited to three targets')
@@ -303,6 +309,22 @@ def validate_synthesis(payload, receipt, strategy, candidates, reports, challeng
     if any(x['status'] != 'complete' for x in reports) or (challenge and challenge['status']!='complete'):
         require(payload['status']=='partial', 'incomplete coverage cannot be complete synthesis')
 
+def validate_context_index(workspace, receipt):
+    context = receipt['roster'].get('context', {})
+    if context.get('mode', 'full') != 'indexed': return
+    index = read(workspace/'context-index.json')
+    require(index.get('schema_version') == 1 and index.get('kind') == 'research-context-index', 'typed context index required')
+    require(index.get('run_id') == receipt['run_id'] and index.get('input_sha256') == receipt['input_sha256'], 'context index receipt join')
+    shared = context['shared_context_files']
+    require(index.get('shared_context_files') == shared, 'context index shared files')
+    expected = {x['name']:x for x in receipt['files']}
+    rows = index.get('files')
+    require(isinstance(rows,list) and {x.get('name') for x in rows} == set(expected), 'context index membership')
+    for row in rows:
+        name=row['name']; require(row.get('sha256') == expected[name]['sha256'] and row.get('bytes') == expected[name]['bytes'], 'context index digest')
+        require(row.get('snapshot_path') == 'input-snapshot/'+name, 'context index path')
+    require(set(shared) <= set(expected), 'shared context missing from receipt')
+
 def current(workspace):
     receipt = read(workspace / 'run-receipt.json')
     require(receipt.get('kind') == 'research-run-receipt' and receipt.get('schema_version')==1, 'current typed receipt required')
@@ -312,6 +334,7 @@ def current(workspace):
     require({p.name for p in snapshot_dir.iterdir()} == set(expected), 'snapshot membership changed')
     require(all((snapshot_dir/n).is_file() and digest(snapshot_dir/n)==h for n,h in expected.items()), 'original context digest changed')
     validate_roster(receipt['roster'],receipt['mode'])
+    validate_context_index(workspace, receipt)
     return receipt
 
 def prepare(workspace, input_dir, roster, mode, max_bytes=262144):
@@ -325,6 +348,11 @@ def prepare(workspace, input_dir, roster, mode, max_bytes=262144):
     receipt = read(workspace/'run-receipt.json')
     receipt.update(kind='research-run-receipt', mode=mode, roster=roster)
     write(workspace/'run-receipt.json',receipt)
+    context = roster.get('context', {})
+    if context.get('mode','full') == 'indexed':
+        rows=[{'name':row['name'],'sha256':row['sha256'],'bytes':row['bytes'],'snapshot_path':'input-snapshot/'+row['name']} for row in receipt['files']]
+        write(workspace/'context-index.json', {'schema_version':1,'kind':'research-context-index','run_id':receipt['run_id'],'input_sha256':receipt['input_sha256'],'shared_context_files':context['shared_context_files'],'files':rows})
+    elif (workspace/'context-index.json').exists(): (workspace/'context-index.json').unlink()
     write(workspace/'status.json', {'kind':'research-status','schema_version':1,'run_id':receipt['run_id'],'status':'partial','reason':'required research stages not yet validated'})
     return receipt
 
