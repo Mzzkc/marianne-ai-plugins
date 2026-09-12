@@ -58,11 +58,19 @@ statement kinds.
 - `reason`: required for partial/no_web. no_web has no sources/candidates and all
   accounts unknown. A malformed response must not be relabeled no_web.
 
-A source object: {`id`, `title`, `url`: real HTTP(S) source URL,
-`accessed_at`: actual ISO timestamp with timezone, `source_type`: docs/code/release/
-issue/etc., `supported_claim`: exact specific claim supported by inspected source}.
+A source object is either external or current input evidence. External evidence has
+{`id`, `title`, `url`: real HTTP(S) source URL, `accessed_at`: actual ISO
+timestamp with timezone, `source_type`: docs/code/release/issue/etc.,
+`supported_claim`: exact specific claim supported by inspected source}. Input
+evidence has {`id`, `title`, `source_type`: "input", `input_name`: exact current
+original filename, `input_sha256`: exact current receipt digest,
+`supported_claim`}; it has no URL, local path, or access timestamp. Delivery
+resolves validated input evidence only to its copied `original-NNNN.txt` link.
+It cannot name another receipt, a traversal path, or an arbitrary local file.
 Search snippets are leads. Retrieve primary evidence before claiming support.
 Two models citing the same document are one source, not independent corroboration.
+Input evidence can ground provided project facts, but it does not replace actual
+external queries or make a `no_web` lane successful.
 
 Small valid no-web shape (replace `RUN`, `Q1`, and `R1` with current IDs):
 

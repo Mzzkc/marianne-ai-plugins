@@ -73,6 +73,19 @@ def test_statement_renderer_links_every_validated_source():
     )
     assert rendered == 'Inference: Fixture conclusion ([First source](https://example.test/one); [Second source](https://example.test/two))'
 
+
+def test_input_source_binds_current_receipt_member_and_digest(tmp_path):
+    _, _, receipt = prepare(tmp_path)
+    original = receipt['files'][0]
+    source = {'id':'I1', 'title':'Provided context', 'source_type':'input',
+              'input_name':original['name'], 'input_sha256':original['sha256'],
+              'supported_claim':'Fixture context states the blue constraint'}
+    assert research.sources([source], receipt)['I1'] == source
+    for key, value in [('input_name','missing.md'), ('input_sha256','0' * 64), ('url','file:///tmp/escape')]:
+        bad = copy.deepcopy(source); bad[key] = value
+        with pytest.raises(research.ContractError):
+            research.sources([bad], receipt)
+
 def prepare(tmp,mode='A',roster=None):
     inp=tmp/'input'; ws=tmp/'workspace'
     put(inp/'prompt.md','BENIGN_ORIGINAL_PROMPT: compare synthetic widgets.\n')
@@ -272,6 +285,42 @@ def test_two_requests_freshness_and_concurrent_boundary(tmp_path):
     assert not (ws/'delivery').exists() and not (ws/'synthesis.json').exists()
     complete(ws,new); put(ws/'synthesis.json',old)
     assert research.deliver(ws)==4
+
+
+def test_input_source_renders_delivery_original_link_for_collision_name(tmp_path):
+    inp, ws, _ = prepare(tmp_path)
+    put(inp/'report.md', 'ORIGINAL_REPORT_COLLISION')
+    receipt = research.prepare(ws, inp, ROSTER, 'A')
+    complete(ws, receipt)
+    original = next(row for row in receipt['files'] if row['name'] == 'report.md')
+    search_record = research.read(ws/'search-2.json')
+    search_record['sources'] = [{'id':'I1', 'title':'Provided report', 'source_type':'input',
+                                 'input_name':'report.md', 'input_sha256':original['sha256'],
+                                 'supported_claim':'Provided report supplies fixture context'}]
+    for candidate in search_record['candidates']:
+        candidate['identity']['source_ids'] = ['I1']
+        candidate['fit']['R1']['reason']['source_ids'] = ['I1']
+    for account in search_record['question_accounts']:
+        account['finding']['source_ids'] = ['I1']
+    put(ws/'search-2.json', search_record)
+    synthesis = research.read(ws/'synthesis.json')
+    def rebind(value):
+        if isinstance(value, dict):
+            for key, item in value.items():
+                if key == 'source_ids': value[key] = ['search-2:I1' if ref == 'search-2:S1' else ref for ref in item]
+                else: rebind(item)
+        elif isinstance(value, list):
+            for item in value: rebind(item)
+    rebind(synthesis)
+    put(ws/'synthesis.json', synthesis)
+    assert research.deliver(ws) == 0
+    manifest = research.read(ws/'delivery/status.json')
+    copied = next(row for row in manifest['originals'] if row['name'] == 'report.md')
+    report = (ws/'delivery/report.md').read_text()
+    assert f"]({copied['delivery_name']})" in report
+    workspace_report = (ws/'synthesis.md').read_text()
+    assert f"](delivery/{copied['delivery_name']})" in workspace_report
+    assert (ws/'delivery'/copied['delivery_name']).read_text() == 'ORIGINAL_REPORT_COLLISION'
 
 
 def test_direct_and_concert_original_hashes_and_synthesis(tmp_path):

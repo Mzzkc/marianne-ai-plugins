@@ -44,6 +44,12 @@ linkage only: a reviewer must still judge relevance and semantic entailment.
 Citation-free legacy reports fail current delivery and are not rewritten; archived
 runs remain readable as-is.
 
+Provided original context may be cited as `source_type: input` only when its exact
+filename and SHA-256 join the current run receipt. Delivery renders that evidence
+as the corresponding copied original artifact, never as a local filesystem path.
+Input evidence grounds supplied project facts; it does not substitute for required
+external search or turn `no_web` into success.
+
 `roster.json` is the authoring surface for research/review musician bindings,
 model names, backend-supported config settings, role budgets and seat count.
 Config transports only settings actually honored by the selected backend. Native

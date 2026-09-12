@@ -159,19 +159,27 @@ def validate_strategy(strategy, receipt):
                 require(sum(q in ids for ids in assignments.values()) >= 2, 'integration question needs explicit corroborating owner')
     return reqs, questions
 
-def sources(rows):
+def sources(rows, receipt):
     result = indexed(rows, 'sources', False)
+    current_inputs = {row['name']:row['sha256'] for row in receipt['files']}
     for sid, row in result.items():
-        url = urlparse(text(row.get('url'), sid + '.url'))
-        require(url.scheme in ('http','https') and bool(url.netloc) and url.hostname not in snapshot.PLACEHOLDER_HOSTS, 'source URL must be retrievable, non-placeholder HTTP(S)')
-        for key in ('title', 'accessed_at', 'supported_claim', 'source_type'):
+        for key in ('title', 'supported_claim', 'source_type'):
             text(row.get(key), sid + '.' + key)
-        from datetime import datetime
-        try:
-            dt = datetime.fromisoformat(row['accessed_at'].replace('Z','+00:00'))
-            require(dt.tzinfo is not None, 'accessed_at needs timezone')
-        except ValueError as exc:
-            raise ContractError('accessed_at must be an ISO datetime') from exc
+        if row['source_type'] == 'input':
+            require('url' not in row and 'accessed_at' not in row, 'input source must not carry URL, local path, or access timestamp')
+            name = text(row.get('input_name'), sid + '.input_name')
+            require(name in current_inputs, 'input source must name a current receipt file')
+            require(row.get('input_sha256') == current_inputs[name], 'input source digest must match current receipt file')
+        else:
+            require('input_name' not in row and 'input_sha256' not in row, 'external source must not carry input binding fields')
+            url = urlparse(text(row.get('url'), sid + '.url'))
+            require(url.scheme in ('http','https') and bool(url.netloc) and url.hostname not in snapshot.PLACEHOLDER_HOSTS, 'source URL must be retrievable, non-placeholder HTTP(S)')
+            from datetime import datetime
+            try:
+                dt = datetime.fromisoformat(text(row.get('accessed_at'), sid + '.accessed_at').replace('Z','+00:00'))
+                require(dt.tzinfo is not None, 'accessed_at needs timezone')
+            except ValueError as exc:
+                raise ContractError('accessed_at must be an ISO datetime') from exc
     return result
 
 def candidate_rows(rows, reqs, source_ids, prefix=None):
@@ -196,7 +204,7 @@ def validate_search(payload, receipt, strategy, sid):
     reqs, questions = validate_strategy(strategy, receipt)
     require(payload.get('seat') == sid, 'wrong search seat')
     require(payload.get('status') in ('complete','partial','no_web'), 'invalid search status')
-    evidence = sources(payload.get('sources'))
+    evidence = sources(payload.get('sources'), receipt)
     accounts = indexed(payload.get('question_accounts'), 'question_accounts')
     require(set(accounts) == set(strategy['assignments'][sid]), 'search must account for exactly assigned questions')
     for row in accounts.values():
@@ -236,7 +244,7 @@ def discoveries(workspace, receipt, strategy):
 def validate_challenge(payload, receipt, strategy, candidates):
     envelope(payload, receipt, 'research-challenge')
     require(payload.get('status') in ('complete','partial','no_web'), 'invalid challenge status')
-    evidence = sources(payload.get('sources'))
+    evidence = sources(payload.get('sources'), receipt)
     new = candidate_rows(payload.get('new_candidates'), {x['id']:x for x in strategy['requirements']}, evidence, 'challenge')
     require(not set(new)&set(candidates), 'duplicate challenge candidate')
     targets = indexed(payload.get('targets'), 'targets', False)
@@ -351,18 +359,32 @@ def assignments(workspace):
     for sid,ids in strategy['assignments'].items():
         write(workspace/('assignment-'+sid+'.json'),{'schema_version':1,'kind':'research-assignment','run_id':receipt['run_id'],'seat':sid,'question_ids':ids,'strategy_sha256':digest(workspace/'strategy.json')})
 
-def source_map(reports, challenge=None):
-    result = {r['seat']+':'+s['id']:s for r in reports for s in r['sources']}
+def delivery_originals(receipt):
+    return [{**row, 'delivery_name':f'original-{index:04d}.txt'} for index, row in enumerate(receipt['files'], 1)]
+
+def resolved_source(source, originals, input_link_prefix=''):
+    if source['source_type'] != 'input': return source
+    copied = {row['name']:row for row in originals}
+    row = copied.get(source['input_name'])
+    require(row is not None and row['sha256'] == source['input_sha256'], 'input source delivery binding failed')
+    return {**source, 'url':input_link_prefix + row['delivery_name']}
+
+def source_map(reports, originals, challenge=None, input_link_prefix=''):
+    result = {r['seat']+':'+s['id']:resolved_source(s, originals, input_link_prefix) for r in reports for s in r['sources']}
     if challenge:
-        result.update({'challenge:'+s['id']:s for s in challenge['sources']})
+        result.update({'challenge:'+s['id']:resolved_source(s, originals, input_link_prefix) for s in challenge['sources']})
     return result
 
-def markdown(result, strategy, candidates, reports, challenge=None):
-    evidence = source_map(reports, challenge)
+def bibliography_line(source):
+    accessed = f" ({source['accessed_at']})" if 'accessed_at' in source else ''
+    return f"- {source['id']}: [{source['title']}]({source['url']}) — {source['supported_claim']}{accessed}\n"
+
+def markdown(result, strategy, candidates, reports, originals, challenge=None, input_link_prefix=''):
+    evidence = source_map(reports, originals, challenge, input_link_prefix)
     requirement_ids = {row['id'] for row in strategy['requirements']}
-    local_evidence = {report['seat']:{source['id']:source for source in report['sources']} for report in reports}
+    local_evidence = {report['seat']:{source['id']:resolved_source(source, originals, input_link_prefix) for source in report['sources']} for report in reports}
     if challenge:
-        local_evidence['challenge'] = {source['id']:source for source in challenge['sources']}
+        local_evidence['challenge'] = {source['id']:resolved_source(source, originals, input_link_prefix) for source in challenge['sources']}
     lines=['# Research decision', '', render_statements(result['summary'], evidence), '', '**Recommendation:** '+result['recommendation'], '', render_statements(result['ranking_rationale'], evidence)]
     lines += ['', '## Requirements']
     for row in strategy['requirements']:
@@ -395,7 +417,7 @@ def markdown(result, strategy, candidates, reports, challenge=None):
     return '\n'.join(lines)+'\n'
 
 def deliver(workspace):
-    receipt=current(workspace); mode=receipt['mode']; status='partial'; reason=''; result=None; strategy_for_delivery=None
+    receipt=current(workspace); originals=delivery_originals(receipt); mode=receipt['mode']; status='partial'; reason=''; result=None; strategy_for_delivery=None
     try:
         if mode=='lab':
             reviews=[f'review-{i+1}' for i in range(len(receipt['roster']['seats']))]
@@ -408,14 +430,17 @@ def deliver(workspace):
             candidates, reports=discoveries(workspace,receipt,strategy_for_delivery)
             if mode=='B':
                 candidates.update(validate_challenge(read(workspace/'challenge.json'),receipt,strategy_for_delivery,candidates))
-            report=markdown(result,strategy_for_delivery,candidates,reports,read(workspace/'challenge.json') if mode=='B' else None)
-            for row in receipt['roster']['seats']:
-                p=read(workspace/(row['id']+'.json'))
-                report+='\n## Sources: '+row['id']+'\n'+''.join(f"- {s['id']}: [{s['title']}]({s['url']}) — {s['supported_claim']} ({s['accessed_at']})\n" for s in p['sources'])
-            if mode=='B':
-                p=read(workspace/'challenge.json')
-                report+='\n## Challenge sources\n'+''.join(f"- {s['id']}: [{s['title']}]({s['url']}) — {s['supported_claim']}\n" for s in p['sources'])
-            (workspace/'synthesis.md').write_text(report)
+            challenge = read(workspace/'challenge.json') if mode=='B' else None
+            def render_report(input_link_prefix):
+                rendered = markdown(result, strategy_for_delivery, candidates, reports, originals, challenge, input_link_prefix)
+                for row in receipt['roster']['seats']:
+                    payload = read(workspace/(row['id']+'.json'))
+                    rendered += '\n## Sources: '+row['id']+'\n'+''.join(bibliography_line(resolved_source(source, originals, input_link_prefix)) for source in payload['sources'])
+                if challenge:
+                    rendered += '\n## Challenge sources\n'+''.join(bibliography_line(resolved_source(source, originals, input_link_prefix)) for source in challenge['sources'])
+                return rendered
+            report = render_report('')
+            (workspace/'synthesis.md').write_text(render_report('delivery/'))
         status=result['status']; reason='validated' if status=='complete' else 'incomplete required coverage'
     except (ContractError,OSError) as exc:
         strategy_for_delivery=None
@@ -425,10 +450,8 @@ def deliver(workspace):
     delivery=workspace/'delivery'
     if delivery.exists(): shutil.rmtree(delivery)
     delivery.mkdir()
-    originals=[]
-    for i,row in enumerate(receipt['files'],1):
-        name=f'original-{i:04d}.txt'; shutil.copyfile(workspace/'input-snapshot'/row['name'],delivery/name)
-        originals.append({**row,'delivery_name':name})
+    for row in originals:
+        shutil.copyfile(workspace/'input-snapshot'/row['name'],delivery/row['delivery_name'])
     (delivery/'report.md').write_text(report); write(delivery/'result.json',result)
     write(delivery/'run-receipt.json',receipt)
     artifact_names=['report.md','result.json','run-receipt.json']
