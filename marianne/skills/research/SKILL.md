@@ -50,31 +50,34 @@ Adding/removing a seat does not change research prompt logic. Never hand-edit
 aliases alone: regenerate and run `scripts/check_graph.py` with source-bound
 Marianne imports so runtime routing and the receipt agree.
 
-The portable default has two complementary Antigravity search seats:
-`claude-sonnet-4-6` and `gemini-3.8-flash-high`. The complete Gemini model ID
-selects its high tier; do not add arbitrary effort keys or flags. Gemini Flash
-is also the strategist and B challenger. `codex-cli` synthesis explicitly uses
-mid-sized `gpt-5.6-terra`. Use stronger synthesis only when a concrete failed
-obligation justifies it; use economical, qualified search-capable routes for
-retrieval. The roster remains configurable from 2 through 8 seats.
+The portable default has two complementary search seats: OpenCode
+`zai-coding-plan/glm-5.3-flash` and Antigravity `gemini-3.8-flash-high`. The
+complete Gemini model ID selects its high tier; do not add arbitrary effort keys
+or flags. Do not add unsupported `variant` or effort configuration to the
+portable OpenCode binding. Gemini Flash is also the strategist and B challenger.
+`codex-cli` synthesis explicitly uses mid-sized `gpt-5.6-terra`. Use stronger
+synthesis only when a concrete failed obligation justifies it; use economical,
+qualified search-capable routes for retrieval. The roster remains configurable
+from 2 through 8 seats.
 
 Thinking-lab stays a distinct supplied-context independent-review mode: its
 default two reviewers inherit the roster, while a caller may configure a larger
 review-capable cast when the supplied design or code warrants it. Do not imply
 frontier review capability from the default routes alone.
 
-Gemini Flash high has prior real search-and-primary-fetch evidence. Sonnet's
-observed probe fetched a primary W3C page, but native `search_web` returned
-`GenerateContent` with no summary; model metadata was absent and the fetch was
-cached. Sonnet is therefore **UNQUALIFIED** until conductor qualification proves
-actual search and primary retrieval on the exact route. Do not describe either
-route as ready or superior from these receipts. Each route still needs working
-authentication and sufficient quota. Probe and freeze actual model, family,
-search, retrieval and tool provenance before live work. Model listing or paid
-subscription entitlement proves neither web access nor free service; monetary
-cost is unknown. If a route fails qualification, substitute a verified distinct
-family or regenerate both A/B with the same roster. Local personal profile names
-belong in local run bindings, never portable defaults.
+Gemini Flash high has prior real search-and-primary-fetch evidence. The OpenCode
+GLM route is locally available, but availability does not establish search or
+delivery qualification; its earlier 600-second timeout is historical evidence
+and does not justify a blind rerun. A prior Sonnet-named route did not expose
+enough metadata to establish the actual model, so its probe and comparison do
+not prove distinct-family execution or Sonnet performance. Do not describe the
+GLM route as ready or superior from availability alone. Each route still needs
+working authentication and sufficient quota. Probe and freeze actual model,
+family, search, retrieval and tool provenance before live work. Model listing or
+paid subscription entitlement proves neither web access nor free service;
+monetary cost is unknown. If a route fails qualification, substitute a verified
+distinct family or regenerate both A/B with the same roster. Local personal
+profile names belong in local run bindings, never portable defaults.
 
 For local bindings, copy this resource bundle under your SCORES directory, edit
 its roster, then regenerate there. Or use `scripts/configure.py --roster /abs/roster.json

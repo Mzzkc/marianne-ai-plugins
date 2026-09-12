@@ -37,13 +37,14 @@ with nonzero exit, so it cannot success-chain.
 
 Bounded delivery correction: human reports now render validated requirement and
 candidate identity legends and include hashed strategy.json for search. The default
-two-seat cast is `claude-sonnet-4-6` plus `gemini-3.8-flash-high` through
-Antigravity; Gemini Flash also owns strategy/challenge, while explicit
+two-seat cast is OpenCode `zai-coding-plan/glm-5.3-flash` plus Antigravity
+`gemini-3.8-flash-high`; Gemini Flash also owns strategy/challenge, while explicit
 `codex-cli` `gpt-5.6-terra` owns synthesis. The Gemini high tier is part of its
-model ID, not an arbitrary config effort flag. Its prior search-and-fetch evidence
-does not qualify Sonnet: Sonnet fetched a cached primary page but its native
-search returned GenerateContent with no summary and exposed no model metadata.
-Keep it UNQUALIFIED until conductor qualification proves both functions. Choose
-economical qualified search models and increase synthesis size only for a concrete
-failed obligation. Monetary cost is unknown; paid entitlement is not free. The
-concert wrapper example has a fixed Codex consumer outside the research roster.
+model ID, not an arbitrary config effort flag; do not add unsupported OpenCode
+variant or effort keys. GLM availability does not qualify search or delivery, and
+its earlier 600-second timeout remains historical evidence. The prior
+Sonnet-named route did not establish its actual model, so its probe and comparison
+do not prove distinct-family execution or Sonnet performance. Choose economical
+qualified search models and increase synthesis size only for a concrete failed
+obligation. Monetary cost is unknown; paid entitlement is not free. The concert
+wrapper example has a fixed Codex consumer outside the research roster.

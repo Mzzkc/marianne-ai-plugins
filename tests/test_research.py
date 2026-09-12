@@ -302,9 +302,9 @@ def test_changed_actual_native_routing_disagrees_with_roster(tmp_path):
     with pytest.raises(research.ContractError): check_graph.check(cfg,ROSTER)
 
 
-def test_default_roster_uses_two_qualified_search_routes_and_midsize_synthesis():
+def test_default_roster_uses_available_glm_and_gemini_routes_and_midsize_synthesis():
     assert [(row['profile'], row['model']) for row in ROSTER['seats']] == [
-        ('antigravity', 'claude-sonnet-4-6'),
+        ('opencode', 'zai-coding-plan/glm-5.3-flash'),
         ('antigravity', 'gemini-3.8-flash-high'),
     ]
     assert ROSTER['strategist'] == ROSTER['challenger'] == {

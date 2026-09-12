@@ -5,10 +5,10 @@ workspace_lifecycle:
 instrument: codex-cli
 instruments:
   reviewer-1:
-    profile: antigravity
+    profile: opencode
     config:
       timeout_seconds: 600
-      model: claude-sonnet-4-6
+      model: zai-coding-plan/glm-5.3-flash
   reviewer-2:
     profile: antigravity
     config:

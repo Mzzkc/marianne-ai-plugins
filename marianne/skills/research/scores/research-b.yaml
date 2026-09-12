@@ -20,10 +20,10 @@ instruments:
       timeout_seconds: 360
       model: gemini-3.8-flash-high
   search-1:
-    profile: antigravity
+    profile: opencode
     config:
       timeout_seconds: 600
-      model: claude-sonnet-4-6
+      model: zai-coding-plan/glm-5.3-flash
   search-2:
     profile: antigravity
     config:
