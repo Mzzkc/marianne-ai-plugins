@@ -1,213 +1,36 @@
 ---
 name: research
-description: Research existing solutions through strategy, assigned parallel searches across distinct models, and synthesis; or request independent supplied-context reviews with caller-owned synthesis (thinking-lab).
+description: Research existing components or obtain independent supplied-context review, with caller-owned synthesis when using the lab.
 ---
 
-# Research
+# Adaptive research
 
-Choose the mode by the question you need answered:
+Use adaptive research to answer a practical question about existing tools, content, libraries, services, or integration choices. It produces natural prose with inline primary links. Use thinking-lab for independent review of supplied context when the caller owns synthesis.
 
-| Mode | Use | Native AI calls with default two seats |
-|---|---|---|
-| Search A | Discover and compare existing solutions: strategy → assigned parallel searches → synthesis | 4 |
-| Search B | Same discovery plus one bounded fresh evidence challenge before synthesis | 5 |
-| Independent review (thinking-lab) | Independent reviews of supplied code/design/context; caller synthesizes | 2 |
+Create a roster for one question, complementary domains, indexed controlling files, and actual available routes. Generate a task-local score:
 
-A is a capable baseline. B adds up to three decision-changing evidence checks.
-Neither is established as superior. The paired live comparison and independent
-source-truth evaluation are separate commissioning work, not a claim from tests.
-Do not feed prior answers, evaluator rubrics, or another variant's outputs to performers.
-
-The score assets are relative to this skill directory: `scores/research-a.yaml`,
-`scores/research-b.yaml`, and `scores/thinking-lab.yaml`. Legacy plugin entry
-`scores/prep/thinking-lab.yaml` is a symlink to the same authoritative lab score;
-`scores/thinking-lab.yaml` is also supported. Existing separately operated local
-scores are untouched. The old unreleased single-seat collector is retired from
-public invocation; its safety controls remain in `scripts/snapshot.py` and tests.
-
-## Prepare and configure
-
-Supply a flat UTF-8 text directory outside the run workspace. `prompt.md` is
-required and nonempty; all immediate files are delivered byte-exactly. Nested
-directories, binary/NUL/invalid UTF-8 and over-bound inputs fail. The default total
-bound is 262144 bytes; raise `--var max_input_bytes=...` deliberately. Textual
-symlinks are dereferenced into the snapshot. Keep credentials out of shared input.
-Each new request needs its own workspace and `--fresh`; never run two requests in
-the same workspace. All modes use required directory cadenzas for complete
-original context, plus the current run receipt, at EVERY AI stage.
-Each AI prompt also carries a current-run boundary before originals and an exact
-live-stage/output/contract directive after them. Originals may contain archived
-instructions or reports as context leads; they do not authorize filesystem hunting
-for old fixtures, evaluators, or comparisons.
-
-Research delivery answers the user's question directly. Strategy requirements
-and questions are private aids for finding relevant existing solutions, not an
-acceptance dossier; supplied commissioning machinery does not displace the
-research question or turn the answer into a receipt/status report. New synthesis
-must contain a reader-facing natural `answer` with cited atomic statements. Lead with
-the named off-the-shelf component, its source-supported capability, and concrete
-work it saves; make evidence-supported comparisons and put material compatibility
-caveats next to the affected tool. Do not substitute generic commissioning/adoption
-protocols, project-governance steps, or supplied-plan echoes for an answer. Original
-context constrains relevance; the research question selects what belongs in the
-answer. Facts, inferences and recommendations render clickable links inline;
-authors phrase unknowns and proposals naturally. The final report contains that
-answer and a flat Works cited list only; candidate IDs, matrices, requirement IDs,
-challenge effects, and raw research prose remain audit machinery. The automated contract
-proves source linkage only: a reviewer must still judge relevance, source quality,
-and semantic entailment. Citation-free or answer-free legacy reports fail current
-delivery and are not rewritten; archived runs remain readable as-is.
-
-Provided original context may be cited as `source_type: input` only when its exact
-filename and SHA-256 join the current run receipt. Delivery renders that evidence
-as the corresponding copied original artifact, never as a local filesystem path.
-Input evidence grounds supplied project facts; it does not substitute for required
-external search or turn `no_web` into success.
-
-`roster.json` is the authoring surface for research/review musician bindings,
-model names, backend-supported config settings, role budgets and seat count.
-Config transports only settings actually honored by the selected backend. Native
-PluginCliBackend does not automatically turn arbitrary `variant`, `high` or
-`effort` keys into command flags; storing them in config does not establish effort.
-The generated `scores/roster.json`
-is the frozen copy consumed by preparation. Edit the source roster and regenerate
-all entries with `python3 scripts/configure.py`. Seat IDs are consecutive
-`search-1`…`search-N`, with 2–8 distinct declared families/routes. Questions are
-created dynamically by strategy; native seat count is fixed by generation.
-Adding/removing a seat does not change research prompt logic. Never hand-edit
-aliases alone: regenerate and run `scripts/check_graph.py` with source-bound
-Marianne imports so runtime routing and the receipt agree.
-
-The portable default has two complementary search seats: OpenCode
-`zai-coding-plan/glm-5.3-flash` and Antigravity `gemini-3.8-flash-high`. The
-complete Gemini model ID selects its high tier; do not add arbitrary effort keys
-or flags. Do not add unsupported `variant` or effort configuration to the
-portable OpenCode binding. Gemini Flash is also the strategist and B challenger.
-`codex-cli` synthesis explicitly uses mid-sized `gpt-5.6-terra`. Use stronger
-synthesis only when a concrete failed obligation justifies it; use economical,
-qualified search-capable routes for retrieval. The roster remains configurable
-from 2 through 8 seats.
-
-Thinking-lab stays a distinct supplied-context independent-review mode: its
-default two reviewers inherit the roster, while a caller may configure a larger
-review-capable cast when the supplied design or code warrants it. Do not imply
-frontier review capability from the default routes alone.
-
-Gemini Flash high has prior real search-and-primary-fetch evidence. The OpenCode
-GLM route is locally available, but availability does not establish search or
-delivery qualification; its earlier 600-second timeout is historical evidence
-and does not justify a blind rerun. A prior Sonnet-named route did not expose
-enough metadata to establish the actual model, so its probe and comparison do
-not prove distinct-family execution or Sonnet performance. Do not describe the
-GLM route as ready or superior from availability alone. Each route still needs
-working authentication and sufficient quota. Probe and freeze actual model,
-family, search, retrieval and tool provenance before live work. Model listing or
-paid subscription entitlement proves neither web access nor free service;
-monetary cost is unknown. If a route fails qualification, substitute a verified
-distinct family or regenerate both A/B with the same roster. Local personal
-profile names belong in local run bindings, never portable defaults.
-
-For local bindings, copy this resource bundle under your SCORES directory, edit
-its roster, then regenerate there. Or use `scripts/configure.py --roster /abs/roster.json
---out /abs/SCORES/run-scores --resources /abs/research-resource-bundle` to keep
-immutable shared resources and local generated YAML. The output directory receives
-the frozen roster; preparation uses that file. Corresponding roles in A/B must
-have identical model, effort, timeout and source-access allowances.
-
-## Direct use and conducting
-
-Copy this entire resource bundle under a request directory in SCORES, preserving
-its `scores/`, `scripts/`, `prompts/` and roster layout. Set each copied score's
-top-level `workspace:` to its dedicated absolute WORKSPACES path before running
-it. `mzt run` takes no `--workspace` option.
-
-For example, in `/absolute/SCORES/request/scores/research-a.yaml`:
-
-```yaml
-workspace: /absolute/WORKSPACES/request-a
+```sh
+python3 scripts/configure.py --roster "$HOME/Projects/SCORES/my-roster.json" \
+  --input "$HOME/Projects/SCORES/my-input" \
+  --workspace "$HOME/Projects/WORKSPACES/my-research-run" \
+  --out "$HOME/Projects/SCORES/my-research-score"
 ```
 
-After assigning separate workspace paths to the other scores:
+Start from [`examples/roster.example.json`](examples/roster.example.json). Its `REPLACE_WITH_…` values are intentionally invalid placeholders: replace every one with an available qualified profile/model and current evidence before generation.
 
-```bash
-mzt run /absolute/SCORES/request/scores/research-a.yaml --fresh --var input_dir=/absolute/context
-mzt run /absolute/SCORES/request/scores/research-b.yaml --fresh --var input_dir=/absolute/context
-mzt run /absolute/SCORES/request/scores/thinking-lab.yaml --fresh --var input_dir=/absolute/context
+The roster requires `name`, `question`, `domains`, `core_files`, `editor`, `writer`, and one `searchers` entry per domain. Each role declares `profile`, `model`, and current `qualification`; each searcher also declares `search_method`. `command_env` is optional when the native command supports it. Use at least two distinct available qualified models; same-family diversity is allowed but is not independent-family corroboration.
+
+Generation snapshots the input and creates indexed cadenzas, task-local wrappers, and profile aliases under the output directory. Before validation or launch, install only the generated `profiles/*.yaml` aliases into `~/.marianne/instruments/`; their wrappers remain at their generated absolute SCORES paths. Unique roster-name prefixes prevent collisions. The base profiles must already be available before generation. Run `mzt conductor-status`, verify the reported PID is this installation’s `mzt start` process, then use `kill -HUP PID` to reload profiles without restarting the conductor or in-flight work. Then run:
+
+```sh
+mzt validate "$HOME/Projects/SCORES/my-research-score/research.yaml"
+mzt run "$HOME/Projects/SCORES/my-research-score/research.yaml" --json
 ```
 
-The lab retains `~/workspaces/thinking-lab-input` as its legacy input default;
-explicit per-request paths are preferred. Preserve `review-N.md` semantics and
-read the individual reviews. Caller synthesis should assess evidence and unique
-insights, not majority vote. A collaborative implementation round is a separate
-explicitly authorized build task; research does not automatically start it.
+Do not use `--fresh` on the prepared workspace. It would archive or replace frozen custody files.
 
-For conductor submission, use the current command/conducting workflow, pass the
-same score/workspace/input variables, retain the returned job ID, and monitor typed
-terminal status plus artifacts. A submission receipt is not completion. No blind
-retries, recursive gap loop or automatic package adoption. AI retry/completion
-attempts and all fallback chains are empty/zero in these scores.
+Use economical qualified GLM/Flash retrieval where suitable and medium Terra synthesis when its reasoning role is justified. Paid entitlement is not free access or proof of search/delivery qualification. Do not claim Sonnet/Anthropic availability or invent backend effort flags.
 
-Role timeout defaults: strategy 300s, each search 600s, synthesis 360s, B challenge
-360s. The comparison commissioning ceilings are A 1500s and B 1860s; root must
-monitor/enforce these wall-clock ceilings, including queue/hook overhead. They
-are not an implemented score-wide deadline or a quality promise.
+Assessment selects zero, one, or two targeted followups only when missing evidence can change the advice. An optional followup has a calibrated 430-second outer allowance: 420 seconds for the child, five seconds kill grace, and five seconds for its outcome receipt. This is a working budget, not a proven optimum. Native failures retain receipts and partial evidence. Optional exit 124 and ordinary provider errors may continue with immutable partial receipts; exit 130, 137, or 144 holds the run and propagates its original code for conductor diagnosis. Do not infer a cause such as OOM from the numeric status. Valid first-pass evidence remains usable without calling the failed lane complete.
 
-Read `synthesis.json`/`synthesis.md`, individual `search-N.json`, strategy and B's
-`challenge.json`. Lab emits independent `review-N.md` with current-run hash sidecars.
-The final deterministic gate writes `delivery/status.json`. Full completion needs
-all required seats (and B challenge) plus valid synthesis. Partial/no_web, malformed,
-missing or stale reports cannot trigger successful handoff. Failed native stages
-may stop the DAG before delivery; `status.json` remains partial and useful files
-remain. To package such evidence explicitly, run `python3 scripts/research.py deliver
---workspace /abs/run`; exit 4 means partial, never successful research.
-
-## Concert delivery
-
-See [the executable wrapper example](examples/concert-delivery.md). Use existing
-native `on_success` / `run_job`; there is no new chaining API. The generator writes
-a score-relative downstream YAML path and a disjoint fresh child workspace. Bindings
-are baked into each generated child score's `prompt.variables` and required
-cadenzas; native run_job does NOT propagate arbitrary parent `--var` values.
-This example fixes its downstream consumer to `codex-cli`; the research roster
-does not configure that role. For local adaptation, generate a consumer through
-`concert.consumer(..., profile="your-qualified-profile")` or change the generated
-consumer score binding before conducting it; verify its actual route separately.
-The consumer is generated only after successful delivery and validates the exact
-parent run ID and source hashes before its AI stage. Detached hooks prove child
-submission, not child completion; wait for the child terminal result separately.
-
-The delivered human report includes requirement ID/text and mandatory/preference
-status, plus candidate ID/name/canonical-identity legends from validated records.
-Search delivery also includes the validated `strategy.json`, covered by the
-delivery digest manifest; lab delivery has no strategy artifact.
-
-The flat delivery directory contains numbered `original-NNNN.txt` byte copies,
-`report.md`, `result.json`, `run-receipt.json`, and typed `status.json`. Its manifest
-maps transport names to exact original filenames/digests and binds the original
-snapshot directory. This prevents user filenames such as `report.md` or
-`status.json` from colliding. The next consumer gets BOTH that complete exact-name
-original snapshot directory and the flat delivery directory as required cadenzas,
-plus the current receipt. Lane files and archives remain outside delivery.
-
-## Verification and limits
-
-`prompts/contracts.md` describes structured outputs; `research.py` checks coverage,
-references, run identity and delivery eligibility. It does not assess semantic
-relevance, source truth or actual model identity. Native graph and provider-free
-PromptRenderer tests record all-stage directory-inline receipts using clearly
-labeled benign fixtures. They are plumbing proof, not generated research or a
-release lock. The generic release checker cannot pre-resolve run-generated inputs
-and currently omits score_dir in its injection context; record its failure rather
-than precreating pretend research artifacts. Root owns exact-source acceptance,
-live all-stage receipts, comparative evaluation, publication and propagation.
-
-## Indexed context mode
-
-`roster.json` may opt into `context.mode: indexed` with caller-supplied
-`shared_context_files`. This preserves the default full original-context mode.
-Indexed mode delivers the listed complete originals, current receipt, hash-bound
-all-original index, strategy after it exists, and role evidence to each AI stage;
-it does not inject the entire raw snapshot or replace it with an AI summary. The
-snapshot and delivery still prove every original byte/hash. Sparse candidate fits
-may omit inapplicable requirements, while mandatory question and synthesis
-coverage remain explicit.
+The answer check reads cited bodies. One optional locator correction and changed-only recheck can narrow or remove unsupported prose. Delivery is source-bound mechanically, not a semantic guarantee. Use concert only for a verified successful parent delivery; use the answer and its limits in the actual decision rather than publishing research administration.

@@ -1,0 +1,34 @@
+{
+  "name": "replace-with-safe-score-name",
+  "question": "Replace with the caller's research question.",
+  "domains": [
+    "Replace with the first complementary research domain.",
+    "Replace with the second complementary research domain."
+  ],
+  "core_files": ["prompt.md", "constraints.md"],
+  "editor": {
+    "profile": "REPLACE_WITH_AVAILABLE_PROFILE",
+    "model": "REPLACE_WITH_AVAILABLE_MODEL",
+    "qualification": "REPLACE_WITH_CURRENT_DELIVERY_EVIDENCE"
+  },
+  "writer": {
+    "profile": "REPLACE_WITH_AVAILABLE_PROFILE",
+    "model": "REPLACE_WITH_AVAILABLE_MODEL",
+    "qualification": "REPLACE_WITH_CURRENT_DELIVERY_EVIDENCE"
+  },
+  "searchers": [
+    {
+      "profile": "REPLACE_WITH_AVAILABLE_QUALIFIED_SEARCH_PROFILE",
+      "model": "REPLACE_WITH_AVAILABLE_QUALIFIED_SEARCH_MODEL",
+      "qualification": "REPLACE_WITH_CURRENT_SEARCH_PRIMARY_BODY_DELIVERY_EVIDENCE",
+      "search_method": "REPLACE_WITH_VERIFIED_DISCOVERY_METHOD"
+    },
+    {
+      "profile": "REPLACE_WITH_A_SECOND_DISTINCT_QUALIFIED_SEARCH_PROFILE",
+      "model": "REPLACE_WITH_A_SECOND_DISTINCT_QUALIFIED_SEARCH_MODEL",
+      "qualification": "REPLACE_WITH_CURRENT_SEARCH_PRIMARY_BODY_DELIVERY_EVIDENCE",
+      "search_method": "REPLACE_WITH_VERIFIED_DISCOVERY_METHOD"
+    }
+  ],
+  "max_concurrent": 2
+}

@@ -112,8 +112,8 @@ def validate_roster(roster, mode):
         for key in ('profile', 'family', 'model'):
             text(row.get(key), f'{sid}.{key}')
     require(len({binding(x) for x in seats.values()}) == len(seats), 'seat routes must be distinct')
-    require(len({x['family'] for x in seats.values()}) == len(seats), 'seat model families must be distinct; aliases are not evidence')
-    for role in ('strategist', 'synthesizer', 'challenger'):
+    if mode != 'lab': require(len({x['family'] for x in seats.values()}) == len(seats), 'seat model families must be distinct; aliases are not evidence')
+    for role in (() if mode == 'lab' else ('strategist', 'synthesizer', 'challenger')):
         row = roster.get(role)
         require(isinstance(row, dict), f'roster.{role} required')
         text(row.get('profile'), role + '.profile')
@@ -363,6 +363,7 @@ def validate_context_index(workspace, receipt):
 
 def current(workspace):
     receipt = read(workspace / 'run-receipt.json')
+    require(receipt.get('mode') == 'lab', 'This retained helper only opens supplied-context lab runs')
     require(receipt.get('kind') == 'research-run-receipt' and receipt.get('schema_version')==1, 'current typed receipt required')
     snapshot_dir = workspace / 'input-snapshot'
     require(snapshot_dir.is_dir(), 'missing original directory')
@@ -527,12 +528,12 @@ def verify_delivery(delivery, original_dir, expected_run_id):
     return manifest
 
 def main(argv=None):
-    p=argparse.ArgumentParser(); p.add_argument('command',choices=['prepare','assignments','validate','deliver','verify-delivery']); p.add_argument('--workspace',type=Path); p.add_argument('--input-dir'); p.add_argument('--roster',type=Path); p.add_argument('--mode',choices=['A','B','lab']); p.add_argument('--max-bytes',type=int,default=262144); p.add_argument('--role'); p.add_argument('--delivery',type=Path); p.add_argument('--original-dir',type=Path); p.add_argument('--run-id')
+    p=argparse.ArgumentParser(); p.add_argument('command',choices=['prepare','validate','deliver','verify-delivery']); p.add_argument('--workspace',type=Path); p.add_argument('--input-dir'); p.add_argument('--roster',type=Path); p.add_argument('--mode',choices=['lab']); p.add_argument('--max-bytes',type=int,default=262144); p.add_argument('--role'); p.add_argument('--delivery',type=Path); p.add_argument('--original-dir',type=Path); p.add_argument('--run-id')
     a=p.parse_args(argv)
     try:
         if a.command=='prepare': prepare(a.workspace,a.input_dir,read(a.roster),a.mode,a.max_bytes)
-        elif a.command=='assignments': assignments(a.workspace)
-        elif a.command=='validate': validate_file(a.workspace,a.role)
+        elif a.command=='validate':
+            require(a.role and a.role.startswith('review-'), 'lab only accepts review-N roles'); validate_file(a.workspace,a.role)
         elif a.command=='deliver': return deliver(a.workspace)
         else: verify_delivery(a.delivery,a.original_dir,a.run_id)
         return 0

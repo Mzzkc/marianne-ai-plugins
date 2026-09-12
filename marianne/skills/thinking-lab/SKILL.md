@@ -1,22 +1,10 @@
 ---
 name: thinking-lab
-description: Compatibility entry for independent supplied-context expert reviews with review-N.md outputs and caller-owned synthesis. Use the research skill's independent review mode.
+description: Compatibility entry for the sibling research bundle's independent supplied-context review score.
 ---
 
-Use [research — independent review mode](../research/SKILL.md). This preserves
-independent reviews of supplied code/design/context and caller-owned synthesis;
-it does not force web research or automatically begin implementation.
+# Thinking lab
 
-The bundled authoritative score is `../research/scores/thinking-lab.yaml`.
-Plugin-relative `scores/prep/thinking-lab.yaml` and `scores/thinking-lab.yaml`
-resolve to it. Legacy input default remains `~/workspaces/thinking-lab-input`;
-pass `--var input_dir=/absolute/flat/context` for isolated requests and `--fresh`
-with a dedicated workspace set as an absolute top-level `workspace:` path in the
-copied research bundle under SCORES, preserving its directory layout. Run
-`mzt run /absolute/SCORES/request/scores/thinking-lab.yaml
---fresh --var input_dir=/absolute/flat/context`; `mzt run` has no `--workspace`
-option. Outputs remain `review-N.md`, one per configured
-reviewer, now with run-bound hash sidecars. Configure the roster through research's
-single generator surface. For optional automated synthesis/concert reuse, select
-the documented downstream consumer explicitly; it also receives all originals.
-A later collaborative build round requires separate implementation authorization.
+Thinking-lab is independent supplied-context review, not a research search lane. Use the sibling `research` bundle’s lab commands and files: copy the entire `research` package under SCORES, adapt `lab/roster.json`, run `lab/scripts/configure.py --roster lab/roster.json --out scores --resources lab`, then set the generated public `scores/thinking-lab.yaml` `workspace:` to a dedicated WORKSPACES path. Validate and run that score with `mzt`, passing `--var input_dir=INPUT`.
+
+Keeping the whole research package preserves the lab prompts, roster, scripts, snapshot, receipt, and delivery dependencies. Reviewers write separate review artifacts; the caller owns synthesis and must not treat agreement as truth.
