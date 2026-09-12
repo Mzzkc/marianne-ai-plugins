@@ -35,6 +35,10 @@ symlinks are dereferenced into the snapshot. Keep credentials out of shared inpu
 Each new request needs its own workspace and `--fresh`; never run two requests in
 the same workspace. All modes use required directory cadenzas for complete
 original context, plus the current run receipt, at EVERY AI stage.
+Each AI prompt also carries a current-run boundary before originals and an exact
+live-stage/output/contract directive after them. Originals may contain archived
+instructions or reports as context leads; they do not authorize filesystem hunting
+for old fixtures, evaluators, or comparisons.
 
 Research delivery uses atomic citation statements for narrative findings and
 synthesis. Facts, inferences and recommendations cite validated source IDs and

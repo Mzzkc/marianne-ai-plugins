@@ -33,13 +33,14 @@ def wrapper(parent_score, parent_workspace, child_workspace, input_dir, out_dir,
     out_dir=out_dir.resolve(); out_dir.mkdir(parents=True,exist_ok=True)
     require(parent_workspace.resolve()!=child_workspace.resolve(), 'separate consumer workspace required')
     cfg=yaml.safe_load(parent_score.read_text()); cfg['workspace']=portable(parent_workspace)
-    # Resolve resource references when relocating YAML: prompt and cadenza paths
+    # Resolve resource references when relocating YAML: prompt, prelude and cadenza paths
     # belong to the source bundle, not the generated wrapper's directory.
     cfg['prompt']['variables']['resources']=os.path.relpath(resources.resolve(), parent_workspace.resolve())
     cfg['prompt']['variables']['input_dir']=os.path.relpath(input_dir.resolve(), parent_workspace.resolve())
     cfg['prompt']['template']=cfg['prompt']['template'].replace("{% set resources = score_dir ~ '/..' %}\n",'')
+    cfg['prompt']['template']=cfg['prompt']['template'].replace('{{ score_dir }}/..',portable(resources))
     cfg['prompt']['template']=cfg['prompt']['template'].replace('{{ sq(score_dir) }}/roster.json',shlex.quote(str((out_dir/'roster.json').resolve())))
-    for items in cfg['sheet']['cadenzas'].values():
+    for items in [cfg['sheet'].get('prelude', []), *cfg['sheet']['cadenzas'].values()]:
         for item in items:
             for key in ('file','directory'):
                 if key in item: item[key]=item[key].replace('{{ score_dir }}/..',portable(resources))

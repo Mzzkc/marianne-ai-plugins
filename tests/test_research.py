@@ -162,6 +162,28 @@ def test_native_runtime_all_stage_context_and_dag(tmp_path,mode):
     put(EVIDENCE/(mode+'-receipt.json'),{'label':'BENIGN PROVIDER-FREE FIXTURES; not a release lock or live run','runtime_source':str(Path(sys.modules['marianne'].__file__).resolve()),'graph':graph,'original_manifest':r['files'],'stages':manifests})
     assert research.deliver(ws)==0
 
+
+@pytest.mark.parametrize('mode',['A','B','lab'])
+def test_live_run_boundary_brackets_full_original_context(tmp_path,mode):
+    inp,ws,r=prepare(tmp_path,mode)
+    if mode != 'lab': complete(ws,r)
+    else:
+        for i in range(len(r['roster']['seats'])):
+            name=f'review-{i+1}'; put(ws/(name+'.md'),'Independent benign review')
+            put(ws/(name+'.json'),{**env('review',r),'review':name,'sha256':research.digest(ws/(name+'.md'))})
+    filename='thinking-lab.yaml' if mode=='lab' else f'research-{mode.lower()}.yaml'
+    _,sheets,renderer=native(ASSETS/'scores'/filename,ws,inp)
+    for sheet in sheets:
+        if sheet.instrument_name == 'cli': continue
+        prompt = render(renderer,sheet).prompt
+        original = prompt.index('BENIGN_ORIGINAL_PROMPT')
+        assert prompt.index('CURRENT RUN BOUNDARY') < original
+        directive = prompt.index('LIVE STAGE:')
+        assert directive > prompt.index('BENIGN_SECOND_CONTEXT')
+        assert 'AUTHORITATIVE OUTPUT:' in prompt[directive:]
+        assert 'CURRENT CONTRACT:' in prompt[directive:]
+        assert 'filesystem-hunt' in prompt
+
 @pytest.mark.parametrize('mode',['A','B'])
 def test_rendered_prepare_shell_metacharacters(tmp_path,mode):
     inp=tmp_path/"in 'q $(touch INJECTED) `id`; dir"; ws=tmp_path/"ws 'q $(touch WS_INJECTED) `id` & dir"; ws.mkdir()
@@ -408,6 +430,7 @@ def test_concert_generated_parent_executes_binding_after_delivery(tmp_path):
     # Execute native preparation, then stage explicitly BENIGN performer outputs.
     prep=subprocess.run(['bash','-c',render(renderer,sheets[0]).prompt],text=True,capture_output=True,cwd=tmp_path)
     assert prep.returncode==0,prep.stderr
+    assert concert.portable(ASSETS/'prompts/contracts.md') in render(renderer,sheets[1]).prompt
     r=research.current(ws); complete(ws,r)
     # Execute final deterministic delivery plus actual child YAML generation.
     result=subprocess.run(['bash','-c',render(renderer,sheets[-1]).prompt],text=True,capture_output=True,cwd=tmp_path)
