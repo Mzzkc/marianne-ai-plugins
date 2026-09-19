@@ -5,68 +5,60 @@ description: Use when users ask to "update Marianne models", "refresh instrument
 
 # Marianne model/profile refresh
 
-## Contract
+Run the complete bundled score through `score/scripts/run_refresh.py`. It owns
+inventory, scope admission, backup, apply, commissioning, compensation and the
+terminal receipt. The caller receives a compact outcome and any unresolved
+limitation; submitting a job is not completion. There is no approval pause after
+invocation within the caller's authorized scope.
 
-Run one bounded model-definition update transaction. Inventory first, establish
-scope, research current facts, back up every accepted target, apply updates,
-commission the result, compensate on failure, and write an exact receipt. There
-is no approval pause after invocation.
+This capability updates existing integrations only. Never install clients,
+providers, plugins, models, credentials or authentication flows. Keep secrets
+out of public inventory, manifests and receipts. Profile identity is not agent
+identity: do not edit portable seeds, L1-L4 memory, lifecycle debt,
+relationships or cadenza associations. For persistent-agent implications, read
+`../../docs/ref/modern-agents.md` relative to this skill directory; an available
+plugin-root variable is only a shortcut.
 
-Treat this capability as updates only. Never install a client, provider,
-plugin, model, credential, or authentication flow. Use only already-integrated
-Marianne and client surfaces. Keep credentials and secret-bearing values out of
-inventory, manifests, backup reports, and receipts.
+## Scope and evidence
 
-Instrument/model identity is not agent identity. A profile refresh may update
-verified routing facts and capability evidence; it must not edit an agent's
-portable seed, L1-L4 data, lifecycle debt, relationships, or cadenza
-associations. Read `${CLAUDE_PLUGIN_ROOT}/docs/ref/modern-agents.md` when the
-refresh will feed a persistent-agent score.
+Every refresh researches **all providers Marianne ships**: every distinct
+provider in the shipped musician catalog and any explicit shipped builtin
+provider declarations, plus locally declared providers. Installed clients and reachable active routes do not
+narrow this denominator. Providers with no local route still receive a research
+result. The caller does not need to know new release names. Missing or blocked
+provider results prevent apply; evidence-backed no-change is valid coverage.
+A targeted request can focus proposed edits, but cannot waive research coverage.
 
-## Modes
+Preserve existing roles and defaults unless evidence and the request justify
+changing them. Preserve pinned, frozen, retired, historical and unknown-authority
+references according to `references/scope.md`. Search matches do not grant
+mutation authority.
 
-- **Direct-agent mode:** perform the entire contract directly with the bundled
-  deterministic runtime. Route through `TASK-MAP.md` and use
-  `score/run_refresh.py` when Marianne is available. The runner captures and
-  restores the exact prior technique on every runner exit. Its temporary mode
-  is separate from the explicit persistent `install-technique` command.
-  Without Marianne, execute the same ordered stages directly and use
-  `score/scripts/refreshctl.py` for deterministic inventory, authority
-  validation, backup, commissioning, restore, receipt, and lock operations;
-  never install Marianne to complete a refresh.
-- **Marianne musician mode:** follow the bounded research or apply assignment
-  injected by the score. Treat `score/technique/SKILL.md` as the score-safe
-  projection and keep deterministic backup, validation, commissioning, and
-  compensation under the score runtime's custody.
+## Runtime ownership
 
-Apply the same authority in both modes. A targeted refresh stays within its
-named provider/family and active downstream references. A broad refresh
-requires a full active-state census and current official-web research before
-mutation.
+The schema-v2 manifest binds provider results, exact targets and configured
+expectations to the runtime's caller authority. Backup precedes mutation; the
+protected transaction state binds exact paths, digests, parent-chain identity
+and recovery entries. Known runtime telemetry is handled by the bound
+observation policy; genuine governed configuration drift still fails checks.
+The worker cannot waive an unexpected write. Failed required checks trigger
+exact compensation, and an unproved restore remains a recovery failure.
 
-## Invariants
+Configured expectations, syntax, integration tests and live probes establish
+different things. URLs alone do not prove source support; a parsed file does
+not prove a route works. Unsupported live adapters remain unsupported.
 
-Classify every candidate before editing. Preserve pinned, frozen, retired,
-historical, and unknown-authority references unless the request explicitly
-names an eligible pinned or frozen target. Search matches do not grant mutation
-authority.
-
-Require an accepted manifest and transactional backup before the first target
-mutation. Its protected transaction state binds recovery and manifest
-digests, transaction, exact paths, resolved scope, pre-apply parent-chain
-identity, and caller authority; the public index alone is not recovery
-authority. Keep the observed change set identical to the accepted target
-ledger. Stop on a required gate failure and perform deterministic compensation
-in reverse order. Treat an unproved restore as compensation failure and
-preserve recovery state.
-
-Keep configured, parsed, integrated, and live-smoked evidence distinct. The
-bounded Google adapter uses only an installed Gemini CLI and supported existing
-authentication. Unsupported, unauthenticated, or failed live access remains
-unverified rather than being promoted to success.
+The runner observes terminal state and its matching transaction receipt before
+reporting success. A paused or interrupted observation retains transaction and
+temporary-technique state for `--resume-workspace`; it does not remove a
+technique from musicians that may still be running. Existing schema-v1 protected
+transactions remain recoverable.
 
 ## Route
 
-Read `TASK-MAP.md`, then load only the references named for the current mode or
-decision. Run the bundled scripts instead of recreating byte-level backup,
-restore, redaction, manifest, or release-lock behavior.
+Read `TASK-MAP.md` and the references for your assignment. Use the full score
+route when Marianne is available; do not recreate custody with manual commands.
+If Marianne is unavailable, report the limitation without installing it. The
+bundled helper also supports explicit deterministic recovery and maintenance.
+Research/apply musicians use `score/technique/SKILL.md`, the bounded score-safe
+projection, rather than recursively launching another refresh.

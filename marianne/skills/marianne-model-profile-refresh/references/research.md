@@ -1,29 +1,30 @@
 # Current-fact research
 
-Research unstable or incomplete facts before accepting a manifest. Make
-current official-web research mandatory for every broad refresh. For a named
-refresh, verify supplied facts when they are unstable or incomplete.
+Read the immutable `refresh_scope` in caller authority and its inventory
+associations before searching. A single research movement handles per-provider
+assignments and integrates shared targets; it must not choose its own coverage
+denominator. Every run covers all providers Marianne ships and locally declared providers,
+including catalog-only providers
+with no installed or reachable local route. A request may focus proposed edits,
+not reduce this research denominator.
 
-Use evidence in this order:
+Use official model documentation and release notes to discover releases, then
+official client documentation/registries and available local evidence to check
+routing. Secondary material can identify leads, but accepted unstable facts
+need primary support. Do not begin from a fixed list of expected new models.
 
-1. Official model/API documentation and official release notes.
-2. Official client documentation and model registries.
-3. Live client model listings or provider API metadata already available in
-   the environment.
-4. Local runtime behavior and current configuration.
-5. Reputable secondary material only to identify claims that still require
-   primary verification.
+Distinguish release existence, stability/preview status, client availability,
+capacity, reasoning controls, tool capability and live authentication. One
+source need not establish all these claims. Resolve material contradictions or
+return `blocked`; the transaction does not partially apply around unresolved
+coverage. A URL's presence is not proof that it supports a claim.
 
-Distinguish these evidence lanes: model existence, client availability,
-context and output capacity, reasoning controls, tool capability, and live
-authentication. Never let one source silently establish all lanes.
+Return one provider result per assigned provider, with evidence even for
+`no_change`. Stable fact IDs connect model facts to exact shared-file targets.
+Preserve existing specialized roles, pins and defaults; a newer release does
+not itself authorize replacing them. Report unresolved route associations
+instead of guessing provider identity from client or broker names.
 
-Record evidence URLs and the evidence status for every accepted fact. Record a
-contradiction instead of guessing. Block the contradicted target while allowing
-unrelated well-supported targets to proceed only when the transaction remains
-independently compensable.
-
-For Gemini 3.8 Flash, accept exactly model `gemini-3.8-flash`, input context
-1,048,576, maximum output 65,536, and thinking levels `low`, `medium`, and
-`high`. Reject `minimal`. Do not replace Gemini Pro roles without explicit
-authority.
+Use bounded configured expectations and relevant existing profile/catalog tests
+to express what an accepted change must accomplish. Do not claim these checks
+prove that web research is exhaustive or that unsupported routes were live-tested.

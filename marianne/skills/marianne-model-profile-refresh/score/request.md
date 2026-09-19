@@ -1,19 +1,20 @@
 # Model/profile refresh request
 
-Refresh the active, unpinned Marianne model/profile state to current stable
-provider models already supported by the installed clients. Perform official
-web research for unstable facts, classify every candidate before mutation, and
-preserve pinned, frozen, retired, archived, migration-versioned, historical,
-and unknown references unless this request explicitly names one.
+Research current releases and capability changes for every provider assigned
+from all providers in Marianne’s shipped catalog and builtin declarations,
+plus providers declared by locally used profiles. Discover releases from
+current official sources; do not assume the caller supplied their names.
+Propose evidence-supported updates on already-integrated client routes.
+Installed profiles and reachable routes never narrow required provider coverage;
+catalog-only providers still require a result.
 
-For Gemini Flash, apply the stable Gemini 3.8 Flash treatment when relevant:
+Account for each assigned provider with supported changes, evidenced no-change,
+or an explicit blocked result. Missing or blocked coverage prevents apply.
+Distinguish provider release existence from client routing and authenticated
+availability. Preserve current defaults and specialized roles unless their
+change is justified by evidence and this request.
 
-- model ID `gemini-3.8-flash`;
-- input context 1,048,576 tokens;
-- maximum output 65,536 tokens;
-- thinking profiles low, medium, and high (never minimal);
-- active Gemini Flash defaults and active unpinned downstream references only.
-
-Do not install clients, providers, plugins, models, credentials, or auth flows.
-Do not replace Gemini Pro roles with Flash unless a future request explicitly
-authorizes that role change.
+Classify candidates before mutation. Preserve pinned, frozen, retired,
+archived, historical and unknown-authority references unless explicitly
+eligible under the caller's scope. Use generators for generated consumers.
+Do not install clients, providers, plugins, models, credentials or auth flows.

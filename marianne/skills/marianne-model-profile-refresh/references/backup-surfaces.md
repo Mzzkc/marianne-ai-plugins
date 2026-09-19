@@ -45,3 +45,14 @@ technique directories mode `0700`, and protected indices, state, and blobs mode
 `0600`, independently of umask. Do not chmod unrelated pre-existing parent
 roots. Keep operational recovery data protected and separate from public
 reports.
+
+Authority roots express where changes may be authorized; they do not make every
+runtime log or cache a model profile. The runtime binds observation policy before
+mutation, excludes only supported operational state, and continues detecting
+genuine out-of-manifest governed configuration changes. Accepted targets remain
+observed. Workers cannot add exclusions to excuse unexpected changes. Keep
+backup and exact restore authority unchanged by this observation distinction.
+
+New v2 changes target canonical files, not symlink aliases: backing up a link
+does not back up edits made through it. Existing v1 recovery still restores
+its recorded symlink targets. Plan the resolved file only within caller authority.

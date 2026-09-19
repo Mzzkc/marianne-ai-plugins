@@ -20,6 +20,9 @@ from typing import Any, Iterable
 
 import yaml
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import refresh_observation
+
 
 CLASSIFICATIONS = {"active", "generated", "pinned", "frozen", "retired", "unknown"}
 MUTABLE_CLASSIFICATIONS = {"active", "generated"}
@@ -138,42 +141,104 @@ def _resolved_roots(data: dict[str, Any], errors: list[str]) -> list[Path]:
     return resolved
 
 
+def _evidence_urls(value: Any) -> bool:
+    return (isinstance(value, list) and bool(value)
+            and all(isinstance(url, str) and url.startswith("https://") and len(url) > 8 for url in value))
+
+
+def _provider_facts(data: dict) -> dict[str, dict]:
+    return {fact["id"]: {**fact, "provider": row["provider"]}
+            for row in data.get("provider_results", []) if isinstance(row, dict)
+            for fact in row.get("facts", []) if isinstance(fact, dict) and isinstance(fact.get("id"), str)}
+
+
+def _validate_provider_results(data: dict) -> tuple[list[str], set[str]]:
+    errors: list[str] = []
+    rows = data.get("provider_results")
+    if not isinstance(rows, list) or not rows:
+        return ["provider_results must be a non-empty list"], set()
+    providers: set[str] = set()
+    ids: set[str] = set()
+    for row in rows:
+        if not isinstance(row, dict):
+            errors.append("provider result must be an object")
+            continue
+        provider = row.get("provider")
+        if not isinstance(provider, str) or not provider.strip():
+            errors.append("provider result requires provider identity")
+        elif provider in providers:
+            errors.append(f"duplicate provider result: {provider}")
+        else:
+            providers.add(provider)
+        if row.get("status") not in ("changes", "no_change", "blocked"):
+            errors.append(f"provider {provider} has invalid status")
+        if not isinstance(row.get("reason"), str) or not row["reason"].strip():
+            errors.append(f"provider {provider} requires reason")
+        if row.get("status") == "blocked":
+            errors.append(f"provider {provider} is blocked; mutation is not admitted")
+        if row.get("status") != "blocked" and not _evidence_urls(row.get("evidence_urls")):
+            errors.append(f"provider {provider} requires evidence_urls")
+        facts = row.get("facts")
+        if not isinstance(facts, list):
+            errors.append(f"provider {provider} facts must be an array")
+            continue
+        if row.get("status") == "changes" and not facts:
+            errors.append(f"provider {provider} changes require facts")
+        for fact in facts:
+            if not isinstance(fact, dict):
+                errors.append(f"provider {provider} fact must be an object")
+                continue
+            fact_id = fact.get("id")
+            if not isinstance(fact_id, str) or not fact_id.strip():
+                errors.append("fact requires nonempty id")
+            elif fact_id in ids:
+                errors.append(f"duplicate fact id: {fact_id}")
+            else:
+                ids.add(fact_id)
+            if not isinstance(fact.get("model"), str) or not fact["model"].strip():
+                errors.append(f"fact {fact_id} requires model")
+            if not _evidence_urls(fact.get("evidence_urls")):
+                errors.append(f"fact {fact_id} requires evidence_urls")
+            if "live_contract_required" in fact and not isinstance(fact["live_contract_required"], bool):
+                errors.append(f"fact {fact_id} live_contract_required must be boolean")
+    return errors, ids
+
+
 def validate_manifest(data: dict) -> list[str]:
     """Validate update authority before any mutation is allowed."""
     errors: list[str] = []
     if not isinstance(data, dict):
         return ["manifest must be an object"]
-    if data.get("schema_version") != 1:
-        errors.append("schema_version must be 1")
+    if data.get("schema_version") not in (1, 2):
+        errors.append("schema_version must be 1 or 2")
     if not isinstance(data.get("transaction_id"), str) or not data["transaction_id"].strip():
         errors.append("transaction_id must be a non-empty string")
     if not isinstance(data.get("request"), str) or not data["request"].strip():
         errors.append("request must be a non-empty string")
     mode = data.get("mode")
-    if mode not in {"specific", "broad"}:
+    if mode not in ("specific", "broad"):
         errors.append("mode must be specific or broad")
     roots = _resolved_roots(data, errors)
-    facts = data.get("facts")
-    if not isinstance(facts, dict):
-        errors.append("facts must be an object")
-        facts = {}
-    if mode == "broad" and not facts.get("evidence_urls"):
-        errors.append("broad mode requires evidence_urls")
-    if facts.get("model") == "gemini-3.8-flash":
-        if facts.get("context_window") != 1_048_576:
-            errors.append("gemini-3.8-flash context_window must be 1048576")
-        if facts.get("max_output_tokens") != 65_536:
-            errors.append("gemini-3.8-flash max_output_tokens must be 65536")
-        levels = facts.get("thinking_levels")
-        if not isinstance(levels, list) or set(levels) != {"low", "medium", "high"}:
-            errors.append("gemini-3.8-flash thinking_levels must be low, medium, high (minimal is unsupported)")
+    fact_ids: set[str] = set()
+    if data.get("schema_version") == 2:
+        provider_errors, fact_ids = _validate_provider_results(data)
+        errors.extend(provider_errors)
+    else:
+        # Version 1 remains readable for already-created recovery transactions;
+        # provider-specific release facts are never frozen into admission code.
+        facts = data.get("facts")
+        if not isinstance(facts, dict):
+            errors.append("facts must be an object")
+            facts = {}
+        if mode == "broad" and not facts.get("evidence_urls"):
+            errors.append("broad mode requires evidence_urls")
     if _has_secret_key(data.get("report", {})):
         errors.append("manifest report fields must not contain secret-looking keys")
     if redact(data) != data:
         errors.append("public manifest contains a field or value that requires redaction")
     targets = data.get("targets")
-    if not isinstance(targets, list) or not targets:
-        errors.append("targets must be a non-empty list")
+    if not isinstance(targets, list) or (not targets and data.get("schema_version") == 1):
+        errors.append("targets must be a list (non-empty for version 1)")
         return errors
     seen: set[Path] = set()
     for position, target in enumerate(targets):
@@ -181,12 +246,31 @@ def validate_manifest(data: dict) -> list[str]:
         if not isinstance(target, dict):
             errors.append(f"{prefix} must be an object")
             continue
+        if data.get("schema_version") == 2:
+            refs = target.get("fact_ids")
+            if not isinstance(refs, list) or not refs or any(not isinstance(ref, str) or ref not in fact_ids for ref in refs):
+                errors.append(f"{prefix} requires known fact_ids")
+            if target.get("disposition") != "change":
+                errors.append(f"{prefix}.disposition must be change; retained paths belong in provider results")
+            checks = target.get("checks")
+            if not isinstance(checks, list) or not checks:
+                errors.append(f"{prefix} requires configured checks")
+            else:
+                for check in checks:
+                    if not isinstance(check, dict) or sum(key in check for key in ("equals", "contains")) != 1:
+                        errors.append(f"{prefix} check needs exactly one of equals or contains")
+                    elif "pointer" in check and (not isinstance(check["pointer"], str) or (check["pointer"] and not check["pointer"].startswith("/"))):
+                        errors.append(f"{prefix} check pointer must be a JSON pointer")
+                    elif "equals" in check and "pointer" not in check:
+                        errors.append(f"{prefix} equals check requires pointer")
         raw_path = target.get("path")
         if not isinstance(raw_path, str) or not Path(raw_path).is_absolute():
             errors.append(f"{prefix}.path must be an absolute path")
             continue
         declared_path = Path(raw_path).absolute()
         resolved_path = declared_path.resolve(strict=False)
+        if data.get("schema_version") == 2 and resolved_path != declared_path:
+            errors.append(f"{prefix}: version 2 change targets must use canonical files, not symlink aliases")
         if raw_path != os.path.abspath(raw_path):
             errors.append(f"{prefix}.path must use canonical absolute spelling")
         if resolved_path in seen:
@@ -195,12 +279,23 @@ def validate_manifest(data: dict) -> list[str]:
         if roots and not any(_contained(resolved_path, root) for root in roots):
             errors.append(f"{prefix}.path is outside allowed_roots")
         classification = target.get("classification")
-        if classification not in CLASSIFICATIONS:
+        if classification not in tuple(CLASSIFICATIONS):
             errors.append(f"{prefix}.classification is not recognized")
-        elif classification not in MUTABLE_CLASSIFICATIONS and not (
-            classification in {"pinned", "frozen"} and target.get("explicitly_named") is True
+        elif classification not in tuple(MUTABLE_CLASSIFICATIONS) and not (
+            classification in ("pinned", "frozen") and target.get("explicitly_named") is True
         ):
             errors.append(f"{prefix} may not mutate {classification} without explicitly_named: true")
+    if data.get("schema_version") == 2 and isinstance(data.get("provider_results"), list):
+        used = {ref for target in targets if isinstance(target, dict)
+                for ref in (target.get("fact_ids") if isinstance(target.get("fact_ids"), list) else []) if isinstance(ref, str)}
+        for row in data["provider_results"]:
+            if not isinstance(row, dict) or not isinstance(row.get("facts"), list):
+                continue
+            row_ids = {fact.get("id") for fact in row["facts"] if isinstance(fact, dict) and isinstance(fact.get("id"), str)}
+            if row.get("status") == "changes" and row_ids - used:
+                errors.append(f"provider {row.get('provider')} has unapplied change fact references")
+            if row.get("status") != "changes" and row_ids & used:
+                errors.append(f"provider {row.get('provider')} cannot drive changes with status {row.get('status')}")
     return errors
 
 
@@ -224,6 +319,46 @@ def validate_manifest_authority(
         errors.append("caller authority transaction does not match runtime transaction")
     if data.get("transaction_id") != expected_transaction_id:
         errors.append("manifest transaction does not match runtime transaction")
+    scope = authority.get("refresh_scope")
+    if scope is not None:
+        if data.get("schema_version") != 2:
+            errors.append("inventory-bound refresh requires manifest version 2")
+        if not isinstance(scope, dict) or not isinstance(scope.get("providers"), list) or not scope["providers"]:
+            errors.append("caller refresh_scope requires provider assignments")
+        else:
+            expected = {row.get("id") for row in scope["providers"] if isinstance(row, dict)}
+            rows = data.get("provider_results", [])
+            actual = {row.get("provider") for row in rows if isinstance(row, dict) and isinstance(row.get("provider"), str)} if isinstance(rows, list) else set()
+            if actual != expected:
+                errors.append("provider coverage does not match caller refresh_scope")
+            if data.get("mode") != scope.get("mode"):
+                errors.append("manifest mode does not match caller refresh_scope")
+            unresolved = scope.get("unresolved", [])
+            expected_unresolved = {row.get("id"): row for row in unresolved if isinstance(row, dict)}
+            resolutions = data.get("unresolved_results", [])
+            if not isinstance(resolutions, list):
+                errors.append("unresolved_results must be an array")
+                resolutions = []
+            seen_unresolved = set()
+            for resolution in resolutions:
+                if not isinstance(resolution, dict) or not isinstance(resolution.get("id"), str):
+                    errors.append("unresolved coverage resolution requires id")
+                    continue
+                uid = resolution["id"]
+                if uid in seen_unresolved:
+                    errors.append("duplicate unresolved coverage resolution")
+                seen_unresolved.add(uid)
+                provider = resolution.get("provider")
+                if resolution.get("status") != "resolved":
+                    errors.append(f"unresolved provider coverage is blocked: {uid}")
+                if not isinstance(provider, str) or provider not in expected:
+                    errors.append(f"unresolved resolution must use an assigned provider: {uid}")
+                if not _evidence_urls(resolution.get("evidence_urls")):
+                    errors.append(f"unresolved resolution requires official evidence_urls: {uid}")
+            if seen_unresolved != set(expected_unresolved):
+                errors.append("unresolved provider coverage does not match caller refresh_scope")
+            if isinstance(rows, list) and any(isinstance(row, dict) and row.get("status") == "blocked" for row in rows):
+                errors.append("provider coverage is blocked; mutation is not admitted")
     raw_roots = authority.get("allowed_roots")
     if not isinstance(raw_roots, list) or not raw_roots:
         errors.append("caller authority allowed_roots must be a non-empty list")
@@ -419,6 +554,10 @@ def _accepted_resolved_target_paths(data: dict[str, Any]) -> list[str]:
     ]
 
 
+def _governed_snapshot(roots: Iterable[Path], excluded: Iterable[Path], targets: Iterable[Path]) -> dict:
+    return refresh_observation.snapshot(roots, excluded, required_paths=targets)
+
+
 def create_backup(
     manifest_path: Path,
     backup_dir: Path,
@@ -441,6 +580,13 @@ def create_backup(
     parent_chains = _capture_parent_chains(target_paths)
     entries = _capture_entries(target_paths, backup_dir / "blobs")
     roots = [Path(root).resolve(strict=False) for root in data["allowed_roots"]]
+    excluded_paths = [backup_dir.resolve(strict=False)]
+    if data.get("schema_version") == 2 and authority_path is not None:
+        authority = json.loads(authority_path.read_text(encoding="utf-8"))
+        runtime_paths = authority.get("runtime_paths", [])
+        if not isinstance(runtime_paths, list) or any(not isinstance(path, str) or not Path(path).is_absolute() for path in runtime_paths):
+            raise ValueError("caller runtime_paths must be absolute paths")
+        excluded_paths.extend(Path(path).resolve(strict=False) for path in runtime_paths)
     index_path = backup_dir / "index.json"
     recovery_path = backup_dir / "recovery-index.json"
     recovery_index = {
@@ -456,9 +602,12 @@ def create_backup(
         "accepted_scope": _accepted_scope(data),
         "entries": [asdict(entry) for entry in entries],
         "allowed_roots": [str(root) for root in roots],
-        "excluded_paths": [str(backup_dir.resolve(strict=False))],
-        "scope_snapshot": _snapshot(roots, [backup_dir]),
+        "excluded_paths": [str(path) for path in excluded_paths],
+        "scope_snapshot": (_governed_snapshot(roots, excluded_paths, target_paths)
+                           if data.get("schema_version") == 2 else _snapshot(roots, [backup_dir])),
     }
+    if data.get("schema_version") == 2:
+        recovery_index["observation_policy"] = refresh_observation.POLICY_VERSION
     _atomic_write_json(recovery_path, recovery_index)
     state_path = backup_dir / "transaction-state.json"
     transaction_state = {
@@ -928,7 +1077,14 @@ def observed_changed_paths(
     if index.get("transaction_id") != data.get("transaction_id"):
         return [], ["manifest transaction does not match backup index"]
     roots = [Path(root) for root in index["allowed_roots"]]
-    current = _snapshot(roots, [Path(path) for path in index.get("excluded_paths", [])])
+    excluded = [Path(path) for path in index.get("excluded_paths", [])]
+    policy = index.get("observation_policy")
+    if policy is None:
+        current = _snapshot(roots, excluded)
+    elif policy == refresh_observation.POLICY_VERSION:
+        current = _governed_snapshot(roots, excluded, [Path(path) for path in index["accepted_target_paths"]])
+    else:
+        return [], [f"unsupported observation policy: {policy}"]
     before = index.get("scope_snapshot", {})
     changed = set(before).symmetric_difference(current)
     changed.update(path for path in set(before).intersection(current) if before[path] != current[path])
@@ -940,6 +1096,86 @@ def observed_changed_paths(
 def verify_changed_paths(manifest_path: Path, before_index: Path) -> list[str]:
     _, errors = observed_changed_paths(manifest_path, before_index)
     return errors
+
+
+def _pointer_value(document: Any, pointer: str) -> Any:
+    """JSON pointer with a unique @name=value selector for profile model rows."""
+    current = document
+    for raw in pointer.split("/")[1:] if pointer else []:
+        token = raw.replace("~1", "/").replace("~0", "~")
+        if isinstance(current, list) and token.startswith("@name="):
+            matches = [row for row in current if isinstance(row, dict) and row.get("name") == token[6:]]
+            if len(matches) != 1:
+                raise ValueError(f"selector {token!r} needs exactly one match")
+            current = matches[0]
+        elif isinstance(current, list):
+            if not token.isdigit():
+                raise ValueError(f"invalid array index {token!r}")
+            current = current[int(token)]
+        elif isinstance(current, dict):
+            current = current[token]
+        else:
+            raise ValueError(f"cannot resolve pointer token {token!r}")
+    return current
+
+
+def _configured_checks(manifest: dict) -> list[str]:
+    errors = []
+    facts = _provider_facts(manifest)
+    for target in manifest.get("targets", []):
+        path = Path(target["path"])
+        try:
+            text = path.read_text(encoding="utf-8")
+            document = (json.loads(text) if path.suffix == ".json" else
+                        tomllib.loads(text) if path.suffix == ".toml" else
+                        yaml.safe_load(text) if path.suffix in {".yaml", ".yml"} else text)
+            # Membership is a deterministic profile/catalog contract, independent
+            # of worker-selected prose assertions (a comment cannot add a model).
+            expected_models = {facts[ref]["model"] for ref in target.get("fact_ids", []) if ref in facts}
+            if isinstance(document, dict) and ("models" in document or {"name", "kind"} <= document.keys()):
+                model_rows = document.get("models")
+                if not isinstance(model_rows, list):
+                    errors.append(f"configured profile models must be an array: {path}")
+                    model_rows = []
+                configured_models = {row.get("name") for row in model_rows
+                                     if isinstance(row, dict) and isinstance(row.get("name"), str)}
+                for model in sorted(expected_models - configured_models):
+                    errors.append(f"configured model missing from profile {path}: {model}")
+            if isinstance(document, dict) and ("musicians" in document or path.name == "instrument-catalog.yaml"):
+                musicians = document.get("musicians")
+                if not isinstance(musicians, dict):
+                    errors.append(f"configured catalog musicians must be a mapping: {path}")
+                    musicians = {}
+                for model in sorted(expected_models - set(musicians)):
+                    errors.append(f"configured model missing from catalog {path}: {model}")
+            for check in target.get("checks", []):
+                actual = _pointer_value(document, check["pointer"]) if "pointer" in check else text
+                if "equals" in check:
+                    passed = actual == check["equals"]
+                elif isinstance(actual, (str, list, dict)):
+                    passed = check["contains"] in actual
+                else:
+                    passed = False
+                if not passed:
+                    errors.append(f"configured assertion failed for {path}: {check}")
+        except (OSError, ValueError, yaml.YAMLError, KeyError, IndexError, TypeError) as exc:
+            errors.append(f"configured assertion failed for {path}: {exc}")
+    return errors
+
+
+def _target_snapshot(manifest: dict) -> dict:
+    """Bind leaf link identities and resolved file bytes to the accepted scope."""
+    roots = [Path(root).resolve(strict=False) for root in manifest["allowed_roots"]]
+    paths = set()
+    for target in manifest["targets"]:
+        lexical = Path(target["path"]).absolute()
+        resolved = lexical.resolve(strict=False)
+        if not any(_contained(resolved, root) for root in roots):
+            raise ValueError(f"candidate target is outside accepted roots: {lexical}")
+        paths.update((lexical, resolved))
+    # The observer never follows links. Include the separately authorized resolved
+    # leaf so changing its bytes cannot hide behind an unchanged link string.
+    return _governed_snapshot(sorted(paths), [], sorted(paths))
 
 
 def static_commission(
@@ -968,6 +1204,12 @@ def static_commission(
     except (OSError, json.JSONDecodeError, TypeError) as exc:
         manifest = {}
         errors.append(f"changed-path ledger is invalid: {exc}")
+    candidate_snapshot = None
+    if manifest.get("schema_version") == 2:
+        try:
+            candidate_snapshot = _target_snapshot(manifest)
+        except (OSError, ValueError) as exc:
+            errors.append(f"candidate snapshot failed: {exc}")
     for raw_path in observed:
         path = Path(raw_path)
         try:
@@ -979,11 +1221,22 @@ def static_commission(
                 tomllib.loads(path.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError, yaml.YAMLError, tomllib.TOMLDecodeError) as exc:
             errors.append(f"syntax validation failed for observed target {path}: {exc}")
+    if manifest.get("schema_version") == 2:
+        declared_changes = {str(Path(target["path"]).resolve(strict=False)) for target in manifest["targets"]}
+        for path in sorted(declared_changes - set(observed)):
+            errors.append(f"declared change target has no observed change: {path}")
+        errors.extend(_configured_checks(manifest))
+        try:
+            if candidate_snapshot != _target_snapshot(manifest):
+                errors.append("candidate changed during static commissioning")
+        except (OSError, ValueError) as exc:
+            errors.append(f"candidate snapshot failed: {exc}")
     return {
         "schema_version": 1,
         "transaction_id": manifest.get("transaction_id"),
         "observed_changed_paths": observed,
-        "static": {"passed": not errors, "errors": redact(errors)},
+        "static": {"passed": not errors, "errors": redact(errors),
+                   **({"candidate_snapshot": candidate_snapshot} if manifest.get("schema_version") == 2 else {})},
         "live": {"state": "not_attempted", "required": False, "detail": "pending live movement"},
     }
 
@@ -1001,23 +1254,26 @@ def _live_record(state: str, required: bool, detail: str) -> dict[str, Any]:
     return {"state": state, "required": required, "detail": detail}
 
 
-def live_commission(
-    manifest_path: Path,
-    commissioning_path: Path,
-    *,
-    transaction_id: str,
-    environ: dict[str, str] | None = None,
-    timeout_seconds: float = 30.0,
-) -> dict[str, Any]:
-    """Run one bounded Gemini CLI probe without changing authentication."""
-    if not 0 < timeout_seconds <= 30.0:
-        raise ValueError("live timeout must be greater than zero and at most 30 seconds")
-    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    commissioning = json.loads(commissioning_path.read_text(encoding="utf-8"))
-    if manifest.get("transaction_id") != transaction_id or commissioning.get("transaction_id") != transaction_id:
-        raise ValueError("live commissioning transaction does not match runtime transaction")
-    required = bool(manifest.get("live_contract_required", False))
-    facts = manifest.get("facts", {})
+def _native_google_route(manifest: dict, fact_id: str, model: str) -> bool:
+    for target in manifest.get("targets", []):
+        if fact_id not in target.get("fact_ids", []):
+            continue
+        path = Path(target["path"])
+        if path.suffix not in {".yaml", ".yml"}:
+            continue
+        try:
+            profile = yaml.safe_load(path.read_text(encoding="utf-8"))
+            if (isinstance(profile, dict) and profile.get("name") == "gemini-cli"
+                    and profile.get("kind") == "cli"
+                    and profile.get("cli", {}).get("command", {}).get("executable") == "gemini"
+                    and any(isinstance(row, dict) and row.get("name") == model for row in profile.get("models", []))):
+                return True
+        except (OSError, ValueError, yaml.YAMLError, AttributeError, TypeError):
+            continue
+    return False
+
+
+def _probe_google_cli(facts: dict, required: bool, environ: dict | None, timeout_seconds: float) -> dict:
     provider = facts.get("provider")
     model = facts.get("model")
     if provider != "google":
@@ -1125,6 +1381,46 @@ def live_commission(
                 live = _live_record("failed", required, "bounded Gemini CLI probe timed out")
             except OSError:
                 live = _live_record("failed", required, "bounded Gemini CLI probe failed")
+    return live
+
+
+def live_commission(
+    manifest_path: Path,
+    commissioning_path: Path,
+    *,
+    transaction_id: str,
+    environ: dict[str, str] | None = None,
+    timeout_seconds: float = 30.0,
+) -> dict[str, Any]:
+    """Commission each fact through a proven supported route without changing authentication."""
+    if not 0 < timeout_seconds <= 30.0:
+        raise ValueError("live timeout must be greater than zero and at most 30 seconds")
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    commissioning = json.loads(commissioning_path.read_text(encoding="utf-8"))
+    if manifest.get("transaction_id") != transaction_id or commissioning.get("transaction_id") != transaction_id:
+        raise ValueError("live commissioning transaction does not match runtime transaction")
+    required = bool(manifest.get("live_contract_required", False))
+    if manifest.get("schema_version") == 2:
+        results = []
+        for fact_id, fact in _provider_facts(manifest).items():
+            fact_required = required or bool(fact.get("live_contract_required", False))
+            if fact["provider"] == "google" and _native_google_route(manifest, fact_id, fact["model"]):
+                result = _probe_google_cli(fact, fact_required, environ, timeout_seconds)
+            else:
+                result = _live_record("unsupported", fact_required,
+                                      "no bounded live adapter is bound to this fact's configured route")
+            results.append({"fact_id": fact_id, "provider": fact["provider"], "model": fact["model"], **result})
+        states = {row["state"] for row in results}
+        summary = next((value for value in ("failed", "unauthenticated", "unsupported", "not_attempted", "live_smoked")
+                        if value in states), "not_attempted")
+        commissioning["live"] = {**_live_record(summary, required or any(row["required"] for row in results),
+                                               "per-fact route evidence; configuration checks do not establish live availability"),
+                                 "results": results}
+        public = redact(commissioning)
+        _atomic_write_json(commissioning_path, public)
+        return public
+    facts = manifest.get("facts", {})
+    live = _probe_google_cli(facts, required, environ, timeout_seconds)
     commissioning["live"] = live
     public = redact(commissioning)
     _atomic_write_json(commissioning_path, public)
@@ -1147,13 +1443,51 @@ def finalize_transaction(
     if manifest.get("transaction_id") != transaction_id or commissioning.get("transaction_id") != transaction_id:
         raise ValueError("finalization artifacts do not match runtime transaction")
     gate_errors = list(commissioning.get("static", {}).get("errors", []))
+    if commissioning.get("static", {}).get("passed") is not True and not gate_errors:
+        gate_errors.append("static commissioning did not pass")
     gate_errors.extend(verify_changed_paths(manifest_path, state_path))
     live = commissioning.get("live", {})
     live_state = live.get("state")
     if live_state not in LIVE_STATES:
         gate_errors.append("live commissioning state is invalid")
-    if bool(manifest.get("live_contract_required", False)) and live_state != "live_smoked":
+    if manifest.get("schema_version") == 2:
+        candidate = commissioning.get("static", {}).get("candidate_snapshot")
+        if not isinstance(candidate, dict):
+            gate_errors.append("static commissioning lacks a validated candidate snapshot")
+        else:
+            try:
+                if candidate != _target_snapshot(manifest):
+                    gate_errors.append("candidate changed after static commissioning")
+            except (OSError, ValueError) as exc:
+                gate_errors.append(f"candidate verification failed: {exc}")
+        expected_facts = _provider_facts(manifest)
+        rows = live.get("results", [])
+        if not isinstance(rows, list):
+            rows = []
+            gate_errors.append("per-fact live results must be an array")
+        seen = set()
+        for row in rows:
+            if not isinstance(row, dict) or not isinstance(row.get("fact_id"), str):
+                gate_errors.append("invalid per-fact live result")
+                continue
+            fact_id = row["fact_id"]
+            if fact_id in seen:
+                gate_errors.append(f"duplicate live fact result: {fact_id}")
+            seen.add(fact_id)
+            fact = expected_facts.get(fact_id, {})
+            if row.get("provider") != fact.get("provider") or row.get("model") != fact.get("model"):
+                gate_errors.append(f"live result identity does not match accepted fact {fact_id}")
+            if row.get("state") not in LIVE_STATES:
+                gate_errors.append(f"invalid live state for fact {fact_id}")
+            if row.get("state") == "failed" or row.get("errors"):
+                gate_errors.append(f"live commissioning failed for fact {fact_id}")
+            if (manifest.get("live_contract_required") or fact.get("live_contract_required")) and row.get("state") != "live_smoked":
+                gate_errors.append(f"required live-smoke contract was not verified for fact {fact_id}")
+        if seen != set(expected_facts):
+            gate_errors.append("per-fact live coverage does not match accepted facts")
+    elif bool(manifest.get("live_contract_required", False)) and live_state != "live_smoked":
         gate_errors.append("required live-smoke contract was not verified")
+    gate_errors = list(dict.fromkeys(gate_errors))
     restored = False
     restore_errors: list[str] = []
     if gate_errors:
@@ -1356,6 +1690,10 @@ def inventory_authority(authority_path: Path) -> dict[str, Any]:
     roots = authority.get("allowed_roots")
     if authority.get("schema_version") != 1 or not isinstance(roots, list) or not roots:
         raise ValueError("authority roots document is invalid")
+    if "refresh_scope" in authority:
+        return redact({"roots": roots, "refresh_scope": authority["refresh_scope"],
+                       "observation_policy": refresh_observation.POLICY_VERSION,
+                       "entries": refresh_observation.snapshot([Path(root) for root in roots], [])})
     return inventory(Path(root) for root in roots)
 
 

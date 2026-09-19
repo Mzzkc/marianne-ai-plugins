@@ -14,23 +14,22 @@ import yaml
 REPO = Path(__file__).resolve().parents[1]
 SKILL_ROOT = REPO / "marianne" / "skills" / "marianne-model-profile-refresh"
 SCORE_ROOT = SKILL_ROOT / "score"
-RUNTIME_FILES = {
-    "model-profile-refresh.yaml",
-    "request.md",
-    "runbook.md",
-    "scripts/refreshctl.py",
-    "scripts/run_refresh.py",
-    "technique/SKILL.md",
-}
-LOCKED_RUNTIME = {
-    "model-profile-refresh.yaml": "68baeeeb1f146a60604975ee5b1569c771bef444598dfcf19c6fb46691c36527",
-    "request.md": "1aa18e78695a449a9a3bc80f68afab6e540a9f0527000744e65a41f993a9a84b",
-    "runbook.md": "108617890b5ccfcfcabf94e8fc8fda2f6a769db4182d9323909f4f7d08b28239",
-    "scripts/refreshctl.py": "bd871b9e5bb224874b1916f8abfafb720418240be7569e3ef7e3e5568a71b45c",
-    "scripts/run_refresh.py": "2bc0935ff209945e6433215e4b7370a46b4a97720c7982386eea744f94983fde",
-    "technique/SKILL.md": "b73815fc8b70e2b71eae554b6fc7655e1e8ab638b7397ea33a6d14fdc5735427",
-}
-
+RUNTIME_FILES = {'model-profile-refresh.yaml',
+ 'request.md',
+ 'runbook.md',
+ 'scripts/refresh_observation.py',
+ 'scripts/refresh_scope.py',
+ 'scripts/refreshctl.py',
+ 'scripts/run_refresh.py',
+ 'technique/SKILL.md'}
+LOCKED_RUNTIME = {'model-profile-refresh.yaml': 'a23cfa00249fa74b8c31de611a75a2cb9ebd09e9102033647bdf587708513e16',
+ 'request.md': '67795069423a956cc332d791a317675fcb451b2fadbaffc4a3d85d04a9d77be1',
+ 'runbook.md': '0fb593d013efa17416bbba45fa1c2dc4560ef7f11d844cfbfa928e53ba0232de',
+ 'scripts/refresh_observation.py': '71bf6078b0af1e90c4181f8189be6df5723804c3efdaadb51f8a2566227b402f',
+ 'scripts/refresh_scope.py': '36835a3d7cd8c18aa48a8ee7cdba616a5ab663043d2b42cfd986a6951d525f36',
+ 'scripts/refreshctl.py': '6a36e4196fa185cb03789933d8407665e5f573e5a30e548a59854440782ff2f3',
+ 'scripts/run_refresh.py': '40c9b3d59d62ce9e2e08ae079af14a3243b240c41d6fb479b6084c12515b0a64',
+ 'technique/SKILL.md': '6fb6dc44b480539e3046a16046e4011493c6a11baad1a0914ebe5c2c66d2f38c'}
 
 def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -116,12 +115,12 @@ def test_shipped_skill_tree_physically_contains_no_cache_artifacts() -> None:
     assert artifacts == []
 
 
-def test_version_and_plugin_manifests_are_0_4_0() -> None:
+def test_skill_version_and_plugin_package_version_are_independent() -> None:
     version = (SKILL_ROOT / "VERSION").read_text(encoding="utf-8")
-    assert "version: 0.4.0" in version
+    assert "version: 0.5.0" in version
     assert (
         "canonical_release_lock_sha256: "
-        "321154b7b63baddbd3f4383c7613db3e987c02f12ae3c02ab6a4ecd76e4c32e3"
+        "30e245c2a3aedd1196eb8aeeb5d86f4b73871c10d84522321a28c7cf840c7d6b"
     ) in version
     plugin = json.loads((REPO / "marianne/.claude-plugin/plugin.json").read_text(encoding="utf-8"))
     codex_plugin = json.loads(

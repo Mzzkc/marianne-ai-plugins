@@ -28,11 +28,20 @@ sheet:
     2: [1]
     3: [2]
     4: [3]
-    5: [4]
+    5: [2, 4]
     6: [5]
     7: [6]
     8: [7]
     9: [8]
+  cadenzas:
+    2:
+      - {file: "{{ request_path }}", as: context, required: true}
+      - {file: "{{ authority_roots }}", as: context, required: true}
+    5:
+      - {file: "{{ request_path }}", as: context, required: true}
+      - {file: "{{ authority_roots }}", as: context, required: true}
+      - {file: "{{ workspace_root }}/update-manifest.json", as: context, required: true}
+      - {file: "{{ workspace_root }}/backup/index.json", as: context, required: true}
   per_sheet_fallbacks:
     1: []
     2: [codex-cli]
@@ -99,17 +108,27 @@ prompt:
     `{{ authority_roots }}`. For broad or unstable claims, research current official
     vendor documentation with web access. Do not install or authenticate anything.
 
-    Write only `{{ workspace_root }}/update-manifest.json`. It must be schema
-    version 1, contain transaction_id exactly `{{ transaction_id }}`, and satisfy
-    the technique's manifest contract: request, mode,
-    absolute allowed_roots, evidence-backed facts, and at least one absolute
-    classified target. Every allowed root and target must be contained by a root
-    in the caller authority document. Include no value or field that deterministic
-    public redaction would change. Every discovered candidate
-    must have an authorized target or an explicit skipped disposition. Pinned,
-    frozen, retired, historical, and unknown references remain preserved unless
-    the request explicitly names them. A no-op still names the inspected active
-    target and describes why no byte change is required.
+    The authority's refresh_scope covers every provider Marianne ships, including
+    providers without a local installed route, plus locally declared providers.
+    Research every listed provider,
+    its current supported releases, and how those releases map to the
+    listed clients. A client or broker may serve several providers. Consult the
+    official model documentation and client support for each assignment. Do not
+    let familiar providers or old examples determine coverage. Preserve unknown
+    private profiles and explicitly account for unresolved route IDs.
+
+    Write only `{{ workspace_root }}/update-manifest.json`, schema version 2,
+    with transaction_id exactly `{{ transaction_id }}`, request, mode matching
+    refresh_scope, absolute allowed_roots, provider_results, unresolved_results,
+    and targets. Follow the supplied technique's complete contract. Each assigned
+    provider needs one evidence-backed changes, no_change, or blocked result.
+    Missing evidence is blocked, never no_change. Blocked coverage stops apply.
+    Facts have unique IDs and source-backed model claims. Target fact_ids link
+    changes to evidence; configured checks must verify actual model membership
+    and the values being changed, not merely syntax or comments. A documented
+    no-op may have targets: []. Every root and target stays within caller authority.
+    Pinned, frozen, retired and unknown references remain preserved unless
+    explicitly named by the request. Include no secrets or redaction-changing data.
     {% elif stage == 3 %}
     set -euo pipefail
     gate_tmp={{ workspace_root_q }}/.manifest-gate.json.tmp
@@ -133,7 +152,8 @@ prompt:
     Read `{{ request_path }}`, `{{ workspace_root }}/update-manifest.json`, and
     the public backup record `{{ workspace_root }}/backup/index.json`. Refuse if
     the accepted manifest or protected backup at `{{ backup_root }}/backup` is
-    absent. Modify only accepted target paths beneath `{{ project_root }}`.
+    absent. Modify only accepted change target paths within the caller authority
+    roots; project_root is context, not a substitute mutation boundary.
     Preserve file syntax and local conventions, update every authorized active
     downstream reference, and never touch a skipped candidate or secret value.
 
@@ -172,7 +192,10 @@ prompt:
     receipt_input = {
         **transaction,
         "request": manifest.get("request"),
-        "changed_paths": changed.get("changed_paths", []),
+        "changed_paths": changed.get("changed_paths", []) if transaction.get("transaction_status") == "success" else [],
+        "attempted_changed_paths": changed.get("changed_paths", []),
+        "provider_results": manifest.get("provider_results", []),
+        "live_results": commissioning.get("live", {}).get("results", []),
         "skipped": changed.get("skipped", []),
         "static_commissioning": commissioning.get("static"),
         "live_state": commissioning.get("live", {}).get("state", "not_attempted"),

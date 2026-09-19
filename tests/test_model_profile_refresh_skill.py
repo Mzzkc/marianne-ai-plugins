@@ -52,39 +52,26 @@ def test_frontmatter_is_trigger_only_and_covers_user_phrases() -> None:
         assert phrase.lower() in description.lower()
 
 
-def test_router_exposes_both_modes_and_the_uninterrupted_contract() -> None:
+def test_router_assigns_full_transaction_to_runtime_and_preserves_coverage() -> None:
     router = read("SKILL.md").lower()
     for phrase in (
-        "direct-agent mode",
-        "marianne musician mode",
-        "no approval pause",
-        "official-web research",
-        "targeted refresh",
-        "provider/family",
-        "transactional backup",
-        "compensation",
-        "updates only",
-        "never install",
-        "without marianne",
-        "protected transaction state",
-        "every runner exit",
-        "install-technique",
+        "score/scripts/run_refresh.py", "no approval pause", "all providers marianne ships",
+        "locally declared providers", "never install", "protected transaction state",
+        "compensation", "--resume-workspace", "temporary-technique", "task-map.md",
     ):
         assert phrase in router
-    assert "task-map.md" in router
+    assert "submitting a job is not completion" in router
+    assert "without installing it" in router
+    assert "every runner exit" not in router
 
 
-def test_task_map_routes_direct_musician_and_failed_compensation() -> None:
+def test_task_map_routes_score_musicians_and_unproved_compensation() -> None:
     task_map = read("TASK-MAP.md").lower()
     for phrase in (
-        "direct-agent",
-        "marianne musician",
-        "failed compensation",
-        "score/run_refresh.py",
-        "references/scope.md",
-        "references/research.md",
-        "references/backup-surfaces.md",
-        "references/commissioning.md",
+        "research musician", "apply musician", "unproved compensation",
+        "score/scripts/run_refresh.py", "--resume-workspace",
+        "references/scope.md", "references/research.md",
+        "references/backup-surfaces.md", "references/commissioning.md",
     ):
         assert phrase in task_map
 
@@ -105,11 +92,10 @@ def test_progressive_references_hold_the_detailed_contract() -> None:
 
     research = read("references/research.md").lower()
     for phrase in (
-        "broad refresh",
+        "all providers marianne ships",
         "official model",
         "official client",
-        "live client",
-        "local runtime",
+        "local evidence",
         "secondary",
         "contradiction",
     ):
@@ -155,7 +141,7 @@ def test_progressive_references_hold_the_detailed_contract() -> None:
         "gemini cli",
         "oauth",
         "rolled_back",
-        "compensation failure",
+        "unproved compensation",
     ):
         assert phrase in commissioning
 
@@ -166,3 +152,13 @@ def test_public_router_and_references_are_machine_independent() -> None:
     assert "/home/emzi" not in combined
     assert "Projects/WORSKPACES" not in combined
     assert "Projects/SCORES" not in combined
+
+
+def test_discovery_docs_have_no_fixed_expected_release_or_provider_subset() -> None:
+    combined = "\n".join(read(name) for name in (
+        "score/request.md", "score/technique/SKILL.md", "references/research.md", "score/runbook.md"))
+    assert "gemini-3.8-flash" not in combined
+    assert "--provider " not in combined
+    assert "schema-v2" in combined
+    assert "empty targets array" in combined
+    assert "locally" in combined

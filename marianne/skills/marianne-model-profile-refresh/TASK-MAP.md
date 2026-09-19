@@ -1,18 +1,19 @@
 # Marianne model/profile refresh task map
 
-Load the smallest route that covers the current invocation. All routes retain
-the same no-approval-pause, updates-only, bounded transaction contract.
+Use the full score for refreshes; the runtime owns transaction mechanics and
+returns a compact outcome. Load only references needed for the assigned work.
 
-| Intent or state | Route | Required references |
+| Intent or state | Route | References |
 |---|---|---|
-| Direct-agent update or audit with Marianne available | Run the complete transaction through `score/run_refresh.py`; it temporarily installs and always restores the technique. Use the helper subcommands only for deterministic transaction stages. | `references/scope.md`, plus `references/research.md` for current facts, `references/backup-surfaces.md` before backup, and `references/commissioning.md` before acceptance |
-| Direct-agent update without Marianne | Execute the same uninterrupted stages directly. Use `score/scripts/refreshctl.py` for deterministic inventory, manifest validation, backup, static commissioning, restore, receipt, and lock operations; perform only the bounded research and apply judgments between those gates. | All four references, loaded at their named stage |
-| Marianne musician research assignment | Produce only the evidence-backed, authority-bounded update manifest required by the injected score-safe technique. | `references/scope.md`, `references/research.md` |
-| Marianne musician apply assignment | Modify only accepted targets after the runtime has written the protected bound transaction state; produce the exact changed-path ledger. | `references/scope.md`, `references/backup-surfaces.md`, `references/commissioning.md` |
-| Failed commissioning with intact backup | Stop mutation and invoke deterministic restore; verify exact pre-run state before reporting `rolled_back`. | `references/backup-surfaces.md`, `references/commissioning.md` |
-| Failed compensation or unproved restore | Preserve both backup and working state, emit a high-severity manual-recovery receipt, and stop. Never retry destructive mutation blindly. | `references/backup-surfaces.md`, `references/commissioning.md` |
+| Broad update or audit | `score/scripts/run_refresh.py`; all shipped providers must be accounted for | `references/scope.md`, `references/research.md` |
+| Request focused on one provider or family | Same full score; focus edits without reducing research coverage of all shipped providers | `references/scope.md`, `references/research.md` |
+| Paused/interrupted observation | Same runner with `--resume-workspace` pointing to the existing transaction workspace; preserve its authority and technique state | `score/runbook.md` |
+| Research musician | Read immutable scope; produce complete evidence-backed schema-v2 manifest without mutating targets | `references/scope.md`, `references/research.md` |
+| Apply musician | Edit only accepted targets after protected backup; emit exact changed-path ledger | `references/scope.md`, `references/backup-surfaces.md`, `references/commissioning.md` |
+| Required check failure | Runtime compensates and verifies restoration before reporting rollback | `references/backup-surfaces.md`, `references/commissioning.md` |
+| Unproved compensation | Preserve recovery and working state; report manual recovery required | `references/backup-surfaces.md` |
 
-Use `score/technique/SKILL.md` only inside score musician phases. Use this
-public router for direct-agent orchestration and progressive reference routing.
-Reserve `refreshctl.py install-technique` for an intentional persistent local
-installation; it is not part of `run_refresh.py`.
+`refreshctl.py install-technique` is a separate intentional persistent install,
+not part of ordinary refresh invocation. Do not use it to replace an active
+transaction's temporary technique. Schema-v1 recovery remains supported; new
+broad work uses the coverage contract.
