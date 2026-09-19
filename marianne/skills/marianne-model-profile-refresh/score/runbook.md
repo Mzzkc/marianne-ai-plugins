@@ -57,7 +57,7 @@ python scripts/refreshctl.py install-technique technique/SKILL.md
 ## Artifacts and outcome
 
 Caller authority contains `refresh_scope`; inventory associates providers with
-shipped providers and any known profile/catalog routes. `update-manifest.json` is schema v2, with complete
+shipped providers and any known profile/catalog routes. `update-manifest.json` is schema v3, with complete
 provider results, exact targets, fact references and configured expectations.
 All-no-change work may have no targets. Blocked or incomplete research does not
 apply. Old schema-v1 protected transactions retain recovery support.
@@ -82,3 +82,16 @@ state and recovery digests, authority, entry set, parent chains and blobs.
 An unproved restore preserves working and backup state and reports manual
 recovery required; never retry destructive mutation blindly. Operational logs
 and unrelated files are not reverted as though the transaction owned the machine.
+
+## Discovery and partial outcomes (schema 3)
+
+The mandatory baseline covers every shipped and locally declared provider.
+Research may identify additional creators only through inventoried unknown
+routes; each creator receives research before the manifest/backup freeze.
+Missing coverage rejects admission. Blocked/deferred rows isolate their whole
+shared files and declared dependencies. Supported independent targets can be
+commissioned; terminal status is partial and runner exit is 3 until all
+research/changes are resolved. No targets plus deferrals is still partial.
+Use refresh_artifact_root from the bound score for every output; the native
+execution workspace is separate. Runtime YAML stores absolute bindings so
+reload/resume uses the same paths. Legacy transactions retain their old rules.

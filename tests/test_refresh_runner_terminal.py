@@ -234,3 +234,17 @@ def test_authority_binds_runtime_paths_outside_configuration_observation(simulat
     assert execute([{'status': 'paused'}]) == 2
     authority = json.loads((workspace / 'authority-roots.json').read_text())
     assert authority['runtime_paths'] == [str(workspace), str(workspace.parents[1] / 'backup/txn-test')]
+
+
+def test_partial_is_distinct_from_success_and_restores_technique(simulation):
+    execute, calls, workspace, technique = simulation
+    assert execute([{'status': 'completed'}],
+                   {'transaction_id': 'txn-test', 'transaction_status': 'partial',
+                    'deferrals': {'providers': ['unavailable'], 'routes': []}}) == 3
+    assert technique.read_text() == 'original'
+    score = __import__('yaml').safe_load(next(workspace.glob('*.yaml')).read_text())
+    variables = score['prompt']['variables']
+    assert variables['refresh_artifact_root'] == str(workspace)
+    assert variables['refresh_artifact_root'] != score['workspace']
+    assert variables['transaction_id'] == 'txn-test'
+    assert 'workspace_root' not in variables

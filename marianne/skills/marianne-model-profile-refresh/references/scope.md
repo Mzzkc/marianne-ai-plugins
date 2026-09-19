@@ -24,7 +24,7 @@ Unrecognized model routes remain explicit unresolved questions; repeated local
 aliases share one question with their source paths retained. Caller authority's `refresh_scope` binds it before research.
 
 A request naming a provider or family may focus mutations; it must not narrow
-research coverage. Missing or blocked results stop apply. Broker client names
+research coverage. Missing results stop apply; blocked/deferred dependencies and shared files are excluded from mutation. Broker client names
 do not determine provider identity. Unresolved concrete model associations need
 explicit supported resolution; generic catalog prose about broker capability is
 not a concrete model route.
@@ -69,3 +69,9 @@ research unknown identities before admission; it cannot omit them to proceed.
 Outside a Marianne source checkout, census uses this installed plugin's catalog
 and available installed Marianne builtin resources. An ordinary application
 working directory does not need its own copy of Marianne source.
+
+Schema-v3 discovery may identify additional creators for inventoried unknown
+routes using official evidence. Every such creator must receive a research
+result before admission. This does not expand filesystem authority or permit
+unrelated providers. The admitted manifest is frozen by protected backup;
+existing schema-v1/v2 transactions keep their previous rules.

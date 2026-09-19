@@ -185,7 +185,7 @@ def _finish(state: dict, workspace: Path, runtime: dict) -> int:
             except (ValueError, OSError):
                 continue
             if candidate.get("transaction_id") == transaction_id and candidate.get("transaction_status") in {
-                "success", "rolled_back", "compensation_failed", "failed_before_backup", "incomplete"
+                "success", "partial", "rolled_back", "compensation_failed", "failed_before_backup", "incomplete"
             }:
                 transaction = candidate
                 break
@@ -225,6 +225,9 @@ def _finish(state: dict, workspace: Path, runtime: dict) -> int:
         receipt = _read_json(receipt_path)
     except (OSError, ValueError):
         receipt = {}
+    if (runtime.get("status") == "completed" and receipt.get("transaction_id") == transaction_id
+            and receipt.get("transaction_status") == "partial"):
+        return 3
     return 0 if (runtime["status"] == "completed"
                  and receipt.get("transaction_id") == transaction_id
                  and receipt.get("transaction_status") == "success") else 1
@@ -267,11 +270,16 @@ def main(argv: list[str] | None = None) -> int:
         if installed.returncode:
             return _restore_technique(state, installed.returncode)
         raw_variables = {"request_path": str(request_path), "bundle_root": str(bundle),
-                         "project_root": str(project_root), "workspace_root": str(workspace_root),
+                         "project_root": str(project_root), "refresh_artifact_root": str(workspace_root),
                          "backup_root": str(backup_root), "authority_roots": str(authority_path),
                          "authority_sha256": authority_sha256, "transaction_id": transaction_id}
         variables = {**raw_variables, **{f"{name}_q": shlex.quote(value)
                                         for name, value in raw_variables.items()}}
+        # Persist bindings in the exact submitted YAML as well as CLI variables.
+        # Native resume may reload the score without the submitting process.
+        bound_score = yaml.safe_load(runtime_score.read_text(encoding="utf-8"))
+        bound_score["prompt"]["variables"].update(variables)
+        _write_private_text(runtime_score, yaml.safe_dump(bound_score, sort_keys=False))
         cmd = ["mzt", "run", str(runtime_score), "--fresh", "--json"]
         for name, value in variables.items():
             cmd.extend(["--var", f"{name}={value}"])

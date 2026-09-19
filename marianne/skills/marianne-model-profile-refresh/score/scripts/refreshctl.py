@@ -170,11 +170,11 @@ def _validate_provider_results(data: dict) -> tuple[list[str], set[str]]:
             errors.append(f"duplicate provider result: {provider}")
         else:
             providers.add(provider)
-        if row.get("status") not in ("changes", "no_change", "blocked"):
+        if row.get("status") not in (("changes", "no_change", "blocked", "deferred") if data.get("schema_version") == 3 else ("changes", "no_change", "blocked")):
             errors.append(f"provider {provider} has invalid status")
         if not isinstance(row.get("reason"), str) or not row["reason"].strip():
             errors.append(f"provider {provider} requires reason")
-        if row.get("status") == "blocked":
+        if row.get("status") == "blocked" and data.get("schema_version") != 3:
             errors.append(f"provider {provider} is blocked; mutation is not admitted")
         if row.get("status") != "blocked" and not _evidence_urls(row.get("evidence_urls")):
             errors.append(f"provider {provider} requires evidence_urls")
@@ -184,6 +184,8 @@ def _validate_provider_results(data: dict) -> tuple[list[str], set[str]]:
             continue
         if row.get("status") == "changes" and not facts:
             errors.append(f"provider {provider} changes require facts")
+        if data.get("schema_version") == 3 and row.get("status") != "changes" and facts:
+            errors.append(f"provider {provider}: only admitted changes may carry executable facts")
         for fact in facts:
             if not isinstance(fact, dict):
                 errors.append(f"provider {provider} fact must be an object")
@@ -209,8 +211,8 @@ def validate_manifest(data: dict) -> list[str]:
     errors: list[str] = []
     if not isinstance(data, dict):
         return ["manifest must be an object"]
-    if data.get("schema_version") not in (1, 2):
-        errors.append("schema_version must be 1 or 2")
+    if data.get("schema_version") not in (1, 2, 3):
+        errors.append("schema_version must be 1, 2 or 3")
     if not isinstance(data.get("transaction_id"), str) or not data["transaction_id"].strip():
         errors.append("transaction_id must be a non-empty string")
     if not isinstance(data.get("request"), str) or not data["request"].strip():
@@ -220,7 +222,7 @@ def validate_manifest(data: dict) -> list[str]:
         errors.append("mode must be specific or broad")
     roots = _resolved_roots(data, errors)
     fact_ids: set[str] = set()
-    if data.get("schema_version") == 2:
+    if data.get("schema_version") in (2, 3):
         provider_errors, fact_ids = _validate_provider_results(data)
         errors.extend(provider_errors)
     else:
@@ -246,7 +248,7 @@ def validate_manifest(data: dict) -> list[str]:
         if not isinstance(target, dict):
             errors.append(f"{prefix} must be an object")
             continue
-        if data.get("schema_version") == 2:
+        if data.get("schema_version") in (2, 3):
             refs = target.get("fact_ids")
             if not isinstance(refs, list) or not refs or any(not isinstance(ref, str) or ref not in fact_ids for ref in refs):
                 errors.append(f"{prefix} requires known fact_ids")
@@ -269,7 +271,7 @@ def validate_manifest(data: dict) -> list[str]:
             continue
         declared_path = Path(raw_path).absolute()
         resolved_path = declared_path.resolve(strict=False)
-        if data.get("schema_version") == 2 and resolved_path != declared_path:
+        if data.get("schema_version") in (2, 3) and resolved_path != declared_path:
             errors.append(f"{prefix}: version 2 change targets must use canonical files, not symlink aliases")
         if raw_path != os.path.abspath(raw_path):
             errors.append(f"{prefix}.path must use canonical absolute spelling")
@@ -285,7 +287,7 @@ def validate_manifest(data: dict) -> list[str]:
             classification in ("pinned", "frozen") and target.get("explicitly_named") is True
         ):
             errors.append(f"{prefix} may not mutate {classification} without explicitly_named: true")
-    if data.get("schema_version") == 2 and isinstance(data.get("provider_results"), list):
+    if data.get("schema_version") in (2, 3) and isinstance(data.get("provider_results"), list):
         used = {ref for target in targets if isinstance(target, dict)
                 for ref in (target.get("fact_ids") if isinstance(target.get("fact_ids"), list) else []) if isinstance(ref, str)}
         for row in data["provider_results"]:
@@ -296,6 +298,94 @@ def validate_manifest(data: dict) -> list[str]:
                 errors.append(f"provider {row.get('provider')} has unapplied change fact references")
             if row.get("status") != "changes" and row_ids & used:
                 errors.append(f"provider {row.get('provider')} cannot drive changes with status {row.get('status')}")
+    return errors
+
+
+def refresh_deferrals(data: dict) -> dict:
+    return {
+        "providers": sorted(row["provider"] for row in data.get("provider_results", [])
+                            if isinstance(row, dict) and isinstance(row.get("provider"), str) and row.get("status") in ("blocked", "deferred")),
+        "routes": sorted(row["id"] for row in data.get("unresolved_results", [])
+                         if isinstance(row, dict) and isinstance(row.get("id"), str) and row.get("status") == "blocked"),
+    }
+
+
+def _validate_discovery(data: dict, scope: dict, expected: set, actual: set) -> list[str]:
+    """Discover only inventory-bound creators; freeze before protected backup.
+
+    Caller roots and mandatory baseline never expand. Whole shared files are
+    deferred when an associated provider or unidentified route is blocked.
+    """
+    errors = []
+    if data.get("mode") != scope.get("mode"):
+        errors.append("manifest mode does not match caller refresh_scope")
+    known = {row["id"]: row for row in scope.get("unresolved", [])}
+    resolutions = data.get("unresolved_results")
+    if not isinstance(resolutions, list):
+        return ["unresolved_results must be an array"]
+    seen, discovered = set(), set()
+    deferred = set(refresh_deferrals(data)["providers"])
+    forbidden = set()
+    def forbid(row):
+        for path in [row.get("path"), *row.get("source_paths", [])]:
+            if isinstance(path, str):
+                forbidden.add(str(Path(path).resolve()))
+    for row in scope.get("providers", []):
+        if row["id"] in deferred:
+            for route in row.get("routes", []):
+                forbid(route)
+    for resolution in resolutions:
+        if not isinstance(resolution, dict) or not isinstance(resolution.get("id"), str):
+            errors.append("unresolved coverage resolution requires id")
+            continue
+        uid = resolution["id"]
+        if uid in seen:
+            errors.append("duplicate unresolved coverage resolution")
+        seen.add(uid)
+        if uid not in known:
+            errors.append("discovery cannot introduce unobserved route IDs")
+            continue
+        if resolution.get("status") == "blocked":
+            if not isinstance(resolution.get("reason"), str) or not resolution["reason"].strip():
+                errors.append(f"blocked route requires reason: {uid}")
+            forbid(known[uid])
+        elif resolution.get("status") == "resolved":
+            provider = resolution.get("provider")
+            if not isinstance(provider, str) or not provider.strip():
+                errors.append(f"resolved route requires provider: {uid}")
+            else:
+                discovered.add(provider)
+                if provider in deferred:
+                    forbid(known[uid])
+            if not _evidence_urls(resolution.get("evidence_urls")):
+                errors.append(f"resolved route requires official evidence_urls: {uid}")
+        else:
+            errors.append(f"invalid route resolution status: {uid}")
+    if seen != set(known):
+        errors.append("unresolved provider coverage does not match caller refresh_scope")
+    if actual != expected | discovered:
+        errors.append("provider coverage must include all baseline and discovered providers, and no unrelated additions")
+    if deferred or any(r.get("status") == "blocked" for r in resolutions if isinstance(r, dict)):
+        # The shared catalog covers every provider; do not partially edit it.
+        if scope.get("catalog"):
+            catalog = Path(scope["catalog"])
+            forbidden.update([str(catalog.resolve()), str(catalog.with_suffix(".md").resolve())])
+    facts = _provider_facts(data)
+    for target in data.get("targets", []):
+        if not isinstance(target, dict):
+            continue
+        deps = target.get("dependency_providers")
+        if not isinstance(deps, list) or not deps or any(not isinstance(d, str) or d not in actual for d in deps):
+            errors.append("target requires known dependency_providers including creator and broker dependencies")
+        else:
+            if set(deps) & deferred:
+                errors.append("target dependency is deferred")
+            owners = {facts[ref]["provider"] for ref in target.get("fact_ids", []) if isinstance(ref, str) and ref in facts}
+            if not owners <= set(deps):
+                errors.append("target dependency_providers omits a fact provider")
+        path = target.get("path")
+        if isinstance(path, str) and str(Path(path).resolve()) in forbidden:
+            errors.append(f"target shares a file with deferred provider/route coverage: {path}")
     return errors
 
 
@@ -321,7 +411,7 @@ def validate_manifest_authority(
         errors.append("manifest transaction does not match runtime transaction")
     scope = authority.get("refresh_scope")
     if scope is not None:
-        if data.get("schema_version") != 2:
+        if data.get("schema_version") not in (2, 3):
             errors.append("inventory-bound refresh requires manifest version 2")
         if not isinstance(scope, dict) or not isinstance(scope.get("providers"), list) or not scope["providers"]:
             errors.append("caller refresh_scope requires provider assignments")
@@ -329,36 +419,43 @@ def validate_manifest_authority(
             expected = {row.get("id") for row in scope["providers"] if isinstance(row, dict)}
             rows = data.get("provider_results", [])
             actual = {row.get("provider") for row in rows if isinstance(row, dict) and isinstance(row.get("provider"), str)} if isinstance(rows, list) else set()
-            if actual != expected:
-                errors.append("provider coverage does not match caller refresh_scope")
-            if data.get("mode") != scope.get("mode"):
-                errors.append("manifest mode does not match caller refresh_scope")
-            unresolved = scope.get("unresolved", [])
-            expected_unresolved = {row.get("id"): row for row in unresolved if isinstance(row, dict)}
-            resolutions = data.get("unresolved_results", [])
-            if not isinstance(resolutions, list):
-                errors.append("unresolved_results must be an array")
-                resolutions = []
-            seen_unresolved = set()
-            for resolution in resolutions:
-                if not isinstance(resolution, dict) or not isinstance(resolution.get("id"), str):
-                    errors.append("unresolved coverage resolution requires id")
-                    continue
-                uid = resolution["id"]
-                if uid in seen_unresolved:
-                    errors.append("duplicate unresolved coverage resolution")
-                seen_unresolved.add(uid)
-                provider = resolution.get("provider")
-                if resolution.get("status") != "resolved":
-                    errors.append(f"unresolved provider coverage is blocked: {uid}")
-                if not isinstance(provider, str) or provider not in expected:
-                    errors.append(f"unresolved resolution must use an assigned provider: {uid}")
-                if not _evidence_urls(resolution.get("evidence_urls")):
-                    errors.append(f"unresolved resolution requires official evidence_urls: {uid}")
-            if seen_unresolved != set(expected_unresolved):
-                errors.append("unresolved provider coverage does not match caller refresh_scope")
-            if isinstance(rows, list) and any(isinstance(row, dict) and row.get("status") == "blocked" for row in rows):
-                errors.append("provider coverage is blocked; mutation is not admitted")
+            if data.get("schema_version") == 3:
+                if errors:
+                    return errors
+                if scope.get("admission_version") != 3:
+                    errors.append("caller authority does not permit version 3 discovery")
+                errors.extend(_validate_discovery(data, scope, expected, actual))
+            else:
+                if actual != expected:
+                    errors.append("provider coverage does not match caller refresh_scope")
+                if data.get("mode") != scope.get("mode"):
+                    errors.append("manifest mode does not match caller refresh_scope")
+                unresolved = scope.get("unresolved", [])
+                expected_unresolved = {row.get("id"): row for row in unresolved if isinstance(row, dict)}
+                resolutions = data.get("unresolved_results", [])
+                if not isinstance(resolutions, list):
+                    errors.append("unresolved_results must be an array")
+                    resolutions = []
+                seen_unresolved = set()
+                for resolution in resolutions:
+                    if not isinstance(resolution, dict) or not isinstance(resolution.get("id"), str):
+                        errors.append("unresolved coverage resolution requires id")
+                        continue
+                    uid = resolution["id"]
+                    if uid in seen_unresolved:
+                        errors.append("duplicate unresolved coverage resolution")
+                    seen_unresolved.add(uid)
+                    provider = resolution.get("provider")
+                    if resolution.get("status") != "resolved":
+                        errors.append(f"unresolved provider coverage is blocked: {uid}")
+                    if not isinstance(provider, str) or provider not in expected:
+                        errors.append(f"unresolved resolution must use an assigned provider: {uid}")
+                    if not _evidence_urls(resolution.get("evidence_urls")):
+                        errors.append(f"unresolved resolution requires official evidence_urls: {uid}")
+                if seen_unresolved != set(expected_unresolved):
+                    errors.append("unresolved provider coverage does not match caller refresh_scope")
+                if isinstance(rows, list) and any(isinstance(row, dict) and row.get("status") == "blocked" for row in rows):
+                    errors.append("provider coverage is blocked; mutation is not admitted")
     raw_roots = authority.get("allowed_roots")
     if not isinstance(raw_roots, list) or not raw_roots:
         errors.append("caller authority allowed_roots must be a non-empty list")
@@ -568,6 +665,8 @@ def create_backup(
 ) -> dict:
     manifest_bytes = manifest_path.read_bytes()
     data = json.loads(manifest_bytes.decode("utf-8"))
+    if data.get("schema_version") == 3 and any(value is None for value in (authority_path, authority_sha256, transaction_id)):
+        raise ValueError("version 3 backup requires digest-bound caller authority")
     if authority_path is not None and authority_sha256 is not None and transaction_id is not None:
         errors = validate_manifest_authority(data, authority_path, authority_sha256, transaction_id)
     else:
@@ -581,7 +680,7 @@ def create_backup(
     entries = _capture_entries(target_paths, backup_dir / "blobs")
     roots = [Path(root).resolve(strict=False) for root in data["allowed_roots"]]
     excluded_paths = [backup_dir.resolve(strict=False)]
-    if data.get("schema_version") == 2 and authority_path is not None:
+    if data.get("schema_version") in (2, 3) and authority_path is not None:
         authority = json.loads(authority_path.read_text(encoding="utf-8"))
         runtime_paths = authority.get("runtime_paths", [])
         if not isinstance(runtime_paths, list) or any(not isinstance(path, str) or not Path(path).is_absolute() for path in runtime_paths):
@@ -604,9 +703,9 @@ def create_backup(
         "allowed_roots": [str(root) for root in roots],
         "excluded_paths": [str(path) for path in excluded_paths],
         "scope_snapshot": (_governed_snapshot(roots, excluded_paths, target_paths)
-                           if data.get("schema_version") == 2 else _snapshot(roots, [backup_dir])),
+                           if data.get("schema_version") in (2, 3) else _snapshot(roots, [backup_dir])),
     }
-    if data.get("schema_version") == 2:
+    if data.get("schema_version") in (2, 3):
         recovery_index["observation_policy"] = refresh_observation.POLICY_VERSION
     _atomic_write_json(recovery_path, recovery_index)
     state_path = backup_dir / "transaction-state.json"
@@ -1205,7 +1304,7 @@ def static_commission(
         manifest = {}
         errors.append(f"changed-path ledger is invalid: {exc}")
     candidate_snapshot = None
-    if manifest.get("schema_version") == 2:
+    if manifest.get("schema_version") in (2, 3):
         try:
             candidate_snapshot = _target_snapshot(manifest)
         except (OSError, ValueError) as exc:
@@ -1221,7 +1320,7 @@ def static_commission(
                 tomllib.loads(path.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError, yaml.YAMLError, tomllib.TOMLDecodeError) as exc:
             errors.append(f"syntax validation failed for observed target {path}: {exc}")
-    if manifest.get("schema_version") == 2:
+    if manifest.get("schema_version") in (2, 3):
         declared_changes = {str(Path(target["path"]).resolve(strict=False)) for target in manifest["targets"]}
         for path in sorted(declared_changes - set(observed)):
             errors.append(f"declared change target has no observed change: {path}")
@@ -1236,7 +1335,7 @@ def static_commission(
         "transaction_id": manifest.get("transaction_id"),
         "observed_changed_paths": observed,
         "static": {"passed": not errors, "errors": redact(errors),
-                   **({"candidate_snapshot": candidate_snapshot} if manifest.get("schema_version") == 2 else {})},
+                   **({"candidate_snapshot": candidate_snapshot} if manifest.get("schema_version") in (2, 3) else {})},
         "live": {"state": "not_attempted", "required": False, "detail": "pending live movement"},
     }
 
@@ -1400,7 +1499,7 @@ def live_commission(
     if manifest.get("transaction_id") != transaction_id or commissioning.get("transaction_id") != transaction_id:
         raise ValueError("live commissioning transaction does not match runtime transaction")
     required = bool(manifest.get("live_contract_required", False))
-    if manifest.get("schema_version") == 2:
+    if manifest.get("schema_version") in (2, 3):
         results = []
         for fact_id, fact in _provider_facts(manifest).items():
             fact_required = required or bool(fact.get("live_contract_required", False))
@@ -1450,7 +1549,7 @@ def finalize_transaction(
     live_state = live.get("state")
     if live_state not in LIVE_STATES:
         gate_errors.append("live commissioning state is invalid")
-    if manifest.get("schema_version") == 2:
+    if manifest.get("schema_version") in (2, 3):
         candidate = commissioning.get("static", {}).get("candidate_snapshot")
         if not isinstance(candidate, dict):
             gate_errors.append("static commissioning lacks a validated candidate snapshot")
@@ -1505,7 +1604,11 @@ def finalize_transaction(
         status = "rolled_back"
     else:
         status = "success"
+    deferrals = refresh_deferrals(manifest) if manifest.get("schema_version") == 3 else {}
+    if status == "success" and any(deferrals.values()):
+        status = "partial"
     transaction = {
+        "deferrals": deferrals,
         "schema_version": 1,
         "transaction_id": transaction_id,
         "transaction_status": status,

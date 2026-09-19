@@ -198,6 +198,6 @@ def build_scope(project_root: Path, roots: list[Path], providers: list[str] | No
         raise ValueError("no shipped providers found in catalog or builtin declarations")
     if providers is not None and set(providers) != set(grouped):
         raise ValueError("refresh coverage must include all shipped providers and locally declared providers")
-    return {"mode": "broad", "catalog": str(catalog_path),
+    return {"mode": "broad", "admission_version": 3, "catalog": str(catalog_path),
             "providers": [{"id": key, "routes": grouped[key]} for key in sorted(grouped)],
             "unresolved": unresolved, "skipped": skipped}

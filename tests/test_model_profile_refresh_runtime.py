@@ -22,14 +22,14 @@ RUNTIME_FILES = {'model-profile-refresh.yaml',
  'scripts/refreshctl.py',
  'scripts/run_refresh.py',
  'technique/SKILL.md'}
-LOCKED_RUNTIME = {'model-profile-refresh.yaml': 'a23cfa00249fa74b8c31de611a75a2cb9ebd09e9102033647bdf587708513e16',
- 'request.md': '67795069423a956cc332d791a317675fcb451b2fadbaffc4a3d85d04a9d77be1',
- 'runbook.md': '0fb593d013efa17416bbba45fa1c2dc4560ef7f11d844cfbfa928e53ba0232de',
+LOCKED_RUNTIME = {'model-profile-refresh.yaml': '5c72339cf34db63a82564229d489fe1c53b1b89db450ebdcc70f0576d7126658',
+ 'request.md': '0492c0f6284fad11038c1a939b78cc0a834684d2943f84ffff520027986b1bed',
+ 'runbook.md': '6ae8b3428172a2c676d70423af25186d46b51df7e54c3830ab0383c89b64b0bb',
  'scripts/refresh_observation.py': '71bf6078b0af1e90c4181f8189be6df5723804c3efdaadb51f8a2566227b402f',
- 'scripts/refresh_scope.py': '36835a3d7cd8c18aa48a8ee7cdba616a5ab663043d2b42cfd986a6951d525f36',
- 'scripts/refreshctl.py': '6a36e4196fa185cb03789933d8407665e5f573e5a30e548a59854440782ff2f3',
- 'scripts/run_refresh.py': '40c9b3d59d62ce9e2e08ae079af14a3243b240c41d6fb479b6084c12515b0a64',
- 'technique/SKILL.md': '6fb6dc44b480539e3046a16046e4011493c6a11baad1a0914ebe5c2c66d2f38c'}
+ 'scripts/refresh_scope.py': '3f794bd572693c8cc0e88758cb594f5bf47df8d5f72cce1dc97ab33e46e834e9',
+ 'scripts/refreshctl.py': 'b196923964d48f8c91eb8f20e8ace2b6462c25879952eab79e7967e8a26f7345',
+ 'scripts/run_refresh.py': 'd0ebe90aeccf87e232cb667786da4f7c173acb2ae18f5e3a0440e1f9a02335d9',
+ 'technique/SKILL.md': 'b6837c5066402c2b9fc0f74ff08199ef6c1cc366337f50bfb64cf0c7f6a1b4f7'}
 
 def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -117,10 +117,10 @@ def test_shipped_skill_tree_physically_contains_no_cache_artifacts() -> None:
 
 def test_skill_version_and_plugin_package_version_are_independent() -> None:
     version = (SKILL_ROOT / "VERSION").read_text(encoding="utf-8")
-    assert "version: 0.5.0" in version
+    assert "version: 0.6.0" in version
     assert (
         "canonical_release_lock_sha256: "
-        "30e245c2a3aedd1196eb8aeeb5d86f4b73871c10d84522321a28c7cf840c7d6b"
+        "63c009f2811d4afdb03ff7e509a889386879cef93298ac428e35e7246591178d"
     ) in version
     plugin = json.loads((REPO / "marianne/.claude-plugin/plugin.json").read_text(encoding="utf-8"))
     codex_plugin = json.loads(

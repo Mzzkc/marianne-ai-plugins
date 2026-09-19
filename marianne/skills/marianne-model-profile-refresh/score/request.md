@@ -9,7 +9,10 @@ Installed profiles and reachable routes never narrow required provider coverage;
 catalog-only providers still require a result.
 
 Account for each assigned provider with supported changes, evidenced no-change,
-or an explicit blocked result. Missing or blocked coverage prevents apply.
+or an explicit blocked/deferred result. Missing coverage prevents apply.
+Resolve inventoried unknown creators from official evidence and research them
+before freezing the manifest. Retain supported independent changes; defer
+blocked dependencies and shared affected files with explicit partial reporting.
 Distinguish provider release existence from client routing and authenticated
 availability. Preserve current defaults and specialized roles unless their
 change is justified by evidence and this request.

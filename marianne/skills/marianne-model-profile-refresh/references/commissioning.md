@@ -34,3 +34,9 @@ unproved compensation preserves recovery state and requires manual recovery.
 A completed Marianne job is distinct from the transaction outcome: the runner
 must observe the matching final receipt before reporting success, rollback or
 failure. Attempted changes rolled back are not retained updates.
+
+A retained schema-v3 candidate with blocked/deferred coverage reports `partial`
+and lists deferred provider/route IDs. Runner exit 3 distinguishes this from
+full success. All admitted changes still require the same configured, syntax,
+observation, snapshot and required-live checks; failures compensate the entire
+accepted target set. A no-op with deferrals is partial, not full success.

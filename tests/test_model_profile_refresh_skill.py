@@ -159,6 +159,6 @@ def test_discovery_docs_have_no_fixed_expected_release_or_provider_subset() -> N
         "score/request.md", "score/technique/SKILL.md", "references/research.md", "score/runbook.md"))
     assert "gemini-3.8-flash" not in combined
     assert "--provider " not in combined
-    assert "schema-v2" in combined
+    assert "schema-v3" in combined
     assert "empty targets array" in combined
     assert "locally" in combined

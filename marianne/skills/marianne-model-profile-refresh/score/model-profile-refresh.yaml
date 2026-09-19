@@ -40,8 +40,8 @@ sheet:
     5:
       - {file: "{{ request_path }}", as: context, required: true}
       - {file: "{{ authority_roots }}", as: context, required: true}
-      - {file: "{{ workspace_root }}/update-manifest.json", as: context, required: true}
-      - {file: "{{ workspace_root }}/backup/index.json", as: context, required: true}
+      - {file: "{{ refresh_artifact_root }}/update-manifest.json", as: context, required: true}
+      - {file: "{{ refresh_artifact_root }}/backup/index.json", as: context, required: true}
   per_sheet_fallbacks:
     1: []
     2: [codex-cli]
@@ -75,7 +75,7 @@ prompt:
     request_path: request.md
     bundle_root: .
     project_root: .
-    workspace_root: .marianne-model-profile-refresh
+    refresh_artifact_root: .marianne-model-profile-refresh
     backup_root: .marianne-model-profile-refresh-backup
     authority_roots: .marianne-model-profile-refresh/authority-roots.json
     authority_sha256: caller-supplied-authority-digest
@@ -83,7 +83,7 @@ prompt:
     request_path_q: request.md
     bundle_root_q: .
     project_root_q: .
-    workspace_root_q: .marianne-model-profile-refresh
+    refresh_artifact_root_q: .marianne-model-profile-refresh
     backup_root_q: .marianne-model-profile-refresh-backup
     authority_roots_q: .marianne-model-profile-refresh/authority-roots.json
     authority_sha256_q: caller-supplied-authority-digest
@@ -95,15 +95,15 @@ prompt:
     test -f {{ bundle_root_q }}/technique/SKILL.md
     test -d {{ project_root_q }}
     test -s {{ authority_roots_q }}
-    mkdir -p {{ workspace_root_q }}/backup {{ backup_root_q }}/backup
-    chmod 700 {{ workspace_root_q }}/backup {{ backup_root_q }}/backup
-    python -B {{ bundle_root_q }}/scripts/refreshctl.py inventory-authority {{ authority_roots_q }} {{ workspace_root_q }}/inventory.json
+    mkdir -p {{ refresh_artifact_root_q }}/backup {{ backup_root_q }}/backup
+    chmod 700 {{ refresh_artifact_root_q }}/backup {{ backup_root_q }}/backup
+    python -B {{ bundle_root_q }}/scripts/refreshctl.py inventory-authority {{ authority_roots_q }} {{ refresh_artifact_root_q }}/inventory.json
     {% elif stage == 2 %}
     You own scope classification and current-fact research, not mutation.
     The `marianne-model-profile-refresh` technique is mandatory in this phase.
 
     Read the complete request at `{{ request_path }}` and the redacted census at
-    `{{ workspace_root }}/inventory.json`. Inspect the authorized project at
+    `{{ refresh_artifact_root }}/inventory.json`. Inspect the authorized project at
     `{{ project_root }}` and the immutable caller authority at
     `{{ authority_roots }}`. For broad or unstable claims, research current official
     vendor documentation with web access. Do not install or authenticate anything.
@@ -117,12 +117,24 @@ prompt:
     let familiar providers or old examples determine coverage. Preserve unknown
     private profiles and explicitly account for unresolved route IDs.
 
-    Write only `{{ workspace_root }}/update-manifest.json`, schema version 2,
+    Use the exact absolute output below; the native execution workspace is a
+    different directory. Do not substitute cwd or {{ workspace }}.
+    Write only `{{ refresh_artifact_root }}/update-manifest.json`, schema version 3,
     with transaction_id exactly `{{ transaction_id }}`, request, mode matching
     refresh_scope, absolute allowed_roots, provider_results, unresolved_results,
     and targets. Follow the supplied technique's complete contract. Each assigned
-    provider needs one evidence-backed changes, no_change, or blocked result.
-    Missing evidence is blocked, never no_change. Blocked coverage stops apply.
+    provider needs one changes, no_change, blocked, or deferred result.
+    First resolve inventory unknown route creators using official evidence; research
+    every discovered creator too. Discovery never expands allowed filesystem roots.
+    The deterministic admission and protected backup then freeze the manifest.
+    Missing evidence is blocked, never no_change. Independent targets can proceed
+    with explicit deferrals; shared affected files and dependency providers cannot.
+    Each target declares dependency_providers including creator and broker.
+    Explain current releases and the comparison to local references even when
+    proposing no change. Catalog-only does not mean research may be skipped.
+    The authoritative instrument-catalog.yaml is editable source, despite its
+    generated_at metadata. Its .md companion is a derived consumer: locate an
+    existing generator for that consumer or defer that consumer explicitly.
     Facts have unique IDs and source-backed model claims. Target fact_ids link
     changes to evidence; configured checks must verify actual model membership
     and the values being changed, not merely syntax or comments. A documented
@@ -131,49 +143,49 @@ prompt:
     explicitly named by the request. Include no secrets or redaction-changing data.
     {% elif stage == 3 %}
     set -euo pipefail
-    gate_tmp={{ workspace_root_q }}/.manifest-gate.json.tmp
-    if python -B {{ bundle_root_q }}/scripts/refreshctl.py validate-manifest {{ workspace_root_q }}/update-manifest.json --authority-roots {{ authority_roots_q }} --authority-sha256 {{ authority_sha256_q }} --transaction-id {{ transaction_id_q }} > "$gate_tmp"; then
-      mv "$gate_tmp" {{ workspace_root_q }}/manifest-gate.json
+    gate_tmp={{ refresh_artifact_root_q }}/.manifest-gate.json.tmp
+    if python -B {{ bundle_root_q }}/scripts/refreshctl.py validate-manifest {{ refresh_artifact_root_q }}/update-manifest.json --authority-roots {{ authority_roots_q }} --authority-sha256 {{ authority_sha256_q }} --transaction-id {{ transaction_id_q }} > "$gate_tmp"; then
+      mv "$gate_tmp" {{ refresh_artifact_root_q }}/manifest-gate.json
     else
-      mv "$gate_tmp" {{ workspace_root_q }}/manifest-gate.json
+      mv "$gate_tmp" {{ refresh_artifact_root_q }}/manifest-gate.json
       exit 1
     fi
     {% elif stage == 4 %}
     set -euo pipefail
-    python -B {{ bundle_root_q }}/scripts/refreshctl.py backup {{ workspace_root_q }}/update-manifest.json {{ backup_root_q }}/backup --authority-roots {{ authority_roots_q }} --authority-sha256 {{ authority_sha256_q }} --transaction-id {{ transaction_id_q }}
-    cp {{ backup_root_q }}/backup/index.json {{ workspace_root_q }}/backup/index.json
-    chmod 600 {{ workspace_root_q }}/backup/index.json
+    python -B {{ bundle_root_q }}/scripts/refreshctl.py backup {{ refresh_artifact_root_q }}/update-manifest.json {{ backup_root_q }}/backup --authority-roots {{ authority_roots_q }} --authority-sha256 {{ authority_sha256_q }} --transaction-id {{ transaction_id_q }}
+    cp {{ backup_root_q }}/backup/index.json {{ refresh_artifact_root_q }}/backup/index.json
+    chmod 600 {{ refresh_artifact_root_q }}/backup/index.json
     test -s {{ backup_root_q }}/backup/recovery-index.json
     test -s {{ backup_root_q }}/backup/transaction-state.json
     {% elif stage == 5 %}
     You own bounded apply, not scope expansion. The
     `marianne-model-profile-refresh` technique is mandatory in this phase.
 
-    Read `{{ request_path }}`, `{{ workspace_root }}/update-manifest.json`, and
-    the public backup record `{{ workspace_root }}/backup/index.json`. Refuse if
+    Read `{{ request_path }}`, `{{ refresh_artifact_root }}/update-manifest.json`, and
+    the public backup record `{{ refresh_artifact_root }}/backup/index.json`. Refuse if
     the accepted manifest or protected backup at `{{ backup_root }}/backup` is
     absent. Modify only accepted change target paths within the caller authority
     roots; project_root is context, not a substitute mutation boundary.
     Preserve file syntax and local conventions, update every authorized active
     downstream reference, and never touch a skipped candidate or secret value.
 
-    Write `{{ workspace_root }}/changed-paths.json` with exactly:
+    Write `{{ refresh_artifact_root }}/changed-paths.json` with exactly:
     `schema_version`, `transaction_id`, sorted `changed_paths`, and `skipped`.
     Set transaction_id exactly to `{{ transaction_id }}`. The changed path
     array must contain the exact absolute paths whose bytes or symlink targets
     differ after apply. Use an empty array for a true no-op.
     {% elif stage == 6 %}
     set -euo pipefail
-    python -B {{ bundle_root_q }}/scripts/refreshctl.py static-commission {{ workspace_root_q }}/update-manifest.json {{ backup_root_q }}/backup/transaction-state.json {{ workspace_root_q }}/changed-paths.json {{ workspace_root_q }}/commissioning.json
+    python -B {{ bundle_root_q }}/scripts/refreshctl.py static-commission {{ refresh_artifact_root_q }}/update-manifest.json {{ backup_root_q }}/backup/transaction-state.json {{ refresh_artifact_root_q }}/changed-paths.json {{ refresh_artifact_root_q }}/commissioning.json
     {% elif stage == 7 %}
     set -euo pipefail
-    python -B {{ bundle_root_q }}/scripts/refreshctl.py live-commission {{ workspace_root_q }}/update-manifest.json {{ workspace_root_q }}/commissioning.json --transaction-id {{ transaction_id_q }}
+    python -B {{ bundle_root_q }}/scripts/refreshctl.py live-commission {{ refresh_artifact_root_q }}/update-manifest.json {{ refresh_artifact_root_q }}/commissioning.json --transaction-id {{ transaction_id_q }}
     {% elif stage == 8 %}
     set -euo pipefail
-    python -B {{ bundle_root_q }}/scripts/refreshctl.py finalize-transaction {{ workspace_root_q }}/update-manifest.json {{ backup_root_q }}/backup/transaction-state.json {{ workspace_root_q }}/commissioning.json {{ workspace_root_q }}/transaction.json --authority-roots {{ authority_roots_q }} --authority-sha256 {{ authority_sha256_q }} --transaction-id {{ transaction_id_q }}
+    python -B {{ bundle_root_q }}/scripts/refreshctl.py finalize-transaction {{ refresh_artifact_root_q }}/update-manifest.json {{ backup_root_q }}/backup/transaction-state.json {{ refresh_artifact_root_q }}/commissioning.json {{ refresh_artifact_root_q }}/transaction.json --authority-roots {{ authority_roots_q }} --authority-sha256 {{ authority_sha256_q }} --transaction-id {{ transaction_id_q }}
     {% elif stage == 9 %}
     set -euo pipefail
-    python -B - {{ bundle_root_q }} {{ workspace_root_q }} {{ transaction_id_q }} <<'PY'
+    python -B - {{ bundle_root_q }} {{ refresh_artifact_root_q }} {{ transaction_id_q }} <<'PY'
     import json
     from pathlib import Path
     import sys
@@ -192,7 +204,7 @@ prompt:
     receipt_input = {
         **transaction,
         "request": manifest.get("request"),
-        "changed_paths": changed.get("changed_paths", []) if transaction.get("transaction_status") == "success" else [],
+        "changed_paths": changed.get("changed_paths", []) if transaction.get("transaction_status") in {"success", "partial"} else [],
         "attempted_changed_paths": changed.get("changed_paths", []),
         "provider_results": manifest.get("provider_results", []),
         "live_results": commissioning.get("live", {}).get("results", []),
@@ -207,7 +219,7 @@ prompt:
         workspace / "receipt.json",
         workspace / "receipt.md",
     )
-    if transaction.get("transaction_status") != "success":
+    if transaction.get("transaction_status") not in {"success", "partial"}:
         raise SystemExit(1)
     PY
     {% endif %}
@@ -215,46 +227,46 @@ prompt:
 validations:
   - type: command_succeeds
     command: |
-      python -B -c "import json,sys; d=json.load(open(sys.argv[1])); assert isinstance(d.get('entries'), dict) and d.get('roots')" {workspace_root_q}/inventory.json
+      python -B -c "import json,sys; d=json.load(open(sys.argv[1])); assert isinstance(d.get('entries'), dict) and d.get('roots')" {refresh_artifact_root_q}/inventory.json
     condition: stage == 1
     description: census is structured and non-empty
   - type: command_succeeds
     command: |
-      python -B {bundle_root_q}/scripts/refreshctl.py validate-manifest {workspace_root_q}/update-manifest.json --authority-roots {authority_roots_q} --authority-sha256 {authority_sha256_q} --transaction-id {transaction_id_q}
+      python -B {bundle_root_q}/scripts/refreshctl.py validate-manifest {refresh_artifact_root_q}/update-manifest.json --authority-roots {authority_roots_q} --authority-sha256 {authority_sha256_q} --transaction-id {transaction_id_q}
     condition: stage == 2
     description: research produced an accepted bounded manifest
   - type: command_succeeds
     command: |
-      python -B -c "import json,sys; d=json.load(open(sys.argv[1])); assert d.get('valid') is True and d.get('errors') == []" {workspace_root_q}/manifest-gate.json
+      python -B -c "import json,sys; d=json.load(open(sys.argv[1])); assert d.get('valid') is True and d.get('errors') == []" {refresh_artifact_root_q}/manifest-gate.json
     condition: stage == 3
     description: deterministic manifest gate accepted the candidate
   - type: command_succeeds
     command: |
-      test -s {workspace_root_q}/backup/index.json && test -s {backup_root_q}/backup/recovery-index.json && test -s {backup_root_q}/backup/transaction-state.json
+      test -s {refresh_artifact_root_q}/backup/index.json && test -s {backup_root_q}/backup/recovery-index.json && test -s {backup_root_q}/backup/transaction-state.json
     condition: stage == 4
     description: public and protected backup records exist before apply
   - type: command_succeeds
     command: |
-      python -B -c "import json,sys; d=json.load(open(sys.argv[1])); assert d.get('schema_version') == 1 and d.get('transaction_id') == sys.argv[2] and isinstance(d.get('changed_paths'), list) and isinstance(d.get('skipped'), list)" {workspace_root_q}/changed-paths.json {transaction_id_q}
+      python -B -c "import json,sys; d=json.load(open(sys.argv[1])); assert d.get('schema_version') == 1 and d.get('transaction_id') == sys.argv[2] and isinstance(d.get('changed_paths'), list) and isinstance(d.get('skipped'), list)" {refresh_artifact_root_q}/changed-paths.json {transaction_id_q}
     condition: stage == 5
     description: apply emitted an exact changed-path ledger
   - type: command_succeeds
     command: |
-      python -B -c "import json,sys; d=json.load(open(sys.argv[1])); assert d.get('schema_version') == 1 and d.get('transaction_id') == sys.argv[2] and isinstance(d.get('static', {}).get('passed'), bool)" {workspace_root_q}/commissioning.json {transaction_id_q}
+      python -B -c "import json,sys; d=json.load(open(sys.argv[1])); assert d.get('schema_version') == 1 and d.get('transaction_id') == sys.argv[2] and isinstance(d.get('static', {}).get('passed'), bool)" {refresh_artifact_root_q}/commissioning.json {transaction_id_q}
     condition: stage == 6
     description: static commissioning records a deterministic outcome
   - type: command_succeeds
     command: |
-      python -B -c "import json,sys; d=json.load(open(sys.argv[1])); assert d.get('transaction_id') == sys.argv[2] and d.get('live', {}).get('state') in {'live_smoked','unsupported','unauthenticated','failed','not_attempted'}" {workspace_root_q}/commissioning.json {transaction_id_q}
+      python -B -c "import json,sys; d=json.load(open(sys.argv[1])); assert d.get('transaction_id') == sys.argv[2] and d.get('live', {}).get('state') in {'live_smoked','unsupported','unauthenticated','failed','not_attempted'}" {refresh_artifact_root_q}/commissioning.json {transaction_id_q}
     condition: stage == 7
     description: live commissioning uses an honest documented state
   - type: command_succeeds
     command: |
-      python -B -c "import json,sys; d=json.load(open(sys.argv[1])); assert d.get('transaction_id') == sys.argv[2] and d.get('transaction_status') in {'success','rolled_back','compensation_failed'} and (not d.get('gate_errors') or d.get('restored') or d.get('transaction_status') == 'compensation_failed')" {workspace_root_q}/transaction.json {transaction_id_q}
+      python -B -c "import json,sys; d=json.load(open(sys.argv[1])); assert d.get('transaction_id') == sys.argv[2] and d.get('transaction_status') in {'success','partial','rolled_back','compensation_failed'} and (not d.get('gate_errors') or d.get('restored') or d.get('transaction_status') == 'compensation_failed')" {refresh_artifact_root_q}/transaction.json {transaction_id_q}
     condition: stage == 8
     description: finalization either retains a valid candidate or records compensation
   - type: command_succeeds
     command: |
-      python -B -c "import json,sys; d=json.load(open(sys.argv[1])); assert d.get('transaction_id') == sys.argv[2] and d.get('transaction_status') in {'success','rolled_back','compensation_failed'} and d.get('live_state') in {'live_smoked','unsupported','unauthenticated','failed','not_attempted'}" {workspace_root_q}/receipt.json {transaction_id_q} && test -s {workspace_root_q}/receipt.md
+      python -B -c "import json,sys; d=json.load(open(sys.argv[1])); assert d.get('transaction_id') == sys.argv[2] and d.get('transaction_status') in {'success','partial','rolled_back','compensation_failed'} and d.get('live_state') in {'live_smoked','unsupported','unauthenticated','failed','not_attempted'}" {refresh_artifact_root_q}/receipt.json {transaction_id_q} && test -s {refresh_artifact_root_q}/receipt.md
     condition: stage == 9
     description: machine and human receipts share a valid final state

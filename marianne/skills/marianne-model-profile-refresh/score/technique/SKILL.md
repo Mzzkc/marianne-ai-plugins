@@ -25,9 +25,13 @@ Classify targets as `active`, `generated`, `pinned`, `frozen`, `retired` or
 mutable; eligible pinned/frozen targets require explicit naming. Search matches
 are leads, not authority. Preserve existing roles and defaults unless the
 request and evidence justify changing them. Generated consumers use their
-existing generator.
+existing generator. The shipped instrument-catalog.yaml is authoritative active
+source; its generated_at/generated_by history does not make it generated output.
+The companion instrument-catalog.md is derived. Locate a documented generator
+for that consumer or explicitly defer it; do not invent a generator requirement
+for the YAML source itself.
 
-Write a schema-v2 JSON manifest containing the exact `transaction_id`, request,
+Write a schema-v3 JSON manifest containing the exact `transaction_id`, request,
 mode `broad`, absolute `allowed_roots`, `provider_results` and
 `unresolved_results` and `targets`. Every root and target must fit caller authority. Provider results:
 
@@ -42,26 +46,46 @@ mode `broad`, absolute `allowed_roots`, `provider_results` and
 }
 ```
 
-Statuses are `changes`, `no_change` or `blocked`. Evidence-backed no-change is
-valid coverage; blocked/incomplete coverage prevents apply. Facts need unique
+Statuses are `changes`, `no_change`, `blocked` or `deferred`. Evidence-backed
+no-change is valid coverage. Missing provider rows always prevent apply.
+Blocked means evidence could not support a decision; deferred means a supported
+change cannot be safely included now (for example a shared-file dependency).
+Blocked/deferred rows use facts: [] and explain the affected routes/files.
+They produce an explicit partial outcome, never an all-clear success. Facts need unique
 IDs, a model ID and their own nonempty `evidence_urls`; `claims` is optional.
 Every provider result also needs a nonempty `reason`; no-change results use
 `facts: []` when no facts need to drive changes. URL presence is not source support: verify that the
-source actually warrants accepted claims.
+source actually warrants accepted claims. For every provider, state the current
+relevant releases you checked and their relationship to local/catalog references.
+Use specific official model/release pages where available. A generic homepage
+and "catalog-only, no change" sentence is not substantive coverage. Do not
+invent edits merely to make research look thorough.
 
 Account for every `refresh_scope.unresolved` ID exactly once in
 `unresolved_results`, using `{"id": "route-id", "status": "resolved",
 "provider": "assigned-provider-id", "evidence_urls": ["https://official.example/models"]}`.
-Only source-supported resolution to an already assigned provider is admitted.
-Unknown providers require correcting venue metadata before a new transaction;
-report blocked research instead of guessing or expanding the sealed scope.
+Resolve to an existing or newly discovered creator using primary evidence.
+A new provider is permitted only when joined to an inventory unresolved ID,
+and requires its own complete provider_results row. Research discovered creators
+before proposing the final manifest. Do not conflate brokers and creators.
+If ownership cannot be established, use status: blocked with a nonempty reason.
+This defers its source files; it does not excuse missing coverage. Caller roots
+and baseline providers stay fixed. Admission/backup seal the discovered manifest;
+no provider, target or fact changes are allowed afterward.
 Use an empty array if the scope has no unresolved routes.
 
 Use the resolved canonical regular-file path for changes, not a symlink alias;
 its exact bytes must be covered by the target backup.
 
 Each target has an exact canonical absolute `path`, `classification`,
-`disposition` (`change`), `fact_ids`, and `checks`. A change must
+`disposition` (`change`), `fact_ids`, `dependency_providers`, and `checks`.
+List every creator and broker on which that target's changes depend.
+The runtime refuses dependencies marked blocked/deferred and whole files that
+contain their inventory routes (including unresolved source_paths). If a shared
+file is affected, defer every proposed change to that file. The shared catalog
+and its Markdown companion are also deferred whenever any provider/route is
+blocked or deferred. Do not relabel a deferred improvement as no_change.
+Only status: changes may carry executable facts, and every fact must have a target. A change must
 reference its accepted model facts and include bounded configured expectations:
 
 ```json
