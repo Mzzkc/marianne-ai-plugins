@@ -180,6 +180,11 @@ def build_scope(project_root: Path, roots: list[Path], providers: list[str] | No
                     provider = explicit_provider.strip()
                 association = {"instrument": instrument, "model": name,
                                "path": str(path), "classification": classification}
+                # Qualified service prefixes are explicit route metadata. Keep
+                # transport/broker relationships separate from creator identity.
+                service = name.split("/", 1)[0] if "/" in name else None
+                if service in grouped and service != provider:
+                    grouped[service].append({**association, "relationship": "route-service"})
                 if provider in grouped:
                     grouped[provider].append(association)
                 else:

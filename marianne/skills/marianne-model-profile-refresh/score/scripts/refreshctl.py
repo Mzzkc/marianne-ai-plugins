@@ -384,6 +384,22 @@ def _validate_discovery(data: dict, scope: dict, expected: set, actual: set) -> 
             if not owners <= set(deps):
                 errors.append("target dependency_providers omits a fact provider")
         path = target.get("path")
+        if isinstance(path, str) and isinstance(deps, list):
+            required_services = {row["id"] for row in scope["providers"]
+                                 for route in row.get("routes", [])
+                                 if route.get("relationship") == "route-service"
+                                 and route.get("path") == path}
+            if not required_services <= set(deps):
+                errors.append("target omits inventoried route-service dependency")
+        if isinstance(path, str) and Path(path).is_file() and Path(path).suffix in {".yaml", ".yml", ".json"}:
+            try:
+                current = yaml.safe_load(Path(path).read_text(encoding="utf-8"))
+                if isinstance(current, dict):
+                    for check in target.get("checks", []):
+                        if check.get("pointer") == "/default_model" and check.get("equals") != current.get("default_model"):
+                            errors.append("target proposes changing a preserved default_model")
+            except (OSError, yaml.YAMLError) as exc:
+                errors.append(f"could not inspect target default: {exc}")
         if isinstance(path, str) and str(Path(path).resolve()) in forbidden:
             errors.append(f"target shares a file with deferred provider/route coverage: {path}")
     return errors
@@ -724,7 +740,15 @@ def create_backup(
         "recovery_index_sha256": sha256_file(recovery_path),
     }
     _atomic_write_json(state_path, transaction_state)
-    report_index = redact(recovery_index)
+    if data.get("schema_version") == 3:
+        # Public apply receipt grows with accepted targets, never unrelated census.
+        report_index = {key: recovery_index[key] for key in (
+            "schema_version", "transaction_id", "manifest_sha256", "authority_sha256",
+            "accepted_target_paths")}
+        report_index["recovery_index_sha256"] = sha256_file(recovery_path)
+        report_index["transaction_state_sha256"] = sha256_file(state_path)
+    else:
+        report_index = redact(recovery_index)
     report_index["index_path"] = str(index_path)
     report_index["recovery_index"] = "recovery-index.json"
     report_index["transaction_state"] = "transaction-state.json"
@@ -1277,11 +1301,33 @@ def _target_snapshot(manifest: dict) -> dict:
     return _governed_snapshot(sorted(paths), [], sorted(paths))
 
 
+def _preserved_default_errors(manifest_path: Path, state_path: Path) -> list[str]:
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if manifest.get("schema_version") != 3:
+        return []
+    errors = []
+    try:
+        recovery, recovery_path, _, _ = _load_bound_recovery(
+            state_path, manifest_path=manifest_path, transaction_id=manifest["transaction_id"])
+        for entry in recovery["entries"]:
+            path = Path(entry["path"])
+            if path.suffix not in {".yaml", ".yml", ".json"} or entry["kind"] != "file":
+                continue
+            before = yaml.safe_load((recovery_path.parent / entry["blob"]).read_text(encoding="utf-8"))
+            after = yaml.safe_load(path.read_text(encoding="utf-8"))
+            if isinstance(before, dict) and isinstance(after, dict) and before.get("default_model") != after.get("default_model"):
+                errors.append(f"profile default changed without caller authorization: {path}")
+    except (OSError, ValueError, yaml.YAMLError) as exc:
+        errors.append(f"default preservation could not be verified: {exc}")
+    return errors
+
+
 def static_commission(
     manifest_path: Path, before_index: Path, ledger_path: Path
 ) -> dict[str, Any]:
     """Prove the AI ledger equals physical changes and parse every changed target."""
     observed, errors = observed_changed_paths(manifest_path, before_index)
+    errors.extend(_preserved_default_errors(manifest_path, before_index))
     try:
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
@@ -1545,6 +1591,7 @@ def finalize_transaction(
     if commissioning.get("static", {}).get("passed") is not True and not gate_errors:
         gate_errors.append("static commissioning did not pass")
     gate_errors.extend(verify_changed_paths(manifest_path, state_path))
+    gate_errors.extend(_preserved_default_errors(manifest_path, state_path))
     live = commissioning.get("live", {})
     live_state = live.get("state")
     if live_state not in LIVE_STATES:

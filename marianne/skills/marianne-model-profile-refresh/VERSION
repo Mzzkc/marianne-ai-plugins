@@ -1,4 +1,4 @@
-version: 0.6.0
+version: 0.7.0
 runtime_schema: 3
-canonical_release_lock_sha256: 63c009f2811d4afdb03ff7e509a889386879cef93298ac428e35e7246591178d
+canonical_release_lock_sha256: 9f2427abae13996b362cfe78116be7f6830c254dd829c24cba4337aae693e876
 runtime_file_count: 8

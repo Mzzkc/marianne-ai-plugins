@@ -109,3 +109,54 @@ def test_receipt_stage_retains_partial_changed_paths(tmp_path):
     receipt=json.loads((tmp_path/'receipt.json').read_text())
     assert receipt['changed_paths']==['/example/profile.yaml']
     assert receipt['transaction_status']=='partial'
+
+
+def test_compact_receipt_does_not_scale_with_inventory(tmp_path, monkeypatch):
+    import hashlib
+    scope,m=fixture(tmp_path);p,h=authority(tmp_path,scope)
+    mp=tmp_path/'manifest.json';mp.write_text(json.dumps(m))
+    monkeypatch.setattr(ctl,'_governed_snapshot',lambda *args: {('/unrelated/'+'x'*200+str(n)):{'kind':'file','value':'f'*64} for n in range(10000)})
+    index=ctl.create_backup(mp,tmp_path/'backup',authority_path=p,authority_sha256=h,transaction_id='trial')
+    assert (tmp_path/'backup/recovery-index.json').stat().st_size>2000000
+    assert (tmp_path/'backup/index.json').stat().st_size<4096
+    assert 'scope_snapshot' not in index
+    assert index['recovery_index_sha256']==hashlib.sha256((tmp_path/'backup/recovery-index.json').read_bytes()).hexdigest()
+
+
+def test_broker_census_cannot_be_omitted_by_manifest(tmp_path):
+    import yaml
+    from .test_refresh_coverage import refresh_scope
+    scope_fixture(tmp_path)
+    catalog=tmp_path/'plugins/marianne/docs/ref/instrument-catalog.yaml'
+    d=yaml.safe_load(catalog.read_text());d['musicians']['router/free']={'provider':'router'};d['instruments']['broker']['runs_models'].append('router/creator/model');catalog.write_text(yaml.safe_dump(d))
+    scope=refresh_scope.build_scope(tmp_path,[tmp_path])
+    row=next(r for r in scope['providers'] if r['id']=='router')
+    assert any(r['relationship']=='route-service' and r['path'].endswith('broker.yaml') for r in row['routes'])
+
+
+def test_default_replacement_rejected_before_backup(tmp_path):
+    scope,m=fixture(tmp_path)
+    f=tmp_path/'profile.yaml';f.write_text('default_model: original\nmodels: []\n')
+    m['provider_results'][0].update(status='changes',facts=[{'id':'new','model':'new','evidence_urls':['https://vendor.example/model']}])
+    m['targets']=[{'path':str(f),'classification':'active','disposition':'change','fact_ids':['new'],'dependency_providers':['vendor-a'],'checks':[{'pointer':'/default_model','equals':'new'}]}]
+    p,h=authority(tmp_path,scope)
+    assert any('default_model' in e for e in ctl.validate_manifest_authority(m,p,h,'trial'))
+
+
+def test_unpromised_default_change_triggers_compensation(tmp_path):
+    import hashlib
+    scope,m=fixture(tmp_path);f=tmp_path/'profile.yaml';f.write_text('default_model: original\nmodels: []\n')
+    work=tmp_path/'runtime';work.mkdir()
+    m['provider_results'][0].update(status='changes',facts=[{'id':'new','model':'new','evidence_urls':['https://vendor.example/model']}])
+    m['targets']=[{'path':str(f),'classification':'active','disposition':'change','fact_ids':['new'],'dependency_providers':['vendor-a'],'checks':[{'pointer':'/models/@name=new/name','equals':'new'}]}]
+    p,h=authority(tmp_path,scope);a=json.loads(p.read_text());a['runtime_paths']=[str(work)];p.write_text(json.dumps(a));h=hashlib.sha256(p.read_bytes()).hexdigest()
+    mp=work/'manifest.json';mp.write_text(json.dumps(m));ctl.create_backup(mp,work/'backup',authority_path=p,authority_sha256=h,transaction_id='trial')
+    f.write_text('default_model: new\nmodels:\n  - name: new\n')
+    ledger=work/'ledger.json';ledger.write_text(json.dumps({'schema_version':1,'transaction_id':'trial','changed_paths':[str(f)]}))
+    result=ctl.static_commission(mp,work/'backup/transaction-state.json',ledger)
+    assert not result['static']['passed']
+    assert any('default changed' in e for e in result['static']['errors'])
+    cp=work/'commission.json';cp.write_text(json.dumps(result));ctl.live_commission(mp,cp,transaction_id='trial')
+    result=ctl.finalize_transaction(mp,work/'backup/transaction-state.json',cp,work/'transaction.json',transaction_id='trial')
+    assert result['transaction_status']=='rolled_back'
+    assert f.read_text()=='default_model: original\nmodels: []\n'

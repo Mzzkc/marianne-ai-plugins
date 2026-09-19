@@ -30,8 +30,8 @@ Blocked/deferred findings prevent edits to dependent or shared affected files;
 independent supported targets may proceed with an explicit partial receipt.
 A targeted request can focus proposed edits, but cannot waive research coverage.
 
-Preserve existing roles and defaults unless evidence and the request justify
-changing them. Preserve pinned, frozen, retired, historical and unknown-authority
+Automatic refresh preserves defaults. Preserve existing roles unless evidence
+and the request justify changing them. Preserve pinned, frozen, retired, historical and unknown-authority
 references according to `references/scope.md`. Search matches do not grant
 mutation authority.
 

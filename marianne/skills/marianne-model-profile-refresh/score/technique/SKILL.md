@@ -23,7 +23,7 @@ and unresolved findings explicit; never turn missing research into no-change.
 Classify targets as `active`, `generated`, `pinned`, `frozen`, `retired` or
 `unknown`. Only active and generator-owned generated targets are normally
 mutable; eligible pinned/frozen targets require explicit naming. Search matches
-are leads, not authority. Preserve existing roles and defaults unless the
+are leads, not authority. Preserve defaults exactly; preserve existing roles unless the
 request and evidence justify changing them. Generated consumers use their
 existing generator. The shipped instrument-catalog.yaml is authoritative active
 source; its generated_at/generated_by history does not make it generated output.
@@ -125,3 +125,15 @@ live adapters remain unsupported; never claim a route worked because its YAML
 parsed. The runtime owns compensation and terminal receipts. On failed required
 checks stop mutation and preserve recovery authority; do not perform improvised
 rollback or keep editing around a failed gate.
+
+Automatic refresh preserves existing default_model values exactly; a deliberate
+change of default is a separate caller-authorized configuration task. Admission
+rejects proposed default replacements and commissioning compares defaults to
+protected preimages, including changes omitted from worker checks.
+
+The apply cadenza receives only a compact digest-bound backup receipt. Complete
+recovery data stays on disk; never paste its scope_snapshot into an AI prompt.
+The backup stage checks the total immutable apply inputs against a350000-byte
+budget before dispatch. Inventory size is not an excuse to cast a larger model.
+Qualified service prefixes in inventory create separate broker dependencies;
+provider ownership and route-service identity are different relationships.

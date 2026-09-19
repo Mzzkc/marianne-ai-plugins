@@ -157,6 +157,13 @@ prompt:
     chmod 600 {{ refresh_artifact_root_q }}/backup/index.json
     test -s {{ backup_root_q }}/backup/recovery-index.json
     test -s {{ backup_root_q }}/backup/transaction-state.json
+    python -B - {{ request_path_q }} {{ authority_roots_q }} {{ refresh_artifact_root_q }}/update-manifest.json {{ refresh_artifact_root_q }}/backup/index.json {{ bundle_root_q }}/technique/SKILL.md <<'PYLIMIT'
+    import sys
+    from pathlib import Path
+    total = sum(Path(p).stat().st_size for p in sys.argv[1:])
+    if total > 350000:
+        raise SystemExit(f"apply inputs exceed 350000-byte context budget: {total}")
+    PYLIMIT
     {% elif stage == 5 %}
     You own bounded apply, not scope expansion. The
     `marianne-model-profile-refresh` technique is mandatory in this phase.
@@ -166,6 +173,8 @@ prompt:
     the accepted manifest or protected backup at `{{ backup_root }}/backup` is
     absent. Modify only accepted change target paths within the caller authority
     roots; project_root is context, not a substitute mutation boundary.
+    Preserve existing default_model values exactly. Default replacement is not
+    part of this automatic refresh.
     Preserve file syntax and local conventions, update every authorized active
     downstream reference, and never touch a skipped candidate or secret value.
 

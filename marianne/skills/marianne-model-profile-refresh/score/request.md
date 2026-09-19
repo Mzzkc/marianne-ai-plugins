@@ -14,7 +14,7 @@ Resolve inventoried unknown creators from official evidence and research them
 before freezing the manifest. Retain supported independent changes; defer
 blocked dependencies and shared affected files with explicit partial reporting.
 Distinguish provider release existence from client routing and authenticated
-availability. Preserve current defaults and specialized roles unless their
+availability. Preserve current defaults exactly. Preserve specialized roles unless their
 change is justified by evidence and this request.
 
 Classify candidates before mutation. Preserve pinned, frozen, retired,

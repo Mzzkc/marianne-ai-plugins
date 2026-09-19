@@ -40,3 +40,15 @@ and lists deferred provider/route IDs. Runner exit 3 distinguishes this from
 full success. All admitted changes still require the same configured, syntax,
 observation, snapshot and required-live checks; failures compensate the entire
 accepted target set. A no-op with deferrals is partial, not full success.
+
+Automatic refresh preserves existing default_model values exactly; a deliberate
+change of default is a separate caller-authorized configuration task. Admission
+rejects proposed default replacements and commissioning compares defaults to
+protected preimages, including changes omitted from worker checks.
+
+The apply cadenza receives only a compact digest-bound backup receipt. Complete
+recovery data stays on disk; never paste its scope_snapshot into an AI prompt.
+The backup stage checks the total immutable apply inputs against a350000-byte
+budget before dispatch. Inventory size is not an excuse to cast a larger model.
+Qualified service prefixes in inventory create separate broker dependencies;
+provider ownership and route-service identity are different relationships.

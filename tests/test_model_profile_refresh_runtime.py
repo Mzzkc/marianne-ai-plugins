@@ -22,14 +22,14 @@ RUNTIME_FILES = {'model-profile-refresh.yaml',
  'scripts/refreshctl.py',
  'scripts/run_refresh.py',
  'technique/SKILL.md'}
-LOCKED_RUNTIME = {'model-profile-refresh.yaml': '5c72339cf34db63a82564229d489fe1c53b1b89db450ebdcc70f0576d7126658',
- 'request.md': '0492c0f6284fad11038c1a939b78cc0a834684d2943f84ffff520027986b1bed',
+LOCKED_RUNTIME = {'model-profile-refresh.yaml': 'e16e8a94b3a1e03fe9a82de95fb1e0eb48f5932c55db55370979e47f6b8f5faf',
+ 'request.md': '3550b29de3879242028a005d4e0f94d87f127dfb04064868829f7d6b2c5035e7',
  'runbook.md': '6ae8b3428172a2c676d70423af25186d46b51df7e54c3830ab0383c89b64b0bb',
  'scripts/refresh_observation.py': '71bf6078b0af1e90c4181f8189be6df5723804c3efdaadb51f8a2566227b402f',
- 'scripts/refresh_scope.py': '3f794bd572693c8cc0e88758cb594f5bf47df8d5f72cce1dc97ab33e46e834e9',
- 'scripts/refreshctl.py': 'b196923964d48f8c91eb8f20e8ace2b6462c25879952eab79e7967e8a26f7345',
+ 'scripts/refresh_scope.py': '2fb56fb1efce34c1b1e97990147b43bec2037e75adac3cba4d7c46ea3b13316c',
+ 'scripts/refreshctl.py': '023af392e0ebd4a9249e3648338ee44efc5bdeb5056e4cd6c68973b820db486b',
  'scripts/run_refresh.py': 'd0ebe90aeccf87e232cb667786da4f7c173acb2ae18f5e3a0440e1f9a02335d9',
- 'technique/SKILL.md': 'b6837c5066402c2b9fc0f74ff08199ef6c1cc366337f50bfb64cf0c7f6a1b4f7'}
+ 'technique/SKILL.md': 'c907ade770dbdede32b8d98186cb28d1bbdc79b18979c73004cdd86fe91f0c7e'}
 
 def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -117,10 +117,10 @@ def test_shipped_skill_tree_physically_contains_no_cache_artifacts() -> None:
 
 def test_skill_version_and_plugin_package_version_are_independent() -> None:
     version = (SKILL_ROOT / "VERSION").read_text(encoding="utf-8")
-    assert "version: 0.6.0" in version
+    assert "version: 0.7.0" in version
     assert (
         "canonical_release_lock_sha256: "
-        "63c009f2811d4afdb03ff7e509a889386879cef93298ac428e35e7246591178d"
+        "9f2427abae13996b362cfe78116be7f6830c254dd829c24cba4337aae693e876"
     ) in version
     plugin = json.loads((REPO / "marianne/.claude-plugin/plugin.json").read_text(encoding="utf-8"))
     codex_plugin = json.loads(
