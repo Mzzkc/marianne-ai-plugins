@@ -5,9 +5,27 @@ Route volatile mechanics instead of copying them here.
 
 ## Current technical truth
 
-**REQUIRED SUB-SKILL:** Use `marianne-expert` when architecture, source behavior,
-instrument capability, runtime implementation status, or current-versus-pinned
-evidence affects a decision.
+**REQUIRED SUB-SKILL:** Use `marianne-expert` before persistent-agent casting,
+construction, package installation, lifecycle, composition, runtime operations
+or source conclusions. Run its preflight, bootstrap and routed current guide;
+this is orientation, not an optional escalation after guessing.
+
+Discover released seeds and the three engagement shapes in the authoritative
+plugin `agent-scores/` package. Shipped means present in that distribution;
+installed means integrity-checked reconciliation on this box; bound means current
+routes, workspace and identity context resolved; running requires native runtime
+evidence. None implies the next. Missing local scores trigger package discovery.
+An integrity failure pauses that mutation path and routes to the maintainer.
+Never hand-copy or regenerate substitute distribution authority unless the
+composer explicitly commissions rebuilding with source authority. Existing
+unaffected authorized work may continue.
+
+Default to `full-lifecycle.yaml`, `targeted-work.yaml` and
+`lifecycle-integration.yaml`. Use supported installation and route binding,
+supplying objectives/authority through cadenza. Verify requested versus resolved
+workspace paths and actual attached context. Distribution portability and bound
+run locality are different subjects; diagnose binder/validator conflicts at
+that seam instead of assuming either validation result establishes everything.
 
 Ask experts to inspect code, tests, logs, artifacts, and live seams. The
 conductor consumes their findings and directs the response; technical fluency
@@ -36,11 +54,13 @@ actually reset. Preserve non-overwritable evidence, commission a new governed
 workspace when required, and rebind every invalidated lane.
 
 Treat the repaired harness and rerun machinery as writers. Bind their identities
-before execution, recompute custody on the final produced bytes and state, and
-replay the same causal proof after any mutation. At rerun completion,
+through the existing run record. Use existing Git/native evidence for material
+changes to the final produced bytes and state; replay affected causal proof only
+when those changes invalidate it. At rerun completion,
 corroborate process or session termination and interaction state separately
 from checkpoint status, receipts, artifact validity, semantics, and validation.
-Use one independent judge for the executed evidence; retain their session when
+Reuse applicable independent judgment already supplied by the system; commission
+a judge only for a consequential uncovered claim. Retain their session when
 appropriate. Add another reviewer only when they change the evidence basis;
 multiple reviewers on the same evidence basis are one oracle.
 
@@ -58,21 +78,30 @@ or rejection. The composer or score specialist authors the score. The same
 boundary applies to compiler changes, techniques, code, specs, designs,
 content, research, validation systems, and substantial revisions.
 
-## Rehearse the real handoff
+## Reuse and rehearse the real handoff
 
-Commission exact producer/consumer schemas, machine-join values, resolved paths,
-working directories, scalar result types, output-size bounds, and one cheap
-prefreeze command. Supply a concrete valid example instead of making performers
-rediscover validators. Keep deterministic join fields separate from agent-authored
-semantic paragraphs. Use phase-owned logs or frozen snapshots so later lifecycle
-reads cannot append to a frozen Work subject.
+Before custom composition, locate the closest shipped examples and Rosetta
+motifs, read selected files in full and route them to the composer. Ask for a
+short reuse/adapt/build disposition naming borrowed and rejected structures.
+Custom construction needs a behavioral requirement stock shapes cannot express;
+bespoke proof preferences are not that requirement.
 
-Rehearse the actual invocation through the last safe side-effect boundary with
-real receipt destinations and permissions. Syntax and helper tests do not execute
-remaining wrapper statements. Validate native rules and dry-render topology before
-reporting source ready. When submission is governed by a release lock, verify
-its existence and successful verification in the same conditional flow that
-permits submission.
+Use existing producer/consumer contracts and native outcome checks. Supply the
+current cadenza and concrete paths once; commission new schemas or checkers only
+for a demonstrated missing contract. On a new or materially changed binding,
+use subsystem tooling to render every affected sheet in its real workspace
+geometry and check attachments, routes and dependencies. The normal stock path
+consumes supported score/runtime checks and compact outcomes; it does not add
+parallel root verification of those checks. Future generated inputs need declared producer obligations,
+not fake completed artifacts. Rehearse only the affected safe boundary.
+
+For recovery, inspect required artifacts and which applicable outcome validators
+actually ran; a green wrapper with zero applicable checks proves nothing. Verify
+current conditional dispatch behavior rather than trusting a declared skip.
+If a native recovery/branch/binding seam is defective, retain the failure and
+route one shared fix to its owner. A bounded authorized exception may materialize
+the necessary branch or restore a coordination view, but is not a new default
+campaign wrapper or permission to bypass an integrity stop.
 
 Discover current routing, session reuse, reload behavior, and capacity enforcement
 from actual source/profile/runtime evidence. A fixed authorized route needs its
@@ -85,10 +114,14 @@ free-slot count. Missing native enforcement stays an explicit conductor obligati
 
 Do not preserve model names, client versions, machine failures, feature status,
 or instrument routing in this skill. Discover them at the time of performance.
-Canonical lifecycle and profile sources are **mutable provenance**. When exact
-review or release authority depends on them, materialize the relevant bytes in
-a candidate-owned **immutable snapshot** before dispatch. A later source change
-creates a new subject and invalidates the prior verdict.
+Canonical lifecycle and profile sources are **mutable provenance**. Preserve
+normal memory transitions and full lifecycle; a review may bind the post-Work
+subject without prohibiting the memory mutation that Work was authorized to make. When exact
+review or release authority depends on them and existing subject identity is
+insufficient for an actual mutable-input risk, use the supported mechanism to
+bind an **immutable snapshot** of the relevant bytes. Material changes to that
+judged subject require affected checks; unrelated lifecycle growth does not
+automatically invalidate every prior verdict.
 
 Separate:
 
@@ -139,8 +172,18 @@ observable state, authority, and stop condition in control artifacts. Missing
 score syntax does not make a useful coordination mechanism unavailable; it
 makes its enforcement the conductor's explicit responsibility.
 
-Before dispatch, compare the intended owner/work-unit graph with the compiler's
-or runtime's rendered sheet graph. Validation alone does not prove cardinality,
+At first binding or after a material topology/route change, compare the intended
+owner/work-unit graph with the compiler's or runtime's rendered sheet graph.
+Reuse that check for an unchanged admitted binding; do not hand-repeat it at
+every dispatch. Validation alone does not prove cardinality,
 instrument routing, fallback, dependency, concurrency, or write isolation.
 Treat a mismatch as a topology defect and hold launch until reshaped and
 rerendered.
+
+For supported package operations, follow the current modern-agent guide:
+`marianne-agents install-package PACKAGE --techniques-source TECHNIQUES --dry-run`
+previews integrity-checked reconciliation; the authorized mutation omits
+`--dry-run`. `marianne-agents bind-score-routes` binds an installed score to the
+current inventory and output location. Inspect current help/guide for required
+arguments rather than inventing flags. These provided operations replace
+handwritten installation and route-copying procedures.

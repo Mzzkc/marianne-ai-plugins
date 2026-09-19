@@ -1,11 +1,12 @@
 # Conducting Task Map
 
-Start with one row; load additional references when the incident crosses
-boundaries. Load optional artifacts only when needed.
+First complete the mandatory `marianne-expert` preflight and routed guidance
+for Marianne work. Then select a row; these references deepen that orientation.
+Templates are optional prompts, not required records or parallel custody systems.
 
 | Intent | Reference | Optional artifacts |
 |---|---|---|
-| Cast or maintain a persistent agent | plugin `docs/ref/modern-agents.md` | registry README/index, seed reconciliation preview, context-delivery and lifecycle receipts |
+| Cast or maintain a persistent agent | plugin `docs/ref/modern-agents.md` | authoritative `agent-scores/` package, installer preview, stock score binding and native context/lifecycle evidence |
 | Learn the vision, venue, technical system, or shape the performance | `references/orient-and-shape.md` | `templates/vision-libretto-brief.md`, `templates/performance-graph.yaml` |
 | Declare progress economics: capability matrix, first vertical journey, assurance budgets | `references/orient-and-shape.md` | `templates/performance-graph.yaml` |
 | Assign, verify live steering, monitor, or measure total conducting cost | `references/direct-and-monitor.md` | `templates/directive-ledger.md`, `templates/unresolved-work.md` |

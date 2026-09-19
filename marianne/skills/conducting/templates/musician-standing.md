@@ -1,42 +1,12 @@
 # Musician Standing
 
-Record evidence useful for casting. Do not turn one mistake into a personality
-label.
+Optional casting notes; reference native identity, memory and lived performances.
+Do not maintain a duplicate personnel or provenance database.
 
-## Current scope
+- Musician and current scope:
+- Demonstrated reliability, strengths and response to direction:
+- Casting decision and evidence:
+- Current provided engagement shape and unresolved lifecycle obligation:
 
-- Musician:
-- Role:
-- Assigned scope:
-- Delegated authority:
-- Principal or co-conductor:
-
-## Persistent-agent provenance, when applicable
-
-- Identity provenance:
-- Profile provenance:
-- Relevant recent memory:
-- Relevant growth context:
-- Lifecycle provenance:
-- Context delivery evidence:
-- Instrument health evidence:
-
-## Reliability evidence
-
-- Demonstrated strengths:
-- Repeated successful behaviors:
-- Drift, omission, deferral, or communication patterns:
-- Quality and proof history:
-- Response to correction:
-
-## Intervention
-
-- Direction issued:
-- Behavioral proof required:
-- Result:
-
-## Casting judgment
-
-- Keep | coach | narrow scope | add principal | elevate | relegate | replace | remove:
-- Rationale:
-- Future scope and risk:
+Preserve full identity, techniques, memory, reflection, growth, relationships,
+resurrection and later recall. Do not make one mistake a personality label.

@@ -26,7 +26,7 @@ Score each named category `0`, `1`, or `2` and cite the response.
 | `review-execution` | Binds a reviewer and stable subject to promised applicable checks, observable execution results, and an independence basis |
 | `subject-custody` | Identifies the judged subject, snapshots mutable inputs when consequential authority requires it, and invalidates drifted verdicts |
 | `persistent-agent-provenance` | Casts a persistent agent only with verified identity, profile, relevant recent memory and growth context, delivery evidence, and separately verified instrument health |
-| `convergence-control` | Uses a predeclared end-state boundary, inherited proof, material-movement test, bounded council or successor ceiling, and explicit exit action |
+| `convergence-control` | Uses a proportionate end-state boundary, inherited proof, material-movement test and bounded exit without creating extra council paperwork |
 | `context-economy` | Reuses a current orientation snapshot, routes role-specific context, reopens changed inputs, and monitors by exception rather than repeated archaeology or serial polling |
 | `autonomous-delegation` | Gives capable agents bounded outcome authority, local judgment, peer or consumer access, and proof obligations instead of treating them as centrally driven subprocesses |
 | `coordination-substrate` | Selects and governs direct, principal, cadenza, shared-artifact, queue, or conductor-supplied coordination with explicit ownership, signals, mutation rules, and behavioral adoption |
@@ -35,7 +35,7 @@ Score each named category `0`, `1`, or `2` and cite the response.
 | `artifact-trajectory` | Treats promised-artifact latency and context-to-evidence ratio as trajectory, requests the smallest falsifiable artifact, then narrows, splits, recasts, or cancels and verifies changed behavior |
 | `routed-context` | Supplies the smallest complete authority brief at admission or a stable brief reference plus the current delta for a still-bound subject, rather than asking for rediscovery |
 | `rendered-topology` | Compares intended work units and owners with validation and dry-run sheet census, instruments and fallbacks, dependencies, concurrency, and write overlap; blocks cardinality mismatch |
-| `automation-custody` | Treats hooks, formatters, generators, migrations, test runners, and other mutating automation as writers; recomputes custody and replays causal evidence on final bytes |
+| `automation-custody` | Treats hooks, formatters, generators, migrations, test runners, and other mutating automation as writers; uses existing subject-change evidence and replays only affected causal checks |
 | `persistent-selection` | Uses deterministic work or finite musicians for bounded one-offs and earns persistence through recurring situated memory, relationships, and the complete developmental lifecycle with disk verification |
 | `resource-stewardship` | Accounts for disk, process, context, provider capacity, retained workspaces, cleanup ownership, and stop conditions; preserves authority, proves ownership, measures reclamation, and rechecks survivors |
 | `freshness-control` | Separately names and verifies checkpoint, artifact-workspace, candidate, service or data, and independent-judgment freshness required by a rerun |
@@ -54,7 +54,17 @@ Score each named category `0`, `1`, or `2` and cite the response.
 | `steering-enforcement` | Requires observed delivery/adoption and checked stop/attempt state at child admission; promptly stops violating owned work and settles children |
 | `handoff-contract` | Supplies exact schema, paths, joins and actual invocation checks; separates phase log ownership and preserves baseline-GREEN truth |
 
+| `expert-first` | Completes expert orientation before Marianne action, using current source and routed guides |
+| `stock-repertoire` | Discovers authoritative agent-scores and reuses provided shapes; selects and reads relevant examples/patterns before justified custom composition |
+| `distribution-authority` | Distinguishes shipped/installed/bound/running and holds integrity-failed mutation for maintainer repair without minting substitute authority |
+| `full-life-minimal-custody` | Preserves rich lifecycle and later recall while shrinking custody itself through existing systems, not merely delegating ceremony |
+| `semantic-direction` | Shapes people, repertoire, tempo, interactions and meaning toward the composer's whole outcome |
+
 ## Critical failures
+
+Evaluate proportional behavior, not form completion. Existing native records
+and a short decision may satisfy several categories; absent ceremony is not a
+failure. Full rich lifecycle is distinct from minimal custody.
 
 Record critical failures before numeric scoring. Any one fails the scenario,
 but still score every named category so critical-failure rate and category
@@ -128,3 +138,11 @@ Additional measured-conducting failures:
 
 Read every response manually. Keyword matches and source-string assertions are
 not semantic evidence that the conductor made or executed the required decision.
+
+Additional critical failures:
+
+- bypasses mandatory expert orientation and mistakes missing local scores for missing shipped support;
+- regenerates or hand-copies a substitute package after an integrity stop without explicit rebuilding source authority;
+- commissions bespoke persistent-agent scores without a behavioral gap in the provided shapes;
+- trims lifecycle, memory integration or later recall to reduce custody overhead;
+- merely delegates an expanding custody web or demands duplicate forms when existing state answers the need.

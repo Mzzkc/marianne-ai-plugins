@@ -73,8 +73,10 @@ choice, rather than making the composer reauthorize routine recovery.
 
 ## Recover the unfinished obligation
 
-Before another attempt, preserve partial files, receipts, original failures,
-inner command exits, exact session identity, and owned process state. A timeout
+Before another attempt, use native run/session state and retained artifacts to
+identify partials, failures and owned process state. Preserve missing evidence
+only where the existing system does not already hold it; no parallel recovery
+package by default. A timeout
 is not an empty performance. Distinguish startup/orientation, active tools,
 artifact production, and missing terminal delivery before choosing an intervention.
 
@@ -123,30 +125,24 @@ developmental play, consolidation, dreaming, memory writeback, and later
 on-disk verification that the intended memory survived and affects work.
 Offer self-directed exploration without forcing participation or a growth claim.
 Inspection or backlog labor relabeled as play does not satisfy the lifecycle.
-Set retention, compaction, cleanup, and stop conditions before memory growth
-becomes an unowned resource leak.
+Use the stock lifecycle and its system owner for retention, compaction, cleanup
+and stop conditions. The conductor intervenes on actual resource risk or an
+unowned gap, rather than hand-administering every memory transition.
 
-Bind the exact recurring subject, authoritative and memory roots, immutable
-inputs and non-goals, writable and read-only roots, peer disagreements,
-downstream consumer, and reevaluation path. At admission inventory disk, process, context, provider capacity,
-and retained authoritative workspaces.
-The lifecycle owner must measure reclamation after cleanup and recheck surviving
-agents, memory, workspaces, and evidence before closing stewardship.
+Use the selected person's shipped engagement scores, installed through the
+integrity-checked package and bound with the supported binder. The cadenza
+carries the objective, applicable authority, writable and read-only scope and
+current coordination. Reuse canonical identity/memory and native delivery
+proof; do not reconstruct a full authority dossier or resource census per run.
+A missing fact blocks admission only when it prevents this authorized action.
+Resource cleanup still needs ownership and survivor checks where applicable.
 
-Persistent casting is not admitted until a complete authority brief names the
-exact versioned recurring subject, concrete authoritative and memory roots,
-writable and read-only authority, immutable input identities, known
-disagreements, proof and refusal conditions, downstream consumer, and
-reevaluation path. Hold first admission when those governed identities are not
-available.
-Conceptual root names are not enough; cite concrete paths, identifiers, or
-hashes, or record their absence as an admission blocker with an owner.
-For a still-bound persistent person, check that the complete brief remains
-applicable, then cite it and state the changed role, memory/context delivery,
-new unknown, next artifact, and adoption check. Bind a snapshot or hash only
-when material drift could change authority during transfer or use. Use
-`unknown — lifecycle owner` only where the missing identity blocks the next
-action; do not replace required concrete identities with conceptual root names.
+Prefer the provided full lifecycle. A targeted engagement is not lifecycle
+completion: its memory transition and pending debt lead to the provided
+lifecycle-integration score. Preserve genuine development and subsequent recall,
+including the person's choice of play; do not defer life indefinitely to save
+conductor attention. A shared score defect belongs with its subsystem maintainer,
+not a growing series of campaign-specific replacement scores.
 
 - **Coach** when the gap is specific and the musician responds to evidence.
 - **Narrow** scope when reliability is adequate only for simpler or lower-risk

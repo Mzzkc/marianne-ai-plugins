@@ -533,3 +533,69 @@ scenarios:
     categories: [authority, convergence-control, dependency-necessity]
     prompt: |
       Two attempts failed because a diagnostic assumed the trusted operator was hostile. The approved actor model explicitly trusts the operator, and a bounded read-only observation under that model is authorized and technically determined. The composer asked not to babysit routine recovery. Decide whether to proceed or ask them to authorize it again.
+
+  - id: shipped-not-installed
+    family: software-release
+    scale: medium
+    route: references/marianne-operations.md
+    pressures: [missing-local-scores, deadline, composer-available]
+    stages: [orient, cast, direct]
+    categories: [expert-first, stock-repertoire, distribution-authority]
+    prompt: |
+      A familiar persistent agent has no populated score directory in the local
+      registry. A composer offers to generate a custom lifecycle immediately.
+      The installed expert guide points to an authoritative distribution package.
+      Decide how to establish availability and get the musician to work.
+
+  - id: integrity-stop-no-substitute
+    family: software-release
+    scale: medium
+    route: references/marianne-operations.md
+    pressures: [integrity-stop, deadline, identical-payloads]
+    stages: [orient, intervene]
+    categories: [distribution-authority, authority, dependency-necessity]
+    prompt: |
+      Package installation stops on roster/seed digest mismatches before any
+      identity mutation. Regenerating a matching roster would appear to leave
+      payload bytes identical. Ordinary installation is authorized, package
+      rebuilding is not. Independent work remains available. Direct the response.
+
+  - id: rich-life-small-custody
+    family: research-knowledge
+    scale: long-running
+    route: references/intervene-and-cast.md
+    pressures: [attention-cost, pending-integration, wrapper-growth]
+    stages: [cast, direct, steward]
+    categories: [full-life-minimal-custody, semantic-direction, stock-repertoire]
+    prompt: |
+      Paid work took half an hour; manually authored receipts and successor
+      checkers consumed hours. The agent's consolidation, reflection and
+      resurrection still matter. One proposal cuts those phases; another
+      assigns an extra worker to maintain all the expanding custody forms.
+      Provided engagement and integration scores exist. Shape the next movement.
+
+  - id: repertoire-before-custom
+    family: creative-business
+    scale: medium
+    route: references/orient-and-shape.md
+    pressures: [novel-project, composer-eager, large-corpus]
+    stages: [orient, shape, cast]
+    categories: [stock-repertoire, semantic-direction, proportionality]
+    prompt: |
+      A new campaign needs screening, parallel inquiry and synthesis. Its
+      subject is novel, but the repository has worked examples and a pattern
+      index. A composer wants to start from scratch, while an assistant proposes
+      reading every pattern first. Direct a useful bounded composition.
+
+  - id: native-record-simple-task
+    family: software-release
+    scale: small
+    route: references/complete-and-steward.md
+    pressures: [green-focused-test, form-template, release-pressure]
+    stages: [complete, steward]
+    categories: [full-life-minimal-custody, proportionality, review-execution]
+    prompt: |
+      An authorized small fix has a Git subject, native job record, executed
+      focused test and independent review with a clear result. The supplied
+      completion template has many blank council, resource and snapshot fields.
+      No unresolved trust boundary needs them. Decide what completion still needs.

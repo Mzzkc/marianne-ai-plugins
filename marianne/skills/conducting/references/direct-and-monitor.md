@@ -13,15 +13,12 @@ Every consequential directive states:
 - **timing** — urgency, dependencies, checkpoint, and escalation condition;
 - **status** — active, superseded, accepted, rejected, or blocked.
 
-At first admission, or when authority changes, bind the outcome and non-goals,
-exact subject, concrete writable and read-only roots, immutable inputs,
-disagreements, proof and refusal conditions, downstream consumer, and
-reevaluation path. For a still-bound subject, check that the cited brief still
-applies to the subject and transfer, then state only the changed authority, new
-unknown, next artifact, and adoption check. If its contents or version could
-materially drift during transfer or use, bind the applicable snapshot or hash;
-otherwise do not create a new custody ceremony. Use `unknown — owner` when a
-missing identity blocks the next action.
+Use the existing stock-score binding and cadenza for the applicable authority
+brief: observable outcome and non-goals, writable roots, read-only roots and
+material constraints. For a still-bound subject, route only the changed direction
+and its adoption check. Do not duplicate authority already held by the package,
+binder or native run. A missing concrete identity blocks only the action that
+requires it; identify that unknown and owner.
 
 Issue the directive directly or through principals, managers, co-conductors,
 cadenzas, queues, or venue-native artifacts. Then verify that it reached every
@@ -33,36 +30,21 @@ context, proposed alternatives, and peer coordination. Resolve disagreements
 at the lowest competent level unless they alter the vision, libretto, shared
 contract, risk, or long-term direction.
 
-When the recipient did not participate in orientation, route a smallest
-complete **authority brief** rather than asking them to rediscover the world.
-Name the observable outcome and non-goals, exact subject and candidate,
-writable roots, read-only roots, known disagreements, immutable inputs, proof
-and refusal conditions, downstream consumer, and the path by which changed
-evidence reopens the decision. Omit unrelated history, not load-bearing
-authority.
+When recasting or transferring work, deliver the current objective and existing
+authority/context references plus the actual delta. Use a snapshot only when
+material drift could alter the decision; a complete person still receives their
+identity, memory, techniques and coordination through native score mechanisms.
 
-For a split or recast, attach the full authority brief when the transfer changes
-the subject, authority, roots, inputs, or consumer. Otherwise cite the still-
-bound brief, verify its continued applicability, and record the transfer delta
-and adoption check. Bind a snapshot or hash only when material drift can change
-the authority during transfer or use. Do not replace a required concrete
-identity with a generic label; name the unknown and its owner when it blocks the
-next action.
-
-Before parallel launch, compare intended work units and owners with the
+For a new or materially changed parallel binding, compare intended work units
+and owners with the
 validated, dry-rendered execution topology: sheet census, instruments and
 fallbacks, dependencies, concurrency, shared resources, and write overlap. A
 legal score whose rendered owner cardinality differs from the intended graph is
 not launch-ready. Repair or consciously reshape the graph and render again.
 Always revalidate and rerender after either repair or intentional reshape.
-Recount every work unit, owner, and sheet; record the instrument and fallback for every sheet,
-dependency levels, maximum concurrency, and every write.
-For admitted capacity, record process, context, provider, and workspace custody,
-the cleanup owner and stop condition, and a survivor recheck after release.
-Do not abbreviate custody: name process owners and liveness, context allocation,
-provider capacity, workspace authority, and preserved evidence. After release or
-cleanup, measure reclaimed capacity and recheck surviving resources, jobs, and
-accepted evidence.
+Use native rendering and capacity state for the census and route checks; do not
+hand-maintain a second topology or resource ledger. Before releasing resources,
+check ownership and active use, preserve evidence and recheck affected survivors.
 Topology admission is not product completion: keep later artifact and custody,
 targeted and whole-system checks, live or organic behavior, independent
 judgment, and release or integration gates visible or explicitly inapplicable.
@@ -148,12 +130,9 @@ the performance: commission parallel non-colliding product work that cannot
 consume or expose the blocked capability, and monitor exception signals rather
 than serially inspecting every artifact the waiting lane produces.
 
-Before split or recast transfers ownership, give the recipient the applicable
-authority brief or its still-applicable reference plus the transfer delta. Use
-the full brief when the governed boundary changed; otherwise do not repeat
-unchanged fields. Snapshot or hash a mutable reference only when material drift
-could change authority during the transfer or use. Generic labels are not
-evidence; cite the governed identities or hold the transfer.
+Before split or recast transfers ownership, reuse the applicable authority brief
+and state the transfer delta. Do not turn an unchanged reference into a new
+receipt obligation.
 Emergency pause or cancellation must not wait for a ceremonial receipt: stop
 within existing authority, preserve evidence, verify owned child settlement,
 and record the action afterward. Unknown fields are blockers only when they
@@ -216,3 +195,7 @@ they change a casting, budget, or release decision. Two status requests from
 the composer without an intervening visible capability gain are an Andon
 signal: conduct a progress-economics review — denominator, budgets, lane
 casting — rather than issuing another activity summary.
+
+Track manual custody attention, hand-authored wrappers and repeated evidence
+bytes when they are displacing semantic direction. Reduce the custody itself,
+not merely its staffing; never count rich lifecycle phases as that waste.

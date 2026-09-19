@@ -145,8 +145,8 @@ class ConductingSkillReleaseTests(unittest.TestCase):
 
     def test_version_records_composer_doctrine(self) -> None:
         text = (ROOT / "VERSION").read_text(encoding="utf-8")
-        self.assertIn("version: 1.5.0", text)
-        self.assertIn("doctrine: proportionate-continuity-2026-09-12", text)
+        self.assertIn("version: 1.6.0", text)
+        self.assertIn("doctrine: repertoire-full-life-minimal-custody-2026-09-15", text)
 
 
 if __name__ == "__main__":

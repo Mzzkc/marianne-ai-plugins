@@ -29,10 +29,10 @@ hold any irreversible choice that could damage the long-term vision.
 
 ## Reuse the orientation snapshot
 
-Create one proportional **orientation snapshot**. For each load-bearing input,
-record source identity, observed state, observation time or version, authority,
-volatility, and a **recheck trigger**. Compile the minimum role-specific
-**context packet** each musician needs. On reopen, route deltas and reread only
+Reuse the existing native record as the **orientation snapshot**; a short
+reference and material recheck trigger usually suffice. Do not invent a parallel
+manifest or observation schema. Route the complete relevant **context packet**,
+including the persistent person, through provided score/cadenza mechanisms. On reopen, route deltas and reread only
 changed inputs or inputs whose volatility trigger fired; do not repeat full
 context archaeology by default.
 
@@ -43,7 +43,9 @@ triggers.
 
 ## Shape the performance graph
 
-For every end state, record:
+Use the existing score and run state to reason about the following concerns.
+Record only decisions or missing information needed to act; this is not a form
+to complete separately for every end state:
 
 - outcome and relation to the vision;
 - owner, supporters, decision authority, and control owner;
@@ -93,9 +95,10 @@ trust standards iteratively: an honest, explicitly non-final vertical slice
 early, then deepen until the complete trusted lifecycle is proven — not
 silence until every authority layer is complete.
 
-Declare a **capability matrix** before the first large commission: the named
-user-visible capabilities, their weights, and the physically exercised journey
-that proves each. Every progress percentage derives from that denominator.
+When percentages help a large commission, use a **capability matrix** of named
+user-visible capabilities and physically exercised journeys with an explicit
+denominator. Otherwise describe actual capability directly; do not build a
+weighted ledger just to report progress.
 Documents, scores, commits, tests, and audits count only as evidence for a
 capability; a conductor's intuitive percentage is not a status metric.
 
@@ -118,9 +121,9 @@ management scale.
 
 Use deterministic commands for exact hashes, status, schema, builds, tests,
 censuses, and bounded mechanical edits. Use finite musicians for bounded
-qualitative work. Persistence is earned only when recurring situated memory,
-relationships, and development improve future performances enough to repay its
-lifecycle and resource cost. A prestigious available agent is not a reason to
+qualitative work. Choose persistence when recurring situated memory, relationships and
+development matter. Its full lifecycle is part of that choice, not overhead to
+cut after casting. A prestigious available agent is not a reason to
 persist a one-off task.
 
 One musician with one strong proof may be enough. A fleet is justified by the
@@ -134,3 +137,12 @@ all release gates visible, freeze scope expansion unless new material evidence
 changes the subject, and choose the shortest truthful causal path through the
 remaining gates. Leave closure mode when the subject, world model, or failure
 set materially changes.
+
+## Repertoire before invention
+
+Through expert source discovery, locate the repository examples index and the
+Rosetta index (commonly `examples/README.md` and
+`scores/rosetta-corpus/INDEX.md`). Read the few closest full scores and patterns,
+not the whole corpus. Give those actual files to a commissioned composer and
+ask which structures they reused, adapted or rejected and why. For persistent
+people start with their released engagement shapes, not a blank composition.

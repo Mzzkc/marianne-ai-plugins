@@ -1,32 +1,12 @@
-# Unresolved Work Register
+# Unresolved Work
 
-Use when omissions, risks, deferred obligations, or evidence debt could
-disappear between reports.
+Use the existing issue/run record. Add a compact entry only when an obligation
+could otherwise disappear; deferred lifecycle remains visible and actionable.
 
-| ID | Outcome affected | Missing or deferred work | Owner | Why unresolved | Evidence required | Dependency or side effect | Next direction | Status |
-|---|---|---|---|---|---|---|---|---|
-| | | | | | | | | |
+- Outcome still owed:
+- Existing evidence and exact missing obligation:
+- Owner, blocker and next authorized action/resume point:
+- Material reason and finite boundary for any further attempt:
 
-## Decisions held
-
-- Irreversible choice:
-- Composer or authority needed:
-- Reversible work that may continue:
-
-## Evidence debt
-
-- Claimed outcome:
-- Missing evidence:
-- Accountable owner:
-- Due:
-
-## Convergence budget
-
-- End-state boundary:
-- Cost since material movement:
-- Inherited proof:
-- Consecutive same-boundary successors:
-- Bounded council:
-- Council ceiling:
-- Material finding or downstream effect required for another pass:
-- Exit action: execute | redesign once | escalate
+A settled partial or saved plan is not ongoing baton coverage. Continue admissible
+independent work; escalate only unresolved authority or semantic choices.

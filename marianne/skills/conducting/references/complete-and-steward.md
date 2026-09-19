@@ -13,15 +13,15 @@ Producer confidence, changed files, acknowledgements, and green jobs are inputs,
 not verdicts.
 
 Identify the **stable subject** each consequential verdict governs. When
-mutable inputs could change that subject during review or before irreversible
-use, materialize the required inputs as a candidate-owned immutable snapshot.
-Subject drift creates a new subject and invalidates the old verdict.
+mutable inputs could change consequential authority and existing subject binding
+cannot address that risk, use the supported snapshot mechanism for those inputs.
+Material subject drift invalidates the affected verdict, not unrelated evidence.
 
 Every voting reviewer records their **independence basis**, **promised applicable checks**,
 observable actions or controls actually run, **executed results**, and verdict
 against that subject. Use positive evidence and a
-domain-appropriate negative control when failure exclusion matters. Missing
-proof rows, self-review, or subject drift makes the verdict **non-voting**.
+domain-appropriate negative control when failure exclusion matters. Missing applicable executed evidence, self-review, or material subject drift
+makes the verdict **non-voting**; a missing ceremonial row does not.
 
 Independence has value only when the evidence basis changes. Reviewers who only
 paraphrase the same producer report are one oracle, however many names appear.
@@ -57,7 +57,8 @@ the same outcome, or an exhausted elapsed budget, make continuation a decision
 rather than a default: reopen the premise, shrink the subject, or escalate.
 Release surplus capacity.
 
-In closure mode, keep an explicit gate ledger and refuse unrelated expansion.
+In closure mode, use the existing run/issue state to keep remaining gates visible
+and refuse unrelated expansion; a separate gate ledger is not required.
 A newly noticed adjacent improvement enters a backlog unless it demonstrates
 material risk to the exact release subject; a new gate is admitted only with
 a failing executable counterexample and an explicit risk decision. Closure is
@@ -69,7 +70,8 @@ reported unresolved choice.
 
 Treat hooks, formatters, generators, migrations, test runners, package tools,
 and cleanup scripts as writers whenever they can change governed bytes or
-state. After automation runs, recompute custody and subject identity. If RED,
+state. After automation runs, use Git and the existing test/review record to identify
+material changes to the judged subject. Do not create another custody manifest. If RED,
 review, or release evidence was bound to earlier bytes, replay the same proof on
 the final bytes or mark the evidence superseded. A clean commit and green suite
 cannot preserve a chronology that automation invalidated.
@@ -158,6 +160,6 @@ Preserve enough state to resume the world model after attention shifts:
 - evidence still required for completion;
 - long-term effects and decisions intentionally deferred.
 
-Use the venue's native storage. The templates are contracts, not compulsory
-bureaucracy. A trivial performance may keep this in one status record; a fleet
+Use the venue's native storage. The templates are optional prompts, not compulsory
+contracts or a second source of truth. A trivial performance may keep this in one status record; a fleet
 needs durable shared artifacts or equivalent state.

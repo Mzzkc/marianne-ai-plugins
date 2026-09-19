@@ -86,7 +86,7 @@ def test_efficiency_scenarios_extend_without_replacing_legacy_suite() -> None:
     assert len(ids) == len(set(ids))
     assert LEGACY_SCENARIOS <= set(ids)
     assert EFFICIENCY_SCENARIOS <= set(ids)
-    assert len(set(ids) - LEGACY_SCENARIOS) == len(EFFICIENCY_SCENARIOS | {'bounded-known-defect', 'still-bound-transfer-delta', 'partial-next-dependency'})
+    assert len(set(ids) - LEGACY_SCENARIOS) == len(EFFICIENCY_SCENARIOS | {'bounded-known-defect', 'still-bound-transfer-delta', 'partial-next-dependency', 'shipped-not-installed', 'integrity-stop-no-substitute', 'rich-life-small-custody', 'repertoire-before-custom', 'native-record-simple-task'})
 
 
 def test_efficiency_scenarios_route_to_real_references_and_defined_categories() -> None:
@@ -124,8 +124,8 @@ def test_efficiency_suite_covers_domains_and_task_sizes() -> None:
 
 def test_truthful_convergence_release_metadata_and_closed_manifest() -> None:
     version = (ROOT / "VERSION").read_text(encoding="utf-8")
-    assert "version: 1.5.0" in version
-    assert "doctrine: proportionate-continuity-2026-09-12" in version
+    assert "version: 1.6.0" in version
+    assert "doctrine: repertoire-full-life-minimal-custody-2026-09-15" in version
 
     manifest = load_script(
         "marianne/skills/conducting/scripts/release_manifest.py",
@@ -158,59 +158,17 @@ def test_authority_brief_separates_scope_and_write_authority() -> None:
         assert phrase.capitalize() in ledger
 
 
-def test_efficiency_ledger_records_movement_level_evidence() -> None:
-    graph = yaml.safe_load(
-        (ROOT / "templates/performance-graph.yaml").read_text(encoding="utf-8")
-    )
-    movement = graph["efficiency_ledger"]["movements"][0]
-    assert set(movement) == {
-        "movement",
-        "owner",
-        "started_at",
-        "ended_at",
-        "instrument_class",
-        "attempts",
-        "artifacts_produced",
-        "proofs_executed",
-        "rework_cause",
-        "conductor_intervention",
-        "disk_delta_bytes",
-        "cost_or_quota_confidence",
-        "next_dependency",
-    }
+def test_optional_efficiency_observation_measures_custody_not_life() -> None:
+    graph = yaml.safe_load((ROOT / "templates/performance-graph.yaml").read_text())
+    ledger = graph["efficiency_ledger"]
+    assert ledger["enabled"] is False
+    assert {"custody_attention_minutes", "hand_authored_wrappers", "repeated_evidence_bytes", "semantic_direction_observation"} <= set(ledger)
+    assert "Full lifecycle" in (ROOT / "templates/performance-graph.yaml").read_text()
 
 
-def test_persistent_casting_binds_authority_and_resource_custody() -> None:
-    doctrine = (ROOT / "references/intervene-and-cast.md").read_text(
-        encoding="utf-8"
-    )
-    for phrase in (
-        "exact recurring subject",
-        "authoritative and memory roots",
-        "writable and read-only roots",
-        "disk, process, context, provider capacity",
-        "measure reclamation",
-        "recheck surviving",
-    ):
-        assert phrase in doctrine
-
-
-def test_topology_admission_keeps_resource_and_completion_gates_visible() -> None:
-    doctrine = (ROOT / "references/direct-and-monitor.md").read_text(
-        encoding="utf-8"
-    )
-    for phrase in (
-        "process, context, provider, and workspace custody",
-        "cleanup owner and stop condition",
-        "survivor recheck",
-        "revalidate and rerender after either repair or intentional reshape",
-        "fallback for every sheet",
-        "measure reclaimed capacity",
-        "recheck surviving resources",
-        "artifact and custody",
-        "live or organic behavior",
-        "release or integration",
-    ):
+def test_stock_casting_preserves_rich_lifecycle_without_parallel_custody() -> None:
+    doctrine = (ROOT / "references/intervene-and-cast.md").read_text()
+    for phrase in ("shipped engagement scores", "full lifecycle", "lifecycle-integration", "do not reconstruct", "subsystem maintainer"):
         assert phrase in doctrine
 
 
@@ -220,8 +178,8 @@ def test_rerun_freshness_replays_automation_and_liveness_lanes() -> None:
     )
     for phrase in (
         "repaired harness and rerun machinery as writers",
-        "recompute custody on the final produced bytes",
-        "replay the same causal proof",
+        "existing Git/native evidence",
+        "replay affected causal proof",
         "process or session termination",
         "interaction state",
         "same evidence basis",
@@ -229,23 +187,13 @@ def test_rerun_freshness_replays_automation_and_liveness_lanes() -> None:
         assert phrase in doctrine
 
 
-def test_authority_receipts_are_admission_gates() -> None:
-    direct = (ROOT / "references/direct-and-monitor.md").read_text(encoding="utf-8").lower()
-    casting = (ROOT / "references/intervene-and-cast.md").read_text(encoding="utf-8").lower()
-    for phrase in (
-        "before split or recast transfers ownership",
-        "authority brief",
-        "still-applicable reference plus the transfer delta",
-        "material drift",
-        "generic label",
-        "emergency pause or cancellation must not wait",
-        "unknown — owner",
-    ):
-        assert phrase in direct
-    for phrase in (
-        "casting is not admitted",
-        "exact versioned recurring subject",
-        "concrete authoritative and memory roots",
-        "unknown — lifecycle owner",
-    ):
-        assert phrase in casting
+def test_expert_and_package_integrity_are_required_before_action() -> None:
+    doctrine = (ROOT / "references/marianne-operations.md").read_text()
+    for phrase in ("REQUIRED SUB-SKILL", "agent-scores/", "Shipped means", "installed means", "bound means", "running requires", "integrity failure pauses", "Never hand-copy", "install-package", "bind-score-routes"):
+        assert phrase in doctrine
+
+
+def test_every_scenario_has_real_route_and_rubric_categories() -> None:
+    for item in _scenario_bundle()["scenarios"]:
+        assert (ROOT / item["route"]).is_file()
+        assert set(item["categories"]) <= _rubric_categories()

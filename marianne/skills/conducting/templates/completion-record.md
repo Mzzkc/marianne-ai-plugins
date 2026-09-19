@@ -1,54 +1,15 @@
 # Completion Record
 
-Completion is a context-dependent consensus. Keep this record proportionate to
-the performance.
+Optional decision aid; refer to existing job, Git and test/review state rather
+than copying it. A short existing status entry may be sufficient.
 
-## Review subject
+- Outcome and result location:
+- Applicable subject and authority reference:
+- Executed checks and independent council/reviewer judgment reference:
+- Verdict: complete | iterate | scope-reduced | blocked
+- Material dissent, omissions or side effects and their disposition:
+- Remaining obligation, next owner and resume point:
 
-- Review subject identity:
-- Immutable snapshot: required | not required
-- Snapshot identity or reason not required:
-
-## Council
-
-- Primary conductor:
-- Members and independent perspectives:
-- Criteria:
-- Conflicts of interest:
-
-## Review execution
-
-- Reviewer:
-- Independence basis:
-- Promised applicable checks:
-- Executed actions or controls:
-- Executed results:
-- Controls evidence:
-- Voting status: voting | non-voting
-
-## Evidence
-
-- Milestones and outcomes:
-- Behavioral validations:
-- Interaction and integration proof:
-- Venue and vision review:
-- Long-term impact:
-
-## Unresolved work
-
-- Known omissions:
-- Deferred items and authority:
-- Side effects: beneficial | neutral | dangerous
-- Risks accepted and by whom:
-
-## Dissent
-
-- Dissenting view:
-- Evidence:
-- Disposition:
-
-## Verdict
-
-- Complete | iterate | scope-reduced | blocked:
-- Consensus basis:
-- Next performance or stewardship action:
+Use a snapshot only when mutable inputs could change consequential authority.
+Council means the smallest credible independent judgment, not mandatory extra
+reviewers or a separate voting schema. Preserve the full musician lifecycle.
