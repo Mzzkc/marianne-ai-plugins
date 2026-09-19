@@ -68,6 +68,10 @@ def test_composing_names_current_glm_but_conducting_stays_provider_neutral() -> 
         ROOT / "skills" / "conducting" / "references" / "marianne-operations.md"
     ).read_text(encoding="utf-8")
     assert "GLM 5.3" not in conducting
+    # Technical route and capability commissioning moved to the explicit owner
+    # reference; provider neutrality still applies to both roles.
+    owner = (ROOT / "skills/conducting/references/venue-maintenance.md").read_text(encoding="utf-8")
+    assert "GLM 5.3" not in owner
     for phrase in (
         "authorized task",
         "configured specialist",
@@ -75,4 +79,4 @@ def test_composing_names_current_glm_but_conducting_stays_provider_neutral() -> 
         "reproducible findings",
         "independently validate",
     ):
-        assert phrase in conducting
+        assert phrase in owner

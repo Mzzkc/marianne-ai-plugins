@@ -2,10 +2,10 @@
 
 ## Separate state before replacement
 
-After an apparent stop, establish **job state**, **process/session** liveness,
-**interaction state**, artifact movement, and semantic progress independently.
-A pause in one lane does not close another. Before recasting, close, cancel, or
-transfer every live control surface so two owners cannot act on the same work.
+Use the venue's outcome and settlement reports before replacement. A paused job
+alone does not prove its active work stopped. If safe transfer is uncertain,
+hold conflicting replacement work and refer settlement to the venue owner;
+do not assume responsibility for process/session inspection or recovery mechanics.
 
 ## Intervention signals
 
@@ -35,8 +35,8 @@ One anomaly invites inquiry. A repeated pattern changes casting.
 3. Define behavioral proof of adoption.
 4. Commission independent validation when the author could pass a decorative
    check without achieving the outcome.
-5. Inspect where propagation failed: directive, manager, cadenza, queue,
-   authority, context, timing, or validation.
+5. Distinguish a misunderstood direction from a reported venue-delivery fault;
+   route technical diagnosis to its owner.
 6. Change the communication topology or assignment.
 7. Verify the correction before closing it.
 
@@ -73,76 +73,57 @@ choice, rather than making the composer reauthorize routine recovery.
 
 ## Recover the unfinished obligation
 
-Before another attempt, use native run/session state and retained artifacts to
-identify partials, failures and owned process state. Preserve missing evidence
-only where the existing system does not already hold it; no parallel recovery
-package by default. A timeout
-is not an empty performance. Distinguish startup/orientation, active tools,
-artifact production, and missing terminal delivery before choosing an intervention.
+A timeout is not an empty performance. Ask what useful result survives and what
+obligation remains. Prefer supported continuation by the original author or
+independent judge where the venue offers it. The owner establishes safe session
+continuity and preserves partials and failed history; the conductor chooses the
+smallest unfinished commission and its budget, without checking invocation flags
+or session plumbing. Do not treat job resume as provider-session continuity.
 
-Prefer a bounded continuation by the original author or independent judge when
-useful work and verified session history survive. Deliver the current authority
-delta and unfinished contract; retain exact originals on demand. Prove that the
-supported invocation resumes that session; a job resume or parsed session field
-alone does not prove provider-session reuse. Retaining an independent judge's
-session does not make them the author. A new vote needs a changed evidence basis.
-Keep original absolute deadlines distinct from phase/model ceilings and explicitly
-budget a separate commission; recovery setup is consumed time, not free headroom.
+Retaining an independent judge does not make them the author. A new vote needs
+a changed evidence basis. Recovery time counts toward the performance; do not
+claim that a fresh commission resets an earlier absolute deadline.
 
-## Classify failures before commissioning repair
+## Route failures to the responsible owner
 
-For each consequential failed claim, separate independent evidence into a
-small classification matrix:
-
-| Class | Meaning |
-|---|---|
-| product | The bound candidate behavior is wrong |
-| harness | The observer, selector, adapter, or assertion is wrong |
-| fixture | Setup or test data does not represent the claim |
-| environment | Service, dependency, credentials, timing, or venue state is wrong |
-| mixed | More than one boundary contributes materially |
-| unknown | Evidence does not yet distinguish the cause |
-
-Record the claim, product-side observation, observer-side observation, subject
-identity, class, smallest discriminating probe, and one owner. Use an explicit
-joint boundary only when a mixed cause cannot truthfully have one owner. Do not
-fan product writers across harness-shaped failures. After repair, rerun the same
-bound proof; a different green check does not reclassify the original failure.
+Ask what intended result failed, what survives, and which decisions are blocked.
+Use the responsible expert's diagnosis to choose a repair owner and priority.
+An unknown cause is a valid limitation; the conductor need not construct a
+failure matrix, choose a technical probe or replay a test to route it. Keep
+product, observer and venue faults distinct when the evidence supports that
+distinction, and avoid commissioning product rewrites for a reported tool fault.
+The owner supplies diagnosis, repair and applicable verification; the conductor
+judges whether the resulting behavior meets the performance's needs.
 
 ## Casting decisions
 
 Record demonstrated behavior, not personality labels.
 
-When casting a **persistent agent**, verify identity and profile provenance,
-**relevant recent memory**, relevant **growth context**, lifecycle provenance,
-and evidence that this context reached the recipient. A disposable musician
-given a familiar name is not that persistent agent. Verify **instrument health**
-and availability separately; instrument status does not prove identity or
-context delivery.
+Cast a **persistent agent** when recurring situated memory, relationships and
+development matter. Use the venue's supported engagement for that person, with
+relevant recent memory and growth context. A disposable musician bearing a
+familiar name is not the persistent person. Judge the offered continuity,
+capability and meaningful limitations; venue systems supply identity/context
+correctness and instrument readiness without requiring a provenance audit.
 
-Persistence includes selection, situated work, reflection, genuinely
-developmental play, consolidation, dreaming, memory writeback, and later
-on-disk verification that the intended memory survived and affects work.
-Offer self-directed exploration without forcing participation or a growth claim.
-Inspection or backlog labor relabeled as play does not satisfy the lifecycle.
-Use the stock lifecycle and its system owner for retention, compaction, cleanup
-and stop conditions. The conductor intervenes on actual resource risk or an
-unowned gap, rather than hand-administering every memory transition.
+Preserve the full rich lifecycle: selection, situated work, reflection, genuinely
+developmental play, consolidation, dreaming, memory writeback, maturity,
+resurrection and later recall. Offer self-directed exploration without forcing
+participation or claiming growth from backlog labor. The persistent person keeps
+final semantic authority over identity and memory; disputes become explicit
+agent-adjudicated debt rather than conductor rewrites.
 
-Use the selected person's shipped engagement scores, installed through the
-integrity-checked package and bound with the supported binder. The cadenza
-carries the objective, applicable authority, writable and read-only scope and
-current coordination. Reuse canonical identity/memory and native delivery
-proof; do not reconstruct a full authority dossier or resource census per run.
-A missing fact blocks admission only when it prevents this authorized action.
-Resource cleanup still needs ownership and survivor checks where applicable.
+Prefer the provided full lifecycle. Targeted work is not lifecycle completion:
+the venue's supplied lifecycle-integration path carries its remaining obligation.
+Choose that continuation and allow adequate resources, without hand-administering
+memory verification, retention or cleanup. If lifecycle service is unavailable,
+retain the obligation and ask its owner for supported options; do not cut life,
+substitute a persona or defer integration indefinitely to reduce attention.
 
-Prefer the provided full lifecycle. A targeted engagement is not lifecycle
-completion: its memory transition and pending debt lead to the provided
-lifecycle-integration score. Preserve genuine development and subsequent recall,
-including the person's choice of play; do not defer life indefinitely to save
-conductor attention. A shared score defect belongs with its subsystem maintainer,
-not a growing series of campaign-specific replacement scores.
+The conductor supplies objective, scope, current context and coordination through
+the engagement interface. An integrity stop pauses affected work and belongs to
+the maintainer; no substitute package or campaign-specific wrapper restores
+authority. Continue unaffected authorized work when useful.
 
 - **Coach** when the gap is specific and the musician responds to evidence.
 - **Narrow** scope when reliability is adequate only for simpler or lower-risk

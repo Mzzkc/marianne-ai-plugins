@@ -13,12 +13,10 @@ Every consequential directive states:
 - **timing** — urgency, dependencies, checkpoint, and escalation condition;
 - **status** — active, superseded, accepted, rejected, or blocked.
 
-Use the existing stock-score binding and cadenza for the applicable authority
-brief: observable outcome and non-goals, writable roots, read-only roots and
-material constraints. For a still-bound subject, route only the changed direction
-and its adoption check. Do not duplicate authority already held by the package,
-binder or native run. A missing concrete identity blocks only the action that
-requires it; identify that unknown and owner.
+Use the supported engagement interface and cadenza for the applicable outcome,
+non-goals, authority and relevant context. For unchanged work, supply only the
+direction delta. Venue systems deliver the correct person/context and enforce
+accepted scope without a conductor-managed binding or custody dossier.
 
 Issue the directive directly or through principals, managers, co-conductors,
 cadenzas, queues, or venue-native artifacts. Then verify that it reached every
@@ -30,24 +28,12 @@ context, proposed alternatives, and peer coordination. Resolve disagreements
 at the lowest competent level unless they alter the vision, libretto, shared
 contract, risk, or long-term direction.
 
-When recasting or transferring work, deliver the current objective and existing
-authority/context references plus the actual delta. Use a snapshot only when
-material drift could alter the decision; a complete person still receives their
-identity, memory, techniques and coordination through native score mechanisms.
-
-For a new or materially changed parallel binding, compare intended work units
-and owners with the
-validated, dry-rendered execution topology: sheet census, instruments and
-fallbacks, dependencies, concurrency, shared resources, and write overlap. A
-legal score whose rendered owner cardinality differs from the intended graph is
-not launch-ready. Repair or consciously reshape the graph and render again.
-Always revalidate and rerender after either repair or intentional reshape.
-Use native rendering and capacity state for the census and route checks; do not
-hand-maintain a second topology or resource ledger. Before releasing resources,
-check ownership and active use, preserve evidence and recheck affected survivors.
-Topology admission is not product completion: keep later artifact and custody,
-targeted and whole-system checks, live or organic behavior, independent
-judgment, and release or integration gates visible or explicitly inapplicable.
+When transferring work, deliver the current objective and authority/context
+references plus the actual delta. The venue handles safe transfer, context
+continuity and admission. If the offered execution shape differs from intended
+ownership, decide whether to reshape or hold launch; its owner diagnoses and
+corrects the mismatch. Do not inspect rendered topology to operate a normal
+engagement. Product completion still requires meaningful outcome evidence.
 
 ## Coordinate autonomous principals
 
@@ -57,28 +43,21 @@ peers and consumers. Do not funnel every decision or status update through the
 primary conductor. Use principals and peer-to-peer coordination where they
 reduce attention bottlenecks without obscuring accountability.
 
-Use **stigmergic** coordination when durable state should organize work without
-constant messages. Cadenza directories, shared artifacts, governed pull queues,
-decision records, and evidence ledgers can expose claims, needs, leases,
-handoffs, and completed proof for the next musician to act on. Name one owner
-for each shared contract, define write and consumption rules, prevent unsafe
-concurrent mutation, and verify that downstream behavior changed. A shared
-directory is a coordination substrate only when musicians actually read and
-update its governed signals.
+Shared context, cadenzas and venue-native work queues can let musicians
+coordinate without relaying every message through the conductor. Name semantic
+ownership and consumption expectations; use the venue's existing coordination
+interface. Its owner supplies safe mutation, routing and enforcement.
 
 ## Make steering observable
 
-Separate immutable admission from mutable working direction. Publish one exact
-active path and archive superseded directives; deliver only phase-relevant write
-instructions. Prove entry delivery, subsequent physical reads, and changed
-behavior separately. A requested milestone reread is voluntary polling, not a
-verified in-flight message or stop guarantee.
-
-For child-submission loops, require an actually checked stop/attempt state at
-each admission, unique attempt identities, bounded attempts, and preserved inner
-exits. Verify the runtime mechanism before claiming enforcement. If unavailable,
-use bounded execution boundaries and explicit cancellation. Stop violating owned
-work promptly; parent cancellation does not establish child termination.
+Judge whether consequential direction changed behavior. An acknowledgement or
+editable note is not proof of adoption or an enforced stop. Issue stop, pause or
+bounded-work requests through supported controls. If the venue reports it cannot
+enforce a required limit, hold that affected execution shape and choose an
+available alternative or request owner remediation. Do not implement or audit
+admission counters, attempt IDs, polling readers or child-process settlement.
+A known active child remains an actionable limitation until the venue reports
+safe settlement; it is not permission to launch a conflicting replacement.
 
 ## Adoption checkpoint
 
@@ -133,20 +112,16 @@ than serially inspecting every artifact the waiting lane produces.
 Before split or recast transfers ownership, reuse the applicable authority brief
 and state the transfer delta. Do not turn an unchanged reference into a new
 receipt obligation.
-Emergency pause or cancellation must not wait for a ceremonial receipt: stop
-within existing authority, preserve evidence, verify owned child settlement,
-and record the action afterward. Unknown fields are blockers only when they
+Emergency pause or cancellation must not wait for a ceremonial receipt: issue
+the supported control within existing authority, then consume the venue’s
+settlement or limitation report before transferring conflicting work. Unknown fields are blockers only when they
 prevent the next authorized action; name each such identity and owner rather
 than hiding it in a generic constraint.
 
-For costly performances, an optional **efficiency ledger** may record artifact
-latency, idle dependency time, repeated reads, duplicate reviews, recasts,
-resource growth, and causal movement. Each recorded movement names its stable
-ID, owner, start and end, instrument class, attempts, produced artifacts,
-executed proofs, rework cause, conductor intervention, disk delta, cost or quota
-confidence, and next dependency. Use it to answer what moved the outcome, what
-consumed resources, and which intervention improved trajectory—not as
-compulsory telemetry or a utilization score.
+Use existing summaries of artifact latency, idle dependencies, rework and cost
+when they change tempo or casting. Do not create a per-movement telemetry ledger
+or administer collection. A separate efficiency investigation may be commissioned
+when the outcome warrants it.
 
 The conductor's attention is scarce. Restore useful work to idle experts,
 delegate observation, and avoid becoming the slowest serial worker in a
@@ -158,22 +133,20 @@ capacity. Never manufacture utilization to make the orchestra look busy.
 Calibrate budgets from observed input volume, first useful artifact, tool/suite
 runtime, and terminal handoff. Reserve time for the actual receipt consumer.
 First tool, headings-only scaffold, and collection failure are distinct from a
-useful decision, behavioral proof, or completed handoff. Before diagnosing model
-inactivity, inspect owned running tools and descendants. Quiet time alone proves
-neither queueing nor quota exhaustion; inspect timing/usage metadata, not private
-reasoning content.
+useful decision, behavioral proof, or completed handoff. Quiet time alone proves neither inactivity nor quota exhaustion. Ask for the
+actionable status needed to decide pace or casting; venue diagnosis remains
+with its owner, and private reasoning is not an inspection target.
 
-In the existing record, capture change, retained quality checks, observed result,
-and next adjustment. Include preparation, ready-to-dispatch queue, recovery setup,
-root attention, and whole elapsed time alongside model time. Smaller initial
-briefs can relocate reading; retained history is still context. Record exposed
-usage fields with their event scope; zeros and cache hits are not billing or
-quota savings. Label proposed ceilings and unmatched comparisons honestly.
+When evaluating an efficiency change, use available venue measurements and
+observed outcomes to decide the next adjustment. Include preparation, waiting,
+recovery and conductor attention when those change the conclusion. Measurement
+collection and usage accounting belong to venue systems, not a required
+conductor record. Smaller briefs may relocate reading; zeros and cache hits
+do not establish billing or quota savings. Label unmatched comparisons honestly.
 
-Use one event/deadline observer per lane and grouped outcome records. Read settled
-reports once; reread changed boundaries. Budget both nested and outer tool output;
-extract bounded bytes or structured fields because one log line can be enormous.
-Keep mandatory orientation complete and record already-read sources precisely.
+Use existing event/deadline observation and grouped outcome reports. Read settled
+results once and revisit changed claims; do not personally administer polling,
+log extraction or technical orientation records.
 
 ## Status judgment
 
@@ -196,6 +169,7 @@ the composer without an intervening visible capability gain are an Andon
 signal: conduct a progress-economics review — denominator, budgets, lane
 casting — rather than issuing another activity summary.
 
-Track manual custody attention, hand-authored wrappers and repeated evidence
-bytes when they are displacing semantic direction. Reduce the custody itself,
-not merely its staffing; never count rich lifecycle phases as that waste.
+When administration displaces semantic direction, request a venue improvement
+and judge its effect on conductor attention. The owner can measure custody
+mechanics; the conductor need not collect telemetry. Reduce custody itself,
+not merely its staffing; rich lifecycle phases are not that waste.

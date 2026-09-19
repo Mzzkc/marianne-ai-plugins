@@ -13,8 +13,9 @@ Producer confidence, changed files, acknowledgements, and green jobs are inputs,
 not verdicts.
 
 Identify the **stable subject** each consequential verdict governs. When
-mutable inputs could change consequential authority and existing subject binding
-cannot address that risk, use the supported snapshot mechanism for those inputs.
+reported mutable inputs could change consequential authority, have the venue
+owner settle the affected subject before acceptance. Snapshot and binding
+mechanisms are not conductor prerequisites.
 Material subject drift invalidates the affected verdict, not unrelated evidence.
 
 Every voting reviewer records their **independence basis**, **promised applicable checks**,
@@ -68,18 +69,12 @@ reported unresolved choice.
 
 ## Preserve causal evidence across automation
 
-Treat hooks, formatters, generators, migrations, test runners, package tools,
-and cleanup scripts as writers whenever they can change governed bytes or
-state. After automation runs, use Git and the existing test/review record to identify
-material changes to the judged subject. Do not create another custody manifest. If RED,
-review, or release evidence was bound to earlier bytes, replay the same proof on
-the final bytes or mark the evidence superseded. A clean commit and green suite
-cannot preserve a chronology that automation invalidated.
-
-For test-first chronology, run the **same final test bytes** against the
-**immutable pre-repair subject** and require the expected failure, then run them
-against the repaired candidate and require GREEN. If the final test cannot
-reproduce causal RED, preserve the old receipt but do not claim that chronology.
+When the venue or reviewer reports that automation changed a consequential
+judged subject, hold the affected verdict until its owner supplies applicable
+proof. Do not accept an old chronology as evidence for materially different
+behavior. The owner tracks writers and replays affected checks; the conductor
+judges the resulting claim without tracing hashes, hooks or test-byte custody.
+Preserve baseline GREEN for already-correct behavior rather than manufacture RED.
 
 ## Keep completion evidence layered
 
@@ -99,17 +94,16 @@ still-bound evidence, add a new lane only when it changes the evidence basis,
 and execute promised applicable live or organic proof before declaring product
 completion.
 
-Size verification by the changed subject. A runtime-byte or
-runtime-environment change earns focused tests, one full-suite replay, and the
-live seam. A score-only change earns its owned tests, render, schema, and
-topology checks plus the affected live seam. A manifest- or custody-only
-change earns deterministic custody checks. Do not replay a whole-runtime suite
-without a whole-runtime change.
+Require evidence proportionate to the changed claim, using the existing qualified
+checks and independent judgment. The specialist chooses and executes technical
+verification; the conductor does not prescribe a universal runtime replay or
+administer manifests to accept ordinary work.
 
 ## Preserve successful results across failed wrappers
 
 When a child succeeds but its parent parser, receipt, or terminal status fails,
-bind and independently inspect the child's exact output. Preserve the failed
+retain the child’s result and obtain its applicable independent judgment
+through the supported recovery interface. Preserve the failed
 wrapper history and repair only the missing obligation; do not repeat successful
 physical acquisition merely to obtain a green job. Mechanical projection of an
 orchestration-owned manifest is labeled as such, not invented author testimony.
@@ -127,19 +121,14 @@ blocker; advance independent admissible work. Do not manufacture a successor
 where authority or evidence is absent, and do not treat a finite job or saved
 plan as future coverage.
 
-For already-correct behavior, preserve baseline GREEN and prove assertions are
-non-vacuous; do not manufacture a RED. A collection failure is not an exercised
-behavioral assertion. Exact final-test replay supports causal evidence, but does
-not rewrite the chronology of when tests and implementation were authored.
-
 ## Steward resources and cleanup
 
-Inventory authoritative evidence separately from recreatable profiles, caches,
-traces, temporary databases, workspaces, and logs. Before cleanup, prove target
-ownership and active-job use, preserve accepted evidence, name the cleanup
-owner and stop condition, and prefer reversible archival where practical.
-Measure reclaimed capacity and recheck surviving jobs and evidence afterward.
-Never delete uncertain authority merely because resource pressure is high.
+Set resource priorities and act on reported pressure. Venue systems own retention,
+cleanup, preservation of accepted evidence and survivor checks. Request capacity
+relief through the existing owner; choose which work can pause if needed. Do not
+personally inventory caches, prove filesystem ownership or audit reclamation.
+Uncertain preservation is a venue limitation, not permission for destructive
+cleanup or an automatic assignment of maintenance to the conductor.
 
 ## Steward the horizon
 

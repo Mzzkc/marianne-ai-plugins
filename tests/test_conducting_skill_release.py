@@ -71,8 +71,8 @@ class ConductingSkillReleaseTests(unittest.TestCase):
 
     def test_router_rejects_fake_utilization(self) -> None:
         text = (ROOT / "SKILL.md").read_text(encoding="utf-8").lower()
-        self.assertIn("manufacture utilization", text)
-        self.assertRegex(text, r"pause or\s+release")
+        self.assertTrue("manufacture utilization" in text or "invent utilization" in text)
+        self.assertIn("release excess capacity", text)
 
     def test_package_contains_no_volatile_machine_doctrine(self) -> None:
         combined = "\n".join(
@@ -145,8 +145,8 @@ class ConductingSkillReleaseTests(unittest.TestCase):
 
     def test_version_records_composer_doctrine(self) -> None:
         text = (ROOT / "VERSION").read_text(encoding="utf-8")
-        self.assertIn("version: 1.6.0", text)
-        self.assertIn("doctrine: repertoire-full-life-minimal-custody-2026-09-15", text)
+        self.assertIn("version: 1.7.0", text)
+        self.assertIn("doctrine: venue-owned-custody-2026-09-19", text)
 
 
 if __name__ == "__main__":

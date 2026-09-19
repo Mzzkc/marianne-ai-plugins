@@ -14,7 +14,8 @@ unresolved:
   - obligation: ""
     owner: ""
     next_action_or_resume_point: ""
-# Optional observation for a real efficiency investigation, not per-run telemetry.
+# Optional separately commissioned efficiency investigation; venue systems own
+# collection. Ordinary conducting need not inspect or fill these telemetry fields.
 efficiency_ledger:
   enabled: false
   custody_attention_minutes: "unknown"

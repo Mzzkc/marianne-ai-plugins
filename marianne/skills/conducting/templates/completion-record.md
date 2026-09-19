@@ -1,5 +1,8 @@
 # Completion Record
 
+Venue owners supply subject binding and any needed snapshots; the conductor
+uses their outcome, without inspecting or administering that mechanism.
+
 Optional decision aid; refer to existing job, Git and test/review state rather
 than copying it. A short existing status entry may be sufficient.
 

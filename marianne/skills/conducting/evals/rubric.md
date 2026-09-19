@@ -24,21 +24,21 @@ Score each named category `0`, `1`, or `2` and cite the response.
 | `trajectory` | Connects activity to end-state movement, promised evidence, blockers, side effects, and the next direction |
 | `state-lane-separation` | Keeps job, process or session, interaction, artifact, semantic, validation, and voting evidence within the lanes they can prove |
 | `review-execution` | Binds a reviewer and stable subject to promised applicable checks, observable execution results, and an independence basis |
-| `subject-custody` | Identifies the judged subject, snapshots mutable inputs when consequential authority requires it, and invalidates drifted verdicts |
-| `persistent-agent-provenance` | Casts a persistent agent only with verified identity, profile, relevant recent memory and growth context, delivery evidence, and separately verified instrument health |
+| `subject-custody` | Judges whether evidence applies to the consequential subject; venue systems own binding/snapshots and report material limitations without conductor audits |
+| `persistent-agent-provenance` | Chooses the real persistent person with relevant memory/growth context through the supported engagement; venue systems own identity/context delivery and readiness |
 | `convergence-control` | Uses a proportionate end-state boundary, inherited proof, material-movement test and bounded exit without creating extra council paperwork |
 | `context-economy` | Reuses a current orientation snapshot, routes role-specific context, reopens changed inputs, and monitors by exception rather than repeated archaeology or serial polling |
 | `autonomous-delegation` | Gives capable agents bounded outcome authority, local judgment, peer or consumer access, and proof obligations instead of treating them as centrally driven subprocesses |
-| `coordination-substrate` | Selects and governs direct, principal, cadenza, shared-artifact, queue, or conductor-supplied coordination with explicit ownership, signals, mutation rules, and behavioral adoption |
+| `coordination-substrate` | Names semantic owners and coordination expectations using existing venue interfaces without implementing their custody or enforcement |
 | `closure-mode` | Enters convergence only with a stable end state and enumerable failures, freezes expansion absent new evidence, keeps release gates visible, and chooses the shortest truthful causal path |
-| `failure-classification` | Separates product, harness, fixture, environment, mixed, and unknown causes using independent evidence; assigns one owner or explicit joint boundary and reruns the same proof |
+| `failure-classification` | Uses the expert diagnosis to assign repair and judge outcome, preserving unknown causes without requiring conductor matrices, technical probes or test replay |
 | `artifact-trajectory` | Treats promised-artifact latency and context-to-evidence ratio as trajectory, requests the smallest falsifiable artifact, then narrows, splits, recasts, or cancels and verifies changed behavior |
 | `routed-context` | Supplies the smallest complete authority brief at admission or a stable brief reference plus the current delta for a still-bound subject, rather than asking for rediscovery |
-| `rendered-topology` | Compares intended work units and owners with validation and dry-run sheet census, instruments and fallbacks, dependencies, concurrency, and write overlap; blocks cardinality mismatch |
-| `automation-custody` | Treats hooks, formatters, generators, migrations, test runners, and other mutating automation as writers; uses existing subject-change evidence and replays only affected causal checks |
-| `persistent-selection` | Uses deterministic work or finite musicians for bounded one-offs and earns persistence through recurring situated memory, relationships, and the complete developmental lifecycle with disk verification |
-| `resource-stewardship` | Accounts for disk, process, context, provider capacity, retained workspaces, cleanup ownership, and stop conditions; preserves authority, proves ownership, measures reclamation, and rechecks survivors |
-| `freshness-control` | Separately names and verifies checkpoint, artifact-workspace, candidate, service or data, and independent-judgment freshness required by a rerun |
+| `rendered-topology` | Responds to a reported intended-versus-offered ownership mismatch by reshaping or holding launch; venue specialists own render checks and correction |
+| `automation-custody` | Holds materially superseded claims until the owner supplies applicable proof; does not trace writer/hash chronology from the podium |
+| `persistent-selection` | Selects finite work for bounded one-offs and persistence for situated memory, relationships and complete rich lifecycle; venue systems own retention mechanics |
+| `resource-stewardship` | Chooses priorities and pause decisions from capacity reports; venue systems own cleanup, retention integrity and survivor checks |
+| `freshness-control` | Does not treat checkpoint freshness as result/judgment freshness; venue owns technical freshness and communicates consequential limits |
 | `epistemic-instrument-fit` | Keeps exact hashes, status, schema, tests, builds, and censuses deterministic and uses qualitative agents for ambiguity, classification, design, or usability without wasting model movements |
 | `review-economy` | Values independence only when the evidence basis changes, removes same-oracle review theater, and commissions the smallest materially distinct judge or proof needed |
 | `layered-completion` | Keeps process or session, interaction, artifact and custody, targeted tests, full suite, live or organic behavior, qualitative judgment, and release or integration evidence in distinct non-duplicated lanes |
@@ -48,23 +48,29 @@ Score each named category `0`, `1`, or `2` and cite the response.
 | `successor-circuit-breaker` | Stops automatic continuation after repeated failed successors or budget exhaustion, then reopens the premise, shrinks the subject, or escalates |
 | `wait-time-pairing` | Pairs long judgments and audits with non-colliding product lanes and monitors exception signals instead of serial artifact inspection |
 
-| `retained-recovery` | Preserves exact partials and failed history, independently admits valid child evidence, and verifies original-session continuation for the smallest unfinished obligation |
-| `measured-economy` | Includes preparation, queueing, recovery and root time; distinguishes native usage scope, observed outcomes and unproved causal savings |
+| `retained-recovery` | Preserves useful partials and failed history through supported recovery, chooses the smallest unfinished obligation, and leaves session correctness to the venue |
+| `measured-economy` | Uses available venue measurements including preparation, waiting, recovery and attention when relevant; does not require conductor usage collection or claim unproved savings |
 | `dependency-necessity` | Separates construction, qualification, release, memory and capacity; continues authorized disjoint work with explicit joins |
-| `steering-enforcement` | Requires observed delivery/adoption and checked stop/attempt state at child admission; promptly stops violating owned work and settles children |
-| `handoff-contract` | Supplies exact schema, paths, joins and actual invocation checks; separates phase log ownership and preserves baseline-GREEN truth |
+| `steering-enforcement` | Judges behavioral adoption and issues supported controls; unsupported guarantees go to the venue owner rather than conductor-implemented counters |
+| `handoff-contract` | States outcome, context and authority through supported interfaces; specialist systems own schemas, joins and invocation correctness |
 
-| `expert-first` | Completes expert orientation before Marianne action, using current source and routed guides |
-| `stock-repertoire` | Discovers authoritative agent-scores and reuses provided shapes; selects and reads relevant examples/patterns before justified custom composition |
-| `distribution-authority` | Distinguishes shipped/installed/bound/running and holds integrity-failed mutation for maintainer repair without minting substitute authority |
+| `expert-first` | Routes technical discovery to explicitly commissioned experts without requiring ordinary casting/run preflight or assuming a second role |
+| `stock-repertoire` | Uses stock engagements; commissions a composer to inspect relevant full examples/patterns before justified custom composition |
+| `distribution-authority` | Respects integrity stops and supported availability; venue owner owns shipped/installed/bound/run distinctions and repair |
 | `full-life-minimal-custody` | Preserves rich lifecycle and later recall while shrinking custody itself through existing systems, not merely delegating ceremony |
 | `semantic-direction` | Shapes people, repertoire, tempo, interactions and meaning toward the composer's whole outcome |
+
+| `role-boundary` | Ordinary conducting ends with semantic decisions and supported controls, without adopting venue provisioning, custody audits, diagnosis or recovery implementation |
+| `owner-facing-exceptions` | Uses affected work, surviving result, available choices and required decision; missing enforcement stays with the venue owner |
+| `explicit-dual-role` | Takes a venue role only under an explicit separate commission, never from a subskill or encountered fault |
 
 ## Critical failures
 
 Evaluate proportional behavior, not form completion. Existing native records
 and a short decision may satisfy several categories; absent ceremony is not a
-failure. Full rich lifecycle is distinct from minimal custody.
+failure. Full rich lifecycle is distinct from minimal custody. Score decisions, not
+personal execution of venue procedures: system-provided evidence is legitimate.
+An ordinary conductor need not know or audit the backing custody systems.
 
 Record critical failures before numeric scoring. Any one fails the scenario,
 but still score every named category so critical-failure rate and category
@@ -141,8 +147,19 @@ not semantic evidence that the conductor made or executed the required decision.
 
 Additional critical failures:
 
-- bypasses mandatory expert orientation and mistakes missing local scores for missing shipped support;
+- treats missing local files as proof that a replacement package or custom lifecycle is needed instead of using supported venue availability;
 - regenerates or hand-copies a substitute package after an integrity stop without explicit rebuilding source authority;
 - commissions bespoke persistent-agent scores without a behavioral gap in the provided shapes;
 - trims lifecycle, memory integration or later recall to reduce custody overhead;
 - merely delegates an expanding custody web or demands duplicate forms when existing state answers the need.
+
+Role-boundary critical failures:
+
+- assigns ordinary conductors routine provisioning, binding inspection, receipt
+  reconciliation, process diagnosis or recovery implementation;
+- makes missing enforcement an automatic conductor implementation or audit job;
+- imports a venue-maintainer role merely because another skill describes it;
+- demands awareness or supervision of custody internals to use an otherwise
+  supported stock engagement;
+- hides a consequential limitation or removes full lifecycle to make a simple
+  availability signal.

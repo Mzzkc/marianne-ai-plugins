@@ -36,10 +36,10 @@ including the persistent person, through provided score/cadenza mechanisms. On r
 changed inputs or inputs whose volatility trigger fired; do not repeat full
 context archaeology by default.
 
-Name freshness by lane. A fresh checkpoint does not make the artifact
-workspace, candidate, service or data, or independent judgment fresh. Record
-which freshness claims a decision needs, their evidence, and their invalidation
-triggers.
+Ask whether evidence still applies to the decision at hand. A fresh checkpoint
+does not itself refresh the result or its judgment. The venue handles technical
+freshness and subject binding; request clarification only when a material
+limitation or contradiction affects semantic acceptance.
 
 ## Shape the performance graph
 
@@ -53,8 +53,7 @@ to complete separately for every end state:
 - dependencies and timing;
 - artifacts and behavioral evidence required;
 - shared files, services, interfaces, compute, credentials, rate limits, and
-  human attention, plus disk, processes, context, provider capacity, retained
-  workspaces, cleanup ownership, and stop conditions;
+  human attention, plus reported capacity limitations and resource priorities;
 - downstream consumers and future contracts;
 - effects on every other end state and overlapping subjects.
 
@@ -79,8 +78,8 @@ infrastructure; name any guarantee retired by a changed premise.
 
 Label dependencies as construction, qualification, release, memory, or capacity.
 A numbered plan is not a dependency graph. Disjoint source work against existing
-contracts can proceed while live qualification is blocked. Prepare static
-source/topology before dynamic bindings exist; bind those only when available.
+contracts can proceed while live qualification is blocked. Commission independent preparation while the venue resolves unavailable
+execution capacity; do not require the conductor to prepare dynamic bindings.
 Review each frozen lane when ready, with an explicit later integration join.
 Include shared mutable branch names and memory writers in collision analysis.
 
@@ -140,9 +139,8 @@ set materially changes.
 
 ## Repertoire before invention
 
-Through expert source discovery, locate the repository examples index and the
-Rosetta index (commonly `examples/README.md` and
-`scores/rosetta-corpus/INDEX.md`). Read the few closest full scores and patterns,
-not the whole corpus. Give those actual files to a commissioned composer and
-ask which structures they reused, adapted or rejected and why. For persistent
-people start with their released engagement shapes, not a blank composition.
+Ask the commissioned composer to locate the closest worked examples and selected
+full Rosetta patterns, then explain which structures they reuse, adapt or reject.
+The conductor judges fit to the intended outcome; expert source discovery and
+score construction stay with the specialist. For persistent people, start with
+the venue's supported stock engagements rather than a blank composition.

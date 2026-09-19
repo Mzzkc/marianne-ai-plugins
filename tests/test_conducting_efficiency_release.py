@@ -86,7 +86,7 @@ def test_efficiency_scenarios_extend_without_replacing_legacy_suite() -> None:
     assert len(ids) == len(set(ids))
     assert LEGACY_SCENARIOS <= set(ids)
     assert EFFICIENCY_SCENARIOS <= set(ids)
-    assert len(set(ids) - LEGACY_SCENARIOS) == len(EFFICIENCY_SCENARIOS | {'bounded-known-defect', 'still-bound-transfer-delta', 'partial-next-dependency', 'shipped-not-installed', 'integrity-stop-no-substitute', 'rich-life-small-custody', 'repertoire-before-custom', 'native-record-simple-task'})
+    assert len(set(ids) - LEGACY_SCENARIOS) == len(EFFICIENCY_SCENARIOS | {'bounded-known-defect', 'still-bound-transfer-delta', 'partial-next-dependency', 'shipped-not-installed', 'integrity-stop-no-substitute', 'rich-life-small-custody', 'repertoire-before-custom', 'native-record-simple-task', 'ordinary-stock-engagement', 'venue-enforcement-gap', 'dual-role-explicit'})
 
 
 def test_efficiency_scenarios_route_to_real_references_and_defined_categories() -> None:
@@ -124,8 +124,8 @@ def test_efficiency_suite_covers_domains_and_task_sizes() -> None:
 
 def test_truthful_convergence_release_metadata_and_closed_manifest() -> None:
     version = (ROOT / "VERSION").read_text(encoding="utf-8")
-    assert "version: 1.6.0" in version
-    assert "doctrine: repertoire-full-life-minimal-custody-2026-09-15" in version
+    assert "version: 1.7.0" in version
+    assert "doctrine: venue-owned-custody-2026-09-19" in version
 
     manifest = load_script(
         "marianne/skills/conducting/scripts/release_manifest.py",
@@ -135,13 +135,13 @@ def test_truthful_convergence_release_metadata_and_closed_manifest() -> None:
 
 
 def test_automation_replay_preserves_causal_red_and_green() -> None:
-    doctrine = (ROOT / "references/complete-and-steward.md").read_text(
+    doctrine = (ROOT / "references/venue-maintenance.md").read_text(
         encoding="utf-8"
     )
     assert "immutable pre-repair subject" in doctrine
-    assert "same final test bytes" in doctrine
-    assert "expected failure" in doctrine
-    assert "repaired candidate" in doctrine
+    assert "same final test bytes" in " ".join(doctrine.split())
+    assert "expected RED" in doctrine
+    assert "repaired subject" in doctrine
 
 
 def test_authority_brief_separates_scope_and_write_authority() -> None:
@@ -154,8 +154,9 @@ def test_authority_brief_separates_scope_and_write_authority() -> None:
         "writable roots",
         "read-only roots",
     ):
-        assert phrase in doctrine
         assert phrase.capitalize() in ledger
+    for phrase in ("supported engagement interface", "non-goals", "authority", "relevant context"):
+        assert phrase in doctrine
 
 
 def test_optional_efficiency_observation_measures_custody_not_life() -> None:
@@ -168,12 +169,12 @@ def test_optional_efficiency_observation_measures_custody_not_life() -> None:
 
 def test_stock_casting_preserves_rich_lifecycle_without_parallel_custody() -> None:
     doctrine = (ROOT / "references/intervene-and-cast.md").read_text()
-    for phrase in ("shipped engagement scores", "full lifecycle", "lifecycle-integration", "do not reconstruct", "subsystem maintainer"):
+    for phrase in ("supported engagement", "full lifecycle", "lifecycle-integration", "without hand-administering", "integrity stop"):
         assert phrase in doctrine
 
 
-def test_rerun_freshness_replays_automation_and_liveness_lanes() -> None:
-    doctrine = (ROOT / "references/marianne-operations.md").read_text(
+def test_venue_owner_preserves_rerun_freshness_and_liveness_checks() -> None:
+    doctrine = (ROOT / "references/venue-maintenance.md").read_text(
         encoding="utf-8"
     )
     for phrase in (
@@ -187,8 +188,8 @@ def test_rerun_freshness_replays_automation_and_liveness_lanes() -> None:
         assert phrase in doctrine
 
 
-def test_expert_and_package_integrity_are_required_before_action() -> None:
-    doctrine = (ROOT / "references/marianne-operations.md").read_text()
+def test_venue_owner_keeps_expert_and_package_integrity_procedures() -> None:
+    doctrine = (ROOT / "references/venue-maintenance.md").read_text()
     for phrase in ("REQUIRED SUB-SKILL", "agent-scores/", "Shipped means", "installed means", "bound means", "running requires", "integrity failure pauses", "Never hand-copy", "install-package", "bind-score-routes"):
         assert phrase in doctrine
 
