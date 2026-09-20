@@ -52,3 +52,9 @@ The backup stage checks the total immutable apply inputs against a350000-byte
 budget before dispatch. Inventory size is not an excuse to cast a larger model.
 Qualified service prefixes in inventory create separate broker dependencies;
 provider ownership and route-service identity are different relationships.
+
+The home-anchored Claude marketplace registry is compared semantically except
+for each entry's runtime lastUpdated timestamp. Sources, install locations,
+unknown fields and malformed contents remain governed. Known Claude security
+log/session-warning files are runtime data; other security files remain governed.
+Exact accepted targets always use raw byte hashes, overriding these exclusions.

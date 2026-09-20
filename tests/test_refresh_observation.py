@@ -148,3 +148,36 @@ def test_required_paths_never_extend_authority_or_follow_links(home, tmp_path):
     result = observation.snapshot([root], [], required_paths=[link / 'secret'])
     assert result == {str(link): {'kind': 'symlink', 'value': str(outside.parent)}}
     assert str(outside) not in result
+
+
+def test_claude_security_runtime_and_marketplace_timestamp_preserve_configuration(home):
+    import json
+    root = home / '.claude'
+    market = put(root / 'plugins/known_marketplaces.json', json.dumps({'official': {'source': {'repo': 'vendor/plugins'}, 'installLocation': '/plugins', 'lastUpdated': 'old'}}))
+    noise = [put(root / n) for n in ['security/log.txt', 'security/security_warnings_state_f3c6a4f0-023e-4f10-a218-a6eccbedb3d9.json', 'security/security_warnings_state_f3c6a4f0-023e-4f10-a218-a6eccbedb3d9.lock']]
+    governed = put(root / 'security/policy.json')
+    before = observation.snapshot([root], [])
+    data = json.loads(market.read_text()); data['official']['lastUpdated'] = 'new'
+    market.write_text(json.dumps(data, indent=2))
+    for p in noise: p.write_text('runtime update')
+    assert changed(before, observation.snapshot([root], [])) == set()
+    data['official']['source']['repo'] = 'different/source'
+    market.write_text(json.dumps(data)); governed.write_text('changed policy')
+    assert changed(before, observation.snapshot([root], [])) == {str(market), str(governed)}
+    before = observation.snapshot([root], [], required_paths=[market])
+    data['official']['lastUpdated'] = 'third'; market.write_text(json.dumps(data))
+    assert changed(before, observation.snapshot([root], [], required_paths=[market])) == {str(market)}
+
+
+def test_marketplace_semantics_are_home_anchored_and_malformed_data_remains_visible(home):
+    import json
+    root = home / '.claude'
+    p = put(root / 'plugins/known_marketplaces.json', '{malformed')
+    before = observation.snapshot([root], [])
+    p.write_text('{different malformed')
+    assert changed(before, observation.snapshot([root], [])) == {str(p)}
+    repo = home / 'repo'
+    q = put(repo / '.claude/plugins/known_marketplaces.json', json.dumps({'x': {'lastUpdated': 'old'}}))
+    before = observation.snapshot([repo], [])
+    q.write_text(json.dumps({'x': {'lastUpdated': 'new'}}))
+    assert changed(before, observation.snapshot([repo], [])) == {str(q)}

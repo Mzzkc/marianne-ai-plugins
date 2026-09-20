@@ -25,7 +25,7 @@ RUNTIME_FILES = {'model-profile-refresh.yaml',
 LOCKED_RUNTIME = {'model-profile-refresh.yaml': 'e16e8a94b3a1e03fe9a82de95fb1e0eb48f5932c55db55370979e47f6b8f5faf',
  'request.md': '3550b29de3879242028a005d4e0f94d87f127dfb04064868829f7d6b2c5035e7',
  'runbook.md': '6ae8b3428172a2c676d70423af25186d46b51df7e54c3830ab0383c89b64b0bb',
- 'scripts/refresh_observation.py': '71bf6078b0af1e90c4181f8189be6df5723804c3efdaadb51f8a2566227b402f',
+ 'scripts/refresh_observation.py': '10f23616b083c283ef2b7e8ae2f9aeb1048718015b601aaf48253629704da50f',
  'scripts/refresh_scope.py': '2fb56fb1efce34c1b1e97990147b43bec2037e75adac3cba4d7c46ea3b13316c',
  'scripts/refreshctl.py': '023af392e0ebd4a9249e3648338ee44efc5bdeb5056e4cd6c68973b820db486b',
  'scripts/run_refresh.py': 'd0ebe90aeccf87e232cb667786da4f7c173acb2ae18f5e3a0440e1f9a02335d9',
@@ -120,7 +120,7 @@ def test_skill_version_and_plugin_package_version_are_independent() -> None:
     assert "version: 0.7.0" in version
     assert (
         "canonical_release_lock_sha256: "
-        "9f2427abae13996b362cfe78116be7f6830c254dd829c24cba4337aae693e876"
+        "d75edbcda0d5577d45753bfe8a51a635f476ccf5a75475bd3ec47497cac61337"
     ) in version
     plugin = json.loads((REPO / "marianne/.claude-plugin/plugin.json").read_text(encoding="utf-8"))
     codex_plugin = json.loads(

@@ -8,13 +8,14 @@ observation policy, not mutation authority or a worker-configurable waiver.
 from __future__ import annotations
 
 import hashlib
+import json
 import os
 from pathlib import Path
 import re
 import stat
 from typing import Iterable
 
-policy_version = "governed-config-v1"
+policy_version = "governed-config-v2"
 POLICY_VERSION = policy_version
 
 # Generated development artifacts, at any depth. No generic logs/cache or file
@@ -75,6 +76,12 @@ def _ignored(path: Path, clients: dict[Path, str]) -> bool:
         if first in _RUNTIME[client]:
             return True
         if client == "claude" and re.fullmatch(r"security_warnings_state_[0-9a-f-]+\.json", first):
+            return True
+        if client == "claude" and len(parts) == 2 and first == "security" and (
+            parts[1] == "log.txt" or re.fullmatch(
+                r"security_warnings_state_[0-9a-f-]+\.(?:json|lock)", parts[1]
+            )
+        ):
             return True
         if client == "codex" and re.fullmatch(r"(?:state|logs|memories|goals|queue|thread_history)_\d+\.sqlite(?:-wal|-shm)?", first):
             return True
@@ -138,8 +145,26 @@ def snapshot(roots: Iterable[Path], excluded: Iterable[Path], *,
                     visit(fd, child, path / child)
             else:
                 digest = hashlib.sha256()
+                # Only the native marketplace refresh timestamp is runtime data.
+                # Keep all sources, locations, flags and unknown fields governed.
+                semantic_marketplace = (
+                    path not in required
+                    and path == _absolute(Path.home()) / ".claude/plugins/known_marketplaces.json"
+                )
+                body = bytearray()
                 while chunk := os.read(fd, 1024 * 1024):
                     digest.update(chunk)
+                    if semantic_marketplace:
+                        body.extend(chunk)
+                if semantic_marketplace:
+                    try:
+                        data = json.loads(body)
+                        if isinstance(data, dict) and all(isinstance(v, dict) for v in data.values()):
+                            for entry in data.values():
+                                entry.pop("lastUpdated", None)
+                            digest = hashlib.sha256(json.dumps(data, sort_keys=True, separators=(",", ":")).encode())
+                    except (ValueError, UnicodeError):
+                        pass  # Malformed content remains governed by its raw hash.
                 final = os.fstat(fd)
                 if (opened.st_size, opened.st_mtime_ns, opened.st_ctime_ns) != (final.st_size, final.st_mtime_ns, final.st_ctime_ns):
                     raise ValueError(f"governed file changed during observation: {path}")
