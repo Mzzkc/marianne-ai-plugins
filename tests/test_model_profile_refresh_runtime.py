@@ -23,13 +23,13 @@ RUNTIME_FILES = {'model-profile-refresh.yaml',
  'scripts/run_refresh.py',
  'technique/SKILL.md'}
 LOCKED_RUNTIME = {'model-profile-refresh.yaml': 'e16e8a94b3a1e03fe9a82de95fb1e0eb48f5932c55db55370979e47f6b8f5faf',
- 'request.md': '3550b29de3879242028a005d4e0f94d87f127dfb04064868829f7d6b2c5035e7',
+ 'request.md': 'f15b38d77e3f4a208db0449d029f28137daab68c7d0970a066cd286b2edfc446',
  'runbook.md': '6ae8b3428172a2c676d70423af25186d46b51df7e54c3830ab0383c89b64b0bb',
- 'scripts/refresh_observation.py': '10f23616b083c283ef2b7e8ae2f9aeb1048718015b601aaf48253629704da50f',
+ 'scripts/refresh_observation.py': '5d87caad260ed91f6ac6e0e5ae8520bee0f1f0e0d7b88ebc89509c0a0f84620f',
  'scripts/refresh_scope.py': '2fb56fb1efce34c1b1e97990147b43bec2037e75adac3cba4d7c46ea3b13316c',
- 'scripts/refreshctl.py': '023af392e0ebd4a9249e3648338ee44efc5bdeb5056e4cd6c68973b820db486b',
+ 'scripts/refreshctl.py': '6e66e8d7a9f95034384e4b37dd7f6c309456f3e3db6aea47ef2b3e03a1554c9a',
  'scripts/run_refresh.py': 'd0ebe90aeccf87e232cb667786da4f7c173acb2ae18f5e3a0440e1f9a02335d9',
- 'technique/SKILL.md': 'c907ade770dbdede32b8d98186cb28d1bbdc79b18979c73004cdd86fe91f0c7e'}
+ 'technique/SKILL.md': 'ccdbb823b2275b07f953210d2a79f99ad9f37bbdc74544f2f2aa2292eba762c4'}
 
 def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()

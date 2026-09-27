@@ -33,7 +33,7 @@ _RUNTIME = {
     "codex": {"sessions", "log", "cache", "tmp", ".tmp", "attachments",
               "generated_images", "shell_snapshots", "thread-writer-locks",
               "history.jsonl", "session_index.jsonl", "models_cache.json",
-              "version.json", "installation_id"},
+              "version.json", "installation_id", "app-server-daemon"},
     "gemini": {"history", "tmp", "state.json", "installation_id"},
     "marianne": {"logs", "interactive-logs", "dashboard-submissions", "snapshots"},
     "opencode-data": {"storage", "tool-output", "snapshot", "log", "opencode.db",

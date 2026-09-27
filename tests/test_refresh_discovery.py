@@ -34,10 +34,22 @@ def test_blocked_shared_file_rejected_but_independent_target_admitted(tmp_path):
     t={'path':str(tmp_path/'independent.yaml'),'classification':'active','disposition':'change','fact_ids':['a'],'dependency_providers':['vendor-a'],'checks':[{'contains':'new-a'}]}
     m['targets']=[t];p,h=authority(tmp_path,scope)
     assert ctl.validate_manifest_authority(m,p,h,'trial') == []
+    # A blocked provider scopes to its own entries: the shared route file it
+    # lives in stays editable through another admitted provider's facts.
     t['path']=scope['providers'][0]['routes'][0]['path']
-    assert any('deferred' in e for e in ctl.validate_manifest_authority(m,p,h,'trial'))
+    assert ctl.validate_manifest_authority(m,p,h,'trial') == []
     t['path']=str(tmp_path/'independent.yaml');t['dependency_providers'].append('vendor-b')
     assert any('dependency' in e for e in ctl.validate_manifest_authority(m,p,h,'trial'))
+
+
+def test_catalog_updates_flow_despite_unrelated_deferral(tmp_path):
+    scope,m=fixture(tmp_path)
+    m['provider_results'][1]['status']='deferred'
+    m['provider_results'][1]['reason']='Vendor evidence contradicts itself; supported change cannot be safely included now'
+    m['provider_results'][0].update(status='changes',facts=[{'id':'a','model':'new-a','evidence_urls':['https://a.example/model']}])
+    m['targets']=[{'path':scope['catalog'],'classification':'active','disposition':'change','fact_ids':['a'],'dependency_providers':['vendor-a'],'checks':[{'pointer':'/runs_models','contains':'new-a'}]}]
+    p,h=authority(tmp_path,scope)
+    assert ctl.validate_manifest_authority(m,p,h,'trial') == []
 
 
 def test_blocked_unknown_route_is_explicit_and_its_file_cannot_change(tmp_path):

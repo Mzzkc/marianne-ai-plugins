@@ -27,9 +27,10 @@ are leads, not authority. Preserve defaults exactly; preserve existing roles unl
 request and evidence justify changing them. Generated consumers use their
 existing generator. The shipped instrument-catalog.yaml is authoritative active
 source; its generated_at/generated_by history does not make it generated output.
-The companion instrument-catalog.md is derived. Locate a documented generator
-for that consumer or explicitly defer it; do not invent a generator requirement
-for the YAML source itself.
+The companion instrument-catalog.md is derived documentation: when a documented
+generator exists use it, otherwise update the companion in lockstep with the
+YAML inside this same transaction. Inability to regenerate the companion
+mechanically never defers the YAML source or the companion itself.
 
 Write a schema-v3 JSON manifest containing the exact `transaction_id`, request,
 mode `broad`, absolute `allowed_roots`, `provider_results` and
@@ -48,8 +49,13 @@ mode `broad`, absolute `allowed_roots`, `provider_results` and
 
 Statuses are `changes`, `no_change`, `blocked` or `deferred`. Evidence-backed
 no-change is valid coverage. Missing provider rows always prevent apply.
-Blocked means evidence could not support a decision; deferred means a supported
-change cannot be safely included now (for example a shared-file dependency).
+This is an explicit update score: apply every evidence-supported update and
+addition. Blocked means evidence could not support a decision (surviving
+official documentation that still describes exactly the catalogued models,
+with nothing newer released, is evidenced no_change — not blocked). Deferred
+means a supported change cannot be safely included now (for example a required
+broker slug or client entitlement cannot be established) — never because a
+file is shared, a consumer is derived, or a neighboring provider is blocked.
 Blocked/deferred rows use facts: [] and explain the affected routes/files.
 They produce an explicit partial outcome, never an all-clear success. Facts need unique
 IDs, a model ID and their own nonempty `evidence_urls`; `claims` is optional.
@@ -80,11 +86,13 @@ its exact bytes must be covered by the target backup.
 Each target has an exact canonical absolute `path`, `classification`,
 `disposition` (`change`), `fact_ids`, `dependency_providers`, and `checks`.
 List every creator and broker on which that target's changes depend.
-The runtime refuses dependencies marked blocked/deferred and whole files that
-contain their inventory routes (including unresolved source_paths). If a shared
-file is affected, defer every proposed change to that file. The shared catalog
-and its Markdown companion are also deferred whenever any provider/route is
-blocked or deferred. Do not relabel a deferred improvement as no_change.
+The runtime refuses targets that depend on blocked/deferred providers or that
+touch the file of a blocked unresolved route. Blocked and deferred providers
+scope to their own entries: they contribute no facts, leave their entries
+untouched, and never freeze a shared file — including the catalog and its
+Markdown companion — for other providers' supported changes. A shared file
+integrates every supported change in this single research movement and they
+apply together. Do not relabel a deferred improvement as no_change.
 Only status: changes may carry executable facts, and every fact must have a target. A change must
 reference its accepted model facts and include bounded configured expectations:
 

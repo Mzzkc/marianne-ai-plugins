@@ -169,6 +169,31 @@ def test_claude_security_runtime_and_marketplace_timestamp_preserve_configuratio
     assert changed(before, observation.snapshot([root], [], required_paths=[market])) == {str(market)}
 
 
+def test_codex_app_server_daemon_runtime_state_does_not_abort_census(monkeypatch):
+    import socket
+    import tempfile
+    # AF_UNIX paths are capped at ~108 bytes, so keep the fake home shallow.
+    home = Path(tempfile.mkdtemp(prefix='codexdaemontest'))
+    monkeypatch.setenv('HOME', str(home))
+    monkeypatch.setenv('XDG_CONFIG_HOME', str(home / '.config'))
+    monkeypatch.setenv('XDG_DATA_HOME', str(home / '.local/share'))
+    root = home / '.codex'
+    governed = put(root / 'config.toml')
+    runtime = root / 'app-server-daemon'
+    runtime.mkdir(parents=True)
+    pids = [put(runtime / n) for n in ['daemon.pid', 'daemon.lock', 'daemon-updater.pid', 'daemon-updater.pid.lock']]
+    server = socket.socket(socket.AF_UNIX)
+    server.bind(str(runtime / 'daemon-updater.sock'))
+    try:
+        before = observation.snapshot([root], [])
+        assert set(before) == {str(governed)}
+        for path in pids:
+            path.write_text('daemon restarted')
+        assert changed(before, observation.snapshot([root], [])) == set()
+    finally:
+        server.close()
+
+
 def test_marketplace_semantics_are_home_anchored_and_malformed_data_remains_visible(home):
     import json
     root = home / '.claude'

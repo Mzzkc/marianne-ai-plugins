@@ -21,8 +21,8 @@
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 
 schema_version: 1
-generated_at: "2026-08-17"
-generated_by: "v1.1 — fact-fold from version-research agent (2026-04-29) + gap-research agent (2026-04-29) + 3-of-5 lab cross-rating reviews (Opus 4.7, Gemini 3.1 Pro, GPT-5.5) + user direct testimony on GLM 5.1. Lab pass for Gemma 4 / GLM 5.1 ratings deferred to next refresh (GLM lab failure was chunked-tool-call issue, now documented as a quirk and remediated for future runs). | 2026-06-14 interim edit: live instrument moved glm-5.1 → glm-5.2; provisional glm-5.2 entry added (existence + Coding-Plan availability session-verified; ratings/benchmarks/license PENDING lab fact-fold); use-case chains repointed to glm-5.2; glm-5.1 retained as documented prior release. | 2026-07-16 Codex cleanup: GPT-5.6 Sol/Terra/Luna and their [1m] variants folded into codex-cli; the mistaken standalone gpt-5.6 instrument rejected; Codex default remains client-selected. | 2026-08-15 GLM 5.3 rollout: live OpenCode registry verified 1M context, 131072 output, reasoning and tool use; composer supplied bounded-task high/max calibration and authorized defensive-security suitability; current GLM chains repointed from 5.2 to 5.3. | 2026-08-17 Gemini 3.7 Flash refresh: official Google model, models-index, and changelog facts added; current Flash chains repointed from gemini-3-flash-preview to stable gemini-3.7-flash; qualitative ratings left provisional pending independent evaluation. | 2026-09-04 Gemini 3.8 Flash refresh: official model page facts (1,048,576 in / 65,536 out; text/image/video/audio/PDF input; low/medium/high thinking) verified 2026-09-04 and live-probed on agy 1.1.26 (models listing + non-TTY print execution); gemini-3.8-flash entry added as the stable Flash route; 3.7 demoted to historical fallback with successor chain; antigravity noted as cross-vendor broker pending full fold; ratings left provisional pending independent evaluation."
+generated_at: "2026-09-26"
+generated_by: "v1.1 — fact-fold from version-research agent (2026-04-29) + gap-research agent (2026-04-29) + 3-of-5 lab cross-rating reviews (Opus 4.7, Gemini 3.1 Pro, GPT-5.5) + user direct testimony on GLM 5.1. Lab pass for Gemma 4 / GLM 5.1 ratings deferred to next refresh (GLM lab failure was chunked-tool-call issue, now documented as a quirk and remediated for future runs). | 2026-06-14 interim edit: live instrument moved glm-5.1 → glm-5.2; provisional glm-5.2 entry added (existence + Coding-Plan availability session-verified; ratings/benchmarks/license PENDING lab fact-fold); use-case chains repointed to glm-5.2; glm-5.1 retained as documented prior release. | 2026-07-16 Codex cleanup: GPT-5.6 Sol/Terra/Luna and their [1m] variants folded into codex-cli; the mistaken standalone gpt-5.6 instrument rejected; Codex default remains client-selected. | 2026-08-15 GLM 5.3 rollout: live OpenCode registry verified 1M context, 131072 output, reasoning and tool use; composer supplied bounded-task high/max calibration and authorized defensive-security suitability; current GLM chains repointed from 5.2 to 5.3. | 2026-08-17 Gemini 3.7 Flash refresh: official Google model, models-index, and changelog facts added; current Flash chains repointed from gemini-3-flash-preview to stable gemini-3.7-flash; qualitative ratings left provisional pending independent evaluation. | 2026-09-04 Gemini 3.8 Flash refresh: official model page facts (1,048,576 in / 65,536 out; text/image/video/audio/PDF input; low/medium/high thinking) verified 2026-09-04 and live-probed on agy 1.1.26 (models listing + non-TTY print execution); gemini-3.8-flash entry added as the stable Flash route; 3.7 demoted to historical fallback with successor chain; antigravity noted as cross-vendor broker pending full fold; ratings left provisional pending independent evaluation. | 2026-09-26 model-profile refresh (broad): 29 catalog additions from official-source evidence — Claude Opus 5.5 / Fable 5.1 / Sonnet 5 and GPT-6 Astra / Sol / Luna (Opus 5.5 and GPT-6 Sol/Luna also joined the active claude-code and codex-cli profiles); gemini-3.8-flash joined gemini-cli runs_models while default_model stays gemini-3.7-flash; deepseek-v4-pro confirmed GA and deepseek-v4.1-flash (API ID deepseek-flash) added with v4-flash marked superseded; mistral-large-3 and 21 further creator releases added as catalog-only entries without new routes; community/novasearch/tencent blocked with entries unchanged; all defaults preserved exactly."
 
 sources:
   - path: "docs/plans/features/2026-04-08-auto-routing-design.md"
@@ -131,6 +131,9 @@ instruments:
       - mcp
       - vision
     runs_models:
+      - claude-opus-5-5
+      - claude-fable-5-1
+      - claude-sonnet-5
       - claude-opus-4-7
       - claude-sonnet-4-6
       - claude-haiku-4-5-20251001
@@ -146,6 +149,7 @@ instruments:
     capabilities: [tool_use, file_edit, shell, vision, mcp, structured_output,
                    thinking]
     runs_models:
+      - gemini-3.8-flash
       - gemini-3.7-flash
       - gemini-3.1-pro-preview
     historical_models:
@@ -174,6 +178,9 @@ instruments:
     capabilities: [tool_use, file_edit, shell, vision, mcp, structured_output,
                    streaming, thinking, session_resume]
     runs_models:
+      - gpt-6-sol
+      - gpt-6-luna
+      - gpt-6-astra
       - gpt-5.6-sol
       - "gpt-5.6-sol[1m]"
       - gpt-5.6-terra
@@ -381,7 +388,124 @@ musicians:
     last_verified: "2026-04-29"
     verified_via: [vendor_docs, judgment]
 
+  claude-opus-5-5:
+    provider: anthropic
+    family: "Claude 5"
+    context_window: 1000000
+    max_output_tokens: 128000
+    cost_per_1m_input: 4.00
+    cost_per_1m_output: 20.00
+    available_via: [claude-code]
+    tags: [max, heavy, premier, subscription]
+    task_tags: [code, code-review, review, research, writing, design,
+                synthesis, planning, reasoning, tool-use, agent]
+    modality_tags: [text, vision]
+    ratings: {}          # provisional — added by the 2026-09-26 refresh; lab pass pending
+    strengths:
+      - "Current Opus-line release; successor to claude-opus-5 at a lower price point"
+    last_verified: "2026-09-26"
+    verified_via: [vendor_docs, refresh_2026_09_26]
+    notes: "Added to the catalog and to the active Claude Code profiles by the 2026-09-26 refresh (profile default_model values unchanged). Catalog routing only — not evidence of local configuration, authentication, or live execution."
+
+  claude-fable-5-1:
+    provider: anthropic
+    family: "Claude 5"
+    context_window: 1000000
+    max_output_tokens: 128000
+    cost_per_1m_input: 10.00
+    cost_per_1m_output: 50.00
+    available_via: [claude-code]
+    tags: [max, premier, subscription]
+    task_tags: [code, code-review, review, research, writing, design,
+                synthesis, planning, reasoning, tool-use, agent,
+                careful-long-running]
+    modality_tags: [text, vision]
+    ratings: {}          # provisional — added by the 2026-09-26 refresh; lab pass pending
+    strengths:
+      - "Anthropic's most capable widely released model; already selectable in Claude Code profiles"
+    last_verified: "2026-09-26"
+    verified_via: [vendor_docs, refresh_2026_09_26]
+    notes: "Catalog addition documenting the current flagship already present in Claude Code profiles. glm-5.3's composer calibration references Fable 5-level performance; ratings await an independent lab pass."
+
+  claude-sonnet-5:
+    provider: anthropic
+    family: "Claude 5"
+    context_window: 1000000
+    max_output_tokens: 128000
+    cost_per_1m_input: 2.00
+    cost_per_1m_output: 10.00
+    available_via: [claude-code]
+    tags: [heavy, standard, subscription]
+    task_tags: [code, code-review, review, research, writing, design,
+                synthesis, planning, tool-use, agent]
+    modality_tags: [text, vision]
+    ratings: {}          # provisional — added by the 2026-09-26 refresh; lab pass pending
+    strengths:
+      - "Native 1M context window; already selectable in Claude Code profiles"
+    last_verified: "2026-09-26"
+    verified_via: [vendor_docs, refresh_2026_09_26]
+    notes: "Catalog addition documenting the current Sonnet already present in Claude Code profiles."
+
   # ── OpenAI ───────────────────────────────────────────────────────────────────
+
+  gpt-6-astra:
+    provider: openai
+    family: "GPT-6"
+    context_window: 1050000   # API context; prompts over 272K input bill at higher rates
+    max_output_tokens: 128000
+    cost_per_1m_input: 10.00
+    cost_per_1m_output: 50.00
+    available_via: [codex-cli]
+    tags: [max, heavy, premier, subscription]
+    task_tags: [code, code-translation, code-review, review, research, writing,
+                transform, design, synthesis, planning, reasoning, math,
+                tool-use, agent]
+    modality_tags: [text, vision]
+    ratings: {}
+    strengths:
+      - "OpenAI's hard-work recommendation in the GPT-6 family; already listed by the codex-cli profile"
+    last_verified: "2026-09-26"
+    verified_via: [vendor_docs, refresh_2026_09_26]
+    notes: "Catalog addition documenting the GPT-6 flagship already present in the codex-cli profile. Marianne leaves the Codex default model unset."
+
+  gpt-6-sol:
+    provider: openai
+    family: "GPT-6"
+    context_window: 1050000   # API context; prompts over 272K input bill at higher rates
+    max_output_tokens: 128000
+    cost_per_1m_input: 2.00
+    cost_per_1m_output: 10.00
+    available_via: [codex-cli]
+    tags: [heavy, standard, premier, subscription]
+    task_tags: [code, code-translation, code-review, review, research, writing,
+                transform, design, synthesis, planning, reasoning, tool-use,
+                agent]
+    modality_tags: [text, vision]
+    ratings: {}
+    strengths:
+      - "OpenAI's balanced recommendation in the GPT-6 family"
+    last_verified: "2026-09-26"
+    verified_via: [vendor_docs, refresh_2026_09_26]
+    notes: "Added to the catalog and to codex-cli by the 2026-09-26 refresh; the Codex default model remains unset."
+
+  gpt-6-luna:
+    provider: openai
+    family: "GPT-6"
+    context_window: 1050000   # API context; prompts over 272K input bill at higher rates
+    max_output_tokens: 128000
+    cost_per_1m_input: 0.10
+    cost_per_1m_output: 0.50
+    available_via: [codex-cli]
+    tags: [quick, standard, fast, subscription]
+    task_tags: [code, code-review, review, classification, routing, transform,
+                writing, tool-use]
+    modality_tags: [text, vision]
+    ratings: {}
+    strengths:
+      - "OpenAI's high-volume recommendation in the GPT-6 family at an order of magnitude below Sol pricing"
+    last_verified: "2026-09-26"
+    verified_via: [vendor_docs, refresh_2026_09_26]
+    notes: "Added to the catalog and to codex-cli by the 2026-09-26 refresh; an explicit score choice, not Marianne's Codex default."
 
   gpt-5.6-sol:
     provider: openai
@@ -574,7 +698,7 @@ musicians:
       - structured_output
       - thinking
       - url_context
-    available_via: [antigravity]
+    available_via: [antigravity, gemini-cli]
     tags: [quick, standard, heavy, subscription]
     task_tags: [classification, code, code-review, transform, research, writing,
                 design, synthesis, planning, reasoning, tool-use, agent]
@@ -1584,7 +1708,7 @@ musicians:
     provider: deepseek
     family: "DeepSeek V4"
     released: "2026-04-24"
-    status: preview
+    status: ga
     context_window: 1000000
     max_output_tokens: 65536
     architecture: "1.6T total / 49B active"
@@ -1593,15 +1717,17 @@ musicians:
     tags: [heavy, premier, open-weights]
     task_tags: [code, reasoning, review, writing]
     modality_tags: [text]
-    notes: "Successor to V3. V3 endpoints retire 2026-07-24."
-    last_verified: "2026-04-29"
-    verified_via: [vendor_docs, version_research_2026_04_29]
+    notes: "Successor to V3. V3 endpoints retire 2026-07-24. GA confirmed by the official changelog 2026-09-26 (model ID deepseek-v4-pro unchanged)."
+    last_verified: "2026-09-26"
+    verified_via: [vendor_docs, version_research_2026_04_29, refresh_2026_09_26]
 
   deepseek-v4-flash:
     provider: deepseek
     family: "DeepSeek V4"
     released: "2026-04-24"
-    status: preview
+    status: superseded
+    superseded_by: deepseek-v4.1-flash
+    supersession_note: "V4.1 Flash replaced V4 Flash at API model ID deepseek-flash (official changelog, verified 2026-09-26)."
     context_window: 1000000
     max_output_tokens: 32768
     architecture: "284B total / 13B active"
@@ -1610,9 +1736,26 @@ musicians:
     tags: [standard, fast, open-weights]
     task_tags: [code, transform, classification, tool-use]
     modality_tags: [text]
-    notes: "Cheap-tier DeepSeek V4. Fast inference."
-    last_verified: "2026-04-29"
-    verified_via: [vendor_docs, version_research_2026_04_29]
+    notes: "Cheap-tier DeepSeek V4. Fast inference. Superseded at the deepseek-flash API ID by V4.1 Flash; retained as documented history."
+    last_verified: "2026-09-26"
+    verified_via: [vendor_docs, version_research_2026_04_29, refresh_2026_09_26]
+
+  deepseek-v4.1-flash:
+    provider: deepseek
+    family: "DeepSeek V4.1"
+    api_model_id: deepseek-flash
+    released: "2026-09"
+    status: ga
+    context_window: null                            # envelope not established by this refresh
+    max_output_tokens: null                         # envelope not established by this refresh
+    available_via: [deepseek-api]
+    tags: [standard, fast]
+    task_tags: [code, transform, classification, tool-use]
+    modality_tags: [text, multimodal]
+    ratings: {}
+    notes: "Multimodal successor to deepseek-v4-flash served at API model ID deepseek-flash (official changelog). Envelope and license pending a fact fold; no Ollama tag is established, so the local deepseek-v3 route is unchanged."
+    last_verified: "2026-09-26"
+    verified_via: [vendor_docs, refresh_2026_09_26]
 
   # ── Mistral additions ───────────────────────────────────────────────────────
 
@@ -1664,6 +1807,19 @@ musicians:
     notes: "Mistral's hosted flagship. Competes with mid-tier frontier models."
     last_verified: "2026-04-29"
     verified_via: [vendor_docs]
+
+  mistral-large-3:
+    provider: mistral
+    family: "Mistral Large"
+    context_window: 256000
+    available_via: [mistral-api, self-host]
+    tags: [heavy, open-weights]
+    task_tags: [reasoning, code, writing, review]
+    modality_tags: [text, vision, multimodal]
+    ratings: {}
+    notes: "GA open-weight multimodal successor to mistral-large-2 (docs: mistral-large-3-25-12). Cost and output ceiling not established by the 2026-09-26 refresh; the local Ollama codestral:22b route is unchanged."
+    last_verified: "2026-09-26"
+    verified_via: [vendor_docs, refresh_2026_09_26]
 
   # ── Phi-4 family (split from base) ──────────────────────────────────────────
 
@@ -2089,6 +2245,248 @@ musicians:
     notes: "Auto-selector that routes prompts to current best free model. Useful as a fallback instrument when specific free models are throttled."
     last_verified: "2026-04-29"
     verified_via: [vendor_docs]
+
+  # ═════════════════════════════════════════════════════════════════════════════
+  # ADDITIONS FROM 2026-09-26 MODEL-PROFILE REFRESH
+  # Creator releases verified from official sources during the broad refresh
+  # (evidence URLs recorded in the refresh manifest). Entries assert release
+  # existence and documented characteristics only — no Marianne route,
+  # entitlement, or live execution is claimed. Ratings omitted pending a
+  # catalog lab pass. Providers community, novasearch, and tencent stayed
+  # blocked in that refresh; their entries are unchanged.
+  # ═════════════════════════════════════════════════════════════════════════════
+
+  yi-lightning:
+    provider: 01-ai
+    family: "Yi"
+    license: proprietary
+    tags: [standard]
+    task_tags: [general, multilingual]
+    modality_tags: [text]
+    notes: "MoE flagship that replaced yi-large as 01.AI's flagship line in 2024-10; completes the successor reference already recorded on the yi-large entry. No Marianne route."
+    last_verified: "2026-09-26"
+    verified_via: [vendor_docs, refresh_2026_09_26]
+
+  arcee-ai/Trinity-Large-Thinking:
+    provider: arcee-ai
+    family: "Arcee Trinity"
+    available_via: [huggingface]
+    tags: [standard, open-weights]
+    modality_tags: [text]
+    notes: "Released successor to the Trinity Large Preview behind the inventoried OpenCode :free route. The free broker slug is preserved unchanged — no successor broker slug or entitlement is established."
+    last_verified: "2026-09-26"
+    verified_via: [vendor_docs, refresh_2026_09_26]
+
+  NousResearch/Hermes-4-405B:
+    provider: nousresearch
+    family: "Hermes 4"
+    available_via: [huggingface, self-host]
+    tags: [heavy, open-weights]
+    task_tags: [reasoning, tool-use, agent]
+    modality_tags: [text]
+    notes: "Hermes 4 405B, released successor to the Hermes 3 405B behind the inventoried OpenCode :free route. The free broker slug is preserved unchanged — no successor broker slug or entitlement is established."
+    last_verified: "2026-09-26"
+    verified_via: [vendor_docs, refresh_2026_09_26]
+
+  command-a-plus-05-2026:
+    provider: cohere
+    family: "Command A+"
+    context_window: 128000
+    max_output_tokens: 64000
+    available_via: [cohere-api]
+    tags: [heavy, subscription]
+    task_tags: [research, writing, retrieval-augmented, tool-use]
+    modality_tags: [text, vision]
+    notes: "Cohere Command A+ (model ID command-a-plus-05-2026), enterprise text/vision model beyond Command R+. Embed v4 and Rerank 3.5 remain represented; no unverified route is added."
+    last_verified: "2026-09-26"
+    verified_via: [vendor_docs, refresh_2026_09_26]
+
+  jais-2:
+    provider: core42-mbzuai
+    family: "Jais"
+    parameters: "70B"
+    available_via: [self-host]
+    tags: [open-weights]
+    task_tags: [multilingual, regional]
+    modality_tags: [text]
+    notes: "Jais 2 — the 70B Arabic open-weight successor to Jais-30B (MBZUAI/Inception/Cerebras announcement). Separate entry; jais-30b-chat retained."
+    last_verified: "2026-09-26"
+    verified_via: [vendor_docs, refresh_2026_09_26]
+
+  distil-whisper/distil-large-v3.5:
+    provider: hugging_face
+    family: "Whisper distillation"
+    tags: [fast, open-weights, offline]
+    modality_tags: [audio-in]
+    notes: "distil-large-v3.5 from the official distil-whisper organization; the distil-whisper-large-v3 entry is retained."
+    installable: true
+    last_verified: "2026-09-26"
+    verified_via: [vendor_docs, refresh_2026_09_26]
+
+  eleven_v3_conversational:
+    provider: elevenlabs
+    family: "ElevenLabs v3"
+    tags: [premier, fast]
+    task_tags: [conversational, streaming]
+    modality_tags: [speech-out]
+    notes: "ElevenLabs' expressive low-latency conversational speech model, listed alongside flagship eleven_v3; both retained, neither replaced."
+    installable: false
+    last_verified: "2026-09-26"
+    verified_via: [vendor_docs, refresh_2026_09_26]
+
+  flux-2-pro:
+    provider: black_forest_labs
+    family: "FLUX.2"
+    tags: [premier, thorough]
+    modality_tags: [image-gen]
+    notes: "Current FLUX.2 Pro commercial image generation, published beside FLUX.1 Pro/Dev/Schnell. No API route or entitlement asserted."
+    installable: false
+    last_verified: "2026-09-26"
+    verified_via: [vendor_docs, refresh_2026_09_26]
+
+  seedream-5.0-pro:
+    provider: bytedance
+    family: "Seedream"
+    tags: [premier, thorough]
+    modality_tags: [image-gen]
+    notes: "ByteDance Seed's Seedream 5.0 Pro (July 2026), superseding the 4.5 release; the historical SDXL-Lightning research entry is retained."
+    installable: false
+    last_verified: "2026-09-26"
+    verified_via: [vendor_docs, refresh_2026_09_26]
+
+  ideogram-4.0:
+    provider: ideogram
+    family: "Ideogram"
+    license: open-weights
+    available_via: [ideogram-api, self-host]
+    tags: [premier, open-weights]
+    modality_tags: [image-gen]
+    notes: "Ideogram 4.0, released with open weights and an API, succeeding Ideogram v3. No installed Marianne client route is claimed."
+    last_verified: "2026-09-26"
+    verified_via: [vendor_docs, refresh_2026_09_26]
+
+  recraft-v4.1:
+    provider: recraft
+    family: "Recraft"
+    license: proprietary
+    available_via: [recraft-api]
+    tags: [premier]
+    modality_tags: [image-gen]
+    notes: "Recraft V4.1, the current image-design release after Recraft v3. No installed API client is claimed."
+    installable: false
+    last_verified: "2026-09-26"
+    verified_via: [vendor_docs, refresh_2026_09_26]
+
+  hidream-o1-image:
+    provider: hidream
+    family: "HiDream-O1"
+    license: open-weight
+    available_via: [self-host, huggingface]
+    tags: [open-weights]
+    modality_tags: [image-gen]
+    notes: "HiDream's current unified image-generation model after HiDream-I1 Full; the earlier specialist entry is retained."
+    installable: true
+    last_verified: "2026-09-26"
+    verified_via: [vendor_docs, refresh_2026_09_26]
+
+  ltx-2:
+    provider: lightricks
+    family: "LTX-2"
+    available_via: [self-host]
+    tags: [open-weights]
+    modality_tags: [video-gen, audio-gen]
+    notes: "LTX-2 with synchronized audio/video generation, announced in the official LTX repository; ltx-video is retained as the earlier release."
+    last_verified: "2026-09-26"
+    verified_via: [vendor_docs, refresh_2026_09_26]
+
+  meta-llama/Llama-4-Maverick-17B-128E-Instruct:
+    provider: meta
+    family: "Llama 4"
+    available_via: [huggingface, self-host]
+    tags: [heavy, open-weights]
+    task_tags: [research, writing, code]
+    modality_tags: [text, vision, multimodal]
+    notes: "Llama 4 Maverick (17B active / 128 experts), natively multimodal successor line to Llama 3. The local Ollama llama3.3:70b tag is retained until a replacement route is evidenced."
+    last_verified: "2026-09-26"
+    verified_via: [vendor_docs, refresh_2026_09_26]
+
+  nemotron-3.5-lightning-30b-a3b:
+    provider: nvidia
+    family: "Nemotron 3.5"
+    tags: [standard]
+    task_tags: [code, reasoning]
+    modality_tags: [text]
+    notes: "NVIDIA's newest announced Nemotron LLM (3.5 Lightning 30B-A3B), beyond catalogued Nemotron 3 Super/Nano. No OpenRouter free broker slug is invented."
+    last_verified: "2026-09-26"
+    verified_via: [vendor_docs, refresh_2026_09_26]
+
+  openbmb/MiniCPM-V-4.6:
+    provider: openbmb
+    family: "MiniCPM-V"
+    license: apache-2.0
+    available_via: [self-host, huggingface]
+    tags: [quick, fast, open-weights]
+    task_tags: [multimodal, vision]
+    modality_tags: [text, vision, multimodal]
+    notes: "MiniCPM-V 4.6, a newer small vision model than catalogued MiniCPM-V 2.6; the 2.6 entry is retained."
+    installable: true
+    last_verified: "2026-09-26"
+    verified_via: [vendor_docs, refresh_2026_09_26]
+
+  bge-m3:
+    provider: bge
+    family: "BGE"
+    available_via: [self-host, huggingface]
+    tags: [free, open-weights, offline, oss-default]
+    task_tags: [multilingual]
+    modality_tags: [embedding]
+    notes: "BGE-M3, multilingual multigranular embedding beyond English-only bge-large-en-v1.5; the English baseline entry is retained."
+    installable: true
+    last_verified: "2026-09-26"
+    verified_via: [vendor_docs, refresh_2026_09_26]
+
+  nomic-ai/nomic-embed-text-v2-moe:
+    provider: nomic
+    family: "Nomic Embed"
+    license: apache-2.0
+    available_via: [self-host, huggingface]
+    tags: [free, open-weights, offline, oss-default]
+    task_tags: [multilingual]
+    modality_tags: [embedding]
+    notes: "nomic-embed-text-v2-moe, multilingual MoE text embedding beyond v1.5; the separate nomic-embed-vision-v1.5 entry is retained."
+    installable: true
+    last_verified: "2026-09-26"
+    verified_via: [vendor_docs, refresh_2026_09_26]
+
+  jina-embeddings-v5-text-small:
+    provider: jina
+    family: "Jina Embeddings"
+    available_via: [jina-api, self-host]
+    tags: [standard, open-weights]
+    modality_tags: [embedding]
+    notes: "Jina's current text embedding release beyond catalogued embeddings-v3; specialized historical entries are retained."
+    last_verified: "2026-09-26"
+    verified_via: [vendor_docs, refresh_2026_09_26]
+
+  jina-reranker-v3.5:
+    provider: jina
+    family: "Jina Reranker"
+    available_via: [jina-api, self-host]
+    tags: [standard, open-weights]
+    modality_tags: [reranking]
+    notes: "Jina's current reranker beyond catalogued reranker-v2; the multilingual v2 base entry is retained."
+    last_verified: "2026-09-26"
+    verified_via: [vendor_docs, refresh_2026_09_26]
+
+  voyage-4-large:
+    provider: voyage_ai
+    family: "voyage-4"
+    tags: [premier]
+    modality_tags: [embedding]
+    notes: "Voyage AI's current MoE embedding model beyond catalogued voyage-3; no local client is invented."
+    installable: false
+    last_verified: "2026-09-26"
+    verified_via: [vendor_docs, refresh_2026_09_26]
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # USE-CASE CHAINS — ranked recommendations per category

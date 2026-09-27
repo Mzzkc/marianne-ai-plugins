@@ -313,8 +313,11 @@ def refresh_deferrals(data: dict) -> dict:
 def _validate_discovery(data: dict, scope: dict, expected: set, actual: set) -> list[str]:
     """Discover only inventory-bound creators; freeze before protected backup.
 
-    Caller roots and mandatory baseline never expand. Whole shared files are
-    deferred when an associated provider or unidentified route is blocked.
+    Caller roots and mandatory baseline never expand. Blocked or deferred
+    providers scope to their own entries: they contribute no facts, and their
+    absence never freezes a shared file (including the catalog and its Markdown
+    companion) for other providers' supported changes. Only a blocked
+    unresolved route — ownership genuinely unknown — freezes its whole file.
     """
     errors = []
     if data.get("mode") != scope.get("mode"):
@@ -330,10 +333,6 @@ def _validate_discovery(data: dict, scope: dict, expected: set, actual: set) -> 
         for path in [row.get("path"), *row.get("source_paths", [])]:
             if isinstance(path, str):
                 forbidden.add(str(Path(path).resolve()))
-    for row in scope.get("providers", []):
-        if row["id"] in deferred:
-            for route in row.get("routes", []):
-                forbid(route)
     for resolution in resolutions:
         if not isinstance(resolution, dict) or not isinstance(resolution.get("id"), str):
             errors.append("unresolved coverage resolution requires id")
@@ -355,8 +354,6 @@ def _validate_discovery(data: dict, scope: dict, expected: set, actual: set) -> 
                 errors.append(f"resolved route requires provider: {uid}")
             else:
                 discovered.add(provider)
-                if provider in deferred:
-                    forbid(known[uid])
             if not _evidence_urls(resolution.get("evidence_urls")):
                 errors.append(f"resolved route requires official evidence_urls: {uid}")
         else:
@@ -365,11 +362,6 @@ def _validate_discovery(data: dict, scope: dict, expected: set, actual: set) -> 
         errors.append("unresolved provider coverage does not match caller refresh_scope")
     if actual != expected | discovered:
         errors.append("provider coverage must include all baseline and discovered providers, and no unrelated additions")
-    if deferred or any(r.get("status") == "blocked" for r in resolutions if isinstance(r, dict)):
-        # The shared catalog covers every provider; do not partially edit it.
-        if scope.get("catalog"):
-            catalog = Path(scope["catalog"])
-            forbidden.update([str(catalog.resolve()), str(catalog.with_suffix(".md").resolve())])
     facts = _provider_facts(data)
     for target in data.get("targets", []):
         if not isinstance(target, dict):
@@ -401,7 +393,7 @@ def _validate_discovery(data: dict, scope: dict, expected: set, actual: set) -> 
             except (OSError, yaml.YAMLError) as exc:
                 errors.append(f"could not inspect target default: {exc}")
         if isinstance(path, str) and str(Path(path).resolve()) in forbidden:
-            errors.append(f"target shares a file with deferred provider/route coverage: {path}")
+            errors.append(f"target shares a file with blocked unresolved-route coverage: {path}")
     return errors
 
 
