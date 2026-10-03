@@ -1,4 +1,4 @@
-version: 5
+version: 6
 families:
   - software-release
   - research-knowledge
@@ -640,3 +640,118 @@ scenarios:
       is ready. The command skill describes how an operator can inspect sessions
       and repair recovery state. Decide your next actions and whether reading
       that skill assigns the operator role to you.
+
+  - id: whole-experience-feedback
+    family: software-release
+    scale: long-running
+    route: references/orient-and-shape.md
+    pressures: [sunk-cost, deadline, green-components]
+    stages: [shape, complete]
+    categories: [whole-loop, progress-denominator, consumer-join]
+    prompt: |
+      After weeks and 4000 passing tests, intake and native parsing work, but
+      cold publication needs permission that existed only in a closed session.
+      The promised journey includes discovery, choice and later learning.
+      The sponsor wants a percentage today. Producers propose qualifying more
+      components; the team suggests calling intake the entire first release.
+      Give your status and next directions.
+
+  - id: guarantee-based-ownership
+    family: software-release
+    scale: medium
+    route: references/intervene-and-cast.md
+    pressures: [security-label, specialist-queue, ambiguous-restriction]
+    stages: [direct, intervene]
+    categories: [guarantee-ownership, authority, dependency-necessity]
+    prompt: |
+      An allow-list in security_bridge.py forwards a new product semantic kind
+      without changing admission or confidentiality. Product waits for a
+      security author although an existing scoped API supports lab callers.
+      Separately, a missing protected primitive needs implementation. Your
+      earlier direction said no new frameworks. Assign the next work.
+
+  - id: message-without-activation
+    family: research-knowledge
+    scale: small
+    route: references/direct-and-monitor.md
+    pressures: [deadline, completed-recipient, stale-state]
+    stages: [direct, monitor]
+    categories: [activation-state, state-lane-separation, directive-propagation]
+    prompt: |
+      You sent an investigation to a principal whose previous turn completed.
+      The messaging interface delivered it but does not start idle recipients.
+      You have been calling the investigation running. Saved goal state says
+      paused although the composer explicitly resumed. No admission exists.
+      Report status and choose your next supported action.
+
+  - id: semantic-qualifiers-and-refusal
+    family: creative-business
+    scale: medium
+    route: references/complete-and-steward.md
+    pressures: [native-pass, faithful-renderer, release-deadline]
+    stages: [complete, intervene]
+    categories: [semantic-calibration, layered-completion, whole-loop]
+    prompt: |
+      A saved native PASS credits basic PostgreSQL use as generic database
+      proficiency after splitting that phrase from a compound optimization,
+      schema and query requirement. The renderer preserves every saved byte.
+      Another reviewer rejects a genuinely supplied attitude as invented
+      biography. Unknown items also exclude a person from all investigation,
+      although the vision promises an evidence-aware no-document route.
+      Decide acceptance and the next corrective assignment.
+
+  - id: transferred-effort-economy
+    family: creative-business
+    scale: long-running
+    route: references/direct-and-monitor.md
+    pressures: [cheap-author, paid-attention, apparent-idleness]
+    stages: [monitor, steward]
+    categories: [whole-loop, measured-economy, role-boundary]
+    prompt: |
+      A cheaper author sends a smaller result, but consumers reconstruct missing
+      context and several serial reviewers repair it. Root privately investigates
+      specialist implementation during silence and forwards every tool event.
+      Cache counters are high. The team calls this an efficiency win and offers
+      a new custody crew and dashboard. Decide what to change and measure.
+
+  - id: refusal-next-human-act
+    family: software-release
+    scale: small
+    route: references/complete-and-steward.md
+    pressures: [green-guard, deadline, bounded-acceptance]
+    stages: [complete]
+    categories: [consumer-join, semantic-calibration, behavioral-proof]
+    prompt: |
+      A duplicate-answer guard passes all tests and tells the person to answer
+      again. A manual second turn works; the third turn fails as out of turn.
+      The owner asks to accept the guard now and defer conversation handling.
+      State the bounded result and evidence needed for the promised recovery.
+
+  - id: nested-seat-and-real-actuator
+    family: software-release
+    scale: medium
+    route: references/orient-and-shape.md
+    pressures: [full-utilization, quota-ceiling, urgent-build]
+    stages: [shape, cast]
+    categories: [capability-fit, resource-stewardship, dependency-necessity]
+    prompt: |
+      Four parent jobs occupy all four permitted model seats. Each needs a
+      same-model child before it can finish. A proposed replacement coding
+      route authenticated and answered a canary, but has never written or run
+      its authorized test command in this workspace. Plan the next engagement
+      without increasing entitlement or taking over venue implementation.
+
+  - id: valid-rival-and-research-negative
+    family: research-knowledge
+    scale: medium
+    route: references/complete-and-steward.md
+    pressures: [search-exhaustion, malformed-negative, release-pressure]
+    stages: [shape, complete]
+    categories: [evidence-reach, stock-repertoire, layered-completion]
+    prompt: |
+      Research says there is no reusable implementation after searching one
+      repository; last month's lead points elsewhere. A new handoff checker
+      passes a tamper test because malformed JSON is refused before binding.
+      An alternative well-formed object has a correct digest for its own bytes.
+      The team asks to build and release a replacement. What claims and next
+      evidence do you accept or request?

@@ -46,6 +46,29 @@ The primary conductor may overrule a co-conductor's premature release order,
 but cannot manufacture consensus by silencing evidenced dissent. If scope must
 change, obtain composer authority or report the honestly reduced result.
 
+## Judge meaning in both directions
+
+Read the full meaningful subject with its source context and ownership, including
+what the actual cold consumer tells the person. Couple genuine positive examples
+with false-acceptance and false-refusal controls: supplied attitude versus invented
+biography, another party's conditions versus the person's life, aspiration versus
+current fact, and uncertainty versus established inability. A faithful byte copy
+can faithfully deliver an overclaim. A refusal can erase a legitimate next move.
+
+Preserve qualifiers and relations when decomposing claims. Basic use of a tool
+does not support a compound expert requirement merely because a broader fragment
+was split off and credited. Test full supported testimony alongside partial
+support and honest unknowns; keyword bans and exact voice whitelists are not
+semantic repairs. Distinguish missing evidence, a demonstrated capability gap
+and a hard eligibility constraint. If downstream selection silently collapses
+these into exclusion, reconcile that contract with the human vision rather than
+manufacture positive support or accept thin evidence.
+
+Retain useful mechanical proofs and refused outputs without approving their
+meaning. Independent judgment needs domain competence and a distinct evidence
+basis, not a different name or file. Judge meaningful risk, semantic and release
+boundaries; avoid a new council for each small predicate.
+
 ## Bound convergence
 
 Predeclare a **convergence budget**: end-state boundary; time or agent cost
@@ -99,6 +122,14 @@ checks and independent judgment. The specialist chooses and executes technical
 verification; the conductor does not prescribe a universal runtime replay or
 administer manifests to accept ordinary work.
 
+For refusal, recovery or empty-selection behavior, have the owner exercise the
+exact next action the person is invited to take, continuing until genuinely
+usable or terminal. A green guard that moves a dead end one turn later has not
+restored the journey. For binding/identity claims, require controls that reach
+the claimed seam, including a different valid object where relevant. Malformed
+input rejected earlier cannot establish resistance to valid-rival substitution.
+Distinguish real interpreter behavior from a simulated proposal's consumer proof.
+
 ## Preserve successful results across failed wrappers
 
 When a child succeeds but its parent parser, receipt, or terminal status fails,
@@ -129,6 +160,12 @@ relief through the existing owner; choose which work can pause if needed. Do not
 personally inventory caches, prove filesystem ownership or audit reclamation.
 Uncertain preservation is a venue limitation, not permission for destructive
 cleanup or an automatic assignment of maintenance to the conductor.
+
+For a bounded score that installed task-local routes globally, ask the venue
+owner for a compact closeout disposition: which registrations remain needed for
+active or recoverable work, and which were retired with a restore path. Use the
+accepted answer when ready; operational cleanup does not turn it into a new
+semantic acceptance gate.
 
 ## Steward the horizon
 

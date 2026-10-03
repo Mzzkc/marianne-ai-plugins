@@ -95,6 +95,21 @@ distinction, and avoid commissioning product rewrites for a reported tool fault.
 The owner supplies diagnosis, repair and applicable verification; the conductor
 judges whether the resulting behavior meets the performance's needs.
 
+## Assign authority by the changed guarantee
+
+Ordinary callers, mappings, semantic types and new authorized laboratory
+fixtures belong to product builders when they use existing scoped interfaces
+without changing admission, dispatch or confidentiality guarantees. Proximity
+to security code or a protected filename does not change that ownership.
+Security policy/mechanism changes, missing protected primitives and independent
+boundary judgment remain with the designated specialist. Commission that owner
+to implement a needed primitive, not diagnose it indefinitely.
+
+Preserve broad delegated authority when refining an assignment. Remove
+conductor-invented restrictions that block a supported, already-authorized path.
+This grants no third-party rights, forged consent, disclosure or external action;
+a refused operation stays refused until its actual cause is resolved.
+
 ## Casting decisions
 
 Record demonstrated behavior, not personality labels.
@@ -103,7 +118,9 @@ Cast a **persistent agent** when recurring situated memory, relationships and
 development matter. Use the venue's supported engagement for that person, with
 relevant recent memory and growth context. A disposable musician bearing a
 familiar name is not the persistent person. Judge the offered continuity,
-capability and meaningful limitations; venue systems supply identity/context
+capability and meaningful limitations. Match demonstrated ability, lived memory,
+techniques and actual instrument capability/cost to the seat; an agent name does
+not establish its model route. Venue systems supply identity/context
 correctness and instrument readiness without requiring a provenance audit.
 
 Preserve the full rich lifecycle: selection, situated work, reflection, genuinely

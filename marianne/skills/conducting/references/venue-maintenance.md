@@ -219,6 +219,39 @@ fail-closed and stop controls must report actual settlement or an explicit
 limitation. Missing enforcement does not authorize the conductor to simulate a
 guarantee with manual bookkeeping.
 
+For temporary instrument registrations, compare transport, exact model,
+timeout, invocation, and wrapper side effects against qualified existing
+profiles before creating aliases. Use supported score-level model and timeout
+settings where equivalent; preserve distinct admission or outcome hooks until
+their behavior is proved through another supported mechanism. After a run is
+settled or deliberately retired, check active, scheduled, paused and recoverable
+consumers before archiving its exact registrations. Keep the score and wrapper
+source, record a restore path, refresh through the supported venue mechanism,
+and verify surviving routes.
+
+
+## Make the offered interface carry its guarantees
+
+Use existing typed configuration to couple caller, child, validation and wrapper
+budgets while preserving explicit overrides and absolute bounds. Qualify capacity
+with the actual complete input and consumer geometry within its data authority;
+a small public fixture cannot prove a larger private workload fits. Isolate
+structured stdout from warnings and return privacy-safe failure stage/class and
+available recovery, not a content-free refusal or leaked payload.
+
+Distinguish message delivery from turn activation; expose actionable idle state
+and an assignment operation that starts the recipient or reports why it cannot.
+Keep persisted execution/goal state and resume controls coherent without a
+parallel ledger. Durable results must reach the normal cold consumer with its
+necessary state and legitimate permission; a late answer cannot reconstruct a
+lost person's choice. Preserve useful output without a second model call where
+supported, but never synthesize missing authority to publish it.
+
+Exercise the actual installed package and consumer early. Scope resource/process
+oracles to their owned run, retaining controls that catch real leaks while
+excluding unrelated activity. Batch coherent qualification, inherit unchanged
+proof and retain historical failed runs. Preserve identity and rich lifecycle
+when repairing shared binder/checker or unfinished-phase recovery seams.
 
 ## Owner diagnosis before repair
 
@@ -239,4 +272,3 @@ identity, class, smallest discriminating probe, and one owner. Use an explicit
 joint boundary only when a mixed cause cannot truthfully have one owner. Do not
 fan product writers across harness-shaped failures. After repair, rerun the same
 bound proof; a different green check does not reclassify the original failure.
-

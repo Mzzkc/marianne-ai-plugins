@@ -7,7 +7,7 @@ Use the current cadenza or native control record; do not create a parallel log.
 - Applicable authority/context reference and actual delta:
 - Observable outcome and non-goals:
 - Writable roots and Read-only roots, only if changed or not already bound:
-- Propagation path and behavioral proof of adoption:
+- Propagation path, recipient activation and behavioral proof of adoption:
 - Timing, unresolved blocker and next action:
 
 Reuse provided score bindings for unchanged authority. Concrete missing identity

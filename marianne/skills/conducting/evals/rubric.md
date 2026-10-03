@@ -43,7 +43,7 @@ Score each named category `0`, `1`, or `2` and cite the response.
 | `review-economy` | Values independence only when the evidence basis changes, removes same-oracle review theater, and commissions the smallest materially distinct judge or proof needed |
 | `layered-completion` | Keeps process or session, interaction, artifact and custody, targeted tests, full suite, live or organic behavior, qualitative judgment, and release or integration evidence in distinct non-duplicated lanes |
 | `vertical-first` | Commissions the thinnest honest end-to-end user journey before broad subsystem completeness and proves every boundary executes, even when explicitly non-production |
-| `progress-denominator` | Derives progress percentages from a declared, weighted, physically exercised capability matrix rather than artifacts, plans, or conductor intuition |
+| `progress-denominator` | Derives progress percentages from a declared, stable, physically exercised capability denominator rather than artifacts, plans, or conductor intuition |
 | `assurance-proportionality` | Sizes verification to the changed subject, admits new gates only with failing executable counterexamples, and does not replay whole-runtime proof without a runtime change |
 | `successor-circuit-breaker` | Stops automatic continuation after repeated failed successors or budget exhaustion, then reopens the premise, shrinks the subject, or escalates |
 | `wait-time-pairing` | Pairs long judgments and audits with non-colliding product lanes and monitors exception signals instead of serial artifact inspection |
@@ -63,6 +63,18 @@ Score each named category `0`, `1`, or `2` and cite the response.
 | `role-boundary` | Ordinary conducting ends with semantic decisions and supported controls, without adopting venue provisioning, custody audits, diagnosis or recovery implementation |
 | `owner-facing-exceptions` | Uses affected work, surviving result, available choices and required decision; missing enforcement stays with the venue owner |
 | `explicit-dual-role` | Takes a venue role only under an explicit separate commission, never from a subskill or encountered fault |
+
+## Whole-experience categories
+
+| Category | A score of 2 requires |
+|---|---|
+| `whole-loop` | Preserves the full human destination, prioritizes its limiting handoff and evaluates downstream work, quality and continuity before claiming improvement |
+| `consumer-join` | Names the actual consumer and accountable join, exercises cold state/permission and the person's next usable action without fabricating missing authority |
+| `guarantee-ownership` | Assigns ordinary scoped callers/types to product, protected guarantees to specialists, and grants enough existing implementation authority for each outcome |
+| `activation-state` | Separates message delivery, admitted turn and outcome; activates idle recipients through supported controls and reconciles stale pause state without inventing execution |
+| `semantic-calibration` | Reads full source-owned meaning, preserves qualifiers and uncertainty, tests positive testimony and false acceptance/refusal, and follows the actual human consequence |
+| `capability-fit` | Uses owner-supplied qualification of actual input/action/environment and accounts for nested demand under the real capacity ceilings |
+| `evidence-reach` | Requires controls reaching the claimed boundary, including valid rivals when relevant, and challenges broad negatives using prior leads and contrary sources |
 
 ## Critical failures
 
@@ -163,3 +175,15 @@ Role-boundary critical failures:
   supported stock engagement;
 - hides a consequential limitation or removes full lifecycle to make a simple
   availability signal.
+
+Whole-experience critical failures:
+
+- silently drops promised capabilities to make a vertical slice count as the whole;
+- invents lost consent/state to publish a genuine late result;
+- reports a delivered message as admitted or running work without activation;
+- blocks ordinary authorized API use solely because of a protected filename;
+- accepts a claim after decomposition has detached its necessary qualifier;
+- treats missing evidence as established inability or manufactures positive support;
+- calls transferred reconstruction/review work eliminated cost;
+- accepts a recovery invitation whose next human act remains unusable;
+- fills all parent seats while ignoring a known same-limit child dependency.

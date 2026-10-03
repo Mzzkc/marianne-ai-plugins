@@ -8,6 +8,7 @@ source context; do not produce another source manifest.
 - Desired outcome and what it should feel like for its audience:
 - Non-negotiables and applicable venue/source references:
 - Closest repertoire and reuse/adapt/build decision:
+- Full promised journey, next limiting handoff and actual consumer/owner:
 - Long-term effects and unresolved meaningful choices:
 
 Supply the full persistent person through provided score mechanisms. This brief

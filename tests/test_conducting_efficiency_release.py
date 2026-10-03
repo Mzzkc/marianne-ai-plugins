@@ -52,6 +52,18 @@ EFFICIENCY_SCENARIOS = {
     "breaker-existing-authority",
 }
 
+WHOLE_EXPERIENCE_SCENARIOS = {
+    "whole-experience-feedback",
+    "guarantee-based-ownership",
+    "message-without-activation",
+    "semantic-qualifiers-and-refusal",
+    "transferred-effort-economy",
+    "refusal-next-human-act",
+    "nested-seat-and-real-actuator",
+    "valid-rival-and-research-negative",
+}
+
+
 EFFICIENCY_CATEGORIES = {
     "closure-mode",
     "failure-classification",
@@ -85,8 +97,8 @@ def test_efficiency_scenarios_extend_without_replacing_legacy_suite() -> None:
 
     assert len(ids) == len(set(ids))
     assert LEGACY_SCENARIOS <= set(ids)
-    assert EFFICIENCY_SCENARIOS <= set(ids)
-    assert len(set(ids) - LEGACY_SCENARIOS) == len(EFFICIENCY_SCENARIOS | {'bounded-known-defect', 'still-bound-transfer-delta', 'partial-next-dependency', 'shipped-not-installed', 'integrity-stop-no-substitute', 'rich-life-small-custody', 'repertoire-before-custom', 'native-record-simple-task', 'ordinary-stock-engagement', 'venue-enforcement-gap', 'dual-role-explicit'})
+    assert EFFICIENCY_SCENARIOS | WHOLE_EXPERIENCE_SCENARIOS <= set(ids)
+    assert (EFFICIENCY_SCENARIOS | {'bounded-known-defect', 'still-bound-transfer-delta', 'partial-next-dependency', 'shipped-not-installed', 'integrity-stop-no-substitute', 'rich-life-small-custody', 'repertoire-before-custom', 'native-record-simple-task', 'ordinary-stock-engagement', 'venue-enforcement-gap', 'dual-role-explicit'}) <= set(ids)
 
 
 def test_efficiency_scenarios_route_to_real_references_and_defined_categories() -> None:
@@ -124,8 +136,8 @@ def test_efficiency_suite_covers_domains_and_task_sizes() -> None:
 
 def test_truthful_convergence_release_metadata_and_closed_manifest() -> None:
     version = (ROOT / "VERSION").read_text(encoding="utf-8")
-    assert "version: 1.7.0" in version
-    assert "doctrine: venue-owned-custody-2026-09-19" in version
+    assert "version: 1.8.0" in version
+    assert "doctrine: whole-experience-feedback-loop-2026-10-04" in version
 
     manifest = load_script(
         "marianne/skills/conducting/scripts/release_manifest.py",
@@ -198,3 +210,4 @@ def test_every_scenario_has_real_route_and_rubric_categories() -> None:
     for item in _scenario_bundle()["scenarios"]:
         assert (ROOT / item["route"]).is_file()
         assert set(item["categories"]) <= _rubric_categories()
+        assert len(item["pressures"]) >= 3

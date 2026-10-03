@@ -35,6 +35,20 @@ ownership, decide whether to reshape or hold launch; its owner diagnoses and
 corrects the mismatch. Do not inspect rendered topology to operate a normal
 engagement. Product completion still requires meaningful outcome evidence.
 
+## Delivery, activation and actual direction
+
+Check the supported interface's recipient state. Sending a message to an idle
+or completed principal may deliver context without activating a turn. Use the
+supported assignment or follow-up control that starts work, then consume its
+admission/active status or actionable refusal. Do not report a commission as
+running from a sent message, or invent an earlier clock or model failure when
+no execution was admitted.
+
+Reconcile a stale paused goal/run with the composer's resumed direction through
+its owning controls. A brief cannot resume execution, and a user instruction
+does not prove the saved state changed. Report any unavailable control and the
+actual coverage; never create a second goal ledger as a substitute.
+
 ## Coordinate autonomous principals
 
 Treat capable musicians as **autonomous principals** with bounded outcome
@@ -147,6 +161,23 @@ do not establish billing or quota savings. Label unmatched comparisons honestly.
 Use existing event/deadline observation and grouped outcome reports. Read settled
 results once and revisit changed claims; do not personally administer polling,
 log extraction or technical orientation records.
+
+Keep one authoritative current brief with evidence references and material
+obligations. After compaction, reload required identity/memory and the decisions
+needed to act; do not replay the whole growing archive. Stable context prefixes
+and source-bound compact inputs are experiments, not presumed cache savings.
+Compare latency, usage, semantic errors and downstream compatibility before
+adoption; omitted evidence never defaults to support.
+
+Root's private technical speculation is role leakage even without edits. Once
+an expert has the outcome and authority, consume the offered result, wait within
+the communication cadence, or advance independent human-facing work. Batch
+unchanged reports instead of reconstructing every completed tool.
+
+Measure time to the first usable journey, critical-path waiting, rework, defect
+escape and accepted behavior per total paid effort through existing telemetry.
+Include conductor reading and relay as well as author/reviewer work. Distinguish
+reported token/cache counters from reconciled billing and causal savings.
 
 ## Status judgment
 

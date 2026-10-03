@@ -35,6 +35,20 @@ The venue may diagnose sessions, bindings, validators and runtime state; ordinar
 conducting does not inherit those procedures from `command` or another subskill.
 No mandatory expert preflight is required to cast or run an offered engagement.
 
+An assignment must either activate its intended recipient or return an actionable
+reason it cannot. Consume that result separately from message delivery and final
+outcome. For an idle/completed principal, use the offered activating follow-up
+operation; ordinary messaging is sufficient only when its documented semantics
+and observed state support continued work.
+
+Ask the venue to make correct operation the normal path: coupled caller/child
+deadlines, structured output separated from diagnostics, durable completion and
+supported cold continuation. The owner should qualify the actual complete input
+and consumer, not only a small public specimen. Compact outcomes retain safe
+error class, failed stage, surviving work and next available action without
+exposing private content. Unknown cause stays unknown; silence is not quota proof.
+A recurring workaround belongs in the shared subsystem, not a campaign wrapper.
+
 ## Route faults by their effect
 
 A useful exception identifies affected work, surviving results, current limits

@@ -27,6 +27,21 @@ obeying the first literal formulation. Ask the composer when available. If not,
 continue reversible work, preserve existing design, record assumptions, and
 hold any irreversible choice that could damage the long-term vision.
 
+## Keep the whole experience in view
+
+Use the constitution, world model and human acceptance contract as the stable
+destination. A thin slice tests the path; it does not remove difficult user
+capabilities from the denominator. Separate construction, software qualification
+and actual user readiness. Prioritize the current limiting handoff while keeping
+the rest of the promised experience visible.
+
+Treat vision → composition/repertoire → casting/venue → execution/integration →
+semantic judgment/user choice → learning as one feedback loop. For a proposed
+improvement, name its intended benefit and the downstream work, quality or
+continuity it could displace. Transferring work to another seat is not eliminating
+it. Reassess the connected journey before claiming a system improvement; no new
+form or dashboard is required.
+
 ## Reuse the orientation snapshot
 
 Reuse the existing native record as the **orientation snapshot**; a short
@@ -83,6 +98,20 @@ execution capacity; do not require the conductor to prepare dynamic bindings.
 Review each frozen lane when ready, with an explicit later integration join.
 Include shared mutable branch names and memory writers in collision analysis.
 
+## Commission the join before multiplying producers
+
+For each consequential handoff, name the existing producer, actual consumer,
+accountable join owner and what survives a cold restart: data, permission,
+source meaning and necessary state. Have that owner exercise the supported
+path early using a representative complete input. A parser or helper proof is
+not the installed publication, renderer or channel consumer. Survey affected
+consumers when a field or schema changes.
+
+Give explicit implementation authority for necessary missing functions. State
+positive reuse choices and precise non-goals; an ambiguous “no new framework”
+must not forbid the small missing integration. Successful future integration
+cannot be a prerequisite for permission to construct that integration.
+
 ## Make the first graph vertical
 
 Decompose the end state into user-visible capabilities before completing
@@ -96,7 +125,7 @@ silence until every authority layer is complete.
 
 When percentages help a large commission, use a **capability matrix** of named
 user-visible capabilities and physically exercised journeys with an explicit
-denominator. Otherwise describe actual capability directly; do not build a
+stable denominator and evidence for completed units. Otherwise describe actual capability directly; do not build a
 weighted ledger just to report progress.
 Documents, scores, commits, tests, and audits count only as evidence for a
 capability; a conductor's intuitive percentage is not a status metric.
@@ -128,6 +157,14 @@ persist a one-off task.
 One musician with one strong proof may be enough. A fleet is justified by the
 work, not by the availability of agents.
 
+Ask the venue for qualification of the capability the seat will actually use:
+a coding seat needs its authorized write/test action in the intended environment,
+not merely authentication or a tiny answered canary. Count nested demand as well
+as top-level seats. A parent occupying the final model slot while waiting for
+its child can deadlock. Use reported runtime, provider/model and budget limits
+to reserve child headroom or split construction from native qualification;
+never invent entitlement or override the user's capacity ceiling.
+
 ## Enter closure mode deliberately
 
 Enter **closure mode** only when the desired end state is stable, remaining
@@ -144,3 +181,9 @@ full Rosetta patterns, then explain which structures they reuse, adapt or reject
 The conductor judges fit to the intended outcome; expert source discovery and
 score construction stay with the specialist. For persistent people, start with
 the venue's supported stock engagements rather than a blank composition.
+
+For broad research negatives such as “nothing exists” or “only option,” ask the
+research owner to check prior leads, current physical evidence and a contrary
+source class before accepting the claim. Distinguish sourced facts, scoped
+absence and conditional synthesis. A narrow repository search cannot establish
+that a shipped person or useful implementation does not exist.

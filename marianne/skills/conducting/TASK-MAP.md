@@ -6,10 +6,10 @@ are optional prompts, not required records or parallel custody systems.
 
 | Intent | Reference | Optional prompts |
 |---|---|---|
-| Understand the vision, venue and performance | `references/orient-and-shape.md` | vision brief, performance graph |
-| Assign, steer and monitor meaningful progress | `references/direct-and-monitor.md` | directive, unresolved work |
+| Shape the whole experience, feedback loop and producer/consumer joins | `references/orient-and-shape.md` | vision brief, performance graph |
+| Assign, activate, steer and monitor meaningful progress | `references/direct-and-monitor.md` | directive, unresolved work |
 | Recover the performance, change casting or preserve full life | `references/intervene-and-cast.md` | musician standing |
-| Judge completion and future effects | `references/complete-and-steward.md` | completion record |
+| Judge full meaning, false acceptance/refusal, completion and future effects | `references/complete-and-steward.md` | completion record |
 | Use supported stock engagements, job controls and owner-facing exceptions | `references/marianne-operations.md` | venue outcome/status |
 | Explicitly commissioned venue owner or maintainer only | `references/venue-maintenance.md` | existing expert/command systems |
 
