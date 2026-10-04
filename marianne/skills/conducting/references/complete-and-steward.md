@@ -101,6 +101,14 @@ Preserve baseline GREEN for already-correct behavior rather than manufacture RED
 
 ## Keep completion evidence layered
 
+Aim for one accepted final submission through internal construction, feedback
+and repair. Use focused checks while building and the applicable complete
+qualification on the settled candidate; repeat affected evidence when its subject
+changes. Preserve required full-suite and real-environment checks. Internal
+iterations are part of delivery, not requests for the composer to rediscover the
+missing remainder. Native completion with weak or absent validations proves no
+more than its configured contract.
+
 Keep these lanes distinct and include only those applicable to the claim:
 
 - process or session state;
@@ -168,6 +176,19 @@ accepted answer when ready; operational cleanup does not turn it into a new
 semantic acceptance gate.
 
 ## Steward the horizon
+
+Distinguish product acceptance from outstanding lifecycle work. An accepted
+product can coexist with a funded, active life continuation; report both, and
+keep the whole engagement open until its remaining obligations are fulfilled.
+Runtime execution learning, personal lived learning and product feedback serve
+different purposes. Look for each to change its next relevant action, including
+later recall where promised, rather than counting stored words as growth.
+
+After a verified shared correction, have its owner improve the existing binder,
+stock engagement or invocation recipe. Subsequent work inherits applicable
+evidence and rechecks changed premises. Exercise a second use without repeating
+the original setup investigation; otherwise administrative work merely moved
+from the conductor to a principal. This needs no new registry or reporting layer.
 
 Long term wins. Evaluate current decisions against future maintainers,
 performances, contracts, users, and likely system evolution. Push back when a

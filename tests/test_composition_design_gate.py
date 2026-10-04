@@ -68,6 +68,37 @@ class CompositionDesignGateTests(unittest.TestCase):
         data["stages"][1]["depends_on"] = ["missing"]
         self.assertTrue(any("missing" in item for item in self._check(data)))
 
+    def test_empty_substantive_sections_fail(self) -> None:
+        for field in ("goal", "authority", "proof_obligations"):
+            for empty in (None, {}, [], ""):
+                with self.subTest(field=field, empty=empty):
+                    data = valid_design()
+                    data[field] = empty
+                    self.assertTrue(any(field in item for item in self._check(data)))
+
+    def test_cyclic_dependencies_fail(self) -> None:
+        for dependency in ("recon", "release"):
+            with self.subTest(dependency=dependency):
+                data = valid_design()
+                data["stages"][0]["depends_on"] = [dependency]
+                self.assertTrue(any("cycle" in item for item in self._check(data)))
+
+    def test_malformed_dependency_is_reported_not_crashed(self) -> None:
+        data = valid_design()
+        data["stages"][1]["depends_on"] = [{"id": "recon"}]
+        self.assertTrue(any("depends_on" in item for item in self._check(data)))
+
+    def test_parallel_diamond_is_not_a_cycle(self) -> None:
+        data = valid_design()
+        data["stages"].insert(2, {"id": "peer", "depends_on": ["recon"]})
+        data["stages"][-1]["depends_on"] = ["verify", "peer"]
+        self.assertEqual(self._check(data), [])
+
+    def test_nonempty_proof_mapping_remains_supported(self) -> None:
+        data = valid_design()
+        data["proof_obligations"] = {"verification.json": ["full suite"]}
+        self.assertEqual(self._check(data), [])
+
     def test_release_requires_reevaluation_stage(self) -> None:
         data = valid_design()
         data["release"]["requires"] = ["recon"]

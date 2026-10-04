@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+from graphlib import CycleError, TopologicalSorter
 from pathlib import Path
 
 import yaml
@@ -35,6 +36,11 @@ def check_design(path: Path) -> list[str]:
     findings = [f"design.{key}: required" for key in sorted(REQUIRED - data.keys())]
     if findings:
         return findings
+    for key, expected in (("goal", dict), ("authority", dict)):
+        if not isinstance(data[key], expected) or not data[key]:
+            findings.append(f"design.{key}: non-empty {expected.__name__} required")
+    if not isinstance(data["proof_obligations"], (list, dict)) or not data["proof_obligations"]:
+        findings.append("design.proof_obligations: non-empty list or mapping required")
     stages = data.get("stages")
     if not isinstance(stages, list) or not stages:
         return ["design.stages: non-empty list required"]
@@ -47,6 +53,7 @@ def check_design(path: Path) -> list[str]:
     if len(ids) != len(set(ids)):
         findings.append("design.stages: ids must be unique")
     known = set(ids)
+    graph: dict[str, set[str]] = {stage_id: set() for stage_id in ids}
     for index, stage in enumerate(stages):
         if not isinstance(stage, dict):
             continue
@@ -55,10 +62,16 @@ def check_design(path: Path) -> list[str]:
             findings.append(f"design.stages[{index}].depends_on: list required")
             continue
         for dependency in dependencies:
-            if dependency not in known:
+            if not isinstance(dependency, str) or dependency not in known:
                 findings.append(
                     f"design.stages[{index}].depends_on: unknown stage {dependency!r}"
                 )
+            elif isinstance(stage.get("id"), str) and stage["id"] in graph:
+                graph[stage["id"]].add(dependency)
+    try:
+        tuple(TopologicalSorter(graph).static_order())
+    except CycleError:
+        findings.append("design.stages: dependency cycle; encode bounded repair as execution control, not a cyclic DAG")
     repair = data.get("repair_loop")
     release = data.get("release")
     if not isinstance(repair, dict):

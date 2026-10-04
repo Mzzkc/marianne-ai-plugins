@@ -18,6 +18,14 @@ description: Use when writing, reviewing, or fixing Marianne score YAML configs,
 | Understanding available features | CLI operations only |
 | Designing multi-stage workflows | |
 
+Invoking a qualified stock engagement with supported task inputs and route binding
+is conducting, not new score authoring. When changing the score's DAG, prompt
+logic, attachment contract or guarantees, use the composing design and release
+gates. For substantial work, encode the required
+construction, consumer integration, independent review, repair and reevaluation;
+one or two sheets are not a substitute for those behaviors. Atomic operations
+can remain small within that performance.
+
 ---
 
 ## Quick Syntax Reference
@@ -50,7 +58,8 @@ sheet:
 `required` defaults to `false` for legacy compatibility. Set it to `true` for
 every load-bearing persistent-agent identity, memory, and cadenza attachment so
 missing context fails before execution. Runtime context-delivery receipts prove
-the resolved paths and hashes actually assembled into the prompt.
+the resolved paths and hashes actually assembled into the prompt; they do not
+prove that the recipient applied the context or achieved the intended behavior.
 
 **Directory cadenzas are NOT recursive** — only the immediate children of the directory are injected. Subdirectories are silently ignored. If you need a deeper tree, flatten the input dir or list each subdir as its own cadenza item. A common pattern: a small `instrument: cli` preflight stage curates/copies the relevant files into one flat directory the cadenza points at.
 
@@ -81,6 +90,11 @@ the composing skill's design gate. After `mzt validate`, run
 `composing/scripts/check_score_release.py` to resolve load-bearing injections,
 enforce workspace/fallback/validation policy, and write the exact candidate
 digest. Any score or injection change after evaluation requires reevaluation.
+These are structural and identity checks, not proof of the product outcome.
+Give each consequential output an actual consumer and behavioral validation;
+connect failed consumption to owned repair and reevaluation using supported
+execution and recovery controls. A pattern example inherits no stronger
+guarantee than its actual configured checks execute.
 
 ---
 
@@ -104,7 +118,9 @@ ${CLAUDE_PLUGIN_ROOT}/docs/ref/patterns.md     — load for tier 2+
 ${CLAUDE_PLUGIN_ROOT}/docs/ref/advanced.md     — load for tier 3+
 ```
 
-**When this skill is invoked directly** (e.g., `/marianne:score-authoring`), load all three docs — the caller may need any level of detail.
+**When this skill is invoked directly** (e.g., `/marianne:score-authoring`), select
+the tier from the actual score or requested behavior. Load deeper references when
+their features are implicated; the invocation itself does not require all tiers.
 
 ---
 

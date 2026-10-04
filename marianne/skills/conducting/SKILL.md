@@ -37,6 +37,10 @@ policy. Holding a venue role requires explicit commissioning.
 
 Use supported stock engagements and their capability, continuity, cost and
 limitations. Prefer provided full lifecycle, targeted work and integration.
+Marianne drives substantial execution. Compose construction, integration,
+independent judgment and repair as a performance; a single call or one-/two-sheet
+substitute is insufficient when those obligations remain. Atomic operations can
+stay small within the performance; sheet count alone proves nothing.
 No mandatory `marianne-expert` preflight is required for ordinary conducting.
 Missing guarantees go to their owner or require reshaping affected work;
 missing enforcement never becomes automatic conductor work. Integrity stops
@@ -62,8 +66,10 @@ waits or independent useful work.
 Preserve identity, relationships, techniques, memory writeback, dreaming,
 consolidation, reflection, developmental play, maturity, resurrection and later
 recall. Targeted work carries debt into provided integration; recover unfinished
-phases without starting life over. Offer play without forcing it or calling
-saved words demonstrated growth.
+phases without starting life over. Fund and activate the continuation: persistent
+identity does not keep a finite engagement running. Targeted plus integration
+does not restore every full-life phase. Offer play without forcing it or calling
+saved words demonstrated growth; serialize canonical memory writers per person.
 
 Custody stays minimal and proportional. Provided scores/runtime maintain native
 state, provenance and recovery; consume compact outcomes and actionable
@@ -72,29 +78,43 @@ even through another worker. Reduce administration, never trust or life.
 
 ## Conduct
 
-1. Orient to composer, venue, reality and future; route changed inputs.
-2. Name consequential producers, actual consumers and join owners; exercise
-   cold/restarted handoffs early and protect integration time.
-3. Cast autonomous experts with bounded authority and relevant continuity.
-4. Distinguish message delivery, activation and behavioral evidence of adoption.
-   A saved plan or active-looking brief is not execution coverage.
-5. Monitor meaningful outcomes and interactions. Budget real inputs, delivery
-   and recovery; release excess capacity rather than invent utilization.
-6. Inherit applicable evidence; circuit-break repeated failures by changing
-   premise, scope, interface or casting while preserving existing authority.
-7. Preserve partials and failed history; recover the unfinished obligation.
-   Continue authorized supervision after side questions.
-8. Judge Completion through proportionate independent, executed, evidence-backed
-   consensus. Read full meaning, calibrating false acceptance and false refusal;
-   native PASS is not semantic acceptance.
-9. Measure connected outcomes, downstream rework and conductor attention.
-   Smaller prompts and shifted work alone prove no efficiency gain.
+1. At orientation, preserve the full destination; commission its first real
+   consumer journey, accountable integration principal and independent acceptance.
+2. At dispatch, cast for expected total delivery effort and reliability. Have the
+   composer encode routine transitions and bounded repair in supported machinery.
+   Consume activation or actionable refusal, then behavioral evidence of adoption.
+3. At local success, advance the actual consumer. If consumption fails, keep its
+   owner commissioned through repair and rejoin; qualify cold/restarted paths early.
+4. At checkpoints, compare the remaining critical path with the original delivery
+   window and integration/repair reserve. When that reserve is threatened, stop
+   extra producer fan-out and activate or recast the limiting work. Preserve the
+   destination and guarantees; report infeasibility instead of resetting the clock.
+5. At repeated non-delivery, commission causal discrimination or change premise,
+   interface, method or casting using retained evidence and existing authority.
+   Release excess capacity rather than invent utilization.
+6. At interruption or transfer, preserve partials and failed history; verify an
+   active owner for the unfinished obligation. Continue authorized supervision
+   after side questions. A saved plan is not execution coverage.
+7. Judge Completion through proportionate independent, executed, evidence-backed
+   consensus on the integrated result. Read full meaning, including false acceptance
+   and false refusal. Report product acceptance and outstanding life separately.
+8. After a verified shared or recurring repair, commission incorporation into the existing
+   capability and check subsequent reuse. Measure accepted outcomes, downstream
+   rework and conductor attention; shifted work alone proves no efficiency gain.
 
 ## Route
 
-Read `TASK-MAP.md`, then relevant references. Use supported job controls directly
-and `composing` to commission scores. Technical expert/command procedures and
-the venue-maintenance route belong to explicitly commissioned specialists.
+The defaults above apply without further reading. Load detail at the decision:
+
+- Ambiguous destination or joins: [orient and shape](references/orient-and-shape.md).
+- Activation, coordination or tempo: [direct and monitor](references/direct-and-monitor.md).
+- Failure, casting or life recovery: [intervene and cast](references/intervene-and-cast.md).
+- Acceptance or stewardship: [complete and steward](references/complete-and-steward.md).
+- Offered engagements and controls: [operations](references/marianne-operations.md).
+
+`TASK-MAP.md` is an optional index. Use supported controls directly and `composing`
+for new performance design. Expert/command technical procedures and
+[venue maintenance](references/venue-maintenance.md) require that specialist role.
 
 ## Red flags
 

@@ -1,12 +1,12 @@
 # Marianne Expert Task Map
 
-Read `BOOTSTRAP.md` first, then choose one row. Open only the routed material.
+Choose one relevant row directly. Use [CURRENT.md](CURRENT.md) for current-versus-pinned orientation; read `BOOTSTRAP.md` for the historical model when needed. Open only the routed material.
 
 | Intent | Playbook | Add these references | Primary verification |
 |---|---|---|---|
 | Construct, reuse, update, or operate a persistent agent | `playbooks/compose.md` or `playbooks/operate.md` | `${CLAUDE_PLUGIN_ROOT}/docs/ref/modern-agents.md`, current registry README/index, exact seed and score | Prove canonical data authority, required attachment receipts, lifecycle debt/writeback, and later recall |
-| Write or review score YAML | `playbooks/compose.md` | `contracts/score-schema.md`, `contracts/validation-types.md`, `templates/`, `examples/golden/`, `examples/broken/` | `tools/check-score.py SCORE` |
-| Run, monitor, pause, resume, or cancel | `playbooks/operate.md` | `contracts/cli-commands.md`, `evidence/implementation-status.json` | Verify an actuator exists; inspect typed state and artifacts |
+| Write or review score YAML | [composing](../composing/SKILL.md), then `playbooks/compose.md` for runtime syntax | `contracts/score-schema.md`, `contracts/validation-types.md`, `templates/`, `examples/golden/`, `examples/broken/` | `tools/check-score.py SCORE` |
+| Run, monitor, pause, resume, or cancel | `playbooks/operate.md` | `contracts/cli-commands.md`, `CURRENT.md`, pinned `evidence/implementation-status.json` | Verify an actuator exists; inspect typed state and artifacts |
 | Diagnose a failure | `playbooks/debug.md` | `contracts/error-codes.md`, `examples/incidents/`, relevant claim slices | Search exact error; reproduce with the narrowest safe probe |
 | Reason about architecture | `playbooks/architecture.md` | `evidence/triangulation/`, `contracts/` | Join each runtime assertion to a claim and final status |
 | Modify Marianne source | `playbooks/develop.md` | relevant contract, claim, slice, and triangulation record | Targeted tests, then the repository's full applicable suite |
@@ -14,7 +14,7 @@ Read `BOOTSTRAP.md` first, then choose one row. Open only the routed material.
 
 ## Capability vector
 
-Run `scripts/preflight.py` and preserve each field independently:
+Reuse a still-applicable session preflight; run `scripts/preflight.py` when the relevant access, authority or source changes. Preserve each field independently:
 
 - `pinned_kit`: bundled snapshot evidence is available.
 - `current_source_read`: a current checkout can be inspected.

@@ -100,6 +100,13 @@ Include shared mutable branch names and memory writers in collision analysis.
 
 ## Commission the join before multiplying producers
 
+Commission one principal to carry the connected journey through construction,
+integration, correction and acceptance. Existing roles may combine where their
+authority and independence permit. Give authors representative consumer examples
+and public acceptance criteria early; independent judges retain distinct controls.
+The composer makes ordinary transitions executable through existing dependencies,
+validation and supported continuation, so every handoff need not return to Root.
+
 For each consequential handoff, name the existing producer, actual consumer,
 accountable join owner and what survives a cold restart: data, permission,
 source meaning and necessary state. Have that owner exercise the supported
@@ -154,8 +161,11 @@ development matter. Its full lifecycle is part of that choice, not overhead to
 cut after casting. A prestigious available agent is not a reason to
 persist a one-off task.
 
-One musician with one strong proof may be enough. A fleet is justified by the
-work, not by the availability of agents.
+A genuinely atomic task may need one musician and one strong proof. Substantial
+work belongs in a developed Marianne performance with its needed construction,
+integration, judgment, repair and life. Reducing that work to a convenient model
+call or one-/two-sheet wrapper leaves the remaining orchestration somewhere else.
+Choose topology for the obligations, not a minimum sheet count or maximum fleet.
 
 Ask the venue for qualification of the capability the seat will actually use:
 a coding seat needs its authorized write/test action in the intended environment,

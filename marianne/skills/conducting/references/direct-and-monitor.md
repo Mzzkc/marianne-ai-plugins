@@ -51,6 +51,20 @@ actual coverage; never create a second goal ledger as a substitute.
 
 ## Coordinate autonomous principals
 
+Commission execution coverage across finite engagements. An installed persistent
+person does not automatically start their next engagement. The supervising owner
+uses supported submission/continuation controls and remains accountable through
+terminal failure, review, repair and rejoin. A successor is running only after
+actual activation; a submitted child is not a completed child.
+
+For substantial work, have the composer connect ready construction lanes to
+settled integration, then independent inspection. Inspection must see the subject
+it judges. REWORK activates the retained repair owner and reevaluation within the
+existing bound; a stopped wrapper routes an exception to the active supervisor.
+On restart, that owner reconciles native state and recovers the unfinished path.
+Qualify these transitions, including a failed consumer and interrupted return;
+a dependency drawing or a prose repair loop alone does not execute them.
+
 Treat capable musicians as **autonomous principals** with bounded outcome
 authority, local judgment, proof obligations, and direct access to relevant
 peers and consumers. Do not funnel every decision or status update through the
@@ -143,6 +157,20 @@ parallel system. If no valuable assignment exists, pause or release the excess
 capacity. Never manufacture utilization to make the orchestra look busy.
 
 ## Measure the complete conducting loop
+
+Carry the composer's delivery window across resumes and successor jobs. A native
+run clock may restart; the commission's elapsed time does not. Derive the latest
+useful integration start from the remaining critical path: integration,
+qualification, repair reserve and dependent lifecycle work. Use observed or
+conservative durations and account for safe overlap rather than summing all lanes.
+
+If the forecast threatens that reserve, stop admitting speculative producers,
+activate a ready waiting consumer, and resolve or recast the limiting obligation.
+Report an infeasible whole promptly with the actual dependency and available
+choices; preserve the original promise and independent authorized work. A short
+delivery target directs these decisions, not weaker gates or renamed deadlines.
+The checkpoint demonstrates changed consumer behavior or resolved uncertainty;
+accurate lateness narration alone does not change the trajectory.
 
 Calibrate budgets from observed input volume, first useful artifact, tool/suite
 runtime, and terminal handoff. Reserve time for the actual receipt consumer.

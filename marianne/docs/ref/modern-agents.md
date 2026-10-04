@@ -179,13 +179,26 @@ DJ-only profiles, and unverified entitlement or invocation contracts.
 
 ## Conductor acceptance
 
-Before dispatch, record why this is reuse, new persistence, or ephemeral work;
-resolve the canonical data root; preview any seed update; validate the score;
-verify explicit required attachments; and inspect live routing evidence.
+The conductor chooses why to reuse a person, construct new persistence, or use
+ephemeral work, and judges offered capability, continuity, cost and limitations.
+The commissioned composer and venue owner resolve the canonical root, preview
+authorized seed updates, validate scores, verify required attachments and qualify
+routes. Invoke an unchanged qualified stock engagement through supported controls;
+it does not require a fresh composition gate or conductor-run custody inspection.
+New or changed score construction retains its design and release gates.
 
-During and after performance, keep the runtime `job_id`, context-delivery
-receipt, artifacts, terminal/validation evidence, AAR, memory before/after
-digests, open lifecycle debt, and agent-authored conflict resolutions distinct.
-When persistence was chosen, later run lifecycle integration and demonstrate
-recall in a subsequent engagement. Without that loop, the agent was only named,
-not maintained.
+The venue preserves distinct job, delivery, artifact, terminal/validation, AAR,
+memory-transition, debt and agent-adjudication evidence. The conductor consumes
+compact outcomes and actionable exceptions, verifies activation and consequential
+adoption, and commissions recovery of the unfinished obligation. A finite stock
+job or retained identity does not itself provide continuous supervision.
+
+Preserve full life as the preference. Targeted work requires immediate grounded
+writeback and an accountable, actually activated lifecycle continuation. Current
+targeted-work and lifecycle-integration shapes both omit play; their completion
+does not establish full-life equivalence. Preserve room for voluntary developmental
+play, reflection, dreaming, relationships, maturity and resurrection. Demonstrate
+grounded later recall in a subsequent engagement. Report product
+acceptance and outstanding lifecycle work separately; keep the whole engagement
+owned until its obligations are fulfilled. Identity and memory decisions remain
+the persistent person's own.

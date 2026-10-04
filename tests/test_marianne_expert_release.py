@@ -36,6 +36,30 @@ class MarianneExpertPackageTests(unittest.TestCase):
         self.assertNotRegex(text, r"capability level:.*advise.*adapter.*source")
         self.assertLessEqual(len(text.split()), 250)
 
+    def test_current_orientation_separates_verified_source_from_live_venue(self) -> None:
+        orientation = (EXPERT_ROOT / "CURRENT.md").read_text(encoding="utf-8")
+        self.assertIn("489e0ed6", orientation)
+        self.assertIn("RecurrenceController.handle_tick", orientation)
+        self.assertIn("23 passed", orientation)
+        self.assertIn("not a live venue qualification", orientation)
+        self.assertIn("65f2dc3b", orientation)
+
+    def test_composition_example_does_not_claim_behavioral_acceptance(self) -> None:
+        compose = (EXPERT_ROOT / "playbooks" / "compose.md").read_text(encoding="utf-8")
+        self.assertIn("../composing/SKILL.md", compose)
+        self.assertIn("structural example", compose.lower())
+        self.assertIn("does not prove review quality", compose)
+        self.assertIn("canonical data root", compose)
+        self.assertIn("project_root", compose)
+        self.assertNotIn("every required output is named in the prompt, written to `{{ workspace }}`", compose)
+
+    def test_direct_routes_do_not_require_the_historical_bootstrap(self) -> None:
+        router = (EXPERT_ROOT / "SKILL.md").read_text(encoding="utf-8")
+        self.assertIn("playbooks/develop.md", router)
+        self.assertIn("playbooks/operate.md", router)
+        self.assertNotIn("Read `BOOTSTRAP.md`, then", router)
+        self.assertIn("still-applicable", router)
+
     def test_frontmatter_has_only_name_and_description(self) -> None:
         text = (EXPERT_ROOT / "SKILL.md").read_text(encoding="utf-8")
         match = re.match(r"^---\n(.*?)\n---", text, re.DOTALL)

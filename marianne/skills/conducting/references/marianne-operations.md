@@ -8,6 +8,13 @@ and acceptance criteria through the supported interface, including cadenza where
 appropriate. Prefer the provided full lifecycle, targeted work and lifecycle
 integration shapes. A novel subject does not itself require a custom score.
 
+Packaged engagements can be finite even when their people persist. Ask the
+offering owner which supported event or control starts the next obligation,
+who handles failure, and what survives restart. Consume actual activation and
+the intended downstream result; installation, recurrence registration or hook
+submission alone establishes neither. Qualify a reusable engagement's consumer,
+repair and return paths once, then inherit applicable evidence on later uses.
+
 The venue owns provisioning, binding, custody correctness and recovery. The
 conductor need not discover or inspect how those systems work. Availability is
 not merely a boolean: limitations, cost, capability, relevant personal continuity

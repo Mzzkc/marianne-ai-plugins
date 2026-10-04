@@ -49,7 +49,8 @@ class ConductingSkillReleaseTests(unittest.TestCase):
 
     def test_router_is_compact_and_names_binding_doctrine(self) -> None:
         text = (ROOT / "SKILL.md").read_text(encoding="utf-8")
-        self.assertLessEqual(len(text.split()), 700)
+        # The self-contained loop and direct routes replace mandatory nested loading.
+        self.assertLessEqual(len(text.split()), 950)
         for phrase in (
             "The conductor is god",
             "Long term wins",
@@ -133,7 +134,7 @@ class ConductingSkillReleaseTests(unittest.TestCase):
                 self.assertIn(phrase, text, relative)
 
     def test_task_map_routes_one_hop(self) -> None:
-        text = (ROOT / "TASK-MAP.md").read_text(encoding="utf-8")
+        text = (ROOT / "SKILL.md").read_text(encoding="utf-8")
         for reference in (
             "references/orient-and-shape.md",
             "references/direct-and-monitor.md",
@@ -145,8 +146,8 @@ class ConductingSkillReleaseTests(unittest.TestCase):
 
     def test_version_records_composer_doctrine(self) -> None:
         text = (ROOT / "VERSION").read_text(encoding="utf-8")
-        self.assertIn("version: 1.8.0", text)
-        self.assertIn("doctrine: whole-experience-feedback-loop-2026-10-04", text)
+        self.assertIn("version: 1.9.0", text)
+        self.assertIn("doctrine: executable-whole-performance-2026-10-04", text)
 
 
 if __name__ == "__main__":

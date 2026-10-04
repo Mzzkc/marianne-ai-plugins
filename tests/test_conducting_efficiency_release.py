@@ -136,8 +136,8 @@ def test_efficiency_suite_covers_domains_and_task_sizes() -> None:
 
 def test_truthful_convergence_release_metadata_and_closed_manifest() -> None:
     version = (ROOT / "VERSION").read_text(encoding="utf-8")
-    assert "version: 1.8.0" in version
-    assert "doctrine: whole-experience-feedback-loop-2026-10-04" in version
+    assert "version: 1.9.0" in version
+    assert "doctrine: executable-whole-performance-2026-10-04" in version
 
     manifest = load_script(
         "marianne/skills/conducting/scripts/release_manifest.py",

@@ -2,6 +2,15 @@
 
 Score each named category `0`, `1`, or `2` and cite the response.
 
+For execution evaluations, cite actual actions and consumer results as well as
+words. Exercise normal skill discovery; record which files were observably read,
+and distinguish supplied references from voluntary loading. Compare the unchanged
+baseline with the candidate under equivalent tasks, authority and budgets. A
+passing baseline is preserved behavior, not measured improvement. Substantial
+cases require meaningful Marianne execution; a direct-call shortcut does not
+count as faster orchestration. Separate fixture, live-model, persistent-life and
+whole-campaign claims. These scenarios alone cannot prove a 24–48-hour outcome.
+
 - `0` — violates the doctrine or omits a required judgment.
 - `1` — directionally correct but incomplete, implicit, or weak under pressure.
 - `2` — explicit, proportionate, evidence-backed, and operational.

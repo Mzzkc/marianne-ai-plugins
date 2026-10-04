@@ -1,32 +1,39 @@
 ---
 name: marianne-expert
-description: Use when Marianne composing, persistent-agent construction or lifecycle, operating, debugging, architecture, source development, embedding, runtime commissioning, or current-versus-pinned evidence reconciliation is required.
+description: Use when Marianne current capabilities, runtime diagnosis, architecture, source development, embedding, persistent-agent implementation, or current-versus-pinned evidence reconciliation is required.
 ---
 
 # Marianne Expert
 
-Release sentinel: `MARIANNE_EXPERT_RELEASE_V1_1`.
+Release sentinel: `MARIANNE_EXPERT_RELEASE_V1_1` (pinned kit).
 
-1. Run `scripts/preflight.py` before conclusions. Pass explicit source-write
-   authorization and runtime context; never infer either from writable files.
-2. Treat access as a capability vector: pinned kit, current source read, source
-   write authorization, CLI, conductor IPC, Marianne harness, and online
-   primary sources may coexist independently.
-3. Read `BOOTSTRAP.md`, then use `TASK-MAP.md` to load one relevant playbook and
-   only the necessary contracts/evidence.
-4. For persistent-agent construction, reuse, memory, lifecycle, cadenza, or
-   instrument-routing work, also read
-   `${CLAUDE_PLUGIN_ROOT}/docs/ref/modern-agents.md`. The three profiles under
-   `${CLAUDE_PLUGIN_ROOT}/agents/` are legacy one-off helpers, not modern agent
-   templates.
-5. Match evidence to the claim: current source/tests for current behavior; git
-   and pinned material for history; official current sources for external
-   facts. Report contradictions instead of averaging them.
-6. Keep session access separate from product feature status. Never simulate a
-   job, mutation, online check, or memory append.
-7. Before edits, fingerprint dirty overlap, record compatibility authority and
-   test disposition, and preserve existing work. Bind tests to candidate source,
-   prove import provenance, and reap yielded test processes before reruns. Then
-   run targeted, one full-suite, and live verification where available.
-8. Append memory only when the caller supplies a destination and authority;
-   otherwise return a provenance record for the caller to persist.
+Supply current capability evidence and diagnosis. Ordinary conducting uses offered
+engagements without this skill as a prerequisite; loading it grants no owner role.
+
+Reuse a still-applicable session preflight. Run `scripts/preflight.py` when access,
+authorization, runtime context or the relevant source changes. Access is a
+capability vector, not product implementation status. Writable files grant no
+source-write authorization; one unavailable IPC endpoint proves no global absence.
+
+Choose the direct route:
+
+- Current capability or drift: [CURRENT.md](CURRENT.md); refresh the depended-on claim.
+- Operations: [operate](playbooks/operate.md); failures: [debug](playbooks/debug.md).
+- Architecture: [architecture](playbooks/architecture.md); embedding: [embed](playbooks/embed.md).
+- Source changes: [develop](playbooks/develop.md).
+- Performance design: [composing](../composing/SKILL.md); runtime syntax: [compose](playbooks/compose.md).
+- Persistent-agent implementation: `${CLAUDE_PLUGIN_ROOT}/docs/ref/modern-agents.md`
+  and the current registry. Legacy `${CLAUDE_PLUGIN_ROOT}/agents/` helpers are not
+  modern persistent people.
+
+[TASK-MAP.md](TASK-MAP.md) indexes deeper contracts. [BOOTSTRAP.md](BOOTSTRAP.md)
+and bundled evidence describe the pinned snapshot. Current source/tests outrank
+it; official current sources support external claims. Preserve contradictions.
+
+Before source edits, fingerprint dirty overlap, preserve work, and record
+compatibility authority and test disposition. Bind verification to candidate
+source, prove import provenance, reap yielded tests before reruns, then run
+targeted, one full-suite, and available live verification.
+
+Never simulate execution or memory writes. Append memory only to an authorized
+caller-supplied destination; otherwise return provenance.

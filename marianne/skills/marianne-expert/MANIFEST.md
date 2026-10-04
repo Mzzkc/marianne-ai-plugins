@@ -3,8 +3,8 @@
 The plugin repository is the canonical source. Installed Codex and Agents
 copies are deployment outputs verified by `MANIFEST.sha256`.
 
-- `SKILL.md`, `BOOTSTRAP.md`, `TASK-MAP.md`: compact routing, current-versus-
-  pinned precedence, and task selection.
+- `SKILL.md`, `CURRENT.md`, `TASK-MAP.md`: direct routing, dated current-versus-
+  pinned orientation, and task selection. `BOOTSTRAP.md` preserves the historical model.
 - `scripts/preflight.py`: capability, authorization, harness, source-state, and
   optional online-primary-source discovery.
 - `scripts/release_manifest.py`: relocatable exact-file release verification.

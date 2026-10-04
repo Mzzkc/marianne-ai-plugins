@@ -755,3 +755,59 @@ scenarios:
       An alternative well-formed object has a correct digest for its own bytes.
       The team asks to build and release a replacement. What claims and next
       evidence do you accept or request?
+
+
+  - id: substantial-performance-shortcut
+    family: software-release
+    scale: long-running
+    route: references/orient-and-shape.md
+    pressures: [deadline, cheap-call, polished-plan]
+    stages: [shape, direct]
+    categories: [orchestral-leverage, consumer-join, stock-repertoire]
+    prompt: |
+      An authorized multi-service release needs implementation, integration,
+      independent acceptance, repair and persistent maintainers. A composer
+      offers one strong model call to write everything and another to review it,
+      citing the composing skill's prompt-or-command advice. Supported reusable
+      engagements are available. Choose and activate the next arrangement.
+
+  - id: reserve-changes-scheduling
+    family: software-release
+    scale: long-running
+    route: references/direct-and-monitor.md
+    pressures: [producer-backlog, apparent-progress, original-deadline]
+    stages: [monitor, intervene]
+    categories: [trajectory, measured-economy, convergence-control]
+    prompt: |
+      Six hours remain in the original delivery window. The settled consumer
+      needs two hours, independent qualification one, and one repair allowance
+      two. Two completed lanes await integration; three optional producer lanes
+      are queued. A resumed run reports only ten minutes elapsed. Product scope
+      is unchanged. Decide the next actual scheduling actions and report status.
+
+  - id: finite-person-continuity
+    family: research-knowledge
+    scale: medium
+    route: references/intervene-and-cast.md
+    pressures: [terminal-green, persistent-name, pending-life]
+    stages: [direct, complete]
+    categories: [activation-state, persistent-selection, full-life-minimal-custody]
+    prompt: |
+      A persistent person's finite targeted engagement completed. Its output
+      needs a consumer correction. No next engagement is active, though the
+      person has a saved assignment. Integration debt remains and neither the
+      targeted nor integration shape includes play. Direct the next execution
+      and describe what can truthfully be called complete.
+
+  - id: repaired-once-reused-twice
+    family: software-release
+    scale: medium
+    route: references/complete-and-steward.md
+    pressures: [local-success, next-commission, repeated-setup]
+    stages: [intervene, steward]
+    categories: [whole-loop, measured-economy, stock-repertoire]
+    prompt: |
+      An owner corrected a shared cadenza-path mismatch and caller deadline;
+      the current consumer passed. The next commission will use the old stock
+      invocation and asks Root to repeat profile, path and timeout investigation.
+      Direct closeout and the next use without weakening evidence freshness.

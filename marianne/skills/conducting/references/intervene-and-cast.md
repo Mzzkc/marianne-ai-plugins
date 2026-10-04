@@ -114,6 +114,15 @@ a refused operation stays refused until its actual cause is resolved.
 
 Record demonstrated behavior, not personality labels.
 
+Optimize total effort to an accepted result: preparation, context, queueing,
+execution, independent review, repair and integration. Cast difficult causal or
+semantic judgments for demonstrated competence early. A stronger suitable author
+can cost less overall than repeated cheap reconstruction. Mix qualified families
+where useful; diversity does not give an unsuitable seat final authority. Follow
+current user/venue preferences without making local model rankings universal.
+Inventory eligibility and native route ranking do not by themselves prove actual
+actuation or optimize this whole cost. Keep unknown pricing unknown.
+
 Cast a **persistent agent** when recurring situated memory, relationships and
 development matter. Use the venue's supported engagement for that person, with
 relevant recent memory and growth context. A disposable musician bearing a
@@ -136,6 +145,12 @@ Choose that continuation and allow adequate resources, without hand-administerin
 memory verification, retention or cleanup. If lifecycle service is unavailable,
 retain the obligation and ask its owner for supported options; do not cut life,
 substitute a persona or defer integration indefinitely to reduce attention.
+
+Verify actual activation of the continuation. Current targeted and integration
+shapes both omit play; debt closure does not mechanically equal every full-life
+phase. Preserve the offered developmental opportunity and later application of
+learning. Serialize canonical memory mutations for each person while allowing
+independent people and unaffected product work to proceed.
 
 The conductor supplies objective, scope, current context and coordination through
 the engagement interface. An integrity stop pauses affected work and belongs to

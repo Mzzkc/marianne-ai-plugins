@@ -1,5 +1,10 @@
 # Developing Against Marianne
 
+**Evidence scope:** `[C###]` claims below describe source `65f2dc3b`, not a
+current capability inventory. [CURRENT.md](../CURRENT.md) records the subsequent
+CronTick implementation and its executed tests. Refresh the depended-on boundary;
+do not carry a historical refusal into current operations or development.
+
 ## Problem
 
 Marianne developers are most likely to break the runtime by editing the wrong layer: changing score YAML when the public interface is an instrument profile, adding prose about a technique when the runtime only resolves ECS components, or preserving native-backend wording after executor behavior moved behind generic instrument profiles. The governing boundary is that score configuration, instrument profiles, technique components, validation commands, and execution contracts are separate extension points with different trust and test requirements. Use this page when adding an instrument profile, adding a technique, writing tests for dispatch or validation behavior, or planning backend removal. Claims about Anthropic, Ollama, and `recursive_light` in the bundled evidence describe its pinned snapshot; inspect current source before treating any of those registrations or classes as present [C020, C021, C023, C024, C025].
@@ -62,7 +67,7 @@ Technique extension is implemented through ECS-style component configuration: `T
 
 Dispatch and validation test seams are source-backed. `dispatch_ready()` is the dispatch unit to test and enforces global concurrency despite one stale configuration reference denying enforcement [C004, C005]. Per-model limits, rate-limit gates, and stagger comparisons are implemented separately [C006, C007, C008]. Validation commands are powerful process surfaces: retryable types include `command_succeeds`, command validation runs in a separate process group, the guard against sharing the daemon process group exists but is implemented_untested, and cleanup kills the group on exit paths [C015, C016, C017, C018].
 
-The non-extension surfaces matter because developers often overclaim them while documenting new features. The docs say `CronTick` submits and reschedules jobs, but source/tests show it only logs an unimplemented warning. Treat spec_only as runtime truth and record the scheduler prose as stale or contradicted [C029]. The docs say `ConfigReloaded` rebuilds pending sheets, but source/tests show it only logs an unimplemented warning. Treat spec_only as runtime truth and record reload prose as stale or contradicted [C030]. The docs say grounding hooks validate outputs, but source/tests show configuration validates structurally and runtime does not invoke hooks. Treat config_only_runtime_unwired as runtime truth and record active-output-validation prose as stale or contradicted [C031]. The docs say a module-level orphan-reaping disabled flag exists, but source/tests show cleanup methods are inline no-ops. Treat known_broken_safety_noop as runtime truth and record the flag claim as false [C032, C033].
+The non-extension surfaces matter because developers often overclaim them while documenting new features. At the pinned SHA, the docs say `CronTick` submits and reschedules jobs, but source/tests show it only logs an unimplemented warning. Treat spec_only as runtime truth and record the scheduler prose as stale or contradicted [C029]. The docs say `ConfigReloaded` rebuilds pending sheets, but source/tests show it only logs an unimplemented warning. Treat spec_only as runtime truth and record reload prose as stale or contradicted [C030]. The docs say grounding hooks validate outputs, but source/tests show configuration validates structurally and runtime does not invoke hooks. Treat config_only_runtime_unwired as runtime truth and record active-output-validation prose as stale or contradicted [C031]. The docs say a module-level orphan-reaping disabled flag exists, but source/tests show cleanup methods are inline no-ops. Treat known_broken_safety_noop as runtime truth and record the flag claim as false [C032, C033].
 
 ## Trap
 
@@ -84,7 +89,7 @@ Correction: "`command_succeeds` is privileged bash for trusted score authors, an
 2. For a technique change, verify the score declares `kind`, `phases`, and kind-specific config; then test active-technique resolution for the intended phase and avoid claiming executed A2A completion semantics [C010, C011, C012, C026, C027, C028].
 3. For dispatch changes, test `dispatch_ready()` directly for global ceiling, per-instrument/model ceiling, rate-limit skip, and stagger behavior; include a stale-doc check if any prose says global concurrency is not enforced [C004, C005, C006, C007, C008].
 4. For validation changes, label `command_succeeds` as trusted-author bash before any recipe uses it, assert separate process-group spawning and cleanup, and remember the daemon-process-group guard is implemented_untested [C015, C016, C017, C018].
-5. Scan the page or patch for "schedules," "reloads," "grounds," "reaps," and "native." Revise any sentence that turns `CronTick`, `ConfigReloaded`, grounding hooks, orphan cleanup, or generic provider execution into an implemented runtime feature [C021, C023, C029, C030, C031, C032, C033].
+5. Scan feature claims for their evidence time. Keep pinned limitations historical; verify current scheduling, reload, grounding, cleanup and provider behavior at the changed boundary. The later CronTick implementation in [CURRENT.md](../CURRENT.md) must not be rewritten into C029 or denied because of it [C029].
 6. For pinned claims, cite the claim ID. For current-worktree claims, cite the
    live path, HEAD, dirty fingerprint, and verification command. Use official
    current sources for external facts. Never force a current observation into

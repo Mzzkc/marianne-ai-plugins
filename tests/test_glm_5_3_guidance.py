@@ -59,7 +59,10 @@ def test_current_glm_routes_and_security_chain_use_5_3() -> None:
 
 
 def test_composing_names_current_glm_but_conducting_stays_provider_neutral() -> None:
-    composing = (ROOT / "skills" / "composing" / "SKILL.md").read_text(encoding="utf-8")
+    composing_main = (ROOT / "skills" / "composing" / "SKILL.md").read_text(encoding="utf-8")
+    assert "references/instrument-selection.md" in composing_main
+    composing = (ROOT / "skills/composing/references/instrument-selection.md").read_text(encoding="utf-8")
+
     assert "GLM 5.3" in composing
     assert "high or max reasoning" in composing
     assert "specialized vulnerability-discovery score" in composing

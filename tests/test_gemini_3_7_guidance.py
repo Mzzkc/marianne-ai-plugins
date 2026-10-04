@@ -93,9 +93,12 @@ def test_human_catalog_changelog_and_composing_guidance_are_synchronized() -> No
     changelog = (
         ROOT / "docs" / "ref" / "CHANGELOG-instrument-catalog.md"
     ).read_text(encoding="utf-8")
-    composing = (ROOT / "skills" / "composing" / "SKILL.md").read_text(
+    composing_main = (ROOT / "skills" / "composing" / "SKILL.md").read_text(
         encoding="utf-8"
     )
+
+    assert "references/instrument-selection.md" in composing_main
+    composing = (ROOT / "skills/composing/references/instrument-selection.md").read_text(encoding="utf-8")
 
     assert "`gemini-3.7-flash`" in catalog_md
     assert "1,048,576" in catalog_md

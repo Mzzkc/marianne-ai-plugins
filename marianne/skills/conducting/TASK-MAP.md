@@ -1,6 +1,7 @@
 # Conducting Task Map
 
-Select the conducting decision below. Ordinary conducting does not require
+Optional index: the main skill contains the operating defaults and direct routes.
+Select the conducting decision below for further depth. Ordinary conducting does not require
 expert preflight, custody inspection or knowledge of backing systems. Templates
 are optional prompts, not required records or parallel custody systems.
 

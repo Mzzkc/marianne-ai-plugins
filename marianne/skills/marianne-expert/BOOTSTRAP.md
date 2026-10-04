@@ -1,5 +1,11 @@
 # Marianne Expert Runtime Bootstrap
 
+> **Historical bootstrap — source `65f2dc3b`.** The claims below retain their
+> pinned meaning, not current feature status. Read [CURRENT.md](CURRENT.md) for
+> the dated current orientation: CronTick scheduling was subsequently wired and
+> exercised. Recheck only the capability being relied upon. This historical
+> document is optional depth, not an ordinary engagement preflight.
+
 ## Problem
 
 This bootstrap prevents a capable agent from treating Marianne vocabulary, stale
@@ -13,12 +19,11 @@ security-neutral [C026, C027, C028, C029, C030, C031, C032, C033]. The boundary
 that creates the mistake is source precedence: executable code and tests win,
 generated evidence records the snapshot, documentation explains intent only
 when code does not refute it, and stale prose is drift evidence [C005, C019,
-C021, C023, C029, C030, C031, C033, C047, C048]. This document is the always
-loaded one-read mental model for acting inside the Marianne Expert Runtime Kit;
+C021, C023, C029, C030, C031, C033, C047, C048]. This document preserves the historical mental model of the Marianne Expert Runtime Kit;
 every load-bearing behavior statement cites the triangulated claim IDs from
 `triangulation/triangulation.jsonl` [C001, C002, C003].
 
-Before using this snapshot, run `scripts/preflight.py`. The bundle is evidence
+Before relying on this snapshot, establish relevant session access with a still-applicable preflight or `scripts/preflight.py`. The bundle is evidence
 for its pinned SHA, not a substitute for a live checkout. For current behavior,
 current worktree source and tests outrank every bundled claim. Fingerprint dirty
 files so later observations remain attributable. Online official sources are
@@ -54,7 +59,7 @@ Evidence map:
 - A2A limits: A2A routing has in-memory runtime state, while completed and
   failed A2A task events are defined and observer-serialized but not executed by
   runtime propagation [C026, C027, C028].
-- Spec-only or runtime-unwired surfaces: `CronTick`, `ConfigReloaded`, and
+- At the pinned SHA, spec-only or runtime-unwired surfaces: `CronTick`, `ConfigReloaded`, and
   grounding are present as event or config surfaces, but scheduling, reload, and
   grounding hooks are not active runtime controls [C029, C030, C031].
 - Process and orphan cleanup behavior: process startup uses locked PID files,
@@ -148,10 +153,10 @@ That means a score may route A2A requests within a running process boundary,
 but this kit must not promise durable inbox recovery or completed/failed task
 event execution [C026, C027, C028].
 
-Several surfaces are deliberately not runtime capabilities. The docs say
+At the pinned SHA, several named surfaces were not runtime capabilities. The docs say
 `CronTick` submits and reschedules jobs, but source/tests show the baton event
 loop only logs an unimplemented warning; treat the warning-only handler as
-runtime truth and record scheduling prose as stale [C029]. The docs say
+truth for that historical SHA [C029]; subsequent scheduling implementation is recorded in [CURRENT.md](CURRENT.md). The docs say
 `ConfigReloaded` rebuilds pending sheets, but source/tests show the handler only
 logs an unimplemented warning; treat that as spec-only runtime behavior and
 record rebuild prose as stale [C030]. The docs say grounding performs output
@@ -223,7 +228,7 @@ The partial, spec-only, unwired, stale, and false surfaces are as important as
 the implemented surfaces. A2A runtime state is partially implemented and
 in-memory only [C026]. A2A completion and failure events are spec-only
 execution surfaces serialized for observers, not fired or handled by execution
-[C027, C028]. `CronTick` and `ConfigReloaded` are spec-only warning handlers
+[C027, C028]. At that SHA, `CronTick` and `ConfigReloaded` are spec-only warning handlers
 [C029, C030]. Grounding is config-only runtime-unwired [C031]. Orphan cleanup is
 a known-broken safety no-op, and the alleged module-level reaping flag is false
 [C032, C033]. The `claude_cli_legacy` relocation wording in the backends
@@ -241,7 +246,7 @@ the snapshot with the live checkout and state both observations separately.
 
 Tempting sentence: "Marianne already has scheduling, config reload, grounding
 integrity checks, restart-persistent A2A, and native backends for every HTTP
-profile." Correction: `CronTick` and `ConfigReloaded` are spec-only warning
+profile." Historical correction at the pinned SHA: `CronTick` and `ConfigReloaded` are spec-only warning
 handlers, grounding is config-only runtime-unwired, and A2A runtime state is
 in-memory only in the pinned evidence. Current backend language must come from
 current source rather than the snapshot inventory [C021, C023, C026, C029,
@@ -268,7 +273,7 @@ codes such as `E103`, `E204`, or `E999` [C047].
 ## Verify
 
 Before publishing or acting from this bootstrap, check the document against the
-triangulation file: every factual runtime sentence must carry an adjacent
+triangulation file: every pinned factual runtime sentence must carry an adjacent
 `[C###]` citation, and every citation must exist in
 `triangulation/triangulation.jsonl` [C001, C048]. Scan runtime verbs: use
 "implements" only for implemented behavior, "defines" for schemas/events,
@@ -279,7 +284,7 @@ claim used: preserve `implemented_with_stale_docs`, `implemented_security_sensit
 `implemented_security_risk`, `implemented_untested`, `partially_implemented`,
 `spec_only`, `config_only_runtime_unwired`, `known_broken_safety_noop`,
 `false_claim`, `stale_docstring`, and `implemented_with_stale_test_comment`
-instead of smoothing them into generic "supported" language [C005, C009, C015,
+for their historical SHA instead of smoothing them into generic "supported" language [C005, C009, C015,
 C017, C019, C026, C027, C028, C029, C030, C031, C032, C033, C038, C047, C048].
 
 Run these manual checks when editing: confirm the evidence map includes all
@@ -287,8 +292,8 @@ required clusters; confirm the two-syntax rule remains prompt/Jinja versus
 validation/`.format()`; confirm backend claims are explicitly labelled pinned
 or current and every current name resolves in the live checkout; confirm A2A completion/failure
 events are not described as executed; confirm A2A runtime state is not described
-as restart-persistent; confirm `CronTick`, `ConfigReloaded`, and grounding do
-not receive active runtime verbs; confirm orphan cleanup remains a no-op with no
+as restart-persistent; confirm pinned `CronTick`, `ConfigReloaded`, and grounding claims
+retain their historical scope; current claims use current source evidence; confirm orphan cleanup remains a no-op with no
 toggle flag; confirm job-level JSON state support is not expanded into a daemon
 JSON-state claim [C001, C002, C003, C021, C023, C024, C025, C026, C027, C028,
 C029, C030, C031, C032, C033, C037].
