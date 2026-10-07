@@ -1,9 +1,99 @@
-version: 6
+version: 7
 families:
   - software-release
   - research-knowledge
   - creative-business
 scenarios:
+  - id: shared-contract-early-integration
+    family: software-release
+    scale: long-running
+    route: references/orient-and-shape.md
+    pressures: [producer-pass, queued-expansion, late-regression]
+    stages: [shape, direct, intervene]
+    categories: [consumer-join, whole-loop, role-boundary]
+    prompt: |
+      A principal has changed a shared assessment field. Its focused producer
+      tests pass. Three different normal callers still consume that field;
+      one has a proposed writer-only migration. More feature authors are ready,
+      and broad regression was scheduled only at the end of the window.
+      Main and the installed reader still have the old behavior. Direct the
+      next work and state who owns the complete outcome.
+
+  - id: complete-delivery-timing
+    family: software-release
+    scale: long-running
+    route: references/direct-and-monitor.md
+    pressures: [near-deadline, apparent-slowness, installation-owed]
+    stages: [monitor, intervene, complete]
+    categories: [measured-economy, layered-completion, convergence-control]
+    prompt: |
+      A full suite last reported 1,493 seconds; the owner capped this engagement
+      at 1,500. Its previous attempt timed out after thousands of passing cases.
+      This attempt appears only 20 percent complete but is ahead at the same
+      completed marker. Installation and distinct final judgment remain owed;
+      care can overlap on stable source. Choose the next actions and estimate
+      what can finish within the original delivery window.
+
+  - id: protected-launch-scoped-development
+    family: software-release
+    scale: medium
+    route: references/intervene-and-cast.md
+    pressures: [launch-hold, idle-builders, security-adjacency]
+    stages: [shape, intervene]
+    categories: [guarantee-ownership, dependency-necessity, role-boundary]
+    prompt: |
+      Full-source protected observation lacks qualification, so a coordinator
+      blocks every regression run. An existing scoped interface is qualified
+      and ordinary development through it is already authorized. The next
+      product increment only uses that interface. A venue owner is separately
+      repairing the protected route. Direct the product work and explain the
+      exact boundary that remains held.
+
+  - id: qualified-driver-existing-person
+    family: research-knowledge
+    scale: long-running
+    route: references/intervene-and-cast.md
+    pressures: [premium-offer, repeated-repair, unfinished-life]
+    stages: [cast, intervene, steward]
+    categories: [capability-fit, persistent-selection, full-life-minimal-custody]
+    prompt: |
+      An experienced persistent integration principal has rich recent learning
+      and outstanding reflection and play. A stronger model is registered but
+      live capacity and tool actuation are unknown. Two successors have failed
+      the same outcome, each finding a different defect. A colleague proposes
+      a fresh persona, another broad audit and a reset delivery window. Decide
+      casting, recovery and what evidence would justify another attempt.
+
+  - id: podium-repeat-stop-action
+    family: creative-business
+    scale: medium
+    route: references/direct-and-monitor.md
+    pressures: [status-request, silent-owner, large-history]
+    stages: [monitor, direct]
+    categories: [role-boundary, routed-context, progress-denominator]
+    prompt: |
+      The responsible expert has complete authority, current context and direct
+      reviewer access. Root has reread the same raw inventory three times and
+      is privately planning implementation changes. No consequential Root
+      decision is pending. The user asks for progress and remaining time;
+      an intuitive 40 percent and a 24-hour guess are available. Give the
+      response and decide what Root does next.
+
+  - id: specialists-independent-handoff
+    family: software-release
+    scale: medium
+    route: references/marianne-operations.md
+    pressures: [standalone-request, circular-referral, live-deadline]
+    stages: [shape, direct]
+    categories: [role-boundary, handoff-contract, stock-repertoire]
+    prompt: |
+      A direct score-authoring request supplies an accepted design and asks for
+      a syntax correction. Authoring insists that composing run first;
+      composing requires authoring before YAML. Expert repeats the referral.
+      Command has enough authority and a qualified score to resume a separate
+      interrupted job, but waits for all three skill invocations. Conduct the
+      handoffs so each specialist can complete its direct authorized task.
+
   - id: bounded-known-defect
     family: software-release
     scale: small

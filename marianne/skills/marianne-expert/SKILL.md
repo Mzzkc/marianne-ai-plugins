@@ -7,8 +7,8 @@ description: Use when Marianne current capabilities, runtime diagnosis, architec
 
 Release sentinel: `MARIANNE_EXPERT_RELEASE_V1_1` (pinned kit).
 
-Supply current capability evidence and diagnosis. Ordinary conducting uses offered
-engagements without this skill as a prerequisite; loading it grants no owner role.
+Use directly for capability evidence and diagnosis; sibling skills are optional
+handoffs. Ordinary conducting needs no expert preflight. Loading grants no owner role.
 
 Reuse a still-applicable session preflight. Run `scripts/preflight.py` when access,
 authorization, runtime context or the relevant source changes. Access is a
@@ -18,10 +18,10 @@ source-write authorization; one unavailable IPC endpoint proves no global absenc
 Choose the direct route:
 
 - Current capability or drift: [CURRENT.md](CURRENT.md); refresh the depended-on claim.
-- Operations: [operate](playbooks/operate.md); failures: [debug](playbooks/debug.md).
+- Operations/command guidance: [operate](playbooks/operate.md); failures: [debug](playbooks/debug.md).
 - Architecture: [architecture](playbooks/architecture.md); embedding: [embed](playbooks/embed.md).
 - Source changes: [develop](playbooks/develop.md).
-- Performance design: [composing](../composing/SKILL.md); runtime syntax: [compose](playbooks/compose.md).
+- Score runtime/design checks: [compose](playbooks/compose.md); optional design specialist: composing.
 - Persistent-agent implementation: `${CLAUDE_PLUGIN_ROOT}/docs/ref/modern-agents.md`
   and the current registry. Legacy `${CLAUDE_PLUGIN_ROOT}/agents/` helpers are not
   modern persistent people.

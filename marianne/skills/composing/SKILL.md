@@ -8,6 +8,9 @@ description: Use when designing or changing a Marianne score, persistent-agent w
 Composition designs a system of minds. The score is not ready because its YAML
 parses; it is ready when its context, authority, outcomes, repair loop, and exact
 release candidate are provable.
+Use this skill directly from the task's authority, requirements and current evidence.
+Its output is the performance design and its checked realization. Reuse supplied
+decisions; sibling skills provide optional specialist help, not prerequisite invocations.
 
 ## Decide and investigate
 
@@ -36,7 +39,8 @@ For new or changed composition, read:
 2. Each selected pattern's full file, not its name or a summary.
 3. `plugins/marianne/docs/ref/instrument-catalog.yaml` and current venue reports
    before assigning instruments; the venue owner uses `mzt doctor` when needed.
-4. The score-authoring skill before writing YAML.
+4. The relevant `${CLAUDE_PLUGIN_ROOT}/docs/ref/` syntax references before writing
+   YAML; score-authoring can assist when a separate syntax specialist is useful.
 
 Disk and runtime behavior outrank pattern prose. Inspect the selected example's
 actual dependency and validation controls: a report-exists check does not enact
@@ -101,6 +105,12 @@ supported continuation so each authorized transition has an owner and activation
 Root should not need to recommission each join. Exercise the uncertain interface
 with representative material early, preserving the full destination. Carry the
 original delivery window across successors and reserve integration/repair time.
+Give the principal the affected caller chain, complete representative inputs,
+direct consumer/reviewer access and applicable adoption authority. Put downstream
+use and an early applicable broad regression after shared-contract changes, before
+more dependent construction. Budget admission through consumed result with variance,
+installation and provided life, not just command duration. On repeated recovery,
+require a changed premise and feasible remaining delivery reserve within that window.
 
 ## Compose
 
@@ -136,14 +146,20 @@ original delivery window across successors and reserve integration/repair time.
 
 ## Release gate
 
-Run static validation, then lock the exact score and injected inputs:
+Use a project/task scoped filename matching the score `name`; native submission
+derives its default job ID from the filename. Run required gates fail-fast and lock
+the exact score and injected inputs, using the owner's complete qualified recipe:
 
 ```bash
-mzt validate score.yaml
-python scripts/check_score_release.py score.yaml \
-  --project-root /absolute/project --write-lock
-python scripts/check_score_release.py score.yaml \
-  --project-root /absolute/project --lock composition-lock.json
+bash -euo pipefail <<'SH'
+score_path=/absolute/SCORES/project-task/project-task.yaml
+project_root=/absolute/project
+release_checker=/absolute/plugin/skills/composing/scripts/check_score_release.py
+lock_path=/absolute/SCORES/project-task/composition-lock.json
+mzt validate "$score_path"
+python "$release_checker" "$score_path" --project-root "$project_root" --lock "$lock_path" --write-lock
+python "$release_checker" "$score_path" --project-root "$project_root" --lock "$lock_path"
+SH
 ```
 
 The candidate digest joins the evaluated score and injected inputs present at checking to
@@ -158,6 +174,11 @@ handoff or route that capability gap to its owner, preserving required attachmen
 and behavioral checks. An installed extension needs its own applicable evidence.
 Before release, compare the exact diff to the scope and to every report claim;
 an unreported source edit is a failed gate even when tests pass.
+When delivery includes main integration or installation, retain its owner and
+independent ordinary-consumer judgment through that adoption. Hold only an actually
+ungranted action; source qualification alone cannot establish installed behavior.
 
-For ordinary execution and supervision, use conducting. Commission venue diagnosis
-through command or marianne-expert when needed. For YAML details, use score-authoring.
+Return the checked design, exact subject, remaining obligations and activation needs
+to the caller. Conducting can coordinate the performance; command handles operations,
+expert resolves technical capability gaps and score-authoring offers YAML assistance.
+None is required merely to invoke this skill or complete its authorized design work.

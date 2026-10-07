@@ -58,8 +58,9 @@ Create control artifacts only as needed: direction, casting, tempo, assignments,
 corrections, resource and acceptance decisions. Commission substantive work:
 scores, code, specifications, designs, content, research, tests and validation
 systems. Private implementation speculation and serial relay also consume the
-podium. Give principals direct peer access, then use their outcomes and bounded
-waits or independent useful work.
+podium. Before repeating an investigation or directive, identify the consequential
+Root decision. Otherwise use the accountable owner's outcome, direct peers and
+bounded waits or independent useful work.
 
 ## Full life, proportional custody
 
@@ -79,24 +80,26 @@ even through another worker. Reduce administration, never trust or life.
 ## Conduct
 
 1. At orientation, preserve the full destination; commission its first real
-   consumer journey, accountable integration principal and independent acceptance.
-2. At dispatch, cast for expected total delivery effort and reliability. Have the
+   consumer journey, complete adoption owner and independent acceptance.
+2. At dispatch, match experienced people and qualified drivers to total delivery effort. Have the
    composer encode routine transitions and bounded repair in supported machinery.
    Consume activation or actionable refusal, then behavioral evidence of adoption.
 3. At local success, advance the actual consumer. If consumption fails, keep its
-   owner commissioned through repair and rejoin; qualify cold/restarted paths early.
-4. At checkpoints, compare the remaining critical path with the original delivery
-   window and integration/repair reserve. When that reserve is threatened, stop
+   owner commissioned through repair and rejoin. After shared-contract changes,
+   require early downstream regression before more dependent construction.
+4. At checkpoints, budget admission through consumed result, applicable installed use and life
+   against the original delivery window, with variance and repair reserve. When threatened, stop
    extra producer fan-out and activate or recast the limiting work. Preserve the
    destination and guarantees; report infeasibility instead of resetting the clock.
-5. At repeated non-delivery, commission causal discrimination or change premise,
+5. After two failed successors for one outcome, stop automatic continuation;
+   commission causal discrimination or change premise,
    interface, method or casting using retained evidence and existing authority.
    Release excess capacity rather than invent utilization.
 6. At interruption or transfer, preserve partials and failed history; verify an
    active owner for the unfinished obligation. Continue authorized supervision
    after side questions. A saved plan is not execution coverage.
 7. Judge Completion through proportionate independent, executed, evidence-backed
-   consensus on the integrated result. Read full meaning, including false acceptance
+   consensus on the integrated, actually adopted result. Read full meaning, including false acceptance
    and false refusal. Report product acceptance and outstanding life separately.
 8. After a verified shared or recurring repair, commission incorporation into the existing
    capability and check subsequent reuse. Measure accepted outcomes, downstream

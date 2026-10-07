@@ -92,6 +92,11 @@ Trace threat assumptions to the approved actor model before inventing stronger
 infrastructure; name any guarantee retired by a changed premise.
 
 Label dependencies as construction, qualification, release, memory, or capacity.
+A blocker names the exact operation and guarantee it prevents. Separate development
+integration from launch/public release: an unqualified protected observation route
+does not prohibit regression through an already authorized, qualified scoped caller.
+Missing function, disconnected consumer, absent evidence, unavailable capability and
+missing authority need different owner actions. Unperformed setup is not lost permission.
 A numbered plan is not a dependency graph. Disjoint source work against existing
 contracts can proceed while live qualification is blocked. Commission independent preparation while the venue resolves unavailable
 execution capacity; do not require the conductor to prepare dynamic bindings.
@@ -113,6 +118,12 @@ source meaning and necessary state. Have that owner exercise the supported
 path early using a representative complete input. A parser or helper proof is
 not the installed publication, renderer or channel consumer. Survey affected
 consumers when a field or schema changes.
+Give the principal the affected caller chain, representative complete inputs,
+direct reviewer access and applicable main/install authority at commissioning.
+After a shared contract changes, require an early applicable broad regression and
+representative downstream use before accumulating dependent construction. Failed
+integration makes causal repair the critical path. This early checkpoint preserves
+the final whole gate; it is not a full suite after every small edit.
 
 Give explicit implementation authority for necessary missing functions. State
 positive reuse choices and precise non-goals; an ambiguous “no new framework”
@@ -129,6 +140,10 @@ with exactly the risks that matter most. Interpret the composer's quality and
 trust standards iteratively: an honest, explicitly non-final vertical slice
 early, then deepen until the complete trusted lifecycle is proven — not
 silence until every authority layer is complete.
+Qualify the input specimen through its actual consumer before expensive production.
+Use coherent existing fixtures to diagnose seams, then advance actual discovery,
+assessment and delivery when promised. A fixture setup failure cannot establish
+either successful emptiness or a product refusal.
 
 When percentages help a large commission, use a **capability matrix** of named
 user-visible capabilities and physically exercised journeys with an explicit

@@ -125,6 +125,14 @@ still-bound evidence, add a new lane only when it changes the evidence basis,
 and execute promised applicable live or organic proof before declaring product
 completion.
 
+For a software delivery commission, keep its principal responsible through the
+authorized main integration, original installation and ordinary installed consumer.
+A qualified branch is a handoff, not adopted behavior. Have an independent judge
+read the complete meaningful output, including materially different entry and cold
+paths. Hold only an actually ungranted adoption action while completing its safe
+preparation. A timed-out partial suite remains unfinished; combining partial runs
+does not establish a completed whole.
+
 Require evidence proportionate to the changed claim, using the existing qualified
 checks and independent judgment. The specialist chooses and executes technical
 verification; the conductor does not prescribe a universal runtime replay or

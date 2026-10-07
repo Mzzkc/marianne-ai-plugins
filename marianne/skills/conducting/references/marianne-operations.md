@@ -72,6 +72,45 @@ wrapper does not erase a valid outcome, and a successful wrapper cannot create o
 
 ## Commission new performance work
 
+Coordinate the specialist skills by their outputs:
+
+| Specialist | Commission and consume |
+| --- | --- |
+| `composing` | A design with real consumers, accountable joins, supported activation, bounded repair, qualification/adoption and lifecycle reserve. |
+| `score-authoring` | Executable YAML and attachment/validation contracts implementing that design, with unsupported transitions returned explicitly. |
+| `marianne-expert` | Current capability evidence or a diagnosed/repaired technical boundary, stating the exact affected guarantee and available next action. |
+| `command` | Authorized submission/control and truthful native results, including surviving work, failed stage and supported recovery. Expert may use this operational reference. |
+
+Each specialist can handle a direct request in its own lane without first invoking
+another skill. Reuse a supplied design or result; ask for a missing consequential
+decision only when needed. Conducting owns coordination and acceptance. Loading a
+technical skill does not assign the conductor its specialist role.
+
+### Worked delivery decision
+
+Commission an existing integration principal to carry a changed assessment through
+the ordinary installed reader. Supply complete representative inputs, affected
+callers, adoption authority, the original delivery window and direct reviewer access.
+Use the closest qualified stock engagement. If its consumer/repair/return paths are
+unqualified, commission that reusable gap once through composing, authoring and the
+venue owner, including interrupted-handoff recovery; do not call a diagram executed.
+
+| Observation | Next conducting action |
+| --- | --- |
+| Producer PASS; a supplier and cold rebuild consume the changed field differently. | Keep the principal accountable for all affected callers. Activate the early downstream/broad checkpoint before extending dependent work; make a failed join the repair priority. |
+| Empty output follows a fixture setup failure. | Have the consumer owner qualify the specimen and positive/absence controls. Preserve the failed setup as inconclusive about product behavior. |
+| Two repair successors fail while launch evidence is held. | Stop automatic repetition. Choose a changed premise or qualified alternative using remaining adoption/repair/life reserve; keep independent authorized development moving. |
+| Whole regression is approaching a cap based on its fastest reported test duration. | Ask the owner to compare corresponding completed markers and actual admission-to-consumed timing. Preserve an unfinished result honestly; do not restart on an apparent percentage alone. |
+| Frozen source is qualified; main and the installed reader still carry old behavior. | Activate the already-authorized adoption owner and distinct installed-meaning judgment. Keep provided life funded; neither branch acceptance nor custody administration closes those obligations. |
+
+This is a worked decision guide, not a claim of an exercised new stock performance.
+Qualify offered transitions in their real venue and inherit only applicable evidence.
+Evaluate changes through existing run state: first useful journey, accepted behavior,
+downstream rework, escaped defects, total model effort and conductor attention.
+Distinguish instruction gaps, missing offered capability and noncompliance with
+existing guidance before adding rules, tooling or another review. Compare matched
+runs where available and keep unmeasured savings unknown.
+
 Use `composing` for a genuinely new or changed score/concert workflow and
 `score-authoring` for its specialist review. Ask the composer to use the closest
 existing examples and selected full Rosetta patterns, and explain the actual

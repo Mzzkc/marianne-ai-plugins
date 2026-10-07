@@ -70,6 +70,10 @@ A circuit breaker ends the failed shape, not existing delegated authority.
 When evidence determines a safe authorized new premise, record it with a fresh
 finite budget and proceed. Escalate a genuinely unresolved authority or product
 choice, rather than making the composer reauthorize routine recovery.
+Before another attempt, identify the materially changed premise, expected observable
+result, available qualified alternative and remaining consumer/repair/adoption/life
+reserve within the original deadline. Judge the total outcome: successive distinct
+defects can still consume the whole window without delivery. Use existing run state.
 
 ## Recover the unfinished obligation
 
@@ -131,6 +135,11 @@ capability and meaningful limitations. Match demonstrated ability, lived memory,
 techniques and actual instrument capability/cost to the seat; an agent name does
 not establish its model route. Venue systems supply identity/context
 correctness and instrument readiness without requiring a provenance audit.
+When a stronger driver is offered, keep the experienced persistent person and their
+identity, memory, relationships and full life. Ask the venue for qualified tool,
+modality, capacity and entitlement evidence; registration alone establishes none of
+these. Use that driver on the limiting complete journey with a distinct judge.
+Judge accepted integration and rework, not prestige or presumed savings.
 
 Preserve the full rich lifecycle: selection, situated work, reflection, genuinely
 developmental play, consolidation, dreaming, memory writeback, maturity,

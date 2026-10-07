@@ -5,7 +5,7 @@ Choose one relevant row directly. Use [CURRENT.md](CURRENT.md) for current-versu
 | Intent | Playbook | Add these references | Primary verification |
 |---|---|---|---|
 | Construct, reuse, update, or operate a persistent agent | `playbooks/compose.md` or `playbooks/operate.md` | `${CLAUDE_PLUGIN_ROOT}/docs/ref/modern-agents.md`, current registry README/index, exact seed and score | Prove canonical data authority, required attachment receipts, lifecycle debt/writeback, and later recall |
-| Write or review score YAML | [composing](../composing/SKILL.md), then `playbooks/compose.md` for runtime syntax | `contracts/score-schema.md`, `contracts/validation-types.md`, `templates/`, `examples/golden/`, `examples/broken/` | `tools/check-score.py SCORE` |
+| Write or review score YAML | `playbooks/compose.md` directly; composing is an optional design handoff | `contracts/score-schema.md`, `contracts/validation-types.md`, `templates/`, `examples/golden/`, `examples/broken/` | `tools/check-score.py SCORE` |
 | Run, monitor, pause, resume, or cancel | `playbooks/operate.md` | `contracts/cli-commands.md`, `CURRENT.md`, pinned `evidence/implementation-status.json` | Verify an actuator exists; inspect typed state and artifacts |
 | Diagnose a failure | `playbooks/debug.md` | `contracts/error-codes.md`, `examples/incidents/`, relevant claim slices | Search exact error; reproduce with the narrowest safe probe |
 | Reason about architecture | `playbooks/architecture.md` | `evidence/triangulation/`, `contracts/` | Join each runtime assertion to a claim and final status |
@@ -13,6 +13,19 @@ Choose one relevant row directly. Use [CURRENT.md](CURRENT.md) for current-versu
 | Embed Marianne behind an app/tool | `playbooks/embed.md` | `contracts/cli-commands.md`, status contracts, implementation status | Validate before submit; check daemon response and typed job state |
 
 ## Capability vector
+
+Handle direct requests within their authorized technical scope. Reuse supplied
+design and evidence; another skill invocation is not an admission gate. Return the
+affected operation/guarantee, surviving work, current evidence and available next
+action. Distinguish missing implementation, disconnected callers, absent evidence,
+unavailable actuation and missing authority. A held launch capability must not
+block already-qualified scoped development. Complete independent authorized work
+while a genuinely missing owner decision is resolved.
+
+Command is the optional operational syntax reference; this skill's operate/debug
+playbooks remain sufficient entry points. Keep reported native state, meaningful
+consumer behavior and independent acceptance distinct. Loading technical material
+never silently makes an ordinary conductor the venue maintainer.
 
 Reuse a still-applicable session preflight; run `scripts/preflight.py` when the relevant access, authority or source changes. Preserve each field independently:
 

@@ -19,9 +19,15 @@ description: Use when writing, reviewing, or fixing Marianne score YAML configs,
 | Designing multi-stage workflows | |
 
 Invoking a qualified stock engagement with supported task inputs and route binding
-is conducting, not new score authoring. When changing the score's DAG, prompt
-logic, attachment contract or guarantees, use the composing design and release
-gates. For substantial work, encode the required
+is conducting, not new score authoring. Use this skill directly for an authorized
+YAML task; no prior conducting or composing invocation is required. Consume a supplied
+design. When changing the DAG, prompt logic, attachment contract or guarantees,
+establish the goal, authority, inputs, consumers, proof, repair and release decisions
+before encoding them. Composing can own a separate design commission when needed.
+For consequential new/changed behavior, reuse an approved design or obtain a
+separately validated design before YAML. Design and encoding in one unreviewed
+stage is not that gate; unchanged syntax repairs inherit the existing review.
+For substantial work, encode the required
 construction, consumer integration, independent review, repair and reevaluation;
 one or two sheets are not a substitute for those behaviors. Atomic operations
 can remain small within that performance.
@@ -85,16 +91,31 @@ sheet:
 Without this, an inherited AI fallback can reinterpret a failed shell command
 and conceal that the deterministic gate never ran.
 
-For multi-stage, evaluator, source-modifying, or release-producing scores, use
-the composing skill's design gate. After `mzt validate`, run
-`composing/scripts/check_score_release.py` to resolve load-bearing injections,
+For multi-stage, evaluator, source-modifying, or release-producing scores, verify
+the design above, compatibility/test disposition, candidate provenance, distinct
+review and bounded repair through adoption. A narrow syntax repair to an unchanged
+contract does not require recommissioning its design. The plugin's shared
+`composing/scripts/check_design.py` and `composing/scripts/check_score_release.py`
+are reusable tools; using them does not require invoking composing. Run the design
+checker for a new/changed design and, after `mzt validate`, the release checker to resolve load-bearing injections,
 enforce workspace/fallback/validation policy, and write the exact candidate
 digest. Any score or injection change after evaluation requires reevaluation.
 These are structural and identity checks, not proof of the product outcome.
+For a design file, supply `goal`, `authority`, `forces`, `stages`, `context_flow`,
+`injections`, `proof_obligations`, `compatibility`, `test_disposition`,
+`verification_context`, `repair_loop` and `release`. Record candidate/import
+provenance, serialized whole tests and yielded-process cleanup in verification;
+make release depend on affected reevaluation and exact candidate identity.
 Give each consequential output an actual consumer and behavioral validation;
 connect failed consumption to owned repair and reevaluation using supported
 execution and recovery controls. A pattern example inherits no stronger
 guarantee than its actual configured checks execute.
+Use task-scoped score filenames matching `name`, fail-fast gate invocations and
+the same explicit lock path when writing and checking. Keep a complete qualified
+invocation, including test-only prerequisites. Encode owners/activation for failed
+consumption and interrupted return; report an unsupported transition instead of
+inventing YAML semantics. Return the exact YAML, checks run, capabilities still
+unqualified and the next authorized operation to the caller.
 
 ---
 

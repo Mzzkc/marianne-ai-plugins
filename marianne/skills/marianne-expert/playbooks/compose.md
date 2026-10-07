@@ -1,10 +1,13 @@
 # Composing a Score
 
-Use [composing](../../composing/SKILL.md) for canonical performance design,
-consumer joins, independent acceptance, bounded repair and release qualification.
-This playbook supplies runtime syntax and historical examples, not a second
-design gate. Reuse an unchanged qualified engagement through its offered
-interface; custom topology requires an actual behavioral gap.
+Use this playbook directly for technical score work. Consume supplied design
+decisions or establish the task's goal, authority, inputs, consumers, independent
+acceptance, bounded repair and release obligations before encoding new behavior.
+[Composing](../../composing/SKILL.md) is an optional performance-design specialist,
+not a prerequisite invocation or second approval gate. Reuse an unchanged qualified
+engagement through its offered interface; custom topology needs a behavioral gap.
+For consequential new behavior, reuse an approved design or have the design
+separately validated before encoding it; a direct invocation does not waive review.
 
 **Evidence scope:** `[C###]` claims describe source `65f2dc3b`.
 [Current orientation](../CURRENT.md) records verified changes, including cron.
@@ -16,7 +19,7 @@ Score authors fail when they compose from the metaphor instead of the runtime co
 
 ## Mechanism
 
-Use these runtime considerations within the design selected through composing.
+Use these runtime considerations within the supplied or directly established design.
 
 First, decide the work shape. If each sheet performs the same operation over item ranges, use a linear batch: `sheet.size > 1`, `sheet.total_items` equal to the item count, and a prompt that uses `{{ start_item }}` and `{{ end_item }}` [C002, C003, C040]. If each phase has distinct instructions, use one logical stage per sheet: `sheet.size: 1`, `sheet.total_items` equal to the number of stages, and branch the prompt on `stage` or `movement`; those aliases are preserved in the runtime context [C040]. If independent perspectives improve the result, use fan-out: one setup stage, one fan-out stage with multiple `instance` or `voice` values, and one synthesis stage that depends on the fan-out stage [C040]. Dependencies and dispatch still pass through the scheduler, where `dispatch_ready()` enforces global concurrency despite stale docs saying otherwise, per-instrument/model limits, rate-limit skips, and stagger delays [C004, C005, C006, C007, C008].
 
@@ -26,7 +29,7 @@ Third, choose instruments by capability boundary, not provider preference. The s
 
 Fourth, design injections deliberately. Put invariant project context in `sheet.prelude`, sheet-specific files in `sheet.cadenzas`, and methodology in `techniques` when it is reusable across scores [C010, C011, C012]. Technique components are `skill`, `mcp`, or `protocol`; runtime resolution determines active techniques by phase, skill techniques inject text methodology, MCP techniques connect registered tool pools, and protocol techniques classify coordination surfaces [C010, C011, C012, C013, C014]. Do not confuse protocol routing with durable completion semantics: A2A inbox state is in-memory only, and completion/failure events are observer-serialized rather than executed by the runtime [C026, C027, C028].
 
-Fifth, engineer the litmus test. Name each required output, its authorized authoritative destination and its behavioral check. Run artifacts belong under `{{ workspace }}`; authorized product changes belong under `project_root`; persistent identity and memory remain in the person’s canonical data root. A workspace copy is evidence, not replacement product or memory authority. Validate the actual authoritative destination using single-brace Python `.format()` path syntax [C001, C002, C003]; use composing and the modern-agent contract for ownership. Prompts render Jinja2 at dispatch time; validation paths expand with Python `.format()` from the sheet context [C001, C002, C003]. Relative workspace paths resolve against the score file's parent without confinement, so score files are trusted input and `path_in_scope` should be used when untrusted path escape matters [C038, C015].
+Fifth, engineer the litmus test. Name each required output, its authorized authoritative destination and its behavioral check. Run artifacts belong under `{{ workspace }}`; authorized product changes belong under `project_root`; persistent identity and memory remain in the person’s canonical data root. A workspace copy is evidence, not replacement product or memory authority. Validate the actual authoritative destination using single-brace Python `.format()` path syntax [C001, C002, C003]; use the supplied authority and modern-agent contract for ownership. Prompts render Jinja2 at dispatch time; validation paths expand with Python `.format()` from the sheet context [C001, C002, C003]. Relative workspace paths resolve against the score file's parent without confinement, so score files are trusted input and `path_in_scope` should be used when untrusted path escape matters [C038, C015].
 
 Structural example:
 
@@ -74,7 +77,7 @@ validations:
     condition: "stage == 3"
 ```
 
-This structural example illustrates explicit fan-out dependencies, deterministic artifact paths and single-brace validation syntax [C001, C002, C003, C005, C015, C040]. Finding `Priority` does not prove review quality, coverage, independence or successful consumption; the example also lacks checks for each reviewer output. It is not a qualified release pattern. Supply and exercise the applicable behavioral gates through composing before relying on it.
+This structural example illustrates explicit fan-out dependencies, deterministic artifact paths and single-brace validation syntax [C001, C002, C003, C005, C015, C040]. Finding `Priority` does not prove review quality, coverage, independence or successful consumption; the example also lacks checks for each reviewer output. It is not a qualified release pattern. Supply and exercise the applicable behavioral gates before relying on it; no sibling skill invocation can substitute for those checks.
 
 Broken example:
 
@@ -129,7 +132,7 @@ Corrected sentence: "Use implemented validation and profiles confirmed by curren
 Before publishing or running a score, perform these checks:
 
 1. Decision tree: name the selected shape as linear batch, stage pipeline, fan-out/fan-in, or mixed-instrument pipeline; confirm `sheet.size`, `sheet.total_items`, dependencies, and fan-out align with that shape [C004, C005, C040].
-2. Forces: reuse the composing design’s decisions about independence, coupling, artifact surface, risk, total delivery cost, and validation observability. If validation observability is weak, change the artifact contract before adding more sheets [C015].
+2. Forces: reuse the supplied design's decisions, or establish independence, coupling, artifact surface, risk, total delivery cost, and validation observability directly. If validation observability is weak, change the artifact contract before adding more sheets [C015].
 3. Instruments: run the score through current profile vocabulary, not stale backend vocabulary. Confirm each selected name with current source and `mzt instruments check`; require declared capabilities to match the actual shared executor [C020, C021, C023, C024, C025].
 4. Injections: confirm stable context is in prelude/cadenzas or a named technique, and confirm protocol techniques do not claim durable A2A completion semantics [C010, C011, C012, C026, C027, C028].
 5. Litmus test: check each output at its declared authoritative destination. Workspace run artifacts use `{{ workspace }}/...` in prompts and `{workspace}/...` in validations; product and canonical-life changes use their authorized roots. At least one applicable validation checks behavior, freshness, content, structure, digest, command success, scope, or uniqueness rather than only existence [C001, C002, C003, C015].

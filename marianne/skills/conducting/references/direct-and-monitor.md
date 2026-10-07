@@ -173,7 +173,12 @@ The checkpoint demonstrates changed consumer behavior or resolved uncertainty;
 accurate lateness narration alone does not change the trajectory.
 
 Calibrate budgets from observed input volume, first useful artifact, tool/suite
-runtime, and terminal handoff. Reserve time for the actual receipt consumer.
+runtime, and terminal handoff. Use admission-to-consumed-result timings and observed
+variance: include context reading, queueing, setup, compilation, commands, judgment,
+writes, validation, handoff, installation and life. A fastest test-summary duration
+is not a safe whole-engagement cap. Batch compatible repairs, freeze integration
+early and overlap applicable review and care without conflicting writers or suites.
+Reserve time for the actual receipt consumer.
 First tool, headings-only scaffold, and collection failure are distinct from a
 useful decision, behavioral proof, or completed handoff. Quiet time alone proves neither inactivity nor quota exhaustion. Ask for the
 actionable status needed to decide pace or casting; venue diagnosis remains
@@ -201,6 +206,10 @@ Root's private technical speculation is role leakage even without edits. Once
 an expert has the outcome and authority, consume the offered result, wait within
 the communication cadence, or advance independent human-facing work. Batch
 unchanged reports instead of reconstructing every completed tool.
+Before repeating an investigation or directive, name the consequential decision
+that requires Root. If none remains, stop that activity and let the competent
+owner and peers finish. Read full consequential meaning once; revisit changed
+claims rather than reconstructing settled raw inventories.
 
 Measure time to the first usable journey, critical-path waiting, rework, defect
 escape and accepted behavior per total paid effort through existing telemetry.
@@ -219,6 +228,10 @@ Report:
 
 File counts, commits, green local jobs, and enthusiastic reports are activity
 signals. They become progress only when joined to the vision and its evidence.
+Report source construction, exercised product behavior, software qualification and
+actual adoption separately. Estimate the next milestone from observed critical-path
+durations and explicit assumptions; recalibrate after a complete run. Label a
+planning allowance as such instead of presenting it as a measured minimum.
 
 Report progress with a physical denominator when one exists. At a checkpoint,
 state the visible capability movement, current critical blocker, and next

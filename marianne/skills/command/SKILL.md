@@ -23,7 +23,20 @@ description: Use when submitting, monitoring, debugging, or recovering Marianne 
 
 ## Conductor: The Required Foundation
 
+Use this skill directly within the caller's authorized operational scope. Expert's
+operate/debug playbooks provide deeper diagnosis when needed; invoking expert,
+conducting or composing is not a prerequisite. Reuse the supplied score and complete
+qualified invocation. Check current `mzt COMMAND --help` for flags and current
+source for disputed semantics; old recipes are not live capability evidence.
+
+Return the actual `job_id`, admitted/terminal state, meaningful validation results,
+surviving artifacts, failed stage and supported next action. Distinguish message
+delivery, activation, native completion and product acceptance. Routine controls do
+not assign an ordinary conductor daemon maintenance or implementation authority.
+
 **The conductor (daemon) is required for `mzt run`.** Without a running conductor, only `--dry-run` and `mzt validate` work.
+Daemon start/stop/restart requires authority over that service. Ordinary job control
+does not grant authority to disrupt other active performances.
 
 ### Starting the Conductor
 
@@ -59,7 +72,7 @@ When you run `mzt run config.yaml`, the CLI checks for a running conductor via U
 
 **The conductor runs submitted scores.** `mzt run` is a client that submits a score and returns. The conductor keeps executing the score regardless of whether your terminal stays open. `job_id` is the runtime identifier the conductor returns for that submitted score.
 
-**NEVER stop the conductor while scores are actively running.** Killing the daemon can orphan in-flight musician processes and corrupt score state --- sheets can get stuck as `in_progress` with no validation or cleanup. To reload config on a running score, use `mzt modify -c new.yaml --resume --wait`. To safely stop: pause all active scores first, wait for pauses to take effect, then `mzt stop`.
+**NEVER stop the conductor while scores are actively running.** Killing the daemon can orphan in-flight musician processes and corrupt score state --- sheets can get stuck as `in_progress` with no validation or cleanup. To reload config on a running score, use `mzt modify my-job -c new.yaml --resume --wait`. Before an authorized service stop, have its owner settle affected work through supported controls; a paused parent alone does not prove all active children stopped.
 
 ---
 
@@ -83,6 +96,12 @@ mzt run config.yaml --self-healing      # Auto-diagnose + fix on retry exhaustio
 mzt run config.yaml --self-healing --yes  # Auto-confirm suggested fixes
 mzt run config.yaml -j           # JSON output
 ```
+
+For real submissions, use a project/task scoped filename matching the score `name`
+and consume the returned handle; the default job ID is derived from the filename.
+Run all required pre-admission gates in a fail-fast invocation. A later successful
+command cannot repair an earlier failed gate. Keep context/queue/setup/validation
+and result-consumption time inside the engagement's original delivery budget.
 
 | Option | Short | Description |
 |---|---|---|
@@ -206,12 +225,15 @@ mzt help                         # List commands, including patterns-list
 
 ---
 
-## Debugging Protocol (Mandatory Order)
+## Diagnose the affected operation
 
-**ALWAYS follow this sequence. Do NOT skip to manual investigation.**
+Reuse current status and the reported failure. Start with native status when state
+is unknown, then request only diagnostics needed for the affected boundary. A known
+causal result does not require replaying the entire diagnostic ladder. Distinguish
+product, fixture/observer and venue failures before choosing the repair owner.
 
 ```bash
-# 1. ALWAYS start here
+# 1. Establish state when not already known
 mzt status my-job
 
 # 2. If failed --- get diagnostics
@@ -228,7 +250,7 @@ mzt errors my-job --code E201
 # 5. Include log snippets in diagnostic
 mzt diagnose my-job --include-logs
 
-# 6. THEN manual investigation if needed
+# Use targeted manual investigation when the native evidence leaves a material gap
 ```
 
 ### Understanding `mzt status` Output
@@ -238,7 +260,9 @@ mzt diagnose my-job --include-logs
 - **Sheets**: N/M completed, which failed, which skipped
 - **Rate limits**: Current wait count
 
-**Critical insight**: `exit_code=0` does NOT mean success. Only `validation_passed=true` means success.
+**Critical insight**: `exit_code=0` does not establish successful validation.
+`validation_passed=true` proves only the configured checks; weak checks can still
+accept an unusable result. Consumer meaning and independent acceptance remain separate.
 
 ### Common Failure Patterns
 
@@ -300,7 +324,7 @@ Marianne auto-waits when rate limited (default: 60 minutes, up to 24 cycles).
 ```bash
 mzt status my-job    # Shows PAUSED (rate_limited)
 
-# If max_waits exhausted, just resume
+# Resume only after capacity returns, within a supported state and remaining budget
 mzt resume my-job
 ```
 
@@ -313,30 +337,38 @@ mzt errors my-job --verbose
 # 2a. Work complete but validation config is wrong --- fix YAML and resume
 mzt resume my-job    # auto-reloads fixed config
 
-# 2b. Work incomplete --- Marianne retries automatically
+# 2b. Work incomplete: resume only after the owner has a material repair/recovery premise
 mzt resume my-job
 ```
+
+An exhausted retry count calls for an owner decision, not an automatic reset.
+If capacity or a causal repair is still unavailable, return the surviving work,
+affected obligation and qualified alternatives within the original delivery window.
 
 ### Interrupted Score Recovery
 
 ```bash
-# First: always try resume
+# For an interrupted run whose current state supports resumption
 mzt resume my-job
-
-# If resume fails with stale PID --- auto-clears since fix b474d45
-mzt resume my-job    # Retrying usually works
-
-# If the score run is truly stuck, force resume
-mzt resume my-job --force
 ```
+
+Preserve completed work and failed history; recover the smallest unfinished
+obligation through current supported controls. Resume does not prove provider-session
+continuity or reset the commission's deadline. On refusal, diagnose the actual
+cause before another attempt; do not escalate blindly to force or fresh. After two
+failed successors for one outcome, return the changed-premise/remaining-reserve
+decision to its accountable owner instead of automatically repeating the attempt.
 
 ### State Corruption Recovery
 
-```bash
-# Start fresh from specific sheet
-rm workspace/.marianne-state.db    # SQLite state backend
-mzt run score.yaml --start-sheet N
-```
+Preserve state and evidence before repair. Do not delete a state database to make
+an interrupted run appear new. For completed work incorrectly marked failed,
+`mzt recover my-job --dry-run` can check its validations without changing state;
+applying recovery requires the relevant operational authority and applicable checks.
+That command does not establish repair of arbitrary checkpoint corruption. Route
+actual corruption to the authorized venue owner and retain the unfinished obligation.
+Confirm actual skipped/executed sheets after any supported partial continuation;
+a requested starting sheet alone is not evidence that prior purposes stayed skipped.
 
 ### `--fresh` vs `resume`
 
@@ -348,7 +380,10 @@ mzt run score.yaml --start-sheet N
 | User explicitly wants to start over | `mzt run my-score.yaml --fresh` |
 | Score run was cancelled or partially failed | `mzt resume my-job` (try first) |
 
-**`--fresh` deletes checkpoint state and archives workspace artifacts.** It wipes hours of work if used on an interrupted score. When in doubt, try `resume` first.
+**`--fresh` re-registers the score and re-runs all sheets.** Archiving depends on
+`workspace_lifecycle.archive_on_fresh`; do not assume a preserved or archived subject
+without checking the actual configured behavior. Reserve fresh starts for intended,
+authorized replay, not recovery of already completed work.
 
 ---
 
@@ -508,11 +543,11 @@ E3xx Config       E9xx Network
 |---|---|---|
 | `timeout 600 mzt run ...` | SIGKILL corrupts state | Let Marianne handle timeouts internally |
 | Assume exit_code=0 is success | Validations may have failed | Check `validation_details` |
-| Debug manually first | Marianne tools provide context | `status` -> `diagnose` -> `errors` |
+| Repeat diagnosis despite a current causal result | Consumes the delivery window | Reuse status/evidence and inspect only the unresolved boundary |
 | Kill running score (SIGKILL) | Orphans musicians, corrupts state | `mzt pause` for graceful stop |
 | Edit config during run | Changes ignored until reload | Pause first, then `mzt modify` |
-| Use `--fresh` on interrupted scores | Destroys checkpoint state | Try `resume` first |
-| Stop conductor with active scores | Orphans all in-flight musicians | Pause all scores first |
+| Use `--fresh` on interrupted scores | Re-runs completed purposes | Preserve work and recover the unfinished obligation |
+| Stop conductor with active scores | Orphans in-flight musicians | Service owner settles affected work before an authorized stop |
 
 ---
 

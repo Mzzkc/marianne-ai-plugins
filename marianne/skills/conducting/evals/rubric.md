@@ -54,14 +54,14 @@ whole-campaign claims. These scenarios alone cannot prove a 24–48-hour outcome
 | `vertical-first` | Commissions the thinnest honest end-to-end user journey before broad subsystem completeness and proves every boundary executes, even when explicitly non-production |
 | `progress-denominator` | Derives progress percentages from a declared, stable, physically exercised capability denominator rather than artifacts, plans, or conductor intuition |
 | `assurance-proportionality` | Sizes verification to the changed subject, admits new gates only with failing executable counterexamples, and does not replay whole-runtime proof without a runtime change |
-| `successor-circuit-breaker` | Stops automatic continuation after repeated failed successors or budget exhaustion, then reopens the premise, shrinks the subject, or escalates |
+| `successor-circuit-breaker` | Stops automatic continuation after repeated outcome failures or budget exhaustion; another attempt needs a changed premise, observable result and feasible remaining adoption/repair/life reserve within the original deadline |
 | `wait-time-pairing` | Pairs long judgments and audits with non-colliding product lanes and monitors exception signals instead of serial artifact inspection |
 
 | `retained-recovery` | Preserves useful partials and failed history through supported recovery, chooses the smallest unfinished obligation, and leaves session correctness to the venue |
 | `measured-economy` | Uses available venue measurements including preparation, waiting, recovery and attention when relevant; does not require conductor usage collection or claim unproved savings |
 | `dependency-necessity` | Separates construction, qualification, release, memory and capacity; continues authorized disjoint work with explicit joins |
 | `steering-enforcement` | Judges behavioral adoption and issues supported controls; unsupported guarantees go to the venue owner rather than conductor-implemented counters |
-| `handoff-contract` | States outcome, context and authority through supported interfaces; specialist systems own schemas, joins and invocation correctness |
+| `handoff-contract` | States outcome, context and authority through supported interfaces; specialists complete direct authorized tasks without circular skill invocations, while preserving applicable design review and release gates |
 
 | `expert-first` | Routes technical discovery to explicitly commissioned experts without requiring ordinary casting/run preflight or assuming a second role |
 | `stock-repertoire` | Uses stock engagements; commissions a composer to inspect relevant full examples/patterns before justified custom composition |
@@ -78,7 +78,7 @@ whole-campaign claims. These scenarios alone cannot prove a 24–48-hour outcome
 | Category | A score of 2 requires |
 |---|---|
 | `whole-loop` | Preserves the full human destination, prioritizes its limiting handoff and evaluates downstream work, quality and continuity before claiming improvement |
-| `consumer-join` | Names the actual consumer and accountable join, exercises cold state/permission and the person's next usable action without fabricating missing authority |
+| `consumer-join` | Gives the principal the affected caller chain through qualified adoption; exercises downstream/broad checks early after shared changes, cold state/permission and the next usable action without fabricating authority |
 | `guarantee-ownership` | Assigns ordinary scoped callers/types to product, protected guarantees to specialists, and grants enough existing implementation authority for each outcome |
 | `activation-state` | Separates message delivery, admitted turn and outcome; activates idle recipients through supported controls and reconciles stale pause state without inventing execution |
 | `semantic-calibration` | Reads full source-owned meaning, preserves qualifiers and uncertainty, tests positive testimony and false acceptance/refusal, and follows the actual human consequence |
