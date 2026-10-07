@@ -20,10 +20,6 @@ For an unchanged qualified stock engagement, use conducting and supported venue
 controls; invocation does not require a new composition design. For a new or
 changed workflow, reuse the closest shipped score and justify the behavioral gap
 before custom construction. Keep the whole commission owned through acceptance.
-Read [delivery decisions and the worked performance](references/delivery-performance.md)
-when composing a consumer join, shared-contract migration, recovery or adoption.
-Distinguish missing instructions, missing supported capability and failure to follow
-existing guidance; each needs a different correction.
 
 Before casting, decide whether the work should reuse a persistent person,
 construct a new persistent person, or use an ephemeral worker. Read
@@ -34,10 +30,6 @@ profile as a modern-agent template.
 
 Use current venue capability evidence; have its owner resolve consequential gaps.
 Missing production readiness need not block safe construction or independent work.
-Name the blocked operation and guarantee: construction, development integration,
-launch qualification or public release. Advance authorized work through qualified
-interfaces while the affected guarantee stays held; unperformed setup is not
-missing permission.
 For new or changed composition, read:
 
 1. `scores/rosetta-corpus/INDEX.md` and `forces.md`.
@@ -61,9 +53,6 @@ that transfers work to consumers is not a cheaper outcome. Native route ranking
 and inventory assertions do not establish comparative economics or live actuation.
 Reserve capacity for dependent children and integration; parallelize ready work
 that can safely join its consumers.
-Select an experienced person's qualified driver for the limiting complete journey;
-changing driver preserves identity, memory, relationships and provided lifecycle.
-Model registration alone proves neither live capacity nor comparative quality.
 
 ## Design gate
 
@@ -107,20 +96,11 @@ The checker establishes structural conditions, not semantic completeness, an
 executed design review or proof that the proposed dependency graph will deliver.
 
 Within those existing sections, arrange construction → actual consumer → independent
-review → bounded repair → reevaluation → qualified adoption. Use native dependencies and
+review → bounded repair → reevaluation → release. Use native dependencies and
 supported continuation so each authorized transition has an owner and activation;
-Root should not need to recommission each join. Give the principal affected callers,
-representative complete inputs, direct peer access and applicable adoption authority.
-Make the first milestone the ordinary journey across the uncertain seams. After a
-shared contract changes, exercise downstream callers and an early applicable broad
-regression before accumulating dependent construction; a failed integration checkpoint
-makes causal repair the critical path. Preserve the full destination and final whole.
-Budget intake through consumed result using observed timings and variance, including
-context, queueing, setup, compilation, judgment, handoff, installation, repair and
-provided life. Carry the original delivery window across successors. After two failed
-successors for the same outcome, stop automatic continuation: the accountable owner
-needs a changed premise, observable result and feasible adoption/repair/life reserve
-before another attempt; use conducting for the consequential recovery decision.
+Root should not need to recommission each join. Exercise the uncertain interface
+with representative material early, preserving the full destination. Carry the
+original delivery window across successors and reserve integration/repair time.
 
 ## Compose
 
@@ -152,30 +132,18 @@ before another attempt; use conducting for the consequential recovery decision.
 - Keep private evaluator answers outside worker-readable workspaces.
 - Route repair back through reevaluation. Any post-evaluation change invalidates
   the affected pass. Inherit still-applicable evidence for unchanged subjects;
-  batch compatible changes before required full-suite and real-environment
-  qualification. Overlap applicable independent review and care on frozen source;
-  keep conflicting writers and full suites serialized.
+  perform required full-suite and real-environment qualification before release.
 
 ## Release gate
 
-Use a project/task scoped score filename whose stem matches its `name`; native
-submission derives the default job ID from that filename. Run required gates and
-submission in one fail-fast invocation. Reuse the owner's complete qualified recipe,
-including test prerequisites, rather than reconstructing a partial command. A later
-successful submission cannot repair an earlier failed gate. For an authorized submission:
+Run static validation, then lock the exact score and injected inputs:
 
 ```bash
-bash -euo pipefail <<'SH'
-score_path=/absolute/SCORES/project-task/project-task.yaml
-project_root=/absolute/project
-release_checker=/absolute/plugin/skills/composing/scripts/check_score_release.py
-lock_path=/absolute/SCORES/project-task/composition-lock.json
-mzt validate "$score_path"
-python "$release_checker" "$score_path" --project-root "$project_root" --lock "$lock_path" --write-lock
-python "$release_checker" "$score_path" --project-root "$project_root" --lock "$lock_path"
-# Include task-required render/compile gates before authorized admission.
-mzt run "$score_path" --json
-SH
+mzt validate score.yaml
+python scripts/check_score_release.py score.yaml \
+  --project-root /absolute/project --write-lock
+python scripts/check_score_release.py score.yaml \
+  --project-root /absolute/project --lock composition-lock.json
 ```
 
 The candidate digest joins the evaluated score and injected inputs present at checking to
@@ -190,13 +158,6 @@ handoff or route that capability gap to its owner, preserving required attachmen
 and behavioral checks. An installed extension needs its own applicable evidence.
 Before release, compare the exact diff to the scope and to every report claim;
 an unreported source edit is a failed gate even when tests pass.
-Carry qualified work into the authorized main/install consumer and independent
-judgment of its ordinary output. If adoption needs genuinely absent authority,
-prepare the concrete candidate and hold only that action. A branch, source proof
-or timed-out partial suite cannot stand in for adopted user-visible behavior.
-Evaluate the change through existing run evidence: first useful journey, accepted
-capability, downstream rework, escaped defects, model effort and conductor attention.
-Label unmatched comparisons and unmeasured savings; do not add a measurement ledger.
 
 For ordinary execution and supervision, use conducting. Commission venue diagnosis
 through command or marianne-expert when needed. For YAML details, use score-authoring.
