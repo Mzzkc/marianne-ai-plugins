@@ -124,3 +124,50 @@ Measure first (`time pytest tests/ -x -q`), then set `timeout_seconds` to **max(
 ---
 
 *Marianne Score Advanced --- extracted from the score-authoring reference.*
+
+---
+
+## Flow control: loops and triggers
+
+Declare `sheet.loops` by an inclusive sheet span such as `1` or `2-5`.
+Every loop needs `count`, an `until` expression, or both; `max_iterations`
+remains a safety cap. A loop executes its range once before deciding whether
+to repeat. Nested spans are allowed, but partially overlapping spans are not.
+The index is available in prompts as `{{ loops.pass_no }}` and
+`{{ pass_no }}`, in scoped validations as `{pass_no}`, and in expressions as
+`loop.pass_no`. Under `fan_out`, author the stage numbers; Marianne expands
+them into concrete sheet ranges during load.
+
+```yaml
+sheet:
+  size: 1
+  total_items: 2
+  loops:
+    1:
+      index: pass_no
+      until: 'file("done.txt").exists'
+      max_iterations: 5
+  triggers:
+    1:
+      on_fail:
+        - escalate: Inspect the failed pass before resuming.
+```
+
+Expressions can read declared variables, loop indices, sheet facts, and
+bounded file facts. They evaluate at the loop boundary. A file condition can
+use `.exists`, `.modified`, `.contains("text")`, or `.matches("regex")`.
+`validation(...)` and `output(...)` are reserved and fail score load. An
+undefined runtime variable fails the condition when reached.
+
+`on_success` and `on_fail` take ordered lists of single-action objects:
+`goto`, `skip`, `pause`, `escalate`, `run`, `concert`, or `continue`.
+An `on_fail` handler owns the failure; it replaces ordinary retry, fallback,
+completion mode, and healing for that sheet. `run` executes a bounded command
+off the baton loop and may repeat after a crash. Make its side effects
+idempotent; `MARIANNE_FLOW_ATTEMPT` records the replay count. A `concert`
+action submits a child score without waiting for it. Flow state and sheet
+state persist together in the job checkpoint.
+
+See `examples/patterns/convergence-loop.yaml` and
+`docs/configuration-reference.md` in the Marianne venue for a runnable
+CLI-only example and the full field contract.
