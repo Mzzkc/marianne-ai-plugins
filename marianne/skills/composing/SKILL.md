@@ -169,6 +169,11 @@ python "$release_checker" "$score_path" --project-root "$project_root" --lock "$
 SH
 ```
 
+For a strict release gate, use `mzt validate "$score_path" --strict` after
+reviewing existing warnings. A score can acknowledge specific WARN/INFO codes
+with `validate.suppress: [Vxxx]`; V012 refuses ERROR-tier and unknown codes.
+The JSON result keeps its existing keys and adds `summary` and `suppressed`.
+
 The candidate digest joins the evaluated score and injected inputs present at checking to
 release. A digest mismatch requires fresh evaluation; never release a
 repaired-but-unrerun candidate. Structural PASS and a matching lock do not prove

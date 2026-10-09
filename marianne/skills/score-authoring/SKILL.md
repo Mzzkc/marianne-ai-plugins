@@ -106,6 +106,11 @@ checker for a new/changed design and, after `mzt validate`, the release checker 
 enforce workspace/fallback/validation policy, and write the exact candidate
 digest. Any score or injection change after evaluation requires reevaluation.
 These are structural and identity checks, not proof of the product outcome.
+Use `mzt validate --strict` when warnings are part of the release gate. Review
+each warning in score context before listing its WARN/INFO code in
+`validate.suppress`; V012 rejects ERROR-tier and unknown codes. V010/V011
+report unknown YAML fields that the score loader ignores, so correct genuine
+typos before release. INFO findings appear with `--verbose` or in `--json`.
 For a design file, supply `goal`, `authority`, `forces`, `stages`, `context_flow`,
 `injections`, `proof_obligations`, `compatibility`, `test_disposition`,
 `verification_context`, `repair_loop` and `release`. Record candidate/import

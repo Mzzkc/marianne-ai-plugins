@@ -236,11 +236,20 @@ mzt clear --yes                  # Skip confirmation
 
 ```bash
 mzt validate config.yaml         # Pre-flight check (no conductor needed)
+mzt validate config.yaml --strict # Fail on unsuppressed warnings as well as errors
+mzt validate config.yaml --json   # Stable issue keys plus summary/suppressed
 mzt diagnose my-job              # Full diagnostic report
 mzt errors my-job --verbose      # Error details with stdout/stderr
 mzt dashboard                    # Start web dashboard (default port 8000)
 mzt help                         # List commands, including patterns-list
 ```
+
+`mzt validate` exits 0 with warnings by default, 1 for errors (or unsuppressed
+warnings under `--strict`), and 2 when YAML cannot be read or parsed into a
+score. `--errors-only` filters displayed findings without changing the exit
+rule. INFO findings require `--verbose` in terminal output. A score may list
+reviewed WARN/INFO codes under `validate.suppress`; V012 rejects attempts to
+suppress an ERROR or an unknown code.
 
 ---
 
