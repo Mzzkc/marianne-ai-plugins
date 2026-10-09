@@ -65,6 +65,17 @@ setsid mzt start &
 | `mzt restart` | Stop and restart |
 | `mzt restart --profile dev` | Restart with a profile |
 | `mzt conductor-status` | Check if conductor is running |
+| `mzt conductor-status --json` | Raw daemon status (config generation, live per-model caps) |
+| `mzt conductor reload` | Hot-reload config + instrument profiles WITHOUT restart (GH #408) |
+
+`mzt conductor reload` re-reads the config file and instrument profile
+directories on the running conductor (same path as SIGHUP) and prints what
+was `applied` and what was `declined` (restart-only fields keep the running
+value). Reloads are fail-closed: an invalid config changes nothing. Prefer
+this over `mzt restart` whenever the change is reloadable — a restart
+orphans nothing but still pauses admission; a reload does not. Cap changes
+apply live: raised caps dispatch waiting sheets, lowered caps drain without
+cancelling in-flight work.
 
 ### How Scores Route Through the Conductor
 
