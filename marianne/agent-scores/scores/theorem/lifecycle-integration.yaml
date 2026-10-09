@@ -161,6 +161,10 @@ sheet:
     - Read `~/.marianne/agents/theorem/.marianne/pending-lifecycle-debt.yaml` when it exists.
     - Read `~/.marianne/agents/theorem/.marianne/pending-seed-conflicts.yaml` when it exists.
     - Inventory every open lifecycle debt and portable-seed conflict; preserve agent authority over all semantic decisions.
+    - "Do NOT write `cycle-state/theorem-lifecycle-inputs.yaml` or the `-source-lifecycle-debt.yaml` / `-source-seed-conflicts.yaml`
+      snapshots beside it. Those three files are VALIDATOR-OWNED - the stage-1 capture validation renders them from the canonical
+      debt/conflict files and refuses a pre-existing manifest with different bytes. Write your inventory to
+      `cycle-state/theorem-lifecycle-inventory.md` instead."
     9:
     - Consolidate every grounded pending engagement into canonical recent/profile memory. Record before/after hashes and leave
       unrelated memory untouched.
