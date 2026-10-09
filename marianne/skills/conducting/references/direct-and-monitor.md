@@ -87,6 +87,12 @@ admission counters, attempt IDs, polling readers or child-process settlement.
 A known active child remains an actionable limitation until the venue reports
 safe settlement; it is not permission to launch a conflicting replacement.
 
+An urgent cadenza edited after Work was dispatched is saved direction, not evidence
+that the current prompt changed. Have the venue use its supported steering surface
+and report actual delivery; judge subsequent adoption separately. If live steering
+is unavailable, the owner settles affected work and continues only unfinished
+obligations with corrected context, preserving earned prefix, original wall and life.
+
 ## Adoption checkpoint
 
 For a consequential correction, capture the governed **pre-correction

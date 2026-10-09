@@ -118,6 +118,14 @@ a refused operation stays refused until its actual cause is resolved.
 
 Record demonstrated behavior, not personality labels.
 
+Match complementary lived experience to distinct unfinished consumer obligations,
+then activate those seats and consume their delivery. Familiar names alone do not
+justify concentrating every obligation on one principal; additional people need
+useful work, not another general audit panel. A new assignment normally changes
+task/cadenza inputs, not the person's managed score, identity or instrument profile.
+Use qualified ephemeral workers when persistence adds no value. A generated phase
+alias is a driver binding, not a persistent person or demonstrated continuity.
+
 Optimize total effort to an accepted result: preparation, context, queueing,
 execution, independent review, repair and integration. Cast difficult causal or
 semantic judgments for demonstrated competence early. A stronger suitable author

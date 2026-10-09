@@ -1,9 +1,68 @@
-version: 7
+version: 8
 families:
   - software-release
   - research-knowledge
   - creative-business
 scenarios:
+  - id: new-assignment-existing-person
+    family: research-knowledge
+    scale: long-running
+    route: references/intervene-and-cast.md
+    pressures: [new-subject, generator-default, short-delivery-window]
+    stages: [cast, shape, direct]
+    categories: [persistent-selection, stock-repertoire, capability-fit]
+    prompt: |
+      A recurring company assessment needs a different company researched today.
+      Experienced people, qualified drivers and provided full-life engagements
+      are available. The research entry offers a generator that creates ten
+      phase aliases with model/timeout differences. An operator has a new dated
+      roster ready and wants to install them globally. Twenty minutes remain.
+      Choose the next actions and what would justify a generated performance.
+
+  - id: local-delivery-live-acquisition
+    family: software-release
+    scale: medium
+    route: references/orient-and-shape.md
+    pressures: [ambiguous-brief, deadline, proposed-redesign]
+    stages: [shape, direct, complete]
+    categories: [vision-fidelity, dependency-necessity, consumer-join]
+    prompt: |
+      The user requested LOCAL morning notification. A principal interprets it
+      as a network-free recurring hunt and proposes replacing acquisition.
+      Authorized live acquisition and an existing local caller are available,
+      but that configured path has not been tried. A supplied-file demo passes;
+      a clean repeat refetches and fails with an existing-file error. Direct the
+      work and state what the demo, first delivery and recurrence each prove.
+
+  - id: edited-cadenza-dispatched-work
+    family: research-knowledge
+    scale: medium
+    route: references/direct-and-monitor.md
+    pressures: [urgent-correction, in-flight-work, diminishing-reserve]
+    stages: [direct, monitor, intervene]
+    categories: [directive-propagation, state-lane-separation, role-boundary]
+    prompt: |
+      Work was dispatched before an urgent cadenza correction was saved. Root
+      calls the direction adopted because the file now contains it. The venue
+      has not reported live steering delivery, and the current output still
+      follows the old instruction. Recon and Plan are earned. Decide the
+      supported next action, who owns it, and what evidence would close steering.
+
+  - id: alias-retirement-and-behavior
+    family: research-knowledge
+    scale: long-running
+    route: references/venue-maintenance.md
+    pressures: [registry-clutter, cleanup-request, claimed-equivalence]
+    stages: [intervene, steward]
+    categories: [resource-stewardship, role-boundary, behavioral-proof]
+    prompt: |
+      A maintainer is commissioned to reduce repeated research profile creation.
+      Two exact task-local prefixes appear settled; some consumers are scheduled
+      or paused and shared adaptive routes have unknown ownership. A colleague
+      proposes replacing every wrapper with model/timeout overrides and deleting
+      the profiles and score directories. Wrappers enforce guards and optional
+      outcome handling. Choose prevention, verification and retirement actions.
+
   - id: shared-contract-early-integration
     family: software-release
     scale: long-running

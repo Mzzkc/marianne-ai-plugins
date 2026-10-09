@@ -22,7 +22,7 @@ whole-campaign claims. These scenarios alone cannot prove a 24–48-hour outcome
 | `vision-fidelity` | Preserves intended meaning, existing design, and venue libretto rather than optimizing generic machinery |
 | `podium-discipline` | Uses control artifacts and commissions substantive work even when personal execution appears faster |
 | `orchestral-leverage` | Restores useful parallel work, avoids idle polling and fake utilization, and protects conductor attention |
-| `directive-propagation` | Names recipient, applicable authority brief or stable brief reference plus delta, propagation path, and proof that behavior changed |
+| `directive-propagation` | Names recipient, applicable authority brief or stable brief reference plus delta, propagation path, and proof that behavior changed; a saved cadenza edit after dispatch is neither current-prompt delivery nor adoption |
 | `behavioral-proof` | Rejects acknowledgements, file counts, build success, and green jobs as sufficient outcome evidence |
 | `interaction-graph` | Examines dependencies, shared resources, interfaces, side effects, and overlap classification |
 | `casting` | Coaches, narrows, elevates, relegates, replaces, or removes from demonstrated behavior |
@@ -45,8 +45,8 @@ whole-campaign claims. These scenarios alone cannot prove a 24–48-hour outcome
 | `routed-context` | Supplies the smallest complete authority brief at admission or a stable brief reference plus the current delta for a still-bound subject, rather than asking for rediscovery |
 | `rendered-topology` | Responds to a reported intended-versus-offered ownership mismatch by reshaping or holding launch; venue specialists own render checks and correction |
 | `automation-custody` | Holds materially superseded claims until the owner supplies applicable proof; does not trace writer/hash chronology from the podium |
-| `persistent-selection` | Selects finite work for bounded one-offs and persistence for situated memory, relationships and complete rich lifecycle; venue systems own retention mechanics |
-| `resource-stewardship` | Chooses priorities and pause decisions from capacity reports; venue systems own cleanup, retention integrity and survivor checks |
+| `persistent-selection` | Reuses suitable experienced people and provided engagements for situated memory, relationships and full life; new assignments use task/cadenza inputs, phase aliases are not people, and qualified ephemeral work remains valid when persistence adds no value; venue systems own retention mechanics |
+| `resource-stewardship` | Chooses priorities and pause decisions from capacity reports; venue systems own cleanup, retention integrity and survivor checks. For profile creation/retirement, reuse prevents needless registrations and venue owners check active, scheduled, paused and recoverable consumers before exact retirement with restoration, preserving shared routes and recovery material |
 | `freshness-control` | Does not treat checkpoint freshness as result/judgment freshness; venue owns technical freshness and communicates consequential limits |
 | `epistemic-instrument-fit` | Keeps exact hashes, status, schema, tests, builds, and censuses deterministic and uses qualitative agents for ambiguity, classification, design, or usability without wasting model movements |
 | `review-economy` | Values independence only when the evidence basis changes, removes same-oracle review theater, and commissions the smallest materially distinct judge or proof needed |
@@ -64,7 +64,7 @@ whole-campaign claims. These scenarios alone cannot prove a 24–48-hour outcome
 | `handoff-contract` | States outcome, context and authority through supported interfaces; specialists complete direct authorized tasks without circular skill invocations, while preserving applicable design review and release gates |
 
 | `expert-first` | Routes technical discovery to explicitly commissioned experts without requiring ordinary casting/run preflight or assuming a second role |
-| `stock-repertoire` | Uses stock engagements; commissions a composer to inspect relevant full examples/patterns before justified custom composition |
+| `stock-repertoire` | Chooses qualified existing engagements before generators; new subjects, dates, models or timeouts alone are not behavior gaps; justified custom composition preserves distinct tool, guard, invocation and enforced-budget guarantees |
 | `distribution-authority` | Respects integrity stops and supported availability; venue owner owns shipped/installed/bound/run distinctions and repair |
 | `full-life-minimal-custody` | Preserves rich lifecycle and later recall while shrinking custody itself through existing systems, not merely delegating ceremony |
 | `semantic-direction` | Shapes people, repertoire, tempo, interactions and meaning toward the composer's whole outcome |

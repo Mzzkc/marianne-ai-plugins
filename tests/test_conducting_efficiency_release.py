@@ -136,8 +136,8 @@ def test_efficiency_suite_covers_domains_and_task_sizes() -> None:
 
 def test_truthful_convergence_release_metadata_and_closed_manifest() -> None:
     version = (ROOT / "VERSION").read_text(encoding="utf-8")
-    assert "version: 1.10.0" in version
-    assert "doctrine: operational-delivery-decisions-2026-10-07" in version
+    assert "version: 1.11.0" in version
+    assert "doctrine: engagement-first-assignments-2026-10-07" in version
 
     manifest = load_script(
         "marianne/skills/conducting/scripts/release_manifest.py",

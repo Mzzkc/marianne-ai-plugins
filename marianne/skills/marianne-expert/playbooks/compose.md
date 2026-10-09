@@ -6,6 +6,13 @@ acceptance, bounded repair and release obligations before encoding new behavior.
 [Composing](../../composing/SKILL.md) is an optional performance-design specialist,
 not a prerequisite invocation or second approval gate. Reuse an unchanged qualified
 engagement through its offered interface; custom topology needs a behavioral gap.
+New subject matter belongs in supported task/cadenza inputs, not managed-score edits.
+Distinguish a persistent person, an instrument profile and a score-local binding.
+Prefer suitable existing people and qualified routes; a model/timeout difference
+alone does not establish a need for a fresh global profile. Before replacing a
+generated wrapper, verify equivalent tool restrictions, invocation, guards, outcome
+handling and enforced budgets in current source and an applicable execution check.
+Report missing scoped support rather than inventing it or hiding registrations.
 For consequential new behavior, reuse an approved design or have the design
 separately validated before encoding it; a direct invocation does not waive review.
 

@@ -55,6 +55,14 @@ biography, another party's conditions versus the person's life, aspiration versu
 current fact, and uncertainty versus established inability. A faithful byte copy
 can faithfully deliver an overclaim. A refusal can erase a legitimate next move.
 
+For reusable semantic work, judge whether the ordinary result remains useful beyond
+the demonstration. Employer/source-specific canned prose and repeated generic
+paragraphs do not supply grounded interpretation merely because every fact is true.
+Use the existing reviewed investigation path and materially different real inputs.
+For recurring delivery, registration or one successful LOCAL delivery is partial:
+the promised due/not-due, repeat, restart and overlap behaviors need applicable
+consumer evidence. Preserve successful acquisition while repairing the missing join.
+
 Preserve qualifiers and relations when decomposing claims. Basic use of a tool
 does not support a compound expert requirement merely because a broader fragment
 was split off and credited. Test full supported testimony alongside partial
@@ -177,11 +185,12 @@ personally inventory caches, prove filesystem ownership or audit reclamation.
 Uncertain preservation is a venue limitation, not permission for destructive
 cleanup or an automatic assignment of maintenance to the conductor.
 
-For a bounded score that installed task-local routes globally, ask the venue
-owner for a compact closeout disposition: which registrations remain needed for
-active or recoverable work, and which were retired with a restore path. Use the
-accepted answer when ready; operational cleanup does not turn it into a new
-semantic acceptance gate.
+Prevent unnecessary global registration through engagement reuse first. For a score
+that installed task-local routes, ask the venue owner for a compact disposition:
+which exact aliases remain needed for active, scheduled, paused or recoverable work,
+and which were retired with a restore path. Keep required score sources/wrappers,
+shared base routes and in-flight scores. Use the accepted answer when ready; cleanup
+is stewardship, not a new semantic gate or proof of savings from fewer visible names.
 
 ## Steward the horizon
 

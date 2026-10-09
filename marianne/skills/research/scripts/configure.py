@@ -30,21 +30,29 @@ def generate(roster,input_dir,workspace,out):
  budget={'frame':180,'search':420,'synthesize':300,'check':180,'correct':120,'recheck':60,'assess':180,'followup':420,**roster.get('budgets',{})}
  for value in budget.values():trial.require(isinstance(value,int) and 1<=value<=3600,'bounded positive integer seconds')
  aliases={};nodes=[];producers={}
- def bind(row,label,seconds,guard=None,optional_lane=None):
+ def bind(row,label,seconds,guard=None,optional_lane=None,has_next=False):
   profile=Path(row['profile']).expanduser();profile=profile if profile.is_file() else Path.home()/'.marianne/instruments'/(row['profile']+'.yaml')
   trial.require(profile.is_file(),'qualified profile absent: '+str(profile));trial.require(row.get('qualification'),'caller must record current route/tool/delivery qualification')
-  cfg=yaml.safe_load(profile.read_text());name=roster['name']+'-'+label;cfg['name']=name;cfg['default_model']=row['model'];cfg['default_timeout_seconds']=seconds+(10 if optional_lane else 0)
+  cfg=yaml.safe_load(profile.read_text());name=roster['name']+'-'+label;cfg['name']=name;cfg['default_model']=row['model'];cfg['default_timeout_seconds']=seconds+10
   cmd=cfg['cli']['command'];cmd.setdefault('env',{}).update(row.get('command_env',{}));native=row.get('native_executable',cmd['executable']);native=shutil.which(native) or str(Path(native).expanduser());trial.require(Path(native).is_file(),'native command absent')
+  if 'reasoning_effort' in row:
+   effort=row['reasoning_effort'];trial.require(effort in ['low','medium','high','xhigh'],'supported reasoning effort required')
+   trial.require(Path(cmd['executable']).name=='codex','reasoning effort binding requires a Codex profile')
+   cmd['extra_flags']=[*(cmd.get('extra_flags') or []),'-c','model_reasoning_effort='+effort]
   wrapper=profiles/(name+'.sh');guard_cmd=('python3 '+shlex.quote(str(out/'scripts/trial.py'))+' admit "$PWD" '+guard+'\n') if guard else ''
   launch='/usr/bin/timeout --signal=TERM --kill-after=5s '+str(seconds)+'s '+shlex.quote(native)+' "$@"\n'
   if optional_lane:
-   launch='set +e\n'+launch+'native_exit=$?\nset -e\npython3 '+shlex.quote(str(out/'scripts/trial.py'))+' optional-outcome "$PWD" '+str(optional_lane)+' "$native_exit"\n'
+   guard_cmd+='if [ -e \"$PWD/optional-'+str(optional_lane)+'-native-exit.json\" ]; then\npython3 '+shlex.quote(str(out/'scripts/trial.py'))+' optional-validate \"$PWD\" '+str(optional_lane)+'\nexit 0\nfi\n'
+   handoff='if [ \"$native_exit\" -ne 0 ] && [ \"$native_exit\" -ne 130 ] && [ \"$native_exit\" -ne 137 ] && [ \"$native_exit\" -ne 144 ]; then exit \"$native_exit\"; fi\n' if has_next else ''
+   launch='set +e\n'+launch+'native_exit=$?\nset -e\n'+handoff+'python3 '+shlex.quote(str(out/'scripts/trial.py'))+' optional-outcome "$PWD" '+str(optional_lane)+' "$native_exit"\n'
   else:launch='exec '+launch
   wrapper.write_text('#!/bin/sh\nset -eu\n'+guard_cmd+launch);wrapper.chmod(0o755);cmd['executable']=str(wrapper);cmd['prompt_via_stdin']=True;cfg['cli'].setdefault('interactive',{})['enabled_by_default']=False
-  (profiles/(name+'.yaml')).write_text(yaml.safe_dump(cfg,sort_keys=False));aliases[name]={'profile':name,'config':{**row.get('config',{}),'model':row['model'],'timeout_seconds':seconds+(10 if optional_lane else 0),'interactive':False}}
+  (profiles/(name+'.yaml')).write_text(yaml.safe_dump(cfg,sort_keys=False));aliases[name]={'profile':name,'config':{**row.get('config',{}),'model':row['model'],'timeout_seconds':seconds+10,'interactive':False}}
   return name
  def add(label,deps,op=None,row=None,seconds=0,text='',inputs=(),outputs=(),guard=None,validation=None,optional_lane=None):
-  n=len(nodes)+1;ins=bind(row,label,seconds,guard,optional_lane) if row else 'cli';nodes.append(dict(num=n,label=label,deps=list(deps),op=op,ins=ins,seconds=seconds,text=text,inputs=list(inputs),guard=guard,validation=validation or op))
+  n=len(nodes)+1;replacements=row.get('fallbacks',[]) if row else [];ins=bind(row,label,seconds,guard,optional_lane,bool(replacements)) if row else 'cli'
+  fallbacks=[bind(replacement,label+'-fallback-'+str(i+1),seconds,guard,optional_lane,i<len(replacements)-1) for i,replacement in enumerate(replacements)]
+  nodes.append(dict(num=n,label=label,deps=list(deps),op=op,ins=ins,fallbacks=fallbacks,seconds=seconds,text=text,inputs=list(inputs),guard=guard,validation=validation or op))
   for f in outputs:producers[f]=n
   return n
  prep=add('originals',[],op='originals')
@@ -70,7 +78,7 @@ def generate(roster,input_dir,workspace,out):
  add('finish',[recheck],op='finish',validation='verify-delivery')
  cfg={'name':roster['name'],'workspace':portable(workspace),'instrument':'cli','instruments':aliases,'movements':{},'sheet':{'size':1,'total_items':len(nodes),'dependencies':{},'cadenzas':{},'per_sheet_fallbacks':{},'skip_when':{}},'parallel':{'enabled':True,'max_concurrent':roster.get('max_concurrent',2),'fail_fast':True},'retry':{'max_retries':0,'max_completion_attempts':0},'max_wall_seconds':roster.get('max_wall_seconds',sum(x['seconds'] for x in nodes)+320),'prompt':{'template':''},'validations':[]};branches=[];decl=[]
  for x in nodes:
-  n=x['num'];cfg['movements'][n]={'name':x['label'],'instrument':x['ins']};cfg['sheet']['per_sheet_fallbacks'][n]=[]
+  n=x['num'];cfg['movements'][n]={'name':x['label'],'instrument':x['ins']};cfg['sheet']['per_sheet_fallbacks'][n]=x['fallbacks']
   deps=x['deps'][:]
   for f in x['inputs']:
    if producers[f] not in deps:deps.append(producers[f])
@@ -80,7 +88,7 @@ def generate(roster,input_dir,workspace,out):
    args=x['op'].split();text='set -eu\npython3 '+shlex.quote(str(out/'scripts/trial.py'))+' '+args[0]+' "{{ workspace }}" '+' '.join(args[1:])
   else:
    cfg['sheet']['cadenzas'][n]=[{'directory':'{{ workspace }}/shared-cadenza','as':'context','required':True}]+[{'file':'{{ workspace }}/'+f,'as':'context','required':True} for f in x['inputs']]
-   text=current+'\nLIVE ROLE '+x['label']+'; owned workspace {{ workspace }}.\n'+x['text'].replace('VALIDATOR',shlex.quote(str(out/'scripts/trial.py'))).replace('WORKSPACE','"{{ workspace }}"')+'\n'+current+'\nWrite all named artifacts under {{ workspace }}. Hard budget '+str(x['seconds'])+'s; save early. No retries.'
+   text=current+'\nLIVE ROLE '+x['label']+'; owned workspace {{ workspace }}.\n'+x['text'].replace('VALIDATOR',shlex.quote(str(out/'scripts/trial.py'))).replace('WORKSPACE','"{{ workspace }}"')+'\n'+current+'\nWrite all named artifacts under {{ workspace }}. Hard budget '+str(x['seconds'])+'s; save early. Reserve the final '+format(min(30,x['seconds']/4),'g')+'s to run the named validator, save the result and exit before the hard deadline. Do not continue exploring or revising after that reserve begins. No retries.'
   branches.append(('{% if' if n==1 else '{% elif')+' sheet_num == '+str(n)+' %}\n'+text+'\n')
   args=x['validation'].split();cfg['validations'].append({'type':'command_succeeds','condition':'sheet_num == '+str(n),'command':'python3 '+shlex.quote(str(out/'scripts/trial.py'))+' '+args[0]+' {workspace} '+' '.join(args[1:]),'retry_count':0,'timeout_seconds':30})
   if x['guard']:cfg['sheet']['skip_when'][n]={'command':'python3 '+shlex.quote(str(out/'scripts/trial.py'))+' skip {workspace} '+x['guard'],'timeout_seconds':15}

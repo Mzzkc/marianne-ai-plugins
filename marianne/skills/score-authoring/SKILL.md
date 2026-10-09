@@ -24,6 +24,11 @@ YAML task; no prior conducting or composing invocation is required. Consume a su
 design. When changing the DAG, prompt logic, attachment contract or guarantees,
 establish the goal, authority, inputs, consumers, proof, repair and release decisions
 before encoding them. Composing can own a separate design commission when needed.
+For a new subject on an unchanged provided engagement, supply supported task/cadenza
+inputs without editing the managed score. A profile alias binds an instrument; it
+does not create a persistent person. Reuse qualified routes and supported scoped
+model/execution settings when equivalent, preserving distinct tools, guards and
+enforced budgets. A model/timeout difference alone does not justify a global alias.
 For consequential new/changed behavior, reuse an approved design or obtain a
 separately validated design before YAML. Design and encoding in one unreviewed
 stage is not that gate; unchanged syntax repairs inherit the existing review.

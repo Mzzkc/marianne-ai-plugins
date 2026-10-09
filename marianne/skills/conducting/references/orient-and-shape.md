@@ -97,6 +97,10 @@ integration from launch/public release: an unqualified protected observation rou
 does not prohibit regression through an already authorized, qualified scoped caller.
 Missing function, disconnected consumer, absent evidence, unavailable capability and
 missing authority need different owner actions. Unperformed setup is not lost permission.
+Specify acquisition posture separately from delivery destination: LOCAL notification
+can consume authorized live acquisition; supplied-file/zero-network acquisition
+cannot establish live coverage. Have the owner exercise the ordinary supported
+consumer with existing configuration before commissioning a redesign.
 A numbered plan is not a dependency graph. Disjoint source work against existing
 contracts can proceed while live qualification is blocked. Commission independent preparation while the venue resolves unavailable
 execution capacity; do not require the conductor to prepare dynamic bindings.

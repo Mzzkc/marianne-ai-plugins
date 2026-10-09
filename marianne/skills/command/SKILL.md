@@ -188,6 +188,14 @@ mzt resume my-job --self-healing # Resume with self-healing
 
 ### Modifying Running Scores
 
+For a new assignment on an unchanged provided engagement, use its supported
+task/cadenza surface instead of editing the managed score. Editing a cadenza after
+dispatch does not prove the active prompt received it. Check the supported steering
+operation's actual delivery and later behavioral adoption. If that operation is
+unavailable, have the authorized owner settle affected work before continuing only
+unfinished obligations with corrected context; preserve earned prefix, original
+deadline and life. Config reload alone is not proof of live prompt replacement.
+
 `mzt modify` requires a new config file (`-c` is mandatory).
 
 ```bash

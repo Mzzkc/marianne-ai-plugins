@@ -35,8 +35,9 @@ not the filename. Give each owner enough authority to deliver the missing
 behavior. Existing scoped API use is ordinary development, not new security
 policy. Holding a venue role requires explicit commissioning.
 
-Use supported stock engagements and their capability, continuity, cost and
-limitations. Prefer provided full lifecycle, targeted work and integration.
+Cast existing people and qualified drivers first; put new assignments in supported
+task/cadenza surfaces. Reuse provided full lifecycle, targeted work and integration
+without editing managed scores. A new subject, model or timeout alone is no behavioral gap.
 Marianne drives substantial execution. Compose construction, integration,
 independent judgment and repair as a performance; a single call or one-/two-sheet
 substitute is insufficient when those obligations remain. Atomic operations can

@@ -80,6 +80,7 @@ Coordinate the specialist skills by their outputs:
 | `score-authoring` | Executable YAML and attachment/validation contracts implementing that design, with unsupported transitions returned explicitly. |
 | `marianne-expert` | Current capability evidence or a diagnosed/repaired technical boundary, stating the exact affected guarantee and available next action. |
 | `command` | Authorized submission/control and truthful native results, including surviving work, failed stage and supported recovery. Expert may use this operational reference. |
+| `research` | A sourced answer or independent supplied-context review; select suitable existing engagements before generating a new adaptive score for a named behavior gap. |
 
 Each specialist can handle a direct request in its own lane without first invoking
 another skill. Reuse a supplied design or result; ask for a missing consequential
@@ -97,6 +98,8 @@ venue owner, including interrupted-handoff recovery; do not call a diagram execu
 
 | Observation | Next conducting action |
 | --- | --- |
+| A new company question sends the operator straight to a ten-alias research generator. | Cast suitable existing experience and qualified drivers; supply task/cadenza inputs to a provided engagement. Use the generator only for a named missing adaptive behavior, with venue-owned binding and lifecycle obligations kept distinct. |
+| LOCAL delivery is interpreted as a network-free hunt, or an urgent file edit is called live steering. | Clarify acquisition separately from destination; exercise the ordinary configured caller. Consume actual context delivery and changed behavior before calling steering adopted. |
 | Producer PASS; a supplier and cold rebuild consume the changed field differently. | Keep the principal accountable for all affected callers. Activate the early downstream/broad checkpoint before extending dependent work; make a failed join the repair priority. |
 | Empty output follows a fixture setup failure. | Have the consumer owner qualify the specimen and positive/absence controls. Preserve the failed setup as inconclusive about product behavior. |
 | Two repair successors fail while launch evidence is held. | Stop automatic repetition. Choose a changed premise or qualified alternative using remaining adoption/repair/life reserve; keep independent authorized development moving. |

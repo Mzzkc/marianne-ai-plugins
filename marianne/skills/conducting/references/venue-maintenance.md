@@ -126,6 +126,18 @@ performance implications without making the conductor its enforcer.
 
 ## Runtime doctrine
 
+When research generation multiplies global aliases, fix creation in the existing
+generator/invocation path. Reuse suitable provided agent engagements and equivalent
+qualified routes; use supported scoped bindings/execution parameters where their
+behavior is verified. New subjects, titles, dates, models or timeout labels alone
+do not require fresh global registrations. Preserve genuinely different tool
+restrictions, invocation contracts, enforced budgets and guard/outcome behavior.
+Verify native equivalence before removing a wrapper; valid syntax, renamed entries
+or a shorter visible list do not establish it. If native support is absent, return
+the precise gap and keep the required behavior intact. Retire only exact settled
+task-local aliases after consumer checks and with restoration available; never
+rewrite in-flight scores or remove shared base routes as incidental cleanup.
+
 Do not preserve model names, client versions, machine failures, feature status,
 or instrument routing in this skill. Discover them at the time of performance.
 Canonical lifecycle and profile sources are **mutable provenance**. Preserve

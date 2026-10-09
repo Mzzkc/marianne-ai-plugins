@@ -24,6 +24,13 @@ controls; invocation does not require a new composition design. For a new or
 changed workflow, reuse the closest shipped score and justify the behavioral gap
 before custom construction. Keep the whole commission owned through acceptance.
 
+A new research subject, date, title, model or timeout is an assignment/casting
+change, not by itself a design gap. First reuse a suitable person's qualified
+provided engagement through task/cadenza inputs; leave its managed score intact.
+Ephemeral work remains appropriate when situated learning has no future value.
+Score-local model/config bindings can reuse qualified routes where supported;
+do not replace distinct wrapper/tool/guard/budget behavior without equivalence proof.
+
 Before casting, decide whether the work should reuse a persistent person,
 construct a new persistent person, or use an ephemeral worker. Read
 `${CLAUDE_PLUGIN_ROOT}/docs/ref/modern-agents.md` whenever future learning,
