@@ -40,6 +40,14 @@ Marianne distinguishes **instruments** from **musicians**:
 - **Instrument** = the execution framework (a plugin profile). Determines *capabilities* — tool use, file editing, shell access, vision, MCP.
 - **Musician** = the model played by the instrument. Determines *capacity* — context window, cost, speed, reasoning quality.
 
+A score may name a **capability class** such as `strong` or `writing` in an
+instrument position. The class is an installation-specific ordered chain of
+instrument profiles, defined by the packaged default and optional user/venue
+`classes.yaml` layers. It is a routing configuration, not a new instrument or
+musician. `mzt instruments classes show --json` displays the effective chain
+and source hashes; `mzt instruments classes check` tests configuration and
+current route availability. The chain is frozen into each job's checkpoint.
+
 Composers select tag intersections (`tier × task × modality × constraint`) and the catalog maps the intersection to ranked model chains. **Open-source-first by default**; subscription and premier as fallbacks where open models genuinely don't suffice. Frontier means capability tier, not vendor origin.
 
 ---
