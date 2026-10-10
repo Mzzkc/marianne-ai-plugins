@@ -118,6 +118,13 @@ each warning in score context before listing its WARN/INFO code in
 `validate.suppress`; V012 rejects ERROR-tier and unknown codes. V010/V011
 report unknown YAML fields that the score loader ignores, so correct genuine
 typos before release. INFO findings appear with `--verbose` or in `--json`.
+An instrument position may name a capability class (`instrument: strong`,
+fallbacks too) instead of a profile; the class resolves through the machine's
+class-map layers into an ordered profile chain. Never pin `instrument_config.
+model` against a class primary (V323) — write a score alias for a fixed model
+or set the model on the class entry. An alias must name a profile, never a
+class (V321), and a `cli` (raw shell) sheet must not list a class among its
+fallbacks (V307).
 For a design file, supply `goal`, `authority`, `forces`, `stages`, `context_flow`,
 `injections`, `proof_obligations`, `compatibility`, `test_disposition`,
 `verification_context`, `repair_loop` and `release`. Record candidate/import
