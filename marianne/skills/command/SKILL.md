@@ -251,6 +251,17 @@ rule. INFO findings require `--verbose` in terminal output. A score may list
 reviewed WARN/INFO codes under `validate.suppress`; V012 rejects attempts to
 suppress an ERROR or an unknown code.
 
+Scores may name a capability class (`instrument: strong`) instead of a profile.
+Validation then reads the same three class-map layers the conductor reads
+(packaged default, `~/.marianne/classes.yaml`, venue `.marianne/classes.yaml`)
+and reports class problems with position and fix hint: V310 ERROR when a class
+cannot resolve on this machine, V311 WARNING when part of its chain cannot run
+here (the job starts at the first available entry), V321/V322 for alias
+misuse, V323 when a `model` is pinned against a class primary, V324 for an
+invalid classes file the score depends on, and V325 INFO showing each used
+class's resolved chain. `--json` carries the per-sheet resolution and every
+layer path with its sha256 under `summary.classes`.
+
 ---
 
 ## Diagnose the affected operation

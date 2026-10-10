@@ -174,6 +174,14 @@ reviewing existing warnings. A score can acknowledge specific WARN/INFO codes
 with `validate.suppress: [Vxxx]`; V012 refuses ERROR-tier and unknown codes.
 The JSON result keeps its existing keys and adds `summary` and `suppressed`.
 
+Prefer a capability class (`instrument: workhorse`) over a hard profile chain
+for portable compositions: the class resolves per machine through the class-map
+layers, and `mzt validate` reports the resolved chain (V325) plus every layer
+path and sha256 it read under `summary.classes`. Class portability rules: no
+`model` pinned against a class primary (V323), no class as an alias profile
+(V321), and machine-local availability gaps surface as V311 warnings naming
+the first runnable entry.
+
 The candidate digest joins the evaluated score and injected inputs present at checking to
 release. A digest mismatch requires fresh evaluation; never release a
 repaired-but-unrerun candidate. Structural PASS and a matching lock do not prove
