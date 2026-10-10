@@ -3,6 +3,23 @@
 Read when selecting the named model or composing the specialized security work below.
 Current venue evidence still governs availability and fit.
 
+## Capability classes in scores
+
+Prefer a configured class such as `strong`, `workhorse`, `fast`, `writing`,
+`vision`, or `local` when the score describes a kind of work instead of a fixed
+route. Marianne expands the class to an ordered profile chain before dispatch,
+then appends declared fallbacks. `mzt instruments classes show --json` reports
+the layers and their digests; `mzt instruments classes check` reports broken
+chains and route availability. Setup can write a machine-specific user layer
+with `mzt instruments classes write --if-absent`.
+
+An alias in the score wins over a profile, and a profile wins over a class with
+the same name. `cli` therefore remains a shell profile. Use an alias or named
+profile for a fixed model, a reviewed `expected_route`, or a sheet that cannot
+accept heterogeneous fallback profiles. Class entry settings support `model`
+only; availability is checked before authors rely on a chain, while runtime
+fallback still handles a route that disappears later.
+
 ## Current Gemini 3.8 Flash guidance
 
 The catalog's current stable Gemini Flash route is `gemini-3.8-flash`, with a

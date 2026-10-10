@@ -310,6 +310,17 @@ When parallel instances build components that must integrate (e.g., a client and
 
 Assign different instruments to different sheets. Useful for cost optimization (cheap instruments for simple work, expensive for complex) or multi-vendor workflows.
 
+Capability classes let portable scores name the work (`strong`, `fast`,
+`writing`, `vision`, `local`) and let each installation map that name to an
+ordered profile chain. The packaged default is layered under
+`~/.marianne/classes.yaml` and the venue's `.marianne/classes.yaml`; each higher
+class definition replaces its whole chain, and `null` removes an inherited
+class. Run `mzt instruments classes show` to see the effective map and
+`mzt instruments classes check` to check availability. The job freezes its
+resolved class chain at submission, so editing a layer affects new jobs only.
+Keep `instrument: cli` for shell tasks and an explicit profile or score alias
+when a fixed route is part of the score's contract.
+
 ### Per-Sheet Assignment
 
 ```yaml

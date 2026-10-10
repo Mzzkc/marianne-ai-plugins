@@ -29,6 +29,13 @@ inputs without editing the managed score. A profile alias binds an instrument; i
 does not create a persistent person. Reuse qualified routes and supported scoped
 model/execution settings when equivalent, preserving distinct tools, guards and
 enforced budgets. A model/timeout difference alone does not justify a global alias.
+For portable model work, `instrument: strong` (or another configured capability
+class) resolves to an ordered profile chain from `~/.marianne/classes.yaml` and
+the packaged default. Check the effective chain with `mzt instruments classes
+show` and availability with `mzt instruments classes check` before relying on
+it. Score aliases and registered profile names take precedence over classes;
+`instrument: cli` stays the deterministic shell profile. Use an alias when the
+score requires a fixed model or route. A class cannot override `expected_route`.
 For consequential new/changed behavior, reuse an approved design or obtain a
 separately validated design before YAML. Design and encoding in one unreviewed
 stage is not that gate; unchanged syntax repairs inherit the existing review.
