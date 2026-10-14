@@ -52,6 +52,11 @@ can remain small within that performance.
 
 ## Quick Syntax Reference
 
+For `sheet.triggers` actions, `run: {command: "...", timeout_seconds: 120}`
+executes a bounded shell command. Linux uses a per-action subreaper to clean
+detached children even when they close stdio; on other hosts `mzt validate`
+emits V326 INFO because that orphan guarantee is unavailable.
+
 **The #1 rule**: Jinja `{{ }}` in the **prompt pipeline** (templates, prelude/cadenza paths, capture_files). Python format `{}` in the **validation engine** (validation paths, commands, working_directory, skip_when).
 
 | Field | Syntax |
