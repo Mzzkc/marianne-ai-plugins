@@ -69,7 +69,7 @@ Composers select tag intersections (`tier × task × modality × constraint`) an
 |---|---|---|---|
 | `claude-code` | Anthropic sub or API | tool_use, file_edit, shell, web_fetch, MCP, vision | Full agentic capability |
 | `gemini-cli` | Google sub or API | tool_use, file_edit, shell, vision, MCP, structured_output, thinking | Runs `gemini-3.8-flash` (added 2026-09-26; profile `default_model` stays `gemini-3.7-flash`); catalog presence does not prove local configuration or live execution |
-| `antigravity` | existing Google account/API configuration | tool_use, file_edit, shell, MCP, session_resume, thinking | Profile-selected models; configuration and dispatch compatibility require separate checks |
+| `antigravity` | existing Google account/API configuration | tool_use, file_edit, shell, MCP, session_resume, thinking | Profile-selected models; configuration and dispatch compatibility require separate checks. Print mode (`interactive: false`) sends the prompt as one stream-json line on stdin, so large preludes/cadenzas are safe (argv delivery died at the kernel's 128 KiB per-argument limit) |
 | `codex-cli` | OpenAI Plus or API | tool_use, file_edit, shell, vision, MCP, thinking | Plays GPT-6 Sol/Luna/Astra and GPT-5.6 Sol/Terra/Luna; model remains client-selected unless a score overrides it |
 | `opencode` | per-provider | tool_use, file_edit, shell, multi_provider | Best route to OpenRouter free tier and Z.AI Coding Plan |
 | `aider` | per-provider | tool_use, file_edit, git, shell, multi_provider | Strong git integration |
