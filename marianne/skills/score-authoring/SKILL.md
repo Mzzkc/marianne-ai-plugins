@@ -122,6 +122,10 @@ checker for a new/changed design and, after `mzt validate`, the release checker 
 enforce workspace/fallback/validation policy, and write the exact candidate
 digest. Any score or injection change after evaluation requires reevaluation.
 These are structural and identity checks, not proof of the product outcome.
+The keys this skill teaches, the schema's own descriptions, `mzt validate`'s
+words and `docs/configuration-reference.md` are one language checked by
+`tests/scripts/check_language.py` in the venue's suite: a key you find in only one of
+them is a bug to file (`bug` + `documentation`), not a trick to work around.
 Use `mzt validate --strict` when warnings are part of the release gate. Review
 each warning in score context before listing its WARN/INFO code in
 `validate.suppress`; V012 rejects ERROR-tier and unknown codes. V010/V011
