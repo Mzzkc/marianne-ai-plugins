@@ -33,7 +33,9 @@ For portable model work, `instrument: strong` (or another configured capability
 class) resolves to an ordered profile chain from `~/.marianne/classes.yaml` and
 the packaged default. Check the effective chain with `mzt instruments classes
 show` and availability with `mzt instruments classes check` before relying on
-it. Score aliases and registered profile names take precedence over classes;
+it; for a local (`ollama`) entry the check also verifies the server serves the
+profile's model, so a missing pull shows up here and in `mzt validate`, not at
+sheet 1. Score aliases and registered profile names take precedence over classes;
 `instrument: cli` stays the deterministic shell profile. Use an alias when the
 score requires a fixed model or route. A class cannot override `expected_route`.
 For consequential new/changed behavior, reuse an approved design or obtain a
