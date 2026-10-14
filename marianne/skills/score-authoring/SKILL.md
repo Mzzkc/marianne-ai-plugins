@@ -52,6 +52,13 @@ can remain small within that performance.
 
 ## Quick Syntax Reference
 
+Three timers, three different knobs — do not mix them:
+`instrument_config.timeout_seconds` is the per-sheet execution timeout;
+`stale_detection.idle_timeout_seconds` is the opt-in no-output idle timer;
+`schedule.max_wall_seconds` bounds one scheduled tick of a recurring score.
+A one-shot score has no wall budget — per-sheet timeouts and idle detection
+are the whole envelope.
+
 For `sheet.triggers` actions, `run: {command: "...", timeout_seconds: 120}`
 executes a bounded shell command. Linux uses a per-action subreaper to clean
 detached children even when they close stdio; on other hosts `mzt validate`
