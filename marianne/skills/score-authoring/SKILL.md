@@ -36,8 +36,10 @@ show` and availability with `mzt instruments classes check` before relying on
 it; for a local (`ollama`) entry the check also verifies the server serves the
 profile's model, so a missing pull shows up here and in `mzt validate`, not at
 sheet 1. A chain may name profiles this machine lacks: the job starts at the
-first entry that can run (V311 says which); only a class with no registered
-entry is refused (V310). Score aliases and registered profile names take precedence over classes;
+first entry that can run (V311 says which, and it warns rather than refuses
+even when nothing in the chain is installed yet — a fresh install sees that
+on `mzt init`'s starter score until one instrument is on PATH); only a class
+with no registered entry is refused (V310). Score aliases and registered profile names take precedence over classes;
 `instrument: cli` stays the deterministic shell profile. Use an alias when the
 score requires a fixed model or route. A class cannot override `expected_route`.
 For consequential new/changed behavior, reuse an approved design or obtain a
