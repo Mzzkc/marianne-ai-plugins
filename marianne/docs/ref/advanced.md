@@ -163,7 +163,8 @@ undefined runtime variable fails the condition when reached.
 `goto`, `skip`, `pause`, `escalate`, `run`, `concert`, or `continue`.
 An `on_fail` handler owns the failure; it replaces ordinary retry, fallback,
 completion mode, and healing for that sheet. `run` executes a bounded command
-off the baton loop and may repeat after a crash. Make its side effects
+off the baton loop (its log under `.marianne-flow/` is capped at 1 MiB and a
+command that passes the cap is ended) and may repeat after a crash. Make its side effects
 idempotent; `MARIANNE_FLOW_ATTEMPT` records the replay count. A `concert`
 action submits a child score without waiting for it. Flow state and sheet
 state persist together in the job checkpoint.
