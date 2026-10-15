@@ -66,6 +66,11 @@ including resumed work, so pauses and downtime do not spend that limit.
 A one-shot score has no absolute tick deadline — per-sheet timeouts, idle
 detection and the conductor's accumulated RUNNING budget form its envelope.
 
+For readable default-off sections such as `parallel` or `stale_detection`,
+set `enabled: true` with their settings. V329 warns this release if you omit
+the switch; next release settings will turn the section on unless you write
+`enabled: false`. Reserved sections instead emit V327 and remain inert.
+
 A key the runtime does not read yet says so: the configuration reference
 marks it **Reserved**, and `mzt validate` emits V327 when a score sets it —
 remove the key rather than silencing the warning.
