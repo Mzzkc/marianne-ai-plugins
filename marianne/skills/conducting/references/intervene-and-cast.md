@@ -116,6 +116,11 @@ a refused operation stays refused until its actual cause is resolved.
 
 ## Casting decisions
 
+Before "which agent": **which existing agent, given which directory** (GH #443).
+The question is answered by an edit to an existing score, an alias over an existing
+profile, or a cadenza directory on an existing person — in that order — before any
+new name exists. A new agent, profile or layer needs a proven gap filed first.
+
 Record demonstrated behavior, not personality labels.
 
 Match complementary lived experience to distinct unfinished consumer obligations,

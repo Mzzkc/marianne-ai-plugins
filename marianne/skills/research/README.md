@@ -4,11 +4,17 @@ This package supplies one adaptive score. Earlier public A/B resources are migra
 
 ## Choose the engagement
 
+Reuse before invention (GH #443): edit an existing score (they are modified like
+code) → alias config over an existing profile → cadenza directory on an existing
+agent → capability class → only then a new profile or agent, after filing the gap.
+A score never writes into `~/.marianne/instruments/`.
+
 For recurring research with future learning value, use a suitable existing person's
 provided engagement and qualified driver; supply the new assignment through its
 task/cadenza surface while preserving full life. Use a qualified ephemeral engagement
 when continuity adds no value. A new topic, date, model or timeout does not require
-a generated score. This choice is available directly, without invoking conducting.
+a generated score — it is an edit of the last one. This choice is available directly,
+without invoking conducting.
 
 Use the generated adaptive performance only for a named search/followup/checking
 behavior the offered engagement lacks. See [the research entry point](SKILL.md)
@@ -27,20 +33,19 @@ python3 scripts/configure.py --roster "$HOME/Projects/SCORES/my-roster.json" \
   --input "$HOME/Projects/SCORES/my-input" \
   --workspace "$HOME/Projects/WORKSPACES/my-research-run" \
   --out "$HOME/Projects/SCORES/my-research-score"
-# Authorized venue owner: install only generated profiles/*.yaml into ~/.marianne/instruments/.
-# Owner verifies the PID from mzt conductor-status is this installation's mzt start, then: kill -HUP PID
+# No profiles are written and nothing is installed: every seat is an alias over an existing profile.
 mzt validate "$HOME/Projects/SCORES/my-research-score/research.yaml"
 mzt run "$HOME/Projects/SCORES/my-research-score/research.yaml" --json
 ```
 
 The generated score owns the prepared WORKSPACES directory. Do not run it with `--fresh`. It has frame, parallel search, assessment, zero to two targeted followups, synthesis, whole-answer check, optional one correction/recheck, and delivery. The selected `core_files` are injected in full at every AI stage alongside the complete-original index and receipt; every other original remains addressable in the hash-bound snapshot. A partial optional lane preserves receipts and bodies but is never called complete. Optional exit 124 and ordinary provider errors may continue with immutable partial receipts. Exit 130, 137, or 144 sets held status and propagates the original code for conductor diagnosis; do not infer OOM or another cause from that status alone.
 
-Generated aliases are instrument bindings, not new people. This generator still
-requires global profile installation. Keep its budget/guard/outcome wrappers until
-the maintainer verifies an equivalent scoped native route; changing a model/timeout
-setting alone is not that proof. At closeout the venue owner checks active,
-scheduled, paused and recoverable consumers before retiring exact settled aliases
-with a restore path. Keep required wrappers, source scores and shared routes.
+Generated aliases are instrument bindings, not new people, and they live only in
+the score: model and timeout are alias config, the budget is the sheet timeout, the
+admission guard is `skip_when`, and an optional lane's native-exit receipt is a
+sheet trigger. Roster `profile` values are existing profile names; `command_env`
+and `native_executable` are refused (file the gap instead). Keep the generated
+score and `scripts/` for recovery.
 
 ## Concert
 

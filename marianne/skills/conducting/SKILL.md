@@ -122,5 +122,15 @@ for new performance design. Expert/command technical procedures and
 
 ## Red flags
 
+**A new agent, profile, score or layer where an edit would do.** Reuse before
+invention (Emzi, 2026-10-15; GH #443): edit an existing score first (scores are
+modified like code) → a score alias with `config: {model, timeout_seconds}` over an
+existing profile → a cadenza directory for role and posture on an existing agent (it
+carries its own cycles into the role; a new agent starts at zero) → a capability
+class → and only with a proven behavioural gap, filed as an issue first, a new
+profile or agent. A score or generator that writes into `~/.marianne/instruments/`
+is a bug. `mzt instruments list` above the builtins plus a handful of reviewed
+routes is the symptom; course-correct the moment you see it, mid-engagement.
+
 Specialist work at the podium, assurance counted as capability, acknowledgement
 counted as activation, or green jobs rounded into completion require correction.

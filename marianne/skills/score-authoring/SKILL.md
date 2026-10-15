@@ -24,11 +24,16 @@ YAML task; no prior conducting or composing invocation is required. Consume a su
 design. When changing the DAG, prompt logic, attachment contract or guarantees,
 establish the goal, authority, inputs, consumers, proof, repair and release decisions
 before encoding them. Composing can own a separate design commission when needed.
-For a new subject on an unchanged provided engagement, supply supported task/cadenza
-inputs without editing the managed score. A profile alias binds an instrument; it
-does not create a persistent person. Reuse qualified routes and supported scoped
-model/execution settings when equivalent, preserving distinct tools, guards and
-enforced budgets. A model/timeout difference alone does not justify a global alias.
+**Reuse before invention (GH #443).** Edit an existing score first — scores are
+modified like code; a new subject, date, model or timeout is an edit, not a new
+score. A seat is a score alias over an EXISTING profile:
+`instruments: { seat: { profile: codex-cli, config: { model: …, timeout_seconds: N } } }`.
+Role and posture are a cadenza directory on an existing agent. Portable routes are a
+capability class. A new profile, agent or layer comes only after a proven behavioural
+gap, filed as an issue first. A score never writes into `~/.marianne/instruments/`;
+a generator that does is a bug. For a new subject on an unchanged provided
+engagement, supply supported task/cadenza inputs without editing the managed score.
+A profile alias binds an instrument; it does not create a persistent person.
 For portable model work, `instrument: strong` (or another configured capability
 class) resolves to an ordered profile chain from `~/.marianne/classes.yaml` and
 the packaged default. Check the effective chain with `mzt instruments classes
