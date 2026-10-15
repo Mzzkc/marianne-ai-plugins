@@ -35,7 +35,11 @@ the packaged default. Check the effective chain with `mzt instruments classes
 show` and availability with `mzt instruments classes check` before relying on
 it; for a local (`ollama`) entry the check also verifies the server serves the
 profile's model, so a missing pull shows up here and in `mzt validate`, not at
-sheet 1. A chain may name profiles this machine lacks: the job starts at the
+sheet 1. `doctor`, `instruments list`, `instruments check`, `classes check` and
+`classes write` share that one probe (ready / unavailable / unreachable /
+unchecked), so a chain `classes write` emits is one `classes check` accepts on
+the same machine, and "Marianne is ready" means an agent instrument can run
+(the raw shell `cli` profile does not count). A chain may name profiles this machine lacks: the job starts at the
 first entry that can run (V311 says which, and it warns rather than refuses
 even when nothing in the chain is installed yet — a fresh install sees that
 on `mzt init`'s starter score until one instrument is on PATH); only a class
