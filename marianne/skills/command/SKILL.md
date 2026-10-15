@@ -298,6 +298,10 @@ mzt diagnose my-job --include-logs
 - **Validation**: Pass/Fail per sheet (a sheet can execute successfully but fail validation)
 - **Sheets**: N/M completed, which failed, which skipped
 - **Rate limits**: Current wait count
+- **Instrument column**: `codex-cli (was claude-code: execution_timeout after 30m)` means the
+  fallback played and the primary spent 30 minutes first; the duration beside the status is
+  the winning attempt's only. `mzt diagnose` lists every attempt with its instrument,
+  duration and outcome under the timeline.
 
 **Critical insight**: `exit_code=0` does not establish successful validation.
 `validation_passed=true` proves only the configured checks; weak checks can still
@@ -315,6 +319,7 @@ accept an unusable result. Consumer meaning and independent acceptance remain se
 | Config changes ignored | `--no-reload` used or file deleted | Config auto-reloads by default; check YAML file exists |
 | Score run hangs forever | Custom instrument profile lacks an auto-approve flag, or an interactive session is stuck on an unhandled dialog | Built-in profiles auto-approve; for custom profiles set `auto_approve_flag`; for interactive stalls check `tmux -L marianne attach -t <session>` and add a `startup_gates` entry |
 | Chained score does nothing | Missing `fresh: true` in hook | Add `fresh: true` to self-chain hooks |
+| A sheet sits at 0 bytes of output until the sheet timeout, then the next instrument finishes in a minute | The agent session died at start (a stall is not thinking); the shipped streaming profiles end it after `first_output_timeout_seconds` (90 s) as a stale timeout and fall back; a custom `jsonl` profile needs the key set | Set `cli.first_output_timeout_seconds` on streaming profiles; read `mzt diagnose` for the `plugin_cli_first_output_stall` line |
 
 ---
 
