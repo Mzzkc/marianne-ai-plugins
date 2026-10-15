@@ -60,8 +60,11 @@ Unknown keys at all four scopes warn as V010/V011. A reviewed CLI route
 may set `provider` alongside `model` without losing it at YAML load.
 `stale_detection.idle_timeout_seconds` is the opt-in no-output idle timer;
 `schedule.max_wall_seconds` bounds one scheduled tick of a recurring score.
-A one-shot score has no wall budget — per-sheet timeouts and idle detection
-are the whole envelope.
+Set it under `schedule:`; the old root spelling warns as V328 for one release.
+The conductor's `job_timeout_seconds` counts only accumulated RUNNING time,
+including resumed work, so pauses and downtime do not spend that limit.
+A one-shot score has no absolute tick deadline — per-sheet timeouts, idle
+detection and the conductor's accumulated RUNNING budget form its envelope.
 
 A key the runtime does not read yet says so: the configuration reference
 marks it **Reserved**, and `mzt validate` emits V327 when a score sets it —
