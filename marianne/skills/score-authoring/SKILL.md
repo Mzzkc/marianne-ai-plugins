@@ -54,6 +54,10 @@ can remain small within that performance.
 
 Three timers, three different knobs — do not mix them:
 `instrument_config.timeout_seconds` is the per-sheet execution timeout;
+the same typed settings work in `movements.<N>.instrument_config`,
+`sheet.per_sheet_instrument_config.<N>`, and `instruments.<alias>.config`.
+Unknown keys at all four scopes warn as V010/V011. A reviewed CLI route
+may set `provider` alongside `model` without losing it at YAML load.
 `stale_detection.idle_timeout_seconds` is the opt-in no-output idle timer;
 `schedule.max_wall_seconds` bounds one scheduled tick of a recurring score.
 A one-shot score has no wall budget — per-sheet timeouts and idle detection
