@@ -59,6 +59,23 @@ Three timers, three different knobs — do not mix them:
 A one-shot score has no wall budget — per-sheet timeouts and idle detection
 are the whole envelope.
 
+A key the runtime does not read yet says so: the configuration reference
+marks it **Reserved**, and `mzt validate` emits V327 when a score sets it —
+remove the key rather than silencing the warning.
+The score-level `rate_limit:`, `circuit_breaker:`, `logging:`, and `bridge:`
+sections are reserved; use the conductor and instrument settings that have
+runtime readers. Edit an existing score first, then use a score alias with
+`config: {model, timeout_seconds}`, a cadenza directory, or a capability
+class. Create a profile or agent only after proving those cannot express the
+needed behavior; a score never writes into `~/.marianne/instruments/`.
+
+Renamed spellings warn
+V328 and keep working one release: write `approvals:` (not `checkpoints:`),
+and `if_hook_fails` inside `on_success`/`on_failure` hooks (at the trigger
+level `on_failure` means a different thing). The root `conductor:` block is
+deprecated identity metadata with no reader — conductor behaviour lives in
+`~/.marianne/conductor.yaml`.
+
 For `sheet.triggers` actions, `run: {command: "...", timeout_seconds: 120}`
 executes a bounded shell command. Linux uses a per-action subreaper to clean
 detached children even when they close stdio; on other hosts `mzt validate`
