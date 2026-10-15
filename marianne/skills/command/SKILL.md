@@ -242,7 +242,15 @@ mzt diagnose my-job              # Full diagnostic report
 mzt errors my-job --verbose      # Error details with stdout/stderr
 mzt dashboard                    # Start web dashboard (default port 8000)
 mzt help                         # List commands, including patterns-list
+mzt doctor                       # Environment health; lists user profiles no submitted score names (GH #443)
 ```
+
+`mzt doctor` reports, under "Instrument hygiene", every `~/.marianne/instruments/`
+or `.marianne/instruments/` profile that no score the conductor has been given
+names and no class chain includes. It never deletes them. Read the list as the
+reuse rule's symptom: a seat is an alias over an existing profile, so archive the
+file or submit the score that needs it, and course-correct the score or generator
+that wrote it.
 
 `mzt validate` exits 0 with warnings by default, 1 for errors (or unsuppressed
 warnings under `--strict`), and 2 when YAML cannot be read or parsed into a

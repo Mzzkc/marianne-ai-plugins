@@ -130,7 +130,9 @@ carries its own cycles into the role; a new agent starts at zero) → a capabili
 class → and only with a proven behavioural gap, filed as an issue first, a new
 profile or agent. A score or generator that writes into `~/.marianne/instruments/`
 is a bug. `mzt instruments list` above the builtins plus a handful of reviewed
-routes is the symptom; course-correct the moment you see it, mid-engagement.
+routes is the symptom, and `mzt doctor` names the profiles nothing submitted
+references under "Instrument hygiene"; course-correct the moment you see either,
+mid-engagement.
 
 Specialist work at the podium, assurance counted as capability, acknowledgement
 counted as activation, or green jobs rounded into completion require correction.
