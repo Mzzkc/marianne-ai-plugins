@@ -59,8 +59,10 @@ the sheet timeout the baton enforces, the admission guard is each sheet's
 `on_success` / `on_fail` triggers. The roster's `profile` values must be profile
 NAMES that already load (`mzt instruments list`); a path, `command_env` or
 `native_executable` is refused — a seat that needs them is a language gap to file
-(GH #436), not a profile to write. Nothing needs installing and no conductor
-reload is needed before:
+(GH #436), not a profile to write. The generated score is a one-shot run, so
+`configure.py` writes no root `max_wall_seconds` (that key only caps a recurring
+`schedule` tick); each sheet is bounded by its alias `config.timeout_seconds`.
+Nothing needs installing and no conductor reload is needed before:
 
 ```sh
 mzt validate "$HOME/Projects/SCORES/my-research-score/research.yaml"

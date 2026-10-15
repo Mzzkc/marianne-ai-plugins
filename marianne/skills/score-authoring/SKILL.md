@@ -63,10 +63,62 @@ can remain small within that performance.
 
 ## Quick Syntax Reference
 
+Three timers, three different knobs — do not mix them:
+`instrument_config.timeout_seconds` is the per-sheet execution timeout;
+the same typed settings work in `movements.<N>.instrument_config`,
+`sheet.per_sheet_instrument_config.<N>`, and `instruments.<alias>.config`.
+Unknown keys at all four scopes warn as V010/V011. A reviewed CLI route
+may set `provider` alongside `model` without losing it at YAML load.
+A bare `timeout:` is a key at none of them — wherever it appears (root,
+inside `instrument_config`, or next to a trigger action) it is unknown and
+V010 points at `instrument_config.timeout_seconds`; a `run:` trigger
+action's own bound is its `timeout_seconds` field.
+`stale_detection.idle_timeout_seconds` is the opt-in no-output idle timer;
+`schedule.max_wall_seconds` bounds one scheduled tick of a recurring score.
+Set it under `schedule:`; the old root spelling warns as V328 for one release.
+The conductor's `job_timeout_seconds` counts only accumulated RUNNING time,
+including resumed work, so pauses and downtime do not spend that limit.
+A one-shot score has no absolute tick deadline — per-sheet timeouts, idle
+detection and the conductor's accumulated RUNNING budget form its envelope.
+
+For readable default-off sections such as `parallel` or `stale_detection`,
+set `enabled: true` with their settings. V329 warns this release if you omit
+the switch; next release settings will turn the section on unless you write
+`enabled: false`. Reserved sections instead emit V327 and remain inert.
+
+A key the runtime does not read yet says so: the configuration reference
+marks it **Reserved**, and `mzt validate` emits V327 when a score sets it —
+remove the key rather than silencing the warning.
+The score-level `rate_limit:`, `circuit_breaker:`, `logging:`, and `bridge:`
+sections are reserved; use the conductor and instrument settings that have
+runtime readers. The score's `learning.exploration_budget`,
+`learning.entropy_response`, and `learning.auto_apply` are also reserved;
+V327 warns, and V329 does not promise activation for them. Edit an existing
+score first, then use a score alias with
+`config: {model, timeout_seconds}`, a cadenza directory, or a capability
+class. Create a profile or agent only after proving those cannot express the
+needed behavior; a score never writes into `~/.marianne/instruments/`.
+
+Renamed spellings warn
+V328 and keep working one release: write `approvals:` (not `checkpoints:`),
+and `if_hook_fails` inside `on_success`/`on_failure` hooks (at the trigger
+level `on_failure` means a different thing). The root `conductor:` block is
+deprecated identity metadata with no reader — conductor behaviour lives in
+`~/.marianne/conductor.yaml`.
+
 For `sheet.triggers` actions, `run: {command: "...", timeout_seconds: 120}`
 executes a bounded shell command. Linux uses a per-action subreaper to clean
 detached children even when they close stdio; on other hosts `mzt validate`
 emits V326 INFO because that orphan guarantee is unavailable.
+
+For parallel voices, set `movements.<N>.voices` with `sheet.size: 1` and
+`sheet.start_item: 1`; this expands through `fan_out`, including dependencies.
+An explicit `sheet.fan_out` count wins for the same movement. For a cost cap,
+set `cost_limits.max_cost_per_sheet`; the baton enforces it on each sheet,
+including successful attempts. `retry.completion_threshold_percent` is a
+strict gate: a validation pass rate above it enters completion mode; a lower
+result spends a normal retry. Older releases ignored the threshold and sent
+any partial pass to completion mode, so review scores that use the default 50%.
 
 **The #1 rule**: Jinja `{{ }}` in the **prompt pipeline** (templates, prelude/cadenza paths, capture_files). Python format `{}` in the **validation engine** (validation paths, commands, working_directory, skip_when).
 
