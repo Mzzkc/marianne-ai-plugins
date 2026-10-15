@@ -93,11 +93,9 @@ The score-level `rate_limit:`, `circuit_breaker:`, `logging:`, and `bridge:`
 sections are reserved; use the conductor and instrument settings that have
 runtime readers. The score's `learning.exploration_budget`,
 `learning.entropy_response`, and `learning.auto_apply` are also reserved;
-V327 warns, and V329 does not promise activation for them. Edit an existing
-score first, then use a score alias with
-`config: {model, timeout_seconds}`, a cadenza directory, or a capability
-class. Create a profile or agent only after proving those cannot express the
-needed behavior; a score never writes into `~/.marianne/instruments/`.
+V327 warns, and V329 does not promise activation for them. When a key is
+missing for a seat, the reuse ladder above still applies: an alias over an
+existing profile before any new profile.
 
 Renamed spellings warn
 V328 and keep working one release: write `approvals:` (not `checkpoints:`),
