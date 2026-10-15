@@ -76,7 +76,10 @@ marks it **Reserved**, and `mzt validate` emits V327 when a score sets it —
 remove the key rather than silencing the warning.
 The score-level `rate_limit:`, `circuit_breaker:`, `logging:`, and `bridge:`
 sections are reserved; use the conductor and instrument settings that have
-runtime readers. Edit an existing score first, then use a score alias with
+runtime readers. The score's `learning.exploration_budget`,
+`learning.entropy_response`, and `learning.auto_apply` are also reserved;
+V327 warns, and V329 does not promise activation for them. Edit an existing
+score first, then use a score alias with
 `config: {model, timeout_seconds}`, a cadenza directory, or a capability
 class. Create a profile or agent only after proving those cannot express the
 needed behavior; a score never writes into `~/.marianne/instruments/`.
@@ -92,6 +95,15 @@ For `sheet.triggers` actions, `run: {command: "...", timeout_seconds: 120}`
 executes a bounded shell command. Linux uses a per-action subreaper to clean
 detached children even when they close stdio; on other hosts `mzt validate`
 emits V326 INFO because that orphan guarantee is unavailable.
+
+For parallel voices, set `movements.<N>.voices` with `sheet.size: 1` and
+`sheet.start_item: 1`; this expands through `fan_out`, including dependencies.
+An explicit `sheet.fan_out` count wins for the same movement. For a cost cap,
+set `cost_limits.max_cost_per_sheet`; the baton enforces it on each sheet,
+including successful attempts. `retry.completion_threshold_percent` is a
+strict gate: a validation pass rate above it enters completion mode; a lower
+result spends a normal retry. Older releases ignored the threshold and sent
+any partial pass to completion mode, so review scores that use the default 50%.
 
 **The #1 rule**: Jinja `{{ }}` in the **prompt pipeline** (templates, prelude/cadenza paths, capture_files). Python format `{}` in the **validation engine** (validation paths, commands, working_directory, skip_when).
 

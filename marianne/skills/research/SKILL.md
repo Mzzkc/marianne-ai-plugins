@@ -48,8 +48,13 @@ overrides requires verified equivalent native behavior, not just valid YAML.
 
 For this selected path, the authorized venue owner installs only generated
 `profiles/*.yaml` into `~/.marianne/instruments/`; wrappers remain at their generated
-absolute SCORES paths. Base profiles must already be available. The owner uses
-`mzt conductor-status`, verifies the reported PID is this installation's `mzt start`,
+absolute SCORES paths. Base profiles must already be available.
+The generated research score is a one-shot run: its old root `max_wall_seconds`
+no longer caps the whole run. `configure.py` therefore omits that key; each
+sheet remains bounded by its alias `config.timeout_seconds` and the wrapper's
+native timeout. Use `schedule.max_wall_seconds` only for a recurring tick.
+
+The owner uses `mzt conductor-status`, verifies the reported PID is this installation's `mzt start`,
 then sends `kill -HUP PID` for profile reload without restarting in-flight work.
 Following this recipe grants no service authority; consume owner readiness before:
 
