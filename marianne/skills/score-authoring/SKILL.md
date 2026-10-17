@@ -69,10 +69,12 @@ the same typed settings work in `movements.<N>.instrument_config`,
 `sheet.per_sheet_instrument_config.<N>`, and `instruments.<alias>.config`.
 Unknown keys at all four scopes warn as V010/V011. A reviewed CLI route
 may set `provider` alongside `model` without losing it at YAML load.
-A bare `timeout:` is a key at none of them — wherever it appears (root,
-inside `instrument_config`, or next to a trigger action) it is unknown and
-V010 points at `instrument_config.timeout_seconds`; a `run:` trigger
-action's own bound is its `timeout_seconds` field.
+A bare `timeout:` is a key at none of them — wherever it appears it is
+unknown, and V010 names the `timeout_seconds` of the surface it sits in (an
+alias's `config`, a movement's or sheet's `instrument_config`, a `run:`
+action's own bound), falling back to the root `instrument_config.timeout_seconds`
+only at the root. A hint never widens one seat's or one action's bound to the
+whole score.
 `stale_detection.idle_timeout_seconds` is the opt-in no-output idle timer;
 `schedule.max_wall_seconds` bounds one scheduled tick of a recurring score.
 Set it under `schedule:`; the old root spelling warns as V328 for one release.
