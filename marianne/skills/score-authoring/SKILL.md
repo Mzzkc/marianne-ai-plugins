@@ -80,6 +80,8 @@ The conductor's `job_timeout_seconds` counts only accumulated RUNNING time,
 including resumed work, so pauses and downtime do not spend that limit.
 A one-shot score has no absolute tick deadline — per-sheet timeouts, idle
 detection and the conductor's accumulated RUNNING budget form its envelope.
+The three timers sit side by side, with what each bounds and what happens
+when it fires, at the top of the repo's `docs/glossary.md`.
 
 For readable default-off sections such as `parallel` or `stale_detection`,
 set `enabled: true` with their settings. V329 warns this release if you omit
