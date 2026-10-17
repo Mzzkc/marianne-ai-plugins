@@ -166,8 +166,11 @@ completion mode, and healing for that sheet. `run` executes a bounded command
 off the baton loop (its log under `.marianne-flow/` is capped at 1 MiB and a
 command that passes the cap is ended) and may repeat after a crash. Make its side effects
 idempotent; `MARIANNE_FLOW_ATTEMPT` records the replay count. A `concert`
-action submits a child score without waiting for it. Flow state and sheet
-state persist together in the job checkpoint.
+action submits a child score without waiting for it; a score that names
+itself self-chains under a lineage id, bounded only by the root
+`concert.max_chain_depth` (which the runtime reads only with
+`concert.enabled: true`). Flow state and sheet state persist together in
+the job checkpoint.
 
 See `examples/patterns/convergence-loop.yaml` and
 `docs/configuration-reference.md` in the Marianne venue for a runnable
