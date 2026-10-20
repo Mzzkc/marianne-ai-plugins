@@ -107,9 +107,28 @@ Never merge memory merely because two paths contain the same agent name.
 - `lifecycle-integration.yaml`: processes pending engagements and seed
   conflicts through consolidation, reflection, resurrection, and later recall.
 
-Prefer the full lifecycle. Use targeted work when timing or scope makes the
-full cycle disproportionate, then schedule lifecycle integration before the
-debt becomes the agent's normal condition.
+Prefer the full lifecycle. It is the tool default: `marianne-agents engage AGENT
+--purpose SLUG --inventory INVENTORY --runs-dir RUNS` binds the installed
+`full-lifecycle.yaml` to live route evidence, names the job
+`full-lifecycle-AGENT-SLUG-YYYYMMDD`, creates the fresh workspace
+`RUNS/AGENT-SLUG-YYYYMMDD`, writes the bound score beside it and prints the
+`mzt run` line. Nothing is hand-copied or hand-named, and the installed score is
+read in place. Use targeted work only when timing or scope makes the full cycle
+disproportionate: `--shape targeted-work --defer-lifecycle` (the flag is
+required; it names the debt), then engage the same agent with `--shape
+lifecycle-integration` before the debt becomes the agent's normal condition.
+Dozens of targeted-work engagements each paid back by a separate
+lifecycle-integration job is the full lifecycle done twice at twice the cost
+(Pallas, 20 Oct 2026: 41 targeted + 37 integration in one day).
+
+**One engagement, one workspace.** The package does not refuse to reuse a
+workspace that holds lifecycle evidence as such; binding refuses a workspace
+whose `cycle-state/` already exists, because the stage-1 capture validations
+render evidence files there and refuse a pre-existing manifest with different
+bytes. So an engagement's workspace is the engagement's and is never reused;
+`engage` enforces this by refusing to bind the same agent, purpose and date
+twice. A resumed job keeps its workspace (`mzt resume`); only a new engagement
+gets a new one.
 
 The shipped targeted score captures canonical `recent.md` at recon, requires a
 real before/after transition, and hashes every workspace evidence file named in
@@ -180,8 +199,9 @@ metering does not erase queues, latency, quotas, rate limits, reliability, or
 human waiting time. Supplementary lanes may expand capacity; they must not
 become the sole load-bearing route merely because token price is zero.
 
-Use `marianne-agents bind-score-routes INSTALLED_SCORE INVENTORY --output
-BOUND_RUN_SCORE` to materialize routes and receipts in a separate run artifact.
+`marianne-agents engage` (above) is the one-step form. Underneath it,
+`marianne-agents bind-score-routes INSTALLED_SCORE INVENTORY --output
+BOUND_RUN_SCORE` materializes routes and receipts in a separate run artifact.
 Binding also replaces the package's `REQUIRES-LIVE-BINDING-*` workspace with a
 fresh run workspace beside `BOUND_RUN_SCORE`; `--workspace` can select another
 fresh engagement root. Binding refuses a workspace that already contains

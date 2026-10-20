@@ -143,8 +143,8 @@ mzt status my-job                # Check status
 mzt status my-job --watch        # Live monitoring (refreshes every 5s)
 mzt status my-job -W -i 10       # Watch with 10s interval
 mzt status my-job -j             # JSON output
-mzt list                         # List active score runs
-mzt list --all                   # All score runs including completed/failed
+mzt list                         # Every live score run (never paged out)
+mzt list --all                   # Plus terminal history, --limit (20) caps only that part
 mzt list --status running        # Filter by status
 mzt logs my-job                  # View conductor-owned log sources
 mzt logs my-job --follow         # Tail score-specific logs
