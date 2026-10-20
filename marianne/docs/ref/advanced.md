@@ -99,7 +99,7 @@ isolation:
 
 ## Stale Detection and Verification Stages
 
-Stale detection monitors stdout activity only. Child processes (pytest, mypy, ruff) run silently — if they take longer than `idle_timeout_seconds`, the entire process group is killed. This is the #1 cause of stuck verification stages.
+Stale detection monitors stdout activity only. (Child processes that outlive the agent are ended by the Linux instrument supervisor, `cli.command.supervise`; stale detection does not need to see them.) Child processes (pytest, mypy, ruff) run silently — if they take longer than `idle_timeout_seconds`, the entire process group is killed. This is the #1 cause of stuck verification stages.
 
 **Fix: Either set a lenient timeout or fan-out verification into parallel instances.**
 

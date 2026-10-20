@@ -146,6 +146,11 @@ require a changed premise and feasible remaining delivery reserve within that wi
 - Bind verification to the candidate checkout, prove import provenance before
   the suite, run one full suite at a time, and poll yielded processes to
   completion or terminate and reap their scoped process group before rerunning.
+  On Linux every CLI/interactive instrument runs under the instrument
+  supervisor (`cli.command.supervise`, default on): a helper an agent disowns
+  dies with the attempt, and the instrument's I/O class is `low`, so a search
+  from `/` cannot stall the conductor. A profile sets `supervise: false` only
+  when the binary must be the conductor's direct child.
 - Keep private evaluator answers outside worker-readable workspaces.
 - Route repair back through reevaluation. Any post-evaluation change invalidates
   the affected pass. Inherit still-applicable evidence for unchanged subjects;
