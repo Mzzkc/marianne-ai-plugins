@@ -129,6 +129,10 @@ require a changed premise and feasible remaining delivery reserve within that wi
 - Inject required content; do not merely tell an agent to find it.
 - Resolve every prelude and cadenza using runtime workspace semantics.
 - Keep the artifact workspace separate from `project_root`.
+- Point musicians at `$MARIANNE_SCRATCH` for probe clones, mutants and worktrees:
+  the conductor exports it on every CLI/interactive sheet and deletes it when the
+  job ends (`workspace_lifecycle.scratch`). A clone in a system temp directory
+  outlives the job and is never reaped.
 - Use Jinja `{{ }}` in prompts/injection paths and Python format `{}` in
   validations.
 - Use `cli` for deterministic commands. Set
