@@ -85,12 +85,13 @@ When you run `mzt run config.yaml`, the CLI checks for a running conductor via U
 
 **NEVER stop the conductor while scores are actively running.** Killing the daemon can orphan in-flight musician processes and corrupt score state --- sheets can get stuck as `in_progress` with no validation or cleanup. To reload config on a running score, use `mzt modify my-job -c new.yaml --resume --wait`. Before an authorized service stop, have its owner settle affected work through supported controls; a paused parent alone does not prove all active children stopped.
 
-"Marianne conductor did not respond; running state is unknown" is not "not
-running": the socket exists and the conductor is usually alive and blocked on
-disk (its listen queue is full, so a connect lands and the first write fails).
-Do not start or restart it; read `mzt conductor-status` for the PID, check
-`/proc/pressure/io`, and retry a read-only command. Only a missing socket or a
-refused connection proves absence (GH #455).
+"Marianne conductor busy or unresponsive (PID n alive); running state is
+unknown" is not "not running": the conductor is alive and blocked on disk (its
+listen queue is full, so a connect lands and the first write fails). Do not
+start or restart it; `mzt conductor-status` shows the PID, whether it is alive,
+the host I/O pressure and the event-loop lag even when the socket is silent.
+Wait for pressure to clear and retry a read-only command. Absence needs two
+proofs, a missing socket or a refused connection with no live PID (GH #455).
 
 ---
 
