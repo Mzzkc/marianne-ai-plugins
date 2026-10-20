@@ -126,22 +126,38 @@ recall and apply grounded learning from the canonical memory tree.
 
 ## Cadenza attachment and delivery proof
 
-Registry or cadenza membership means eligibility only. It does not attach
-context. Inspect the exact score and require explicit `prelude`/`cadenzas`
-entries for the intended identity, profile, recent memory, growth, techniques,
-and active cadenza. Modern generated attachments use `required: true`; a
-missing source must fail before performance rather than disappear as a warning.
+"Cadenza" names two different things; keep them apart.
 
-The default personal active cadenza contains exactly:
+1. **The score key `sheet.cadenzas`** is a map of sheet number to injection
+   items (`file:` or `directory:`, with `as:` and `required:`). Each item's
+   content is injected into the prompt of *that sheet only*, in addition to
+   `sheet.prelude`, which is injected into every sheet. This is the only
+   mechanism that puts text in front of a musician. A `directory:` item
+   injects the directory's immediate files (not subdirectories), read fresh
+   each time a sheet that lists it is dispatched.
+2. **The agent's directory `cadenzas/personal/active/`** is a folder on disk
+   that holds the agent's coordination surface. Having it, or being listed in
+   a registry, attaches nothing by itself: the folder reaches a musician only
+   when a score names it in a `prelude` or `cadenzas` entry. The shipped
+   lifecycle scores do name it, as a `directory:` item, on the sheets whose
+   phase reads coordination (not on every sheet).
+
+So: inspect the exact score and require explicit `prelude`/`cadenzas` entries
+for the identity, profile, recent memory, growth, techniques, and the active
+cadenza directory. Generated attachments use `required: true`; a missing
+source then fails before performance rather than disappearing as a warning.
+
+The default personal active cadenza directory contains exactly:
 
 - `01-task-board.md`
 - `02-status.md`
 - `03-urgent-directives.md`
 - `04-handoffs.md`
 
-A directory cadenza is immediate-files-only and reread for each sheet. Urgent
-directives are controlling. Keep task claims owner-scoped, status in its
-existing form, and handoffs grounded in artifact evidence.
+Urgent directives are controlling. Keep task claims owner-scoped, status in
+its existing form, and handoffs grounded in artifact evidence. Editing a file
+in the directory after a sheet was dispatched does not reach that sheet's
+prompt; the next sheet that lists the directory reads the new content.
 
 At dispatch, current runtimes write a hash-only receipt below
 `<workspace>/.marianne/context-receipts/<job>/`. The receipt binds job, sheet,
