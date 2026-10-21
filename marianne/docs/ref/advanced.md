@@ -15,6 +15,8 @@ retry:
   max_delay_seconds: 3600       # 1 hour cap
   exponential_base: 2.0
   jitter: true
+  startup_failure_floor_seconds: 120   # a boot failure (non-zero exit within the window) waits at least this
+  startup_failure_window_seconds: 60
   max_completion_attempts: 3    # Completion prompts before full retry
   completion_threshold_percent: 50  # % passing to trigger completion mode
 

@@ -178,6 +178,11 @@ python "$release_checker" "$score_path" --project-root "$project_root" --lock "$
 SH
 ```
 
+To make the lock mandatory at admission, submit with `mzt run "$score_path"
+--require-lock "$lock_path"`: the conductor verifies the lock against the exact
+score bytes and refuses a missing, stale or malformed lock, so shell control
+flow around a failed gate cannot reach RUNNING (GH #403).
+
 For a strict release gate, use `mzt validate "$score_path" --strict` after
 reviewing existing warnings. A score can acknowledge specific WARN/INFO codes
 with `validate.suppress: [Vxxx]`; V012 refuses ERROR-tier and unknown codes.
