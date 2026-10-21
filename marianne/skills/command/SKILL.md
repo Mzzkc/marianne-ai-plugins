@@ -248,7 +248,7 @@ mzt validate config.yaml --strict # Fail on unsuppressed warnings as well as err
 mzt validate config.yaml --json   # Stable issue keys plus summary/suppressed
 mzt diagnose my-job              # Full diagnostic report
 mzt errors my-job --verbose      # Error details with stdout/stderr
-mzt dashboard                    # Start web dashboard (default port 8000)
+mzt dashboard                    # Start web dashboard (default port 8000); /orchestra is the fleet on stage, live + replay
 mzt help                         # List commands, including patterns-list
 mzt doctor                       # Environment health; lists user profiles no submitted score names (GH #443)
 ```
