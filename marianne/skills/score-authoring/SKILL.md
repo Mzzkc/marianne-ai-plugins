@@ -40,7 +40,12 @@ the packaged default. Check the effective chain with `mzt instruments classes
 show` and availability with `mzt instruments classes check` before relying on
 it; for a local (`ollama`) entry the check also verifies the server serves the
 profile's model, so a missing pull shows up here and in `mzt validate`, not at
-sheet 1. `doctor`, `instruments list`, `instruments check`, `classes check` and
+sheet 1. A sheet that sets `instrument_config.response_format` (`type: json_schema`)
+must run on an instrument that can enforce it: an HTTP profile, or a CLI
+profile that declares `cli.command.json_schema_flag` (the `claude-code` builtin
+does; `opencode` and `codex-cli` do not). `mzt validate` warns V311 otherwise,
+for a class chain and for a plain `instrument:` binding alike, because every
+dispatch of that sheet would be refused. `doctor`, `instruments list`, `instruments check`, `classes check` and
 `classes write` share that one probe (ready / unavailable / unreachable /
 unchecked), so a chain `classes write` emits is one `classes check` accepts on
 the same machine, and "Marianne is ready" means an agent instrument can run

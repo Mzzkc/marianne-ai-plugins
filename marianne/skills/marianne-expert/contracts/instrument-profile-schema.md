@@ -74,6 +74,7 @@ Details how to construct subprocess execution arrays.
 | `stdin_sentinel` | `str \| None` | `None` | Input placeholder argument (e.g., `-` for Claude Code). |
 | `start_new_session` | `bool` | `False` | Launches subprocess in a separate process group. |
 | `required_env` | `list[str] \| None`| `None` | Pinned env vars list inherited from host (helps credentials scoping). |
+| `json_schema_flag` | `str \| None` | `None` | Flag that makes the CLI enforce a JSON schema (`--json-schema` on Claude Code; the shipped `claude-code` profile declares it). Without it a sheet's `json_schema` `response_format` is refused at dispatch and V311 warns. Needs `output.format: json`. |
 
 ---
 
