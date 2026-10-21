@@ -33,6 +33,5 @@ validations:
 on_success:
   - type: run_job
     job_path: "self-chaining.yaml"
-    detached: true
     fresh: true
     description: "Chain back to self with fresh state to run the next iteration"

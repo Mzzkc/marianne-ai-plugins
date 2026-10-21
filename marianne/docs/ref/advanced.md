@@ -20,12 +20,14 @@ retry:
   max_completion_attempts: 3    # Completion prompts before full retry
   completion_threshold_percent: 50  # % passing to trigger completion mode
 
-rate_limit:
-  wait_minutes: 60
-  max_waits: 24                 # 24 hours at default
+# rate_limit: is a reserved section (no runtime reader; V327). Rate limits are
+# detected by the instrument profile's cli.errors.rate_limit_patterns.
 ```
 
 ### Other Configuration Sections
+
+`circuit_breaker:` below is a **reserved** score section (no runtime reader;
+V327). The breaker that trips is the conductor's per-instrument one. Omit it.
 
 ```yaml
 circuit_breaker:
@@ -62,7 +64,6 @@ concert:
 on_success:
   - type: run_job
     job_path: "/absolute/path/to/my-score.yaml"   # MUST be absolute
-    detached: true
     fresh: true                 # CRITICAL for self-chaining
 ```
 
@@ -76,7 +77,6 @@ on_success:
 on_success:
   - type: run_job               # Chain to another score
     job_path: "/home/user/project/next-job.yaml"  # Absolute!
-    detached: true
     fresh: true
   - type: run_command           # Shell command
     command: "curl -X POST https://api.example.com/done"

@@ -205,6 +205,5 @@ on_success:
   - type: run_job
     # MUST be absolute path — daemon resolves from its own CWD
     job_path: "/absolute/path/to/scores/tier4-self-chain.yaml"
-    detached: true
     fresh: true  # CRITICAL: without this, loads COMPLETED state and does nothing
     description: "Chain to next improvement iteration"

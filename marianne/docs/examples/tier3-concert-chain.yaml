@@ -18,9 +18,9 @@
 # Key Lessons:
 #   - on_success job_paths MUST be absolute (daemon resolves from its CWD)
 #   - Workspace lifecycle: archive_on_fresh preserves history
-#   - inherit_learning: true flows patterns across scores
+#   - all scores share the one global learning store, so patterns flow across them
 #   - Each score is independently valid — can be run alone or in concert
-#   - detached: true for autonomous chains, false for sequential waits
+#   - a run_job hook returns once the child is accepted; it never waits on it
 #
 # NOTE: This example shows Score 1. Scores 2 and 3 would be separate
 # YAML files. The concert is wired via on_success hooks.
@@ -190,5 +190,4 @@ validations:
 on_success:
   - type: run_job
     job_path: "/absolute/path/to/scores/concert-implement.yaml"
-    detached: true
     description: "Chain to implementation phase"

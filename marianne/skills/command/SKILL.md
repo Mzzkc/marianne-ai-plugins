@@ -490,7 +490,6 @@ Self-chaining scores chain into themselves via `on_success` hooks for iterative 
 on_success:
   - type: run_job
     job_path: "/absolute/path/to/my-score.yaml"  # MUST be absolute
-    detached: true
     fresh: true              # REQUIRED --- clears state
 concert:
   enabled: true
