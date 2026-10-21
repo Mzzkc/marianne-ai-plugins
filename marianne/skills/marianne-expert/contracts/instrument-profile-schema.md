@@ -34,7 +34,13 @@ Applies when `kind="cli"`.
 *   **`output`** (`CliOutputConfig`, *Required*)
     *   Output parser patterns.
 *   **`errors`** (`CliErrorConfig`, default empty)
-    *   Subprocess regex crash and limit detector rules.
+    *   Subprocess regex crash and limit detector rules. Pattern lists, first
+        match wins: `auth_error_patterns` → AUTH_FAILURE, `unavailable_patterns`
+        → INSTRUMENT_UNAVAILABLE (the harness's own "no provider configured" /
+        "provider not found" refusal; chain advances on attempt 1 without a
+        retry charge, GH #389), then `crash_patterns`, `stale_patterns`,
+        `timeout_patterns`, `capacity_patterns`; `rate_limit_patterns` pauses
+        the instrument. Every pattern is compiled at load.
 *   **`interactive`** (`InteractiveCliConfig \| None`, default `None`)
     *   Tmux-based TUI driver configuration.
 

@@ -44,7 +44,13 @@ sheet 1. `doctor`, `instruments list`, `instruments check`, `classes check` and
 `classes write` share that one probe (ready / unavailable / unreachable /
 unchecked), so a chain `classes write` emits is one `classes check` accepts on
 the same machine, and "Marianne is ready" means an agent instrument can run
-(the raw shell `cli` profile does not count). A chain may name profiles this machine lacks: the job starts at the
+(the raw shell `cli` profile does not count). An installed harness whose
+provider is not configured passes that probe and refuses at sheet 1 instead;
+the shipped `goose`, `crush` and `opencode` profiles carry that refusal text
+as `errors.unavailable_patterns`, so the sheet moves to the next chain entry
+on its first attempt without a retry charge (GH #389). A private profile for
+a harness that refuses in its own words needs its own pattern there, or the
+sheet runs to its timeout on every misconfigured entry. A chain may name profiles this machine lacks: the job starts at the
 first entry that can run (V311 says which, and it warns rather than refuses
 even when nothing in the chain is installed yet — a fresh install sees that
 on `mzt init`'s starter score until one instrument is on PATH); only a class
