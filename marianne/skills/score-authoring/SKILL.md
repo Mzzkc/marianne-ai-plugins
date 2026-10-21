@@ -56,7 +56,10 @@ must run on an instrument that can enforce it: an HTTP profile, or a CLI
 profile that declares `cli.command.json_schema_flag` (the `claude-code` builtin
 does; `opencode` and `codex-cli` do not). `mzt validate` warns V311 otherwise,
 for a class chain and for a plain `instrument:` binding alike, because every
-dispatch of that sheet would be refused. `doctor`, `instruments list`, `instruments check`, `classes check` and
+dispatch of that sheet would be refused. The sheet must also run headless:
+claude-code and antigravity run interactively when the score is silent, and the
+interactive backend cannot enforce a schema, so a schema sheet on them carries
+`interactive: false` (V331 warns otherwise, GH #478). `doctor`, `instruments list`, `instruments check`, `classes check` and
 `classes write` share that one probe (ready / unavailable / unreachable /
 unchecked), so a chain `classes write` emits is one `classes check` accepts on
 the same machine, and "Marianne is ready" means an agent instrument can run
@@ -71,6 +74,9 @@ first entry that can run (V311 says which, and it warns rather than refuses
 even when nothing in the chain is installed yet — a fresh install sees that
 on `mzt init`'s starter score until one instrument is on PATH); only a class
 with no registered entry is refused (V310). Score aliases and registered profile names take precedence over classes;
+In a `command_succeeds` command every `{placeholder}` is one shell-quoted word;
+split a space-separated variable in the shell (`read -r -a xs <<< {list}`),
+never as a bash array literal (`xs=({list})` is one element; GH #477).
 Gate each stage's own output with a `file_exists` validation scoped to that
 sheet (`condition: "sheet_num == N"`): it is also the producer declaration.
 V109 then catches a cadenza that reads the file before its producer runs,
