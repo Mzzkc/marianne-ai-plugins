@@ -40,6 +40,14 @@ For payload schemas and examples, read `references/integration-contract.md`.
 - Treat `fresh` as destructive: require explicit user confirmation.
 - Do not assume Marianne's dashboard HTTP API exposes all daemon fields. Audit it
   first; daemon `JobRequest` has historically been broader than dashboard submit.
+- Do not bind the dashboard to a non-loopback host (`--host 0.0.0.0`) with
+  `MZT_AUTH_MODE` at its `localhost_only` default: the listener answers every
+  interface and refuses every non-local client, and `mzt dashboard` prints a red
+  **Exposed bind** panel saying so (GH #387). Network exposure needs
+  `MZT_AUTH_MODE=api_key`, real `MZT_API_KEYS` and `MZT_LOCALHOST_BYPASS=false`,
+  or a loopback bind behind an authenticating proxy. To publish only the
+  fleet view, set `MZT_PUBLIC_ORCHESTRA=true`: `/orchestra`, its read-only API
+  and `/static` are then served to every client and nothing else is.
 - Do not treat a submit RPC as successful just because IPC returned. Check the
   daemon response status; only `accepted` and `pending` mean the conductor took
   the score.
