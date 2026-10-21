@@ -59,7 +59,10 @@ for a class chain and for a plain `instrument:` binding alike, because every
 dispatch of that sheet would be refused. The sheet must also run headless:
 claude-code and antigravity run interactively when the score is silent, and the
 interactive backend cannot enforce a schema, so a schema sheet on them carries
-`interactive: false` (V331 warns otherwise, GH #478). `doctor`, `instruments list`, `instruments check`, `classes check` and
+`interactive: false` (V331 warns otherwise, GH #478). The schema itself needs a top-level `type: object` and no
+top-level `oneOf`/`allOf`/`anyOf` — Claude Code forwards it as a tool
+`input_schema` and the API refuses those shapes (V332, GH #486); put a
+discriminated union under one required property. `doctor`, `instruments list`, `instruments check`, `classes check` and
 `classes write` share that one probe (ready / unavailable / unreachable /
 unchecked), so a chain `classes write` emits is one `classes check` accepts on
 the same machine, and "Marianne is ready" means an agent instrument can run
