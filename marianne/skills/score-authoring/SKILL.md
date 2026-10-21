@@ -34,6 +34,17 @@ gap, filed as an issue first. A score never writes into `~/.marianne/instruments
 a generator that does is a bug. For a new subject on an unchanged provided
 engagement, supply supported task/cadenza inputs without editing the managed score.
 A profile alias binds an instrument; it does not create a persistent person.
+**Bind per role, not one alias for the whole score.** `instrument: strong` on every
+sheet is the wrong pattern: recon, build, review and synthesis want different
+models, and the score is where that is said. Give each role its own alias and
+bind it on the movements or sheets that play that role. An alias may carry a
+`chain` of entries with `select` modifiers: `spread` gives a fan-out's voices
+distinct models from one alias (three reviewers, three models, no agreement
+by shared blind spot); `cycle` rotates across sheets; `cheapest`/`widest`
+order by the profile's model table; `balance` lets the conductor start on the
+least-loaded entry at dispatch. Modifiers compose in the order written. The
+chain's remaining entries are that sheet's fallbacks, so one alias states the
+route and its recovery together.
 For portable model work, `instrument: strong` (or another configured capability
 class) resolves to an ordered profile chain from `~/.marianne/classes.yaml` and
 the packaged default. Check the effective chain with `mzt instruments classes

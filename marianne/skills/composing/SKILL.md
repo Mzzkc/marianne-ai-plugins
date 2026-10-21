@@ -55,6 +55,14 @@ a behavioral gate merely because the pattern advertises one.
 
 ## Instrument selection
 
+Choose per role. One alias (or one class) across every sheet discards the
+granularity Marianne exists for: a recon sheet, a build sheet, three parallel
+reviewers and a synthesis sheet want different models and budgets. Declare an
+alias per role, bind it where that role plays, and for fan-out reviewers use a
+`chain` with `select: [spread]` (distinct models per voice) and `balance`
+(least-loaded entry at dispatch) so independence and throughput come from the
+score, not from luck.
+
 Match phase requirements to current qualified capabilities and the user's casting
 preferences. Read [model-specific guidance](references/instrument-selection.md)
 when selecting Gemini, GLM, or a vulnerability-discovery engagement.
