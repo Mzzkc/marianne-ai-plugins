@@ -66,6 +66,7 @@ setsid mzt start &
 | `mzt restart --profile dev` | Restart with a profile |
 | `mzt conductor-status` | Check if conductor is running |
 | `mzt conductor-status --json` | Raw daemon status (config generation, live per-model caps) |
+| `mzt instruments check NAME --live` / `mzt doctor --live` | Prove a profile against its installed CLI with a real prompt (and schema mode if declared). Run after installing or upgrading a CLI, after editing a profile, and before a long run; readiness only proves the binary is on PATH |
 | `mzt conductor reload` | Hot-reload config + instrument profiles WITHOUT restart (GH #408) |
 
 `mzt conductor reload` re-reads the config file and instrument profile
