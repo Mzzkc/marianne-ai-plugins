@@ -71,6 +71,12 @@ first entry that can run (V311 says which, and it warns rather than refuses
 even when nothing in the chain is installed yet — a fresh install sees that
 on `mzt init`'s starter score until one instrument is on PATH); only a class
 with no registered entry is refused (V310). Score aliases and registered profile names take precedence over classes;
+Gate each stage's own output with a `file_exists` validation scoped to that
+sheet (`condition: "sheet_num == N"`): it is also the producer declaration.
+V109 then catches a cadenza that reads the file before its producer runs,
+and the conductor names a sheet that writes a later sheet's file (an
+`artifact:` warning in `mzt status`) instead of letting the fabrication pass
+as upstream input.
 `instrument: cli` stays the deterministic shell profile. Use an alias when the
 score requires a fixed model or route. A class cannot override `expected_route`.
 For consequential new/changed behavior, reuse an approved design or obtain a
