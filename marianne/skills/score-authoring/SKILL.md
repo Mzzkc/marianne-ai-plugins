@@ -104,7 +104,7 @@ Three timers, three different knobs — do not mix them:
 `instrument_config.timeout_seconds` is the per-sheet execution timeout;
 the same typed settings work in `movements.<N>.instrument_config`,
 `sheet.per_sheet_instrument_config.<N>`, and `instruments.<alias>.config`.
-Unknown keys at all four scopes warn as V010/V011. A reviewed CLI route
+Unknown keys at all four scopes warn as V010/V011. A whole unknown block at the root (`deliver:`, `for_each:`) is V010 WARNING: the loader drops it and the runtime does nothing with it — never ship a score that relies on a key `mzt validate` warns about. A reviewed CLI route
 may set `provider` alongside `model` without losing it at YAML load.
 A bare `timeout:` is a key at none of them — wherever it appears it is
 unknown, and V010 names the `timeout_seconds` of the surface it sits in (an
