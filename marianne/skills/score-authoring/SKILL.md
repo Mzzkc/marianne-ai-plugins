@@ -87,7 +87,8 @@ sheet (`condition: "sheet_num == N"`): it is also the producer declaration.
 V109 then catches a cadenza that reads the file before its producer runs,
 and the conductor names a sheet that writes a later sheet's file (an
 `artifact:` warning in `mzt status`) instead of letting the fabrication pass
-as upstream input.
+as upstream input; `workspace_lifecycle.foreign_artifacts: quarantine` moves
+such a file to the job's scratch quarantine before downstream sheets run.
 `instrument: cli` stays the deterministic shell profile. Use an alias when the
 score requires a fixed model or route. A class cannot override `expected_route`.
 For consequential new/changed behavior, reuse an approved design or obtain a
