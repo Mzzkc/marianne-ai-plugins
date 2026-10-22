@@ -320,7 +320,10 @@ mzt diagnose my-job --include-logs
 - **Instrument column**: `codex-cli (was claude-code: execution_timeout after 30m)` means the
   fallback played and the primary spent 30 minutes first; the duration beside the status is
   the winning attempt's only. `mzt diagnose` lists every attempt with its instrument,
-  duration and outcome under the timeline.
+  duration, outcome and error code under the timeline, and under a failed attempt the
+  cause the classifier picked (`agent process killed by SIGKILL before signalling
+  completion`) — read that line before the logs; the category word (`TRANSIENT`) is the
+  symptom class, the line is the cause.
 
 **Critical insight**: `exit_code=0` does not establish successful validation.
 `validation_passed=true` proves only the configured checks; weak checks can still
