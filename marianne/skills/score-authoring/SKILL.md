@@ -62,7 +62,10 @@ interactive backend cannot enforce a schema, so a schema sheet on them carries
 `interactive: false` (V331 warns otherwise, GH #478). The schema itself needs a top-level `type: object` and no
 top-level `oneOf`/`allOf`/`anyOf` — Claude Code forwards it as a tool
 `input_schema` and the API refuses those shapes (V332, GH #486); put a
-discriminated union under one required property. `doctor`, `instruments list`, `instruments check`, `classes check` and
+discriminated union under one required property. The validated object is
+kept whole as the sheet's `structured_output` in `mzt status --json` and
+`job.status` (up to 64 KiB, else `structured_output_omitted: true`), so a
+downstream reader needs no tools-enabled sheet to write it (GH #489). `doctor`, `instruments list`, `instruments check`, `classes check` and
 `classes write` share that one probe (ready / unavailable / unreachable /
 unchecked), so a chain `classes write` emits is one `classes check` accepts on
 the same machine, and "Marianne is ready" means an agent instrument can run

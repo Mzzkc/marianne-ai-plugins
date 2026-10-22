@@ -167,6 +167,12 @@ Use source artifacts as the authority for dashboards and wrapper reports:
   `running`, `waiting`, `rate_limited`, or `retry_scheduled`. Treat `pending`
   as queued future work, not the active sheet, and render the actual sheet
   status verbatim.
+- A sheet that set `instrument_config.response_format` carries its validated
+  object as `sheets[n].structured_output` in `job_status`, whole and
+  credential-redacted, and it stays there after COMPLETED. Read the object
+  from there, never from `stdout_tail`, which is the last 500 characters. If
+  `structured_output_omitted` is true, the object exceeded 64 KiB and was not
+  kept; fail loudly rather than parse the tail (GH #489).
 - Reports that include counts should be generated from JSON artifacts or checked
   against them before display. Do not let model prose become the source of truth.
 - Do not present a report file as the result of the current run merely because
