@@ -192,6 +192,8 @@ missing context fails before execution. Runtime context-delivery receipts prove
 the resolved paths and hashes actually assembled into the prompt; they do not
 prove that the recipient applied the context or achieved the intended behavior.
 
+`max_bytes` caps what one item injects (a directory sums its files). A ledger that grows with every sheet — an `active/` directory, a memory file — needs it: over the cap a `required` item fails the sheet before execution naming the size, an optional one is dropped with a warning, and nothing ships an over-sized prompt that only the conductor-wide token warning would have noticed after assembly (V334 warns when a static path is already over; GH #474). Pair it with a Consolidate stage that rotates the ledger into `archive/`.
+
 **Directory cadenzas are NOT recursive** — only the immediate children of the directory are injected. Subdirectories are silently ignored. If you need a deeper tree, flatten the input dir or list each subdir as its own cadenza item. A common pattern: a small `instrument: cli` preflight stage curates/copies the relevant files into one flat directory the cadenza points at.
 
 See `patterns.md` → "Prelude & Cadenza" for full file/directory injection rules.
