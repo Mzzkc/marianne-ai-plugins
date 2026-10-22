@@ -88,6 +88,8 @@ Converts subprocess output into `ExecutionResult`.
     *   Dot-path to extract message content inside JSON responses (e.g. `result`).
 *   **`error_path`** (`str \| None`, default `None`)
     *   Dot-path to extract error messages.
+*   **`error_flag_path`** (`str \| None`, default `None`)
+    *   JSON only. Dot-path to a terminal boolean error flag. When the value is exactly `true`, the attempt fails even at a successful exit code, with `CLI reported an error (<path>)` unless `error_path` gives a message. Unset keeps exit-code-only success. For CLIs that exit 0 on a semantic refusal (`qwen-code` uses `is_error`).
 *   **`completion_event_type`** (`str \| None`, default `None`)
     *   Event type matching completion records inside JSONL streams (e.g., `turn.completed`).
 *   **`completion_event_filter`** (`dict[str, str] \| None`, default `None`)
