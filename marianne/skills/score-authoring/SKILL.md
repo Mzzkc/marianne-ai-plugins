@@ -94,7 +94,7 @@ stage is not that gate; unchanged syntax repairs inherit the existing review.
 For substantial work, encode the required
 construction, consumer integration, independent review, repair and reevaluation;
 one or two sheets are not a substitute for those behaviors. Atomic operations
-can remain small within that performance.
+can remain small within that performance. A schema sheet also gets the profile's `cli.command.schema_extra_flags` instead of its `extra_flags` when the profile declares them: the `claude-code` builtin runs schema sheets at `--effort high` because `--effort max` with `--json-schema` emits nothing until the sheet timeout on Claude Code 2.1.307, so a schema sheet that stalls at 0 bytes on a copied profile is missing that key, not a bigger timeout.
 
 ---
 
