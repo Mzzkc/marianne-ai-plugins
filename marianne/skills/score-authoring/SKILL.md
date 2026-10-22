@@ -100,6 +100,13 @@ can remain small within that performance. A schema sheet also gets the profile's
 
 ## Quick Syntax Reference
 
+Before the first paid run of a score you wrote or changed, read what the
+musicians will actually receive: `mzt validate SCORE --render-prompts -`
+prints every sheet's full rendered prompt, identical renders grouped under one
+heading (`## Sheets 2-3`); `--render-prompts prompts.md` writes it instead.
+Findings tell you a key is wrong; the dump tells you a prompt reads wrong.
+
+
 Three timers, three different knobs — do not mix them:
 `instrument_config.timeout_seconds` is the per-sheet execution timeout;
 the same typed settings work in `movements.<N>.instrument_config`,
