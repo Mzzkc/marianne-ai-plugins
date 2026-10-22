@@ -22,7 +22,11 @@ Use a thin backend adapter:
    `Verify posts`, not `run scores/post-mill.yaml --fresh`.
 7. If the app submits edited or inline score content, persist it to a durable
    app-owned YAML path before submit. The conductor stores a path and may read it
-   after the request returns.
+   after the request returns. A score the app builds or edits as a `JobConfig`
+   object serializes with `config.to_yaml()` (round-trips through
+   `JobConfig.from_yaml_string`; relative workspaces come back absolute and fan-outs
+   expanded) — write that string to the app-owned path rather than templating YAML
+   by hand.
 
 Prefer the bundled bridge script for JSON IPC. Resolve `scripts/` relative to
 this skill directory:
