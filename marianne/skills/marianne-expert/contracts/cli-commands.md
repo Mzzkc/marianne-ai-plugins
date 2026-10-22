@@ -65,7 +65,7 @@ Commands for debugging and log inspection.
 *   **`diagnose <job_id>`**
     *   *Purpose:* Scan logs, state databases, and workspace files to pinpoint execution failures.
 *   **`history [job_id]`**
-    *   *Purpose:* Display detailed execution timeline including timestamps and durations.
+    *   *Purpose:* One row per attempt from the checkpoint, newest first: instrument and model, outcome, exit code, duration, timestamp, redacted failure cause. Holds no output (GH #488).
 *   **`doctor`**
     *   *Purpose:* Run readiness checks on the execution environment (PATH, CLI agents, credentials).
 

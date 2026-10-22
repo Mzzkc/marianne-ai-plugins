@@ -153,7 +153,7 @@ mzt logs my-job                  # View conductor-owned log sources
 mzt logs my-job --follow         # Tail score-specific logs
 mzt logs my-job --lines 200      # Last 200 lines
 mzt logs my-job --level ERROR    # ERROR and above
-mzt history my-job               # Execution history
+mzt history my-job               # Every attempt: instrument, outcome, exit, cause
 ```
 
 | Command | Key Options |
