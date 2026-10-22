@@ -66,7 +66,9 @@ discriminated union under one required property. `doctor`, `instruments list`, `
 `classes write` share that one probe (ready / unavailable / unreachable /
 unchecked), so a chain `classes write` emits is one `classes check` accepts on
 the same machine, and "Marianne is ready" means an agent instrument can run
-(the raw shell `cli` profile does not count). An installed harness whose
+(the raw shell `cli` profile does not count). `classes write` ranks shipped
+profiles; a personal or venue profile is seated only where its `class_hints`
+say (`{strong: "after opencode", fast: first}`), never by name alone. An installed harness whose
 provider is not configured passes that probe and refuses at sheet 1 instead;
 the shipped `goose`, `crush` and `opencode` profiles carry that refusal text
 as `errors.unavailable_patterns`, so the sheet moves to the next chain entry
