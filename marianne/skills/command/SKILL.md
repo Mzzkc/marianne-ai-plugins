@@ -254,6 +254,7 @@ mzt errors my-job --verbose      # Error details with stdout/stderr
 mzt dashboard                    # Start web dashboard (default port 8000); /orchestra is the fleet on stage, live + replay
 mzt help                         # List commands, including patterns-list
 mzt doctor                       # Environment health; lists user profiles no submitted score names (GH #443)
+#   and names a personal profile whose ambient credentials no longer reach it (GH #335 filters by default)
 ```
 
 `mzt doctor` reports, under "Instrument hygiene", every `~/.marianne/instruments/`
