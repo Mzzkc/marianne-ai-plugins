@@ -159,6 +159,8 @@ strict gate: a validation pass rate above it enters completion mode; a lower
 result spends a normal retry. Older releases ignored the threshold and sent
 any partial pass to completion mode, so review scores that use the default 50%.
 
+`sheet.skip_when` skips one sheet; it does not cascade — the baton lets dependents of an intentional skip run (`[SKIPPED]` in `previous_outputs`). A chain terminator (a marker that says "this iteration does nothing") goes on every sheet, including the one whose trigger chains, or later sheets run and chain again.
+
 **The #1 rule**: Jinja `{{ }}` in the **prompt pipeline** (templates, prelude/cadenza paths, capture_files). Python format `{}` in the **validation engine** (validation paths, commands, working_directory, skip_when).
 
 | Field | Syntax |
