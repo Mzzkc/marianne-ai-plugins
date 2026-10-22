@@ -79,7 +79,7 @@ on `mzt init`'s starter score until one instrument is on PATH); only a class
 with no registered entry is refused (V310). Score aliases and registered profile names take precedence over classes;
 In a `command_succeeds` command every `{placeholder}` is one shell-quoted word;
 split a space-separated variable in the shell (`read -r -a xs <<< {list}`),
-never as a bash array literal (`xs=({list})` is one element; GH #477).
+never as a bash array literal (`xs=({list})` is one element; V333 warns; GH #477).
 Gate each stage's own output with a `file_exists` validation scoped to that
 sheet (`condition: "sheet_num == N"`): it is also the producer declaration.
 V109 then catches a cadenza that reads the file before its producer runs,
