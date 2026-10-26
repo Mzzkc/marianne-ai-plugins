@@ -75,13 +75,19 @@ def test_same_text_cannot_borrow_other_statement_citation(run):
  base_evidence(run);a,r=answer_and_review(run);a['sections'][0]['paragraphs'][1]=dict(a['sections'][0]['paragraphs'][1],source_ids=['search-2:S1']);write(run/'answer-draft.json',a);r['answer_sha256']=sha(run/'answer-draft.json');write(run/'claim-check-v3.json',r);command('review',run,ok=False)
 
 def test_generator_adaptive_edges_guards_and_bounds(tmp_path):
- inp=tmp_path/'input';inp.mkdir();(inp/'prompt.md').write_text('Fixture.');profile=tmp_path/'profile.yaml';profile.write_text(yaml.safe_dump({'name':'fixture','cli':{'command':{'executable':sys.executable}},'models':[]}))
- row={'profile':str(profile),'model':'fixture-model','qualification':'Benign fixture; never dispatched'};roster={'name':'fixture-research','question':'Fixture','domains':['one','two'],'core_files':['prompt.md'],'editor':row,'writer':row,'searchers':[dict(row,model='fixture-model-a',search_method='fixture'),dict(row,model='fixture-model-b',search_method='fixture')]};rp=tmp_path/'roster.json';write(rp,roster);out=tmp_path/'score with spaces';w=tmp_path/'workspace with spaces'
+ # GH #443: rows name an EXISTING profile; the generator writes aliases, never profiles or wrappers.
+ inp=tmp_path/'input';inp.mkdir();(inp/'prompt.md').write_text('Fixture.')
+ row={'profile':'codex-cli','model':'fixture-model','qualification':'Benign fixture; never dispatched'};roster={'name':'fixture-research','question':'Fixture','domains':['one','two'],'core_files':['prompt.md'],'editor':row,'writer':row,'searchers':[dict(row,model='fixture-model-a',search_method='fixture'),dict(row,model='fixture-model-b',search_method='fixture')]};rp=tmp_path/'roster.json';write(rp,roster);out=tmp_path/'score with spaces';w=tmp_path/'workspace with spaces'
  p=subprocess.run([sys.executable,str(ROOT/'scripts/configure.py'),'--roster',str(rp),'--input',str(inp),'--workspace',str(w),'--out',str(out)],capture_output=True,text=True);assert p.returncode==0,p.stderr
  cfg=yaml.safe_load((out/'research.yaml').read_text());names={x['name']:n for n,x in cfg['movements'].items()};assert cfg['sheet']['dependencies'][names['search-1']]==cfg['sheet']['dependencies'][names['search-2']]==[names['frame']];assert cfg['parallel']['max_concurrent']==2
  for label in ['followup-1','followup-2','correct','recheck']:assert names[label] in cfg['sheet']['skip_when']
- assert cfg['instruments']['fixture-research-followup-1']['config']['timeout_seconds']==430
- assert (out/'profiles/fixture-research-followup-1.sh').read_text().count('optional-outcome')==1
+ alias=cfg['instruments']['fixture-research-followup-1'];assert alias['profile']=='codex-cli' and alias['config']['timeout_seconds']==430 and alias['config']['model']=='fixture-model-a'
+ assert not (out/'profiles').exists()
+ # The old wrapper's native-exit receipt is a sheet trigger on the optional lane, both outcomes.
+ trig=cfg['sheet']['triggers'][names['followup-1']];assert 'optional-outcome' in trig['on_success'][0]['run']['command'] and trig['on_success'][0]['run']['command'].endswith(' 0')
+ assert trig['on_fail'][0]['run']['command'].endswith(' 124')
+ path=tmp_path/'path-profile.json';write(path,dict(roster,editor=dict(row,profile=str(tmp_path/'profile.yaml'))))
+ p=subprocess.run([sys.executable,str(ROOT/'scripts/configure.py'),'--roster',str(path),'--input',str(inp),'--workspace',str(w),'--out',str(tmp_path/'refused')],capture_output=True,text=True);assert p.returncode!=0 and 'existing profile NAME' in p.stderr
  task='Write to {{ workspace }}/consumer.md';child=tmp_path/'child workspace'
  env=dict(os.environ,HOME=str(tmp_path))
  p=subprocess.run([sys.executable,str(ROOT/'scripts/concert.py'),'wrapper','--score',str(out/'research.yaml'),'--child',str(child),'--profile','cli','--model','fixture','--task',task],env=env,capture_output=True,text=True);assert p.returncode==0,p.stderr

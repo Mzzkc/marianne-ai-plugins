@@ -108,6 +108,9 @@ even through another worker. Reduce administration, never trust or life.
 
 ## Route
 
+New commission, rough concept to completion:
+[concept to completion](references/concept-to-completion.md).
+
 The defaults above apply without further reading. Load detail at the decision:
 
 - Ambiguous destination or joins: [orient and shape](references/orient-and-shape.md).

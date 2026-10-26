@@ -7,6 +7,7 @@ are optional prompts, not required records or parallel custody systems.
 
 | Intent | Reference | Optional prompts |
 |---|---|---|
+| Take a new commission from rough concept to completion | `references/concept-to-completion.md` | `examples/engineering/spec-forge.yaml`, `design-to-orchestra.yaml` |
 | Shape the whole experience, feedback loop and producer/consumer joins | `references/orient-and-shape.md` | vision brief, performance graph |
 | Assign, activate, steer and monitor meaningful progress | `references/direct-and-monitor.md` | directive, unresolved work |
 | Recover the performance, change casting or preserve full life | `references/intervene-and-cast.md` | musician standing |

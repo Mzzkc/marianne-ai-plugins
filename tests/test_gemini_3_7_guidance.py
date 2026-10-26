@@ -22,7 +22,10 @@ def test_gemini_3_7_catalog_records_exact_official_contract() -> None:
     gemini = musicians["gemini-3.7-flash"]
 
     assert gemini["provider"] == "google"
-    assert gemini["status"] == "stable"
+    # Superseded by gemini-3.8-flash in the 2026-09-04 refresh; its facts stay exact.
+    assert gemini["status"] == "historical"
+    assert gemini["routing"] == "historical_fallback_only"
+    assert gemini["successor"] == "gemini-3.8-flash"
     assert gemini["release_stage"] == "ga"
     assert gemini["released"] == "2026-08-13"
     assert gemini["context_window"] == 1_048_576
@@ -72,18 +75,24 @@ def test_gemini_3_7_catalog_keeps_evidence_lanes_and_ratings_honest() -> None:
     assert "not attempted" in evidence["live_verified"]
 
 
-def test_current_gemini_flash_routes_use_3_7_and_older_entries_are_historical() -> None:
+def test_current_gemini_flash_routes_use_the_stable_successor_and_older_entries_are_historical() -> None:
     catalog = _catalog()
     musicians = catalog["musicians"]
     chains = catalog["use_case_chains"]
     assert isinstance(musicians, dict)
     assert isinstance(chains, dict)
 
-    assert "gemini-3.7-flash" in str(chains)
-    assert "gemini-3-flash-preview" not in str(chains)
-    historical = musicians["gemini-3-flash-preview"]
-    assert historical["status"] == "historical"
-    assert historical["routing"] == "historical_fallback_only"
+    # Every superseded Flash release names a successor; chains route only the
+    # head of that succession, which must itself be stable.
+    current = "gemini-3.7-flash"
+    while musicians[current].get("successor"):
+        current = musicians[current]["successor"]
+    assert musicians[current]["status"] == "stable"
+    assert current in str(chains)
+    for retired in ("gemini-3.7-flash", "gemini-3-flash-preview"):
+        assert retired not in str(chains)
+        assert musicians[retired]["status"] == "historical"
+        assert musicians[retired]["routing"] == "historical_fallback_only"
 
 
 def test_human_catalog_changelog_and_composing_guidance_are_synchronized() -> None:
