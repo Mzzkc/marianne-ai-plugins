@@ -68,6 +68,8 @@ Commands for debugging and log inspection.
     *   *Purpose:* One row per attempt from the checkpoint, newest first: instrument and model, outcome, exit code, duration, timestamp, redacted failure cause. Holds no output (GH #488).
 *   **`doctor`**
     *   *Purpose:* Run readiness checks on the execution environment (PATH, CLI agents, credentials).
+*   **`remediate <job_id>`**
+    *   *Purpose:* Diagnose failed sheets with the self-healing remedy registry and propose (`--dry-run`) or apply (`--yes`) a remedy from persisted job context; never restarts execution (GH #147).
 
 ---
 
@@ -108,7 +110,10 @@ Commands exposed as sub-apps in Typer.
 ---
 
 ## 8. Learning
-Commands for examining the telemetry database and self-healing.
+Commands for examining the learning database and self-healing.
+
+*   **`telemetry status|consent|export|flush`**
+    *   *Purpose:* Opt-in community telemetry (GH #146): default-off, consent is a user-level decision separate from any score, collection stages a sanitized JSONL envelope locally, and sending happens only through an explicit `flush --push`.
 
 *   **`patterns-list`**
     *   *Purpose:* List optimization and error-remediation patterns registered by learning.

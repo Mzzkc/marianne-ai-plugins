@@ -281,6 +281,14 @@ unqualified and the next authorized operation to the caller.
 
 ---
 
+### Telemetry opt-in
+
+A score may carry `telemetry: {enabled: true, spool_path: …}` (GH #146). It only
+stages a sanitized envelope locally, and only once the user has given consent
+with `mzt telemetry consent`; nothing is sent without `mzt telemetry flush
+--push`. Leave it out of shipped examples. `endpoint` and `submit_mode` are
+reserved: the schema accepts them and no runtime reads them.
+
 ## Reference Docs
 
 Load the docs matching your score's complexity tier:

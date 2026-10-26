@@ -254,6 +254,7 @@ mzt errors my-job --verbose      # Error details with stdout/stderr
 mzt dashboard                    # Start web dashboard (default port 8000); /orchestra is the fleet on stage, live + replay
 mzt help                         # List commands, including patterns-list
 mzt doctor                       # Environment health; lists user profiles no submitted score names (GH #443)
+mzt telemetry status|consent|export|flush # Opt-in community telemetry: off by default, never automatic; see docs/telemetry.md (GH #146)
 #   and names a personal profile whose ambient credentials no longer reach it (GH #335 filters by default)
 ```
 
@@ -472,6 +473,14 @@ without checking the actual configured behavior. Reserve fresh starts for intend
 authorized replay, not recovery of already completed work.
 
 ---
+
+## Remediate a failed job by hand
+
+`mzt remediate JOB_ID [--sheet N] [--dry-run|--yes] [--json]` runs the same
+remedy registry and healing coordinator the conductor's self-healing uses, from
+the persisted job context and attempt history. It proposes or applies a remedy
+and never changes checkpoint status or restarts execution: resume the job
+yourself afterwards (GH #147).
 
 ## Self-Healing
 
