@@ -257,6 +257,22 @@ mzt doctor                       # Environment health; lists user profiles no su
 #   and names a personal profile whose ambient credentials no longer reach it (GH #335 filters by default)
 ```
 
+Skills ship from the plugin tree, and every harness keeps its own copy, so a
+skill edit is invisible to conductors until it is distributed. One tool does the
+whole distribution, on every host where the checkout lives:
+
+```bash
+python3 plugins/scripts/install_skills.py status    # which harness roots lag the source
+python3 plugins/scripts/install_skills.py install   # all roots current, preimages archived, verified
+python3 plugins/scripts/install_skills.py verify    # recompute every installed copy against source
+```
+
+It discovers the harness roots present on the host (Claude Code, Codex, Gemini,
+ZCode, OpenCode, the shared `.agents` surface, the registered Claude plugin cache,
+and the Windows-side roots when run inside WSL), archives each target's exact
+preimage before writing, and refuses a dirty source tree. Run it on each host
+after a skill commit lands; `status` exits 1 while any root lags.
+
 `mzt doctor` reports, under "Instrument hygiene", every `~/.marianne/instruments/`
 or `.marianne/instruments/` profile that no score the conductor has been given
 names and no class chain includes. It never deletes them. Read the list as the
