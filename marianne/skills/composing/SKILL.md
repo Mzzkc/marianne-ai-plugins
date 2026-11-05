@@ -169,6 +169,14 @@ require a changed premise and feasible remaining delivery reserve within that wi
   from `/` cannot stall the conductor. A profile sets `supervise: false` only
   when the binary must be the conductor's direct child.
 - Keep private evaluator answers outside worker-readable workspaces.
+- Size a loop's `cost_limit_usd` from the work, not a default, and give every
+  cap-ended loop a reader: a loop whose `until` is unmet at its cap or pass
+  limit proceeds with a warning, so the next stage must detect the shortfall
+  (the marker absent, the record still false) and carry it to the final gate.
+  A coverage loop also needs a way to name what the host cannot reach (a
+  privilege, a device, a credential): an exclusion ledger with reason,
+  evidence and commit, audited at the end, rather than a flat floor that
+  spends the budget chasing it.
 - Route repair back through reevaluation. Any post-evaluation change invalidates
   the affected pass. Inherit still-applicable evidence for unchanged subjects;
   perform required full-suite and real-environment qualification before release.
