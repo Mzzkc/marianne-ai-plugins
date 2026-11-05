@@ -145,7 +145,7 @@ below use `my-job` as that handle.
 mzt status my-job                # Check status
 mzt status my-job --watch        # Live monitoring (refreshes every 5s)
 mzt status my-job -W -i 10       # Watch with 10s interval
-mzt status my-job -j             # JSON output
+mzt status my-job -j             # JSON output (`loops` carries each span's pass / exit reason / spend)
 mzt list                         # Every live score run (never paged out)
 mzt list --all                   # Plus terminal history, --limit (20) caps only that part
 mzt list --status running        # Filter by status
@@ -334,6 +334,13 @@ mzt diagnose my-job --include-logs
 - **Status**: RUNNING, COMPLETED, FAILED, PAUSED, CANCELLED
 - **Validation**: Pass/Fail per sheet (a sheet can execute successfully but fail validation)
 - **Sheets**: N/M completed, which failed, which skipped
+- **Loops**: one line per `sheet.loops` span with its pass or exit reason and spend. `condition_met`
+  is the loop finishing its job; `cost_limit_exceeded` or `max_iterations` means the `until` was NOT
+  met and the next stage ran on an unfinished span: read the span's last ledger before trusting
+  anything downstream, and raise the cap or the iteration count in the score if the work was real.
+- **Cost**: the job tracker's total when one wrote it, otherwise the sum of every sheet's accumulated
+  attempt cost `(from sheets)`, which is the figure the loop and sheet caps read; `$0.00` with
+  `cost-uncertain` sheets means no priced route, not free work.
 - **Rate limits**: Current wait count
 - **Instrument column**: `codex-cli (was claude-code: execution_timeout after 30m)` means the
   fallback played and the primary spent 30 minutes first; the duration beside the status is
