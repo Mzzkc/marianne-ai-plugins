@@ -168,7 +168,7 @@ executes a bounded shell command. Linux uses a per-action subreaper to clean
 detached children even when they close stdio; on other hosts `mzt validate`
 emits V326 INFO because that orphan guarantee is unavailable.
 
-For parallel voices, set `movements.<N>.voices` with `sheet.size: 1` and
+For parallel voices, set `movements.<N>.voices` with `sheet.size: 1` (the default; a score that names only `total_items` gets one sheet per item) and
 `sheet.start_item: 1`; this expands through `fan_out`, including dependencies.
 An explicit `sheet.fan_out` count wins for the same movement. For a cost cap,
 set `cost_limits.max_cost_per_sheet`; the baton enforces it on each sheet,

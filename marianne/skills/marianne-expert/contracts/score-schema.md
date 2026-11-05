@@ -56,7 +56,7 @@ Controls partitioning, parallelization, dependencies, and fan-out parameters.
 
 | Field Name | Type | Default Value | Description |
 |---|---|---|---|
-| `size` | `int` | *Required* | Number of items bundled in a single sheet (must be >= 1). |
+| `size` | `int` | `1` | Number of items bundled in a single sheet (must be >= 1). Defaults to one item per sheet, which `fan_out` and `voices` require; a score that names only `total_items` gets one sheet per item. |
 | `total_items` | `int` | *Required* | Total logical items representing the composition size (must be >= 1). |
 | `start_item` | `int` | `1` | First item sequence number (1-indexed). |
 | `descriptions` | `dict[int, str]` | `{}` | Sheet description labels shown in progress reports. |
