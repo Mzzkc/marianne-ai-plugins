@@ -335,7 +335,8 @@ mzt diagnose my-job --include-logs
 - **Validation**: Pass/Fail per sheet (a sheet can execute successfully but fail validation)
 - **Sheets**: N/M completed, which failed, which skipped
 - **Loops**: one line per `sheet.loops` span with its pass or exit reason and spend. `condition_met`
-  is the loop finishing its job; `cost_limit_exceeded` or `max_iterations` means the `until` was NOT
+  is the loop finishing its job (also when the finishing pass reached a cap: `until` is judged
+  first); `cost_limit_exceeded` or `max_iterations` means the `until` was NOT
   met and the next stage ran on an unfinished span: read the span's last ledger before trusting
   anything downstream, and raise the cap or the iteration count in the score if the work was real.
 - **Cost**: the job tracker's total when one wrote it, otherwise the sum of every sheet's accumulated
