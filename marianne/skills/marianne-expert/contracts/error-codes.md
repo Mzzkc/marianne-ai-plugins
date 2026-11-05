@@ -62,7 +62,7 @@ Marianne categorizes execution and runtime failures using a structured error tax
 
 | Code | Name | Retriable | Severity | Description |
 |---|---|---|---|---|
-| `E301` | `CONFIG_INVALID` | No | ERROR | YAML schema validation fails. |
+| `E301` | `CONFIG_INVALID` | No | ERROR | YAML schema validation fails. Also `attempt_route_drift`: a reviewed route's identity (arm, instrument, kind, `profile_origin`, profile sha, model, provider, transport) differs at dispatch. `profile_origin` is `organization` for `~/.marianne/instruments/` and `venue` only for a project directory that is not it, so identity does not depend on the caller's cwd (GH #493). |
 | `E302` | `CONFIG_MISSING_FIELD` | No | ERROR | Required YAML fields are missing. |
 | `E303` | `CONFIG_PATH_NOT_FOUND` | No | ERROR | Path referenced in config is missing. |
 | `E304` | `CONFIG_PARSE_ERROR` | No | ERROR | Invalid JSON/YAML syntax. |
