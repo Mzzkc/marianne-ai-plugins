@@ -76,7 +76,7 @@ unchecked), so a chain `classes write` emits is one `classes check` accepts on
 the same machine, and "Marianne is ready" means an agent instrument can run
 (the raw shell `cli` profile does not count). `classes write` ranks shipped
 profiles; a personal or venue profile is seated only where its `class_hints`
-say (`{strong: "after opencode", fast: first}`), never by name alone. An installed harness whose
+say (`{strong: "after opencode", fast: first}`), never by name alone, and only where it passes the class's probe: a refused (profile, class) pair is named in the map's header comment and on the terminal with its cause (an `http` endpoint lacks `file_editing`, so it never seats in `workhorse`; route it through opencode). An installed harness whose
 provider is not configured passes that probe and refuses at sheet 1 instead;
 the shipped `goose`, `crush` and `opencode` profiles carry that refusal text
 as `errors.unavailable_patterns`, so the sheet moves to the next chain entry
