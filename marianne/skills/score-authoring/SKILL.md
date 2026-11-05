@@ -53,7 +53,9 @@ it; for a local (`ollama`) entry the check also verifies the server serves the
 profile's model, so a missing pull shows up here and in `mzt validate`, not at
 sheet 1. A local `kind: http` profile declares its model's real `context_window`
 (and `max_output_tokens` when known): the HTTP executor caps `max_tokens` at it,
-and a small local server refuses the 16,384 default with HTTP 400 otherwise. A
+and a small local server refuses the 16,384 default with HTTP 400 otherwise;
+`mzt instruments check` reads the server's live context from `GET /props` and
+`mzt validate` warns (V234) when the profile declares more. A
 profile in the project's `.marianne/instruments/` is loaded by the conductor
 only when it was started from that directory; submit refuses the score
 otherwise and names both directories. A sheet that sets `instrument_config.response_format` (`type: json_schema`)
