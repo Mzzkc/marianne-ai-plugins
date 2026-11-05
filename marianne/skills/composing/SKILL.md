@@ -42,7 +42,12 @@ Use current venue capability evidence; have its owner resolve consequential gaps
 Missing production readiness need not block safe construction or independent work.
 For new or changed composition, read:
 
-1. `scores/rosetta-corpus/INDEX.md` and `forces.md`.
+1. `scores/rosetta-corpus/INDEX.md` and `forces.md`. Then
+   `python3 -I scores/rosetta-corpus/tools/unproven.py scores/rosetta-corpus`:
+   the proof ledger says which patterns a proof score has exercised and which
+   none has. Composers reach for the same seven patterns run after run
+   (GH #354); a familiar pattern is not evidence that it fits, and the
+   selection guide's compositions are not ranked.
 2. Each selected pattern's full file, not its name or a summary.
 3. `plugins/marianne/docs/ref/instrument-catalog.yaml` and current venue reports
    before assigning instruments; the venue owner uses `mzt doctor` when needed.
