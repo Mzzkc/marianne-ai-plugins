@@ -85,7 +85,7 @@ a harness that refuses in its own words needs its own pattern there, or the
 sheet runs to its timeout on every misconfigured entry. A chain may name profiles this machine lacks: the job starts at the
 first entry that can run (V311 says which, and it warns rather than refuses
 even when nothing in the chain is installed yet — a fresh install sees that
-on `mzt init`'s starter score until one instrument is on PATH); only a class
+on `mzt init`'s starter score until one instrument is on PATH, except that a machine whose only ready instrument is a loopback `http` server gets a starter bound to that profile, passing replies between sheets instead of files); only a class
 with no registered entry is refused (V310). A sheet bound through an alias renders `{{ instrument_alias }}` (the alias name) beside `{{ instrument_name }}` (the profile it resolved to, which changes on fallback) — stamp evidence with the alias when a roster of seats must join. Score aliases and registered profile names take precedence over classes;
 In a `command_succeeds` command every `{placeholder}` is one shell-quoted word;
 split a space-separated variable in the shell (`read -r -a xs <<< {list}`),
