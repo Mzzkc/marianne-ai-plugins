@@ -130,6 +130,17 @@ alias's `config`, a movement's or sheet's `instrument_config`, a `run:`
 action's own bound), falling back to the root `instrument_config.timeout_seconds`
 only at the root. A hint never widens one seat's or one action's bound to the
 whole score.
+For an interactive sheet that needs screen-aware continuation, opt in with
+`instrument_config.interactive_nudge_policy: model` and set
+`instrument_config.interactive_nudge_instrument` to a registered inexpensive
+headless instrument. `instrument_config.interactive_nudge_timeout_seconds`
+is a finite positive per-call bound (30 seconds by default), within the sheet
+deadline. Keep the default `static` policy when a fixed input is enough.
+Model-call errors or invalid replies fall back to `interactive_nudge_message`;
+an unrecoverable decision stops nudging and validations still judge success.
+Without a configured model instrument, continuation stays static with a warning.
+These knobs share the same four override scopes as the other instrument settings.
+
 `stale_detection.idle_timeout_seconds` is the opt-in no-output idle timer;
 `schedule.max_wall_seconds` bounds one scheduled tick of a recurring score.
 Set it under `schedule:`; the old root spelling warns as V328 for one release.
