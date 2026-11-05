@@ -60,7 +60,7 @@ setsid mzt start &
 | `mzt start --profile dev` | Start with dev profile (debug logging, strace on) |
 | `mzt start --profile intensive` | Start with intensive profile (48h timeout, high limits) |
 | `mzt start --profile minimal` | Start with minimal profile (profiler + learning off) |
-| `mzt stop` | Stop the conductor (**only when no scores are running**). Prints the in-flight sheets the graceful drain will wait on; a boundary-paused job's unfinished sheet is one of them, so let pauses settle (`mzt conductor-status` → `In flight: 0`) before stopping |
+| `mzt stop` | Stop the conductor (**only when no scores are running**). Prints the in-flight sheets the graceful drain will wait on. A boundary-paused job does not hold the drain: its unfinished sheet is ended at once and re-runs on resume, so `mzt pause` every active job, then `mzt stop --wait`, restarts promptly (GH #476) |
 | `mzt stop --wait=` | Also wait (30s default, `--wait=N`) for the exit; on timeout it re-probes and names what the drain is still waiting on |
 | `mzt stop --force` | Force-kill the conductor --- **NEVER with active scores** |
 | `mzt restart` | Stop and restart |
