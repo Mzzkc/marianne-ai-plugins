@@ -14,7 +14,7 @@ Marianne uses YAML-based instrument profiles to describe execution harnesses (CL
 | `kind` | `Literal["cli", "http"]` | *Required* | Underlying API interface style. |
 | `capabilities` | `set[str]` | `set()` | Capabilities tags (e.g. `tool_use`, `file_editing`, `mcp`, `structured_output`). |
 | `code_mode` | `CodeModeConfig \| None` | `None` | TS sandbox interfaces and timeouts (opt-in). |
-| `models` | `list[ModelCapacity]` | `[]` | List of models provided by this instrument with pricing and context. |
+| `models` | `list[ModelCapacity]` | `[]` | List of models provided by this instrument with pricing and context. For `kind: http` the bound model's `max_output_tokens` (or smaller `context_window`) caps the request's `max_tokens`, so a small local model does not get the 16,384 transport default and a 400. |
 | `default_model` | `str \| None` | `None` | Fallback model selected when no model is requested in config. |
 | `default_timeout_seconds`| `float` | `1800.0` | Sheet timeout threshold (seconds). |
 | `execution_status` | `Literal["ready", "warning", "unsupported"]` | `"ready"` | General readiness check flag. |

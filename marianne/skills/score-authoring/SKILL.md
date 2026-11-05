@@ -51,7 +51,12 @@ the packaged default. Check the effective chain with `mzt instruments classes
 show` and availability with `mzt instruments classes check` before relying on
 it; for a local (`ollama`) entry the check also verifies the server serves the
 profile's model, so a missing pull shows up here and in `mzt validate`, not at
-sheet 1. A sheet that sets `instrument_config.response_format` (`type: json_schema`)
+sheet 1. A local `kind: http` profile declares its model's real `context_window`
+(and `max_output_tokens` when known): the HTTP executor caps `max_tokens` at it,
+and a small local server refuses the 16,384 default with HTTP 400 otherwise. A
+profile in the project's `.marianne/instruments/` is loaded by the conductor
+only when it was started from that directory; submit refuses the score
+otherwise and names both directories. A sheet that sets `instrument_config.response_format` (`type: json_schema`)
 must run on an instrument that can enforce it: an HTTP profile, or a CLI
 profile that declares `cli.command.json_schema_flag` (the `claude-code` builtin
 does; `opencode` and `codex-cli` do not). `mzt validate` warns V311 otherwise,
