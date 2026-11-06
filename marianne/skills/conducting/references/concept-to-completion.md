@@ -196,6 +196,19 @@ Your job now is to keep it moving:
 - **Classify a failure before repairing.** Venue (instrument, quota, path,
   environment) goes to the venue owner; product goes back to its part's
   repair loop. Most early failures are venue.
+- **Cast around an exhausted instrument before dispatch, not after.** A
+  quota that will not return for days (Codex's subscription limit, 6 Nov
+  2026: "try again at Nov 11") is a venue fact the conductor knows before
+  the fleet runs; every route that leads with that instrument costs the
+  retry budget before the chain advances. Move it to the tail of the
+  affected aliases and classes in the copy you run (never in the shipped
+  example or the user's `classes.yaml`), lower `parallel.max_concurrent`
+  when other sessions already hold the cores, and say so in the run record.
+- **A research musician's report is evidence only after you check it
+  against the venue.** A survey of candidate systems is fast and useful;
+  the venue facts in it (interpreter version, licence, what is already
+  installed) are the ones you verify yourself before they bind a casting
+  or a design choice.
 - **Two failed successors on one outcome stop the repetition.** Change the
   premise, the method or the casting.
 - **Adapt the orchestra to new requests** with `mzt modify` or a new part
