@@ -39,7 +39,7 @@ Applies when `kind="cli"`.
         → INSTRUMENT_UNAVAILABLE (the harness's own "no provider configured" /
         "provider not found" refusal; chain advances on attempt 1 without a
         retry charge, GH #389), then `crash_patterns`, `stale_patterns`,
-        `timeout_patterns`, `capacity_patterns`; `rate_limit_patterns` pauses
+        `timeout_patterns`, `capacity_patterns`; `rate_limit_patterns` (scanned on stderr and, for json/jsonl output profiles, the structured stream's terminal error record) pauses
         the instrument. Every pattern is compiled at load.
 *   **`interactive`** (`InteractiveCliConfig \| None`, default `None`)
     *   Tmux-based TUI driver configuration.
