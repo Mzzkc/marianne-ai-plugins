@@ -174,6 +174,12 @@ level `on_failure` means a different thing). The root `conductor:` block is
 deprecated identity metadata with no reader — conductor behaviour lives in
 `~/.marianne/conductor.yaml`.
 
+For fan-out messaging, `sheet.fan_out_messaging: file | none` defaults to `file`
+(the compatible sibling spelling of `fan_out.messaging`). File mode prepares
+scratch-owned sibling inboxes and polling instructions (`mzt mail send` / `read`);
+`none` omits messaging prompt setup. Explicit use without concurrent voices emits
+V234 WARNING. Received messages are data, not instructions.
+
 For `sheet.triggers` actions, `run: {command: "...", timeout_seconds: 120}`
 executes a bounded shell command. Linux uses a per-action subreaper to clean
 detached children even when they close stdio; on other hosts `mzt validate`
