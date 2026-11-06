@@ -92,9 +92,18 @@ with no registered entry is refused (V310). A sheet bound through an alias rende
 In a `command_succeeds` command every `{placeholder}` is one shell-quoted word;
 split a space-separated variable in the shell (`read -r -a xs <<< {list}`),
 never as a bash array literal (`xs=({list})` is one element; V333 warns; GH #477).
-Gate each stage's own output with a `file_exists` validation scoped to that
-sheet (`condition: "sheet_num == N"`): it is also the producer declaration.
+Declare movement outputs with `movements: {2: {produces: ['{workspace}/report-{sheet_num}.md']}}`
+when downstream cadenzas read them or concurrent sheets need ownership boundaries.
+Paths are workspace-relative or `{workspace}`-prefixed; `{sheet_num}` is the
+concrete producing sheet, including each fan-out voice. A shared path belongs to
+every declaring voice. For the same path, explicit `produces:` ownership takes
+precedence over `sheet.stdout_to`, then the existing sheet-gated `file_exists`
+proxy; independent outputs from all three are combined. A declaration does not
+write a file or verify its contents. Gate each stage's own output with a
+`file_exists` validation scoped to that sheet (`condition: "sheet_num == N"`).
 V109 then catches a cadenza that reads the file before its producer runs,
+while V108 exempts declared cadenza outputs from static missing-file errors
+(prelude inputs must already exist),
 and the conductor names a sheet that writes a later sheet's file (an
 `artifact:` warning in `mzt status`) instead of letting the fabrication pass
 as upstream input; `workspace_lifecycle.foreign_artifacts: quarantine` moves
