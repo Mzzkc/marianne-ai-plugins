@@ -64,7 +64,14 @@ not the stakeholders' judgment. When stakeholder time is scarce, size the
 brief to the time they have; if even that is out of reach, the composer
 approves on their behalf and the stakeholders' first look is the prototype.
 `spec-forge` does all of this and stops in a FERMATA on its last sheet with
-`07-stakeholder-brief.md`:
+`07-stakeholder-brief.md`. A review loop that spends its last pass still in
+REWORK does not fail the job: the brief opens with "Not yet approved" and the
+blockers, and the FERMATA holds. Read those blockers as the loop's finding, not
+as noise; when each pass resolved the previous pass's blockers and found the
+next layer down (the memory-primitive commission did this three times), the
+design is converging and the composer decides whether the remainder is debt
+the first build may carry. When a pass re-raises the same blocker, the premise
+is wrong and rule 5 applies.
 
 ```bash
 mzt run examples/engineering/spec-forge.yaml \
