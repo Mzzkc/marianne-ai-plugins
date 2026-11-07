@@ -141,6 +141,14 @@ alias's `config`, a movement's or sheet's `instrument_config`, a `run:`
 action's own bound), falling back to the root `instrument_config.timeout_seconds`
 only at the root. A hint never widens one seat's or one action's bound to the
 whole score.
+For known slow CLI startup (for example during a backup), set
+`instrument_config.first_output_timeout_seconds: 240` to widen the initial
+zero-byte silence bound for that sheet; a smaller finite positive value narrows
+it. Omit the key to inherit the profile, or set `null` to disable this bound.
+The sheet timeout still caps execution, and this bound is inert after the first
+stdout or stderr byte. The same four override scopes apply; HTTP and interactive
+backends warn and ignore this CLI-only setting.
+
 For an interactive sheet that needs screen-aware continuation, opt in with
 `instrument_config.interactive_nudge_policy: model` and set
 `instrument_config.interactive_nudge_instrument` to a registered inexpensive
