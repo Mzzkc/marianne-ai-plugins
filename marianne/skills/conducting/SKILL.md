@@ -38,6 +38,7 @@ policy. Holding a venue role requires explicit commissioning.
 Cast existing people and qualified drivers first; put new assignments in supported
 task/cadenza surfaces. Reuse provided full lifecycle, targeted work and integration
 without editing managed scores. A new subject, model or timeout alone is no behavioral gap.
+Run shipped scores themselves, named with `mzt run --job-id`; a renamed copy is not reuse.
 Marianne drives substantial execution. Compose construction, integration,
 independent judgment and repair as a performance; a single call or one-/two-sheet
 substitute is insufficient when those obligations remain. Atomic operations can

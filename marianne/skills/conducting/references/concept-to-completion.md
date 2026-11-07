@@ -73,11 +73,16 @@ design is converging and the composer decides whether the remainder is debt
 the first build may carry. When a pass re-raises the same blocker, the premise
 is wrong and rule 5 applies.
 
+Run the shipped score itself; never a renamed copy. A second commission
+running beside the first gets its own name with `--job-id` (and, when the
+score omits `workspace:`, its own `~/workspaces/<name>`). Load and quota are
+the venue's to manage, not a reason to fork (GH #505):
+
 ```bash
-mzt run examples/engineering/spec-forge.yaml \
+mzt run examples/engineering/spec-forge.yaml --job-id spec-forge-<commission> \
   --var concept_file=/abs/concept.md --var context_dir=/abs/context --var tempo=standard
 # read 07-stakeholder-brief.md, then:
-mzt resolve spec-forge <sheet> accept
+mzt resolve spec-forge-<commission> <sheet> accept
 ```
 
 **Existing project.** Take full inventory before designing. Run
@@ -136,8 +141,8 @@ two model families. `RUN.md` re-verifies each lock at start, so a score
 edited after review refuses to start:
 
 ```bash
-mzt run examples/engineering/design-to-orchestra.yaml \
-  --var specs_dir=$HOME/workspaces/spec-forge/specs \
+mzt run examples/engineering/design-to-orchestra.yaml --job-id orchestra-<commission> \
+  --var specs_dir=$HOME/workspaces/spec-forge-<commission>/specs \
   --var project_root=/abs/project --var tempo=standard
 ```
 

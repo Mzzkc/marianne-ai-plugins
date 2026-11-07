@@ -185,9 +185,15 @@ require a changed premise and feasible remaining delivery reserve within that wi
 
 ## Release gate
 
-Use a project/task scoped filename matching the score `name`; native submission
-derives its default job ID from the filename. Run required gates fail-fast and lock
-the exact score and injected inputs, using the owner's complete qualified recipe:
+Run a shipped score as-is: point it at the commission with `--var` inputs and
+name the run with `mzt run --job-id NAME` (the job ID, and the auto-managed
+workspace when the score omits `workspace:`). Copy a score only when its
+behaviour must change, and then edit the copy like code under a project/task
+scoped filename matching its `name`. Concurrency and quota routing are the
+venue's (instrument limits, rate-limit-aware chains), never a reason to fork;
+a forked shipped score stops being the thing that gets dogfooded (GH #505).
+Run required gates fail-fast and lock the exact score and injected inputs,
+using the owner's complete qualified recipe:
 
 ```bash
 bash -euo pipefail <<'SH'

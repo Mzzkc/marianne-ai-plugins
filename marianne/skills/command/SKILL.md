@@ -117,10 +117,14 @@ mzt run config.yaml -s 5         # Start from sheet 5
 mzt run config.yaml --self-healing      # Auto-diagnose + fix on retry exhaustion
 mzt run config.yaml --self-healing --yes  # Auto-confirm suggested fixes
 mzt run config.yaml -j           # JSON output
+mzt run config.yaml --job-id NAME  # Name this run (one score, many commissions)
 ```
 
-For real submissions, use a project/task scoped filename matching the score `name`
-and consume the returned handle; the default job ID is derived from the filename.
+The default job ID is the score's filename stem. To run a shipped score for a
+second commission, keep the file and name the run: `mzt run score.yaml --job-id
+NAME --var ...` (a score without `workspace:` then gets `~/workspaces/NAME`).
+Consume the returned handle and use it for status, pause, resume and cancel.
+A renamed copy is for a score whose behaviour changes, not for a new run (GH #505).
 Run all required pre-admission gates in a fail-fast invocation. A later successful
 command cannot repair an earlier failed gate. Keep context/queue/setup/validation
 and result-consumption time inside the engagement's original delivery budget.
