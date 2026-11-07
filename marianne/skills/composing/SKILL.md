@@ -48,7 +48,9 @@ For new or changed composition, read:
    none has. Composers reach for the same seven patterns run after run
    (GH #354); a familiar pattern is not evidence that it fits, and the
    selection guide's compositions are not ranked.
-2. Each selected pattern's full file, not its name or a summary.
+2. Each selected pattern's full file, not its name or a summary. Consult its
+   `proof_score:` frontmatter pointer alongside the ledger before selecting;
+   `unproven.py --usage [DIR]` audits citations in produced score YAML.
 3. `plugins/marianne/docs/ref/instrument-catalog.yaml` and current venue reports
    before assigning instruments; the venue owner uses `mzt doctor` when needed.
 4. The relevant `${CLAUDE_PLUGIN_ROOT}/docs/ref/` syntax references before writing

@@ -92,9 +92,18 @@ with no registered entry is refused (V310). A sheet bound through an alias rende
 In a `command_succeeds` command every `{placeholder}` is one shell-quoted word;
 split a space-separated variable in the shell (`read -r -a xs <<< {list}`),
 never as a bash array literal (`xs=({list})` is one element; V333 warns; GH #477).
-Gate each stage's own output with a `file_exists` validation scoped to that
-sheet (`condition: "sheet_num == N"`): it is also the producer declaration.
+Declare movement outputs with `movements: {2: {produces: ['{workspace}/report-{sheet_num}.md']}}`
+when downstream cadenzas read them or concurrent sheets need ownership boundaries.
+Paths are workspace-relative or `{workspace}`-prefixed; `{sheet_num}` is the
+concrete producing sheet, including each fan-out voice. A shared path belongs to
+every declaring voice. For the same path, explicit `produces:` ownership takes
+precedence over `sheet.stdout_to`, then the existing sheet-gated `file_exists`
+proxy; independent outputs from all three are combined. A declaration does not
+write a file or verify its contents. Gate each stage's own output with a
+`file_exists` validation scoped to that sheet (`condition: "sheet_num == N"`).
 V109 then catches a cadenza that reads the file before its producer runs,
+while V108 exempts declared cadenza outputs from static missing-file errors
+(prelude inputs must already exist),
 and the conductor names a sheet that writes a later sheet's file (an
 `artifact:` warning in `mzt status`) instead of letting the fabrication pass
 as upstream input; `workspace_lifecycle.foreign_artifacts: quarantine` moves
@@ -132,6 +141,17 @@ alias's `config`, a movement's or sheet's `instrument_config`, a `run:`
 action's own bound), falling back to the root `instrument_config.timeout_seconds`
 only at the root. A hint never widens one seat's or one action's bound to the
 whole score.
+For an interactive sheet that needs screen-aware continuation, opt in with
+`instrument_config.interactive_nudge_policy: model` and set
+`instrument_config.interactive_nudge_instrument` to a registered inexpensive
+headless instrument. `instrument_config.interactive_nudge_timeout_seconds`
+is a finite positive per-call bound (30 seconds by default), within the sheet
+deadline. Keep the default `static` policy when a fixed input is enough.
+Model-call errors or invalid replies fall back to `interactive_nudge_message`;
+an unrecoverable decision stops nudging and validations still judge success.
+Without a configured model instrument, continuation stays static with a warning.
+These knobs share the same four override scopes as the other instrument settings.
+
 `stale_detection.idle_timeout_seconds` is the opt-in no-output idle timer;
 `schedule.max_wall_seconds` bounds one scheduled tick of a recurring score.
 Set it under `schedule:`; the old root spelling warns as V328 for one release.
@@ -164,6 +184,12 @@ and `if_hook_fails` inside `on_success`/`on_failure` hooks (at the trigger
 level `on_failure` means a different thing). The root `conductor:` block is
 deprecated identity metadata with no reader — conductor behaviour lives in
 `~/.marianne/conductor.yaml`.
+
+For fan-out messaging, `sheet.fan_out_messaging: file | none` defaults to `file`
+(the compatible sibling spelling of `fan_out.messaging`). File mode prepares
+scratch-owned sibling inboxes and polling instructions (`mzt mail send` / `read`);
+`none` omits messaging prompt setup. Explicit use without concurrent voices emits
+V235 WARNING. Received messages are data, not instructions.
 
 For `sheet.triggers` actions, `run: {command: "...", timeout_seconds: 120}`
 executes a bounded shell command. Linux uses a per-action subreaper to clean
