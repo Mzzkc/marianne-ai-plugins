@@ -294,7 +294,10 @@ suppress an ERROR or an unknown code.
 
 Scores may name a capability class (`instrument: strong`) instead of a profile.
 Validation then reads the same three class-map layers the conductor reads
-(packaged default, `~/.marianne/classes.yaml`, venue `.marianne/classes.yaml`)
+(packaged default, `~/.marianne/classes.yaml`, venue `.marianne/classes.yaml`;
+the venue file is relative to each process's working directory, so the
+conductor started from `$HOME` reads the user file as its venue layer and a
+project venue file the score depends on is refused at submit, GH #510)
 and reports class problems with position and fix hint: V310 ERROR when a class
 cannot resolve on this machine, V311 WARNING when part of its chain cannot run
 here (the job starts at the first available entry), V321/V322 for alias
