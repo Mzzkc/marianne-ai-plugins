@@ -419,6 +419,9 @@ mzt modify my-job -c updated.yaml --resume --wait
 ### Rate Limit Recovery
 
 Marianne auto-waits when rate limited (default: 60 minutes, up to 24 cycles).
+A sheet shown WAITING whose instrument is not under "waiting for rate limit" in
+`mzt status` is stranded (its fallback advanced while a refusal was in flight);
+a bare `mzt clear-rate-limits` re-queues it, as does pause then resume.
 A quota refusal counts as a rate limit wherever the CLI reports it: stderr, or
 the terminal record of a `json`/`jsonl` stream (Codex `usage_limit_exceeded`;
 Claude Code `is_error` + `api_error_status: 429`, "hit your weekly limit"). If a
