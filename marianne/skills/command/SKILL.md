@@ -424,9 +424,13 @@ A sheet shown WAITING whose instrument is not under "waiting for rate limit" in
 a bare `mzt clear-rate-limits` re-queues it, as does pause then resume.
 A quota refusal counts as a rate limit wherever the CLI reports it: stderr, or
 the terminal record of a `json`/`jsonl` stream (Codex `usage_limit_exceeded`;
-Claude Code `is_error` + `api_error_status: 429`, "hit your weekly limit"). If a
-sheet instead burns retries as E009 on such text, that is a profile pattern gap:
-file it against the builtin profile (GH #507).
+Claude Code `is_error` + `api_error_status: 429`, "hit your weekly limit"; the
+Z.AI gateway's "Weekly/Monthly Limit Exhausted. Your limit will reset at <ISO
+time>" on either claude-code or opencode, GH #509). If a sheet instead burns
+retries as E009 on such text, that is a profile pattern gap: file it against the
+builtin profile (GH #507). A user-layer copy of a builtin replaces it whole, so a
+pattern the builtin gains is missing there until re-copied; `mzt instruments
+check <name> --live` shows what the route actually answers.
 
 ```bash
 mzt status my-job    # Shows PAUSED (rate_limited)

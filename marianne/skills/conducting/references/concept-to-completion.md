@@ -134,9 +134,10 @@ Write the orchestra with Marianne, not by hand at the podium. Commission
 `design-to-orchestra` on the approved specs. It surveys the repertoire,
 casts each part, writes one build score per part plus an integration score
 and a fleet, and gates every generated score before it hands over `RUN.md`:
-`mzt validate` with no errors or warnings (V311, an instrument this machine
-lacks, is reported but tolerated), the composing release checker with a
-lock, a fleet whose members all exist and all passed, and a verdict across
+`mzt validate --strict` with no errors or warnings (V311, an instrument this
+machine lacks, is reported but tolerated; V004 refuses an expanded `/home/...`
+path, so generated scores spell paths with `~` or template variables), the
+composing release checker with a lock, a fleet whose members all exist and all passed, and a verdict across
 two model families. `RUN.md` re-verifies each lock at start, so a score
 edited after review refuses to start:
 
