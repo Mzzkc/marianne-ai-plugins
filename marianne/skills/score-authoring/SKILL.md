@@ -152,6 +152,15 @@ an unrecoverable decision stops nudging and validations still judge success.
 Without a configured model instrument, continuation stays static with a warning.
 These knobs share the same four override scopes as the other instrument settings.
 
+A `kind: mcp` technique names a server the conductor's pool already runs
+(`config.server`); the pool runs any stdio MCP server, so a new tool is a
+pool entry plus a technique, never new Marianne code. REA (Reverse Engineer
+Anything) is the shipped example (GH #499): attach it when a sheet must read a
+binary, bundle, APK, firmware or runtime capture; its analysis state is shared
+across every musician on the conductor, so the sheet opens its target and
+closes it (`close_binary`, `snapshot_path` to keep the analysis) before it
+ends, and `mzt doctor` reports REA's own toolchain gaps under Providers.
+
 `stale_detection.idle_timeout_seconds` is the opt-in no-output idle timer;
 `schedule.max_wall_seconds` bounds one scheduled tick of a recurring score.
 Set it under `schedule:`; the old root spelling warns as V328 for one release.
