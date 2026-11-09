@@ -428,6 +428,11 @@ Marianne auto-waits when rate limited (default: 60 minutes, up to 24 cycles).
 A sheet shown WAITING whose instrument is not under "waiting for rate limit" in
 `mzt status` is stranded (its fallback advanced while a refusal was in flight);
 a bare `mzt clear-rate-limits` re-queues it, as does pause then resume.
+A loop member reopened for its next pass that shows its rate-limited PRIMARY
+(`antigravity (was …)` gone, back to `antigravity`) and sits PENDING while its
+fallback seats idle is GH #521 on conductors before it; `mzt clear-rate-limits -i
+<instrument>` makes dispatch re-hit the limit and take the fallback. On GH #521
+and later, dispatch advances the chain itself.
 A quota refusal counts as a rate limit wherever the CLI reports it: stderr, or
 the terminal record of a `json`/`jsonl` stream (Codex `usage_limit_exceeded`;
 Claude Code `is_error` + `api_error_status: 429`, "hit your weekly limit"; the
