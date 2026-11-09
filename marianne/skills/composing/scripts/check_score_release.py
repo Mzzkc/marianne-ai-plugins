@@ -336,6 +336,7 @@ def _injection_paths(
                 # hashed into the release lock.
                 continue
             key = f"sheet:{sheet.num}:{kind}:{raw}"
+            measured: int | None = None
             if kind == "file":
                 if not path.is_file():
                     findings.append(f"sheet {sheet.num} injection missing file: {path}")
@@ -343,6 +344,7 @@ def _injection_paths(
                     findings.append(f"sheet {sheet.num} injection file is empty: {path}")
                 else:
                     resolved[key] = path
+                    measured = path.stat().st_size
             else:
                 if not path.is_dir():
                     findings.append(f"sheet {sheet.num} injection missing directory: {path}")
@@ -353,6 +355,21 @@ def _injection_paths(
                     continue
                 for candidate in files:
                     resolved[f"{key}/{candidate.name}"] = candidate.resolve()
+                measured = sum(candidate.stat().st_size for candidate in files)
+            # The dispatch guard (GH #474) refuses a required item over its
+            # max_bytes at sheet 1; a lock written over one certifies bytes
+            # that cannot inject (GH #515). Measure here, with the paths the
+            # sheet will actually use.
+            if (
+                measured is not None
+                and item.required
+                and item.max_bytes is not None
+                and measured > item.max_bytes
+            ):
+                findings.append(
+                    f"sheet {sheet.num} required injection {path} is {measured:,} bytes, "
+                    f"over its max_bytes {item.max_bytes:,}: it will fail the sheet at dispatch"
+                )
     return sorted(resolved.items()), findings
 
 
