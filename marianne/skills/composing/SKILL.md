@@ -225,6 +225,20 @@ path and sha256 it read under `summary.classes`. Class portability rules: no
 (V321), and machine-local availability gaps surface as V311 warnings naming
 the first runnable entry.
 
+Structural gates prove a score parses and its inputs exist; they do not prove its
+first sheet can run. Before release, execute the first sheet of every score (a
+fresh workspace, the real injections, `--var` inputs as the fleet will pass them)
+far enough that its validations judge it, and read the result: an over-cap
+required injection, a `cli` sheet's prerequisite (a branch, a binary, a path), a
+class that resolves to nothing, all fail there and nowhere earlier. Any sheet
+that runs a whole test suite carries a MEASURED runtime from this venue at the
+parallelism the fleet will use, with headroom, never an estimate: four suites on
+six cores took 68 minutes against a one-hour cap that pass 3 had "reasoned" to
+150 s (candidate-advantage-orchestra, 2026-11-09: three members failed at
+runtime after every static gate passed; the memory-primitive orchestra carried
+a 105 KB required injection the same way). A dry run is the gate row that
+executes; a lock without it certifies bytes, not behaviour.
+
 The candidate digest joins the evaluated score and injected inputs present at checking to
 release. A digest mismatch requires fresh evaluation; never release a
 repaired-but-unrerun candidate. Structural PASS and a matching lock do not prove

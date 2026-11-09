@@ -69,6 +69,11 @@ For EVERY sheet, apply the litmus test:
 - [ ] No file-exists-only sheets (must combine with content/command checks)
 - [ ] Validations check OUTCOMES not PROCESS
 - [ ] command_succeeds validations have appropriate timeouts
+- [ ] Every sheet that runs a whole test suite has a MEASURED runtime from this venue at
+      the fleet's parallelism, with headroom; an estimated timeout is a first-run killer
+- [ ] Required injections fit their `max_bytes` (measure the files; V334 is only a warning)
+- [ ] A `cli` sheet's prerequisites (branch, binary, path, repo) exist before it runs,
+      or the score creates them; a first-sheet dry run in a fresh workspace proves it
 - [ ] Content checks use structural markers, not exact prose
 - [ ] Content regex checks use AND (separate validations) not OR (single regex with `|`)
 - [ ] Code-change scores include test execution validations (not just file existence)
