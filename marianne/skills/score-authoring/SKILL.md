@@ -168,6 +168,11 @@ binary, bundle, APK, firmware or runtime capture; its analysis state is shared
 across every musician on the conductor, so the sheet opens its target and
 closes it (`close_binary`, `snapshot_path` to keep the analysis) before it
 ends, and `mzt doctor` reports REA's own toolchain gaps under Providers.
+Start from `examples/engineering/artifact-analysis.yaml` rather than a blank
+technique block: give the tool to the maker only (a numbered movement in
+`phases`, such as `["2"]`), make every claim cite an `evidence_id` from the
+bundle the tool itself exported, and keep the judge off the tool so it checks
+the bundle, not the maker's memory of it.
 
 `stale_detection.idle_timeout_seconds` is the opt-in no-output idle timer; it
 measures writes under the sheet's workspace, so a sheet that builds in the

@@ -257,7 +257,8 @@ mzt diagnose my-job              # Full diagnostic report
 mzt errors my-job --verbose      # Error details with stdout/stderr
 mzt dashboard                    # Start web dashboard (default port 8000); /orchestra is the fleet on stage, live + replay
 mzt help                         # List commands, including patterns-list
-mzt doctor                       # Environment health; lists user profiles no submitted score names (GH #443)
+mzt doctor                       # Environment health; lists user profiles no submitted score names (GH #443);
+                                 # Providers: REA's own toolchain gaps for each mcp_pool.servers entry that runs it (GH #499)
 mzt telemetry status|consent|export|flush # Opt-in community telemetry: off by default, never automatic; see docs/telemetry.md (GH #146)
 #   and names a personal profile whose ambient credentials no longer reach it (GH #335 filters by default)
 ```
@@ -378,6 +379,7 @@ accept an unusable result. Consumer meaning and independent acceptance remain se
 | An interactive sheet fails E999 with `agent process killed by SIGKILL` / `exited with status N before signalling completion` | The agent's own process ended (tmux kept the dead pane and read its status): a signal names the killer's shape (SIGKILL: OOM/earlyoom/an external kill; SIGTERM: a shutdown or cleanup), an exit status is the CLI's own failure — read `~/.marianne/interactive-logs/<session>.log` for its last screen | Fix the cause the status names; a retry is scheduled automatically |
 | An interactive sheet fails E999 with `agent session vanished` | tmux no longer holds the session at all: the `marianne` tmux server died or something killed the session by name | Check `tmux -L marianne ls`, the conductor log for `interactive_session_control_failure`, and anything sweeping `mzt-*` sessions |
 | A sheet sits at 0 bytes of output until the sheet timeout, then the next instrument finishes in a minute | The agent session died at start (a stall is not thinking); the shipped streaming profiles end it after `first_output_timeout_seconds` (90 s) as a stale timeout and fall back; a custom `jsonl` profile needs the key set | Set `cli.first_output_timeout_seconds` on streaming profiles; read `mzt diagnose` for the `plugin_cli_first_output_stall` line |
+| A sheet with a `kind: mcp` technique reports `provider_unavailable` from REA, or two artifact jobs read each other's target | REA's engine (Ghidra 12.1.x, Hopper, IDA) is missing or wrong-versioned, or a previous sheet left its target open on the pool's one shared REA session | `mzt doctor` Providers names the gap in REA's words; the sheet records it under Limitations instead of guessing. Every analyst sheet ends with `close_binary`; run one REA score at a time until the pool scopes state per job (GH #499) |
 
 ---
 
