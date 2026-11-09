@@ -75,6 +75,10 @@ For EVERY sheet, apply the litmus test:
 - [ ] A `cli` sheet's prerequisites (branch, binary, path, repo) exist before it runs,
       or the score creates them; a first-sheet dry run in a fresh workspace proves it
 - [ ] Content checks use structural markers, not exact prose
+- [ ] A maker/judge pair is cast as two explicit chains in OPPOSITE orders (never a shared class or a
+      class on either seat): write the resolved profile for each seat under `mzt instruments resolve`
+      and confirm they differ; a release sheet that compares the two context receipts refuses a
+      same-instrument review, so the casting must make it impossible, not merely unlikely
 - [ ] Content regex checks use AND (separate validations) not OR (single regex with `|`)
 - [ ] Code-change scores include test execution validations (not just file existence)
 - [ ] `max_output_chars` is sufficient for downstream stages (default 10000, test output needs 15000+)

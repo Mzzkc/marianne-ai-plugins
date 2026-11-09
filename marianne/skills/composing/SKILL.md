@@ -68,7 +68,14 @@ reviewers and a synthesis sheet want different models and budgets. Declare an
 alias per role, bind it where that role plays, and for fan-out reviewers use a
 `chain` with `select: [spread]` (distinct models per voice) and `balance`
 (least-loaded entry at dispatch) so independence and throughput come from the
-score, not from luck.
+score, not from luck. A maker/judge PAIR (one analyst, one reviewer; one builder,
+one verdict) is not a fan-out: `spread` only separates voices within one alias.
+Cast the pair as two explicit chains in opposite orders, so the same index never
+names the same profile and one unavailable head moves one seat, not both. Never
+bind either seat to a capability class: a class resolves per venue, and a venue's
+class layer can seat both on one model after the money is spent
+(`examples/engineering/artifact-analysis.yaml`, 2026-11-09: both seats on
+codex-cli; the release gate, which reads both context receipts, refused it).
 
 Match phase requirements to current qualified capabilities and the user's casting
 preferences. Read [model-specific guidance](references/instrument-selection.md)
