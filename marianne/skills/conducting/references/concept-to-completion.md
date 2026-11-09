@@ -137,7 +137,7 @@ and a fleet, and gates every generated score before it hands over `RUN.md`:
 `mzt validate --strict` with no errors or warnings (V311, an instrument this
 machine lacks, is reported but tolerated; V004 refuses an expanded `/home/...`
 path, so generated scores spell paths with `~` or template variables), the
-composing release checker with a lock, a fleet whose members all exist and all passed, a loop-route check (a `cli` verifier inside a repair loop must `on_fail: [{goto: builder}]` or the loop ends `range_failed` on its first red run), an oracle-pin check (a RED pin set must name the conftests and fixtures the tests read, GH #518), and a verdict across two model families, judged by the model each voice ran on and counting a confirmed single-voice HIGH on a hard requirement as a blocker (GH #513). `RUN.md` re-verifies each lock at start, so a score
+composing release checker with a lock, a fleet whose members all exist and all passed, a loop-route check (a `cli` verifier inside a repair loop must `on_fail: [{goto: builder}]` or the loop ends `range_failed` on its first red run), an oracle-pin check (a RED pin set must name the conftests and fixtures the tests read, GH #518), and a cap that fails the release sheet, not the verdict musician (a retried verdict can approve what the first attempt refused, GH #519), and a verdict across two model families, judged by the model each voice ran on and counting a confirmed single-voice HIGH on a hard requirement as a blocker (GH #513). `RUN.md` re-verifies each lock at start, so a score
 edited after review refuses to start:
 
 ```bash

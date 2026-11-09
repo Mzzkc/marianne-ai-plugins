@@ -184,6 +184,13 @@ require a changed premise and feasible remaining delivery reserve within that wi
   ends a loop with a FAILED member as `range_failed` and never re-runs the
   builder on its own, so a loop that exists in YAML can be one that cannot
   iterate (GH #513).
+- A check that must fail the JOB sits on a sheet with no retries and no
+  fallback (a `cli` sheet, `per_sheet_fallbacks: {N: []}`), never on the
+  judgment sheet it judges: a failed attempt is retried, and a retried judge
+  with the same inputs and the knowledge that REWORK fails its sheet can
+  reclassify a confirmed defect as "hardening" (GH #519). Preserve each
+  attempt's verdict under `review/evidence/` so approval without repair is
+  visible and refusable.
 - Size a loop's `cost_limit_usd` from the work, not a default, and give every
   cap-ended loop a reader: a loop whose `until` is unmet at its cap or pass
   limit proceeds with a warning, so the next stage must detect the shortfall
