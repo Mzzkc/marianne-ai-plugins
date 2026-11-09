@@ -82,7 +82,7 @@ cancelling in-flight work.
 
 ### How Scores Route Through the Conductor
 
-Fleet members (`type: fleet`) are jobs named `<fleet>--<stem>` (GH #514): `mzt status <fleet>--integration`, never `mzt status integration`, which may be an unrelated older job. When you run `mzt run config.yaml`, the CLI checks for a running conductor via Unix socket. If found, the score is submitted through IPC and the CLI returns a runtime `job_id`. The conductor manages score execution, rate limit coordination across concurrent runs, and event routing. If no conductor is found, the command exits with an error.
+Fleet members (`type: fleet`) are jobs named `<fleet>--<stem>` (GH #514): `mzt status <fleet>--integration`, never `mzt status integration`, which may be an unrelated older job. When a wave member fails, the fleet drops the groups that depend on it (`fleet.group_dependencies_failed` in the log); fix and resubmit that member under its fleet ID, then `mzt resume <fleet>` re-arms the dropped groups once their dependencies are complete (GH #515). When you run `mzt run config.yaml`, the CLI checks for a running conductor via Unix socket. If found, the score is submitted through IPC and the CLI returns a runtime `job_id`. The conductor manages score execution, rate limit coordination across concurrent runs, and event routing. If no conductor is found, the command exits with an error.
 
 **The conductor runs submitted scores.** `mzt run` is a client that submits a score and returns. The conductor keeps executing the score regardless of whether your terminal stays open. `job_id` is the runtime identifier the conductor returns for that submitted score.
 
