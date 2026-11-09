@@ -205,7 +205,12 @@ require a changed premise and feasible remaining delivery reserve within that wi
   A coverage loop also needs a way to name what the host cannot reach (a
   privilege, a device, a credential): an exclusion ledger with reason,
   evidence and commit, audited at the end, rather than a flat floor that
-  spends the budget chasing it.
+  spends the budget chasing it. When `mzt validate` answers V228 ("cost_limit_usd
+  cannot stop a route that reports no cost"), the cap is inert on that venue:
+  subscription routes price their tokens at $0, so `max_iterations` is the only
+  bound. Do not raise the cap or remove it; set `max_iterations` to the number of
+  passes the work can justify and keep `cost_limit_usd` for venues that price the
+  route. A score that must stop on money alone needs a priced route in the span.
 - Route repair back through reevaluation. Any post-evaluation change invalidates
   the affected pass. Inherit still-applicable evidence for unchanged subjects;
   perform required full-suite and real-environment qualification before release.

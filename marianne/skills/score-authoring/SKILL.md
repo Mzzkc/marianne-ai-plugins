@@ -280,6 +280,14 @@ compose a custom score only when the engagement needs a different DAG.
 
 ### Deterministic and release-grade sheets
 
+A loop span carries up to three bounds: `until` (the goal), `max_iterations`
+(passes), `cost_limit_usd` (money). Money is measured from the tokens each
+route reports at its profile's price; a subscription or local route prices at
+$0, so on such a venue `mzt validate` warns V228 and `max_iterations` is the
+only working cap. Write `max_iterations` as the number of passes the work can
+justify, never the default 50, and treat V228 as "this venue cannot stop on
+money", not as a reason to delete the cap.
+
 For a deterministic `cli` sheet, set an explicit empty replacement chain:
 
 ```yaml
