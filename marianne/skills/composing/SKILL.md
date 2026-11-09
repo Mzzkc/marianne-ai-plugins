@@ -171,6 +171,12 @@ require a changed premise and feasible remaining delivery reserve within that wi
   from `/` cannot stall the conductor. A profile sets `supervise: false` only
   when the binary must be the conductor's direct child.
 - Keep private evaluator answers outside worker-readable workspaces.
+- A deterministic `cli` verifier inside a repair loop must route its failure
+  back into the span (`triggers.<n>.on_fail: [{goto: <builder>}]`, V224
+  acknowledged) or exit 0 with a diagnostic the next sheet reads: the engine
+  ends a loop with a FAILED member as `range_failed` and never re-runs the
+  builder on its own, so a loop that exists in YAML can be one that cannot
+  iterate (GH #513).
 - Size a loop's `cost_limit_usd` from the work, not a default, and give every
   cap-ended loop a reader: a loop whose `until` is unmet at its cap or pass
   limit proceeds with a warning, so the next stage must detect the shortfall
