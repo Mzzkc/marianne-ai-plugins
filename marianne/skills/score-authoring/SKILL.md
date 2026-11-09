@@ -169,7 +169,10 @@ across every musician on the conductor, so the sheet opens its target and
 closes it (`close_binary`, `snapshot_path` to keep the analysis) before it
 ends, and `mzt doctor` reports REA's own toolchain gaps under Providers.
 
-`stale_detection.idle_timeout_seconds` is the opt-in no-output idle timer;
+`stale_detection.idle_timeout_seconds` is the opt-in no-output idle timer; it
+measures writes under the sheet's workspace, so a sheet that builds in the
+project's worktree or a scratch clone names those roots in
+`stale_detection.watch_paths` or it is killed as idle while working (GH #516);
 `schedule.max_wall_seconds` bounds one scheduled tick of a recurring score.
 Set it under `schedule:`; the old root spelling warns as V328 for one release.
 The conductor's `job_timeout_seconds` counts only accumulated RUNNING time,
