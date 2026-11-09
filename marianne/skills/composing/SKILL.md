@@ -155,6 +155,13 @@ require a changed premise and feasible remaining delivery reserve within that wi
   cannot reinterpret a failed command.
 - Give AI sheets capability-matched fallbacks, except isolated evaluators where
   fallback would destroy independence.
+- An independent oracle is only as independent as the inputs it pins. When
+  RED freezes blind-authored tests, freeze every input the assertions read
+  (tests and map, ancestor `conftest.py` files, imported assertion helpers,
+  static fixtures, golden documents), re-hash them at every later boundary,
+  and ship a control that edits one fixture after RED and must be refused;
+  a pin set over test modules alone is a gate a builder can walk around
+  (GH #518).
 - Validate outcomes, not file existence. Negative-test empty, stale, malformed,
   and placeholder artifacts.
 - Do not assume compatibility. The caller decides whether a contract survives;
