@@ -509,6 +509,11 @@ Preserve state and evidence before repair. Do not delete a state database to mak
 an interrupted run appear new. For completed work incorrectly marked failed,
 `mzt recover my-job --dry-run` can check its validations without changing state;
 applying recovery requires the relevant operational authority and applicable checks.
+Recover completes a sheet only when a validation applies to it and passes; read
+the summary's `with no applicable validation` count — those sheets were reset to
+pending because nothing could prove their work (GH #523). On a conductor older
+than that fix, never run `mzt recover` without `--sheet` on a score whose
+validations are `stage`-conditional: it marks every skipped sheet completed.
 That command does not establish repair of arbitrary checkpoint corruption. Route
 actual corruption to the authorized venue owner and retain the unfinished obligation.
 Confirm actual skipped/executed sheets after any supported partial continuation;
