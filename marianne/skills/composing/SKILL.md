@@ -191,6 +191,12 @@ require a changed premise and feasible remaining delivery reserve within that wi
   from `/` cannot stall the conductor. A profile sets `supervise: false` only
   when the binary must be the conductor's direct child.
 - Keep private evaluator answers outside worker-readable workspaces.
+- An exemption list is an evaluator answer. If the judged party can write "this
+  difference is intended", scope each entry to exactly what may differ (a field, a
+  line pattern, an exit code), compare the rest, refuse an unscoped entry, and let
+  only the gate admit one. A filename that waives a whole output hid 114 failures
+  in one rewrite proof (GH #530); `examples/engineering/assets/differential_compare.py`
+  is the shipped shape.
 - A deterministic `cli` verifier inside a repair loop must route its failure
   back into the span (`triggers.<n>.on_fail: [{goto: <builder>}]`, V224
   acknowledged) or exit 0 with a diagnostic the next sheet reads: the engine
