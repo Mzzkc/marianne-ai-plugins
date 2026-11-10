@@ -17,6 +17,10 @@ identity: do not edit portable seeds, L1-L4 memory, lifecycle debt,
 relationships or cadenza associations. For persistent-agent implications, read
 `../../docs/ref/modern-agents.md`.
 
+Prices are not this skill's job: a price is a deterministic diff, not research.
+Run `mzt instruments prices` (drift against models.dev; `--write` updates builtin
+rows only) after a refresh adds or renames a model row.
+
 ## Scope and evidence
 
 Every refresh researches **all providers Marianne ships**: every distinct

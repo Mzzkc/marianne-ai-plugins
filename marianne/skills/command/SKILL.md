@@ -69,6 +69,7 @@ setsid mzt start &
 | `mzt conductor-status --json` | Raw daemon status (config generation, live per-model caps) |
 | `mzt instruments resolve SCORE` | What each sheet's binding resolves to on THIS machine — alias/class → profile, model, fallbacks — and how many distinct bindings a fan-out really has. Run it before trusting a score's diversity or tier claims. |
 | `mzt instruments check NAME --live` / `mzt doctor --live` | Prove a profile against its installed CLI with a real prompt (and schema mode if declared). Run after installing or upgrading a CLI, after editing a profile, and before a long run; readiness only proves the binary is on PATH |
+| `mzt instruments prices` | Which model price rows have drifted from models.dev (builtin and user layers apart). Run before trusting a cost figure or sizing a `cost_limit_usd`; `--write` updates builtin rows only, `--offline`/`--snapshot` compare against a saved copy. Exit 1 means drift remains |
 | `mzt conductor reload` | Hot-reload config + instrument profiles WITHOUT restart (GH #408) |
 
 `mzt conductor reload` re-reads the config file and instrument profile
@@ -354,6 +355,11 @@ adds a `Cache read` line with that count and its share of input. Read the share
 before judging a sheet's token efficiency: a long agentic sheet is mostly cache
 reads, and a change that only lowers `Input tokens` has not touched most of
 what the provider processed.
+
+A cost that looks wrong (not zero, wrong) is usually a stale price row, not a
+counting bug: `mzt instruments prices` names the rows that differ from the
+provider's current prices. A `$0.00` on a subscription route is the plan's row,
+not a measurement.
 
 - **Status**: RUNNING, COMPLETED, FAILED, PAUSED, CANCELLED
 - **Validation**: Pass/Fail per sheet (a sheet can execute successfully but fail validation)
