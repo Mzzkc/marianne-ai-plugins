@@ -30,7 +30,16 @@ score. A seat is a score alias over an EXISTING profile:
 `instruments: { seat: { profile: codex-cli, config: { model: …, timeout_seconds: N } } }`.
 Role and posture are a cadenza directory on an existing agent. Portable routes are a
 capability class. A new profile, agent or layer comes only after a proven behavioural
-gap, filed as an issue first. A score never writes into `~/.marianne/instruments/`;
+gap, filed as an issue first. The test for a profile: it needs a DIFFERENT
+`cli.command.executable`, output `format`, prompt delivery, or error vocabulary
+than any builtin has. A model, a timeout, `interactive`, a capability tag or a
+reasoning level is a pin, and a pin is an alias. A user-layer copy of a builtin
+with only the model changed is the worst of both: it replaces the builtin whole,
+so every key the builtin gains later (first-output bound, quota vocabulary,
+cache token paths) is missing from that seat forever (2026-11-10: three such
+copies carried 1,166 score references and lacked three to six builtin keys each).
+When a fork carries an override everyone needs, send it to the builtin as a PR.
+A score never writes into `~/.marianne/instruments/`;
 a generator that does is a bug. For a new subject on an unchanged provided
 engagement, supply supported task/cadenza inputs without editing the managed score.
 A profile alias binds an instrument; it does not create a persistent person.

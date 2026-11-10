@@ -77,6 +77,12 @@ class layer can seat both on one model after the money is spent
 (`examples/engineering/artifact-analysis.yaml`, 2026-11-09: both seats on
 codex-cli; the release gate, which reads both context receipts, refused it).
 
+Cast every seat as an alias over a BUILTIN profile with `config: {model, …}`;
+name a user-layer profile only when it changes the executable, output format,
+prompt delivery or error vocabulary, and say which in the design's `forces`. A
+user-layer copy that only pins a model silently drops every key the builtin gains
+after the copy; `mzt doctor` lists such files under "Instrument hygiene" once
+nothing submitted names them.
 Match phase requirements to current qualified capabilities and the user's casting
 preferences. Read [model-specific guidance](references/instrument-selection.md)
 when selecting Gemini, GLM, or a vulnerability-discovery engagement.

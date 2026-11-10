@@ -285,6 +285,14 @@ names and no class chain includes. It never deletes them. Read the list as the
 reuse rule's symptom: a seat is an alias over an existing profile, so archive the
 file or submit the score that needs it, and course-correct the score or generator
 that wrote it.
+Migrating a fork to an alias: find the builtin it copies (`cli.command.executable`
+tells you), diff the two ignoring `name`/`default_model`/`models`, send any
+override everyone needs to the builtin, rewrite each score's seat as
+`{profile: <builtin>, config: {model: <pin>}}` at that score's next natural edit
+(never mid-run), and archive the file with a manifest once `grep -rl <name>` over
+the live SCORES tree is empty. Doctor counts references from jobs the conductor
+has been given, so a file last used months ago still reads as referenced there;
+the grep is the truth.
 
 `mzt validate` exits 0 with warnings by default, 1 for errors (or unsuppressed
 warnings under `--strict`), and 2 when YAML cannot be read or parsed into a
