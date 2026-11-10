@@ -339,6 +339,14 @@ mzt diagnose my-job --include-logs
 
 ### Understanding `mzt status` Output
 
+The Cost Summary's token counts are summed from every sheet's attempts. `Input
+tokens` is what the harness calls input, which on Anthropic and OpenAI excludes
+tokens served from the prompt cache; a profile with `cache_read_tokens_path`
+adds a `Cache read` line with that count and its share of input. Read the share
+before judging a sheet's token efficiency: a long agentic sheet is mostly cache
+reads, and a change that only lowers `Input tokens` has not touched most of
+what the provider processed.
+
 - **Status**: RUNNING, COMPLETED, FAILED, PAUSED, CANCELLED
 - **Validation**: Pass/Fail per sheet (a sheet can execute successfully but fail validation)
 - **Sheets**: N/M completed, which failed, which skipped

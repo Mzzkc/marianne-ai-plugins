@@ -98,6 +98,10 @@ Converts subprocess output into `ExecutionResult`.
     *   Dot-path to input token count.
 *   **`output_tokens_path`** (`str \| None`, default `None`)
     *   Dot-path to output token count.
+*   **`cache_read_tokens_path`** (`str \| None`, default `None`)
+    *   Dot-path to the input tokens the provider served from its prompt cache (Anthropic `usage.cache_read_input_tokens`, OpenAI `usage.cached_input_tokens`). Billed at the cache rate; the first number a token-efficiency change moves. Unset records 0.
+*   **`cache_write_tokens_path`** (`str \| None`, default `None`)
+    *   Dot-path to the input tokens written into the prompt cache this attempt.
 *   **`aggregate_tokens`** (`bool`, default `False`)
     *   Combines all wildcard token path matches (needed for multi-model tools).
 
