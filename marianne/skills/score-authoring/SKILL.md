@@ -208,7 +208,7 @@ for other harnesses. Only `claude-code` and `claude-code-ollama` declare a
 `tools:` mapping (`--tools`, the flag that removes definitions; `--allowedTools`
 is permission-only and is not used); on any other profile the key is refused,
 so set it on the alias, class entry or movement that owns a Claude Code seat.
-`mzt validate` reports V336 (ERROR) for a profile with no mapping or a name
+`mzt validate` reports V337 (ERROR) for a profile with no mapping or a name
 outside its `known` list; dispatch refuses the same sheets.
 
 For an interactive sheet that needs screen-aware continuation, opt in with

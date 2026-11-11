@@ -98,14 +98,14 @@ A model row's `effort_levels` (`dict | None`) overrides `levels` for that model;
 
 ## ToolsConfig (`tools:`, top level, CLI profiles only)
 
-Declares how a sheet's `instrument_config.tools` (a list of the harness's own tool names, GH #534) reaches the harness. No block = the key is refused on this profile (V336). The flag must be the one that removes tool definitions from the model's context, not a permission-only flag (Claude Code: `--tools`, not `--allowedTools`).
+Declares how a sheet's `instrument_config.tools` (a list of the harness's own tool names, GH #534) reaches the harness. No block = the key is refused on this profile (V337). The flag must be the one that removes tool definitions from the model's context, not a permission-only flag (Claude Code: `--tools`, not `--allowedTools`).
 
 | Field | Type | Default | Description |
 |---|---|---|---|
 | `delivery` | `flag` | required | `<flag> <joined names>`; an empty list is one empty argument. |
 | `flag` | `str` | required | The switch that limits the tool definitions (`--tools`). |
 | `join` | `comma \| space` | `comma` | How names are joined into the single argument. |
-| `known` | `list[str] \| None` | `None` | Accepted names; a name outside it is refused (V336). `None` = any name passes through. |
+| `known` | `list[str] \| None` | `None` | Accepted names; a name outside it is refused (V337). `None` = any name passes through. |
 | `interactive` | `bool` | `True` | `false` refuses an interactive sheet that sets tools. |
 
 A default already in `extra_flags` or `cli.interactive.extra_args` is replaced, never doubled. Builtins: `claude-code` and `claude-code-ollama` only.
