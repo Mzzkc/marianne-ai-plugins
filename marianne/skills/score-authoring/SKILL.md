@@ -168,6 +168,11 @@ a review or evidence check against a written rubric and for synthesis of
 already-judged inputs; use `low` for recon, inventory, mechanical edits, format
 conversion and release sheets (tag, changelog, publish). When a lowered sheet
 starts failing its validations, raise it one level before touching the prompt.
+The one measured step (2026-11-11, three runs of one small task): on Sonnet,
+`max` spent about 2.3 times the reasoning tokens of `high`, while `low`,
+`medium` and `high` did not differ, and Haiku showed no usable effect. So
+`max` to `high` is where the saving is known; the lower levels are role advice,
+not yet a measured gain.
 The levels belong to the profile (`cli.command.effort_levels`; `claude-code`:
 `low`, `medium`, `high`, `xhigh`, `max`), so never set `effort` at score scope
 in a score whose sheets or fallbacks reach a profile without the mapping
