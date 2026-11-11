@@ -45,7 +45,7 @@ engagement, supply supported task/cadenza inputs without editing the managed sco
 A profile alias binds an instrument; it does not create a persistent person.
 **Bind per role, not one alias for the whole score.** `instrument: strong` on every
 sheet is the wrong pattern: recon, build, review and synthesis want different
-models, and the score is where that is said. Pin the model on every model seat (`instrument_config.model` or the alias `config`): an unpinned `claude-code` or `codex-cli` seat follows the operator's own CLI default, and `mzt validate` warns (V336). Give each role its own alias and
+models, and the score is where that is said. Pin the model on every model seat (`instrument_config.model` or the alias `config`): an unpinned `claude-code` or `codex-cli` seat follows the operator's own CLI default, and `mzt validate` notes it (V336). Give each role its own alias and
 bind it on the movements or sheets that play that role. An alias may carry a
 `chain` of entries with `select` modifiers: `spread` gives a fan-out's voices
 distinct models from one alias (three reviewers, three models, no agreement
