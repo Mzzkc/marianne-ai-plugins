@@ -38,6 +38,7 @@ with only the model changed is the worst of both: it replaces the builtin whole,
 so every key the builtin gains later (first-output bound, quota vocabulary,
 cache token paths) is missing from that seat forever (2026-11-10: three such
 copies carried 1,166 score references and lacked three to six builtin keys each).
+To pin one field, write `extends: <builtin>` plus only that field.
 When a fork carries an override everyone needs, send it to the builtin as a PR.
 A score never writes into `~/.marianne/instruments/`;
 a generator that does is a bug. For a new subject on an unchanged provided
