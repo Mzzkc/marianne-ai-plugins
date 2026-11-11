@@ -260,7 +260,7 @@ mzt dashboard                    # Start web dashboard (default port 8000); /orc
 mzt help                         # List commands, including patterns-list
 mzt doctor                       # Environment health; lists user profiles no submitted score names (GH #443);
                                  # Providers: REA's own toolchain gaps for each mcp_pool.servers entry that runs it (GH #499)
-                                 # Musician hooks: user-level Claude Code hooks that would fire in a sheet; hooks detect a musician via MARIANNE_SHEET (GH #536)
+                                 # Musician hooks: user-level Claude Code hooks by event/program name; SessionStart/UserPromptSubmit add to every sheet's context unless the hook exits early on MARIANNE_SHEET (GH #536)
 mzt telemetry status|consent|export|flush # Opt-in community telemetry: off by default, never automatic; see docs/telemetry.md (GH #146)
 #   and names a personal profile whose ambient credentials no longer reach it (GH #335 filters by default)
 ```
