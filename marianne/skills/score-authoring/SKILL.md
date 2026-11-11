@@ -192,6 +192,25 @@ accepted levels; dispatch refuses the same sheets. A fallback takes `effort`
 only from its own entry.
 `effort: null` at a narrower scope restores the profile default.
 
+`instrument_config.tools: [<name>, ...]` narrows one sheet's toolset (GH #534),
+at the same scopes and on an alias chain entry or class entry. The names are the
+harness's own (Claude Code: `Bash`, `Read`, `Edit`, `Write`, `Grep`, `Glob`);
+there is no shared vocabulary. `[]` means no tools, an absent key the harness
+default. Narrow by role: `[Read, Grep, Glob]` for recon, inventory and review
+sheets that only look; `[Bash, Read, Edit, Write]` for sheets that change files
+or run commands; `[]` for pure text work (summarise, judge, rewrite supplied
+text). Keep every tool the prompt tells the sheet to use, since a sheet cannot
+call a tool it was not given. Measured on Claude Code only: a one-turn probe
+sent 28.8k tokens with 29 tools and 14.0k with four, tool definitions being about
+half the fixed prefix every request pays; one small read-only task cost about 40%
+less with four tools (three runs per arm, so direction, not size). Claim nothing
+for other harnesses. Only `claude-code` and `claude-code-ollama` declare a
+`tools:` mapping (`--tools`, the flag that removes definitions; `--allowedTools`
+is permission-only and is not used); on any other profile the key is refused,
+so set it on the alias, class entry or movement that owns a Claude Code seat.
+`mzt validate` reports V336 (ERROR) for a profile with no mapping or a name
+outside its `known` list; dispatch refuses the same sheets.
+
 For an interactive sheet that needs screen-aware continuation, opt in with
 `instrument_config.interactive_nudge_policy: model` and set
 `instrument_config.interactive_nudge_instrument` to a registered inexpensive

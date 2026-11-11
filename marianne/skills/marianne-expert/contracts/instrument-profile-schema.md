@@ -60,7 +60,7 @@ Details how to construct subprocess execution arrays.
 | `output_format_flag` | `str \| None` | `None` | Output format configuration flag. |
 | `output_format_value` | `str \| None` | `None` | Value for output format flag (e.g. `json`). |
 | `system_prompt_flag` | `str \| None` | `None` | System prompt path file flag. |
-| `allowed_tools_flag` | `str \| None` | `None` | Tool restriction flag. |
+| `allowed_tools_flag` | `str \| None` | `None` | Deprecated and ignored (nothing read it); accepted so an older profile loads. Use the top-level `tools:` block. |
 | `mcp_config_flag` | `str \| None` | `None` | MCP configuration path flag. |
 | `mcp_config_workspace_path`| `str \| None`| `None` | Workspace-relative path to copy MCP config JSON. |
 | `mcp_config_workspace_merge_key`| `str \| None`| `None` | JSON key to merge MCP configurations into (e.g. `mcpServers`). |
@@ -93,6 +93,22 @@ Maps the Marianne reasoning vocabulary (`minimal < low < medium < high < xhigh <
 | `interactive` | `bool` | `True` | `false` refuses an interactive sheet that sets effort (`opencode`). |
 
 A model row's `effort_levels` (`dict | None`) overrides `levels` for that model; `{}` = no control. Defaults already in `extra_flags`, `schema_extra_flags` or `cli.interactive.extra_args` must be native values the block maps.
+
+---
+
+## ToolsConfig (`tools:`, top level, CLI profiles only)
+
+Declares how a sheet's `instrument_config.tools` (a list of the harness's own tool names, GH #534) reaches the harness. No block = the key is refused on this profile (V336). The flag must be the one that removes tool definitions from the model's context, not a permission-only flag (Claude Code: `--tools`, not `--allowedTools`).
+
+| Field | Type | Default | Description |
+|---|---|---|---|
+| `delivery` | `flag` | required | `<flag> <joined names>`; an empty list is one empty argument. |
+| `flag` | `str` | required | The switch that limits the tool definitions (`--tools`). |
+| `join` | `comma \| space` | `comma` | How names are joined into the single argument. |
+| `known` | `list[str] \| None` | `None` | Accepted names; a name outside it is refused (V336). `None` = any name passes through. |
+| `interactive` | `bool` | `True` | `false` refuses an interactive sheet that sets tools. |
+
+A default already in `extra_flags` or `cli.interactive.extra_args` is replaced, never doubled. Builtins: `claude-code` and `claude-code-ollama` only.
 
 ---
 
