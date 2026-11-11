@@ -1,0 +1,54 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+# The tests in tests/ guard skill release manifests, word caps and the skill
+# installer. Two groups:
+#   - standalone: stdlib + pytest + pyyaml + jinja2 only.
+#   - needs marianne: test_composition_generated_inputs.py,
+#     test_composition_score_gate.py and three tests in
+#     test_research_runtime.py import the `marianne` package (JobConfig,
+#     build_sheets, the baton PromptRenderer) or run the score gate that does.
+#     marianne is not on PyPI, so the main repository is cloned and installed.
+#     It is the main branch of the main repository, not the pointer that pins
+#     this checkout, so a main-repo change can turn this group red.
+jobs:
+  tests:
+    name: Plugins tests
+    runs-on: ubuntu-latest
+    steps:
+      # actions/checkout leaves a real .git around the tree; the installer
+      # tests need a git repository.
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install test dependencies (standalone)
+        run: python -m pip install pytest pyyaml jinja2
+      - name: Standalone tests (no marianne package)
+        run: >-
+          python -m pytest -q -p no:cacheprovider tests
+          --ignore=tests/test_composition_generated_inputs.py
+          --ignore=tests/test_composition_score_gate.py
+          -k "not native_render_preserves_context and not alias_native_context_snapshot"
+      - name: Install marianne from the main repository
+        run: |
+          git clone --depth 1 https://github.com/Mzzkc/marianne-ai-compose.git "$RUNNER_TEMP/marianne-ai-compose"
+          python -m pip install "$RUNNER_TEMP/marianne-ai-compose"
+      - name: Tests that need the marianne package
+        run: >-
+          python -m pytest -q -p no:cacheprovider
+          tests/test_composition_generated_inputs.py
+          tests/test_composition_score_gate.py
+          "tests/test_research_runtime.py::test_concert_child_native_render_preserves_context_and_task"
+          "tests/test_research_runtime.py::test_public_lab_alias_native_context_snapshot_and_delivery"
