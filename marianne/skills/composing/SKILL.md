@@ -68,7 +68,8 @@ reviewers and a synthesis sheet want different models and budgets. Declare an
 alias per role, bind it where that role plays, and for fan-out reviewers use a
 `chain` with `select: [spread]` (distinct models per voice) and `balance`
 (least-loaded entry at dispatch) so independence and throughput come from the
-score, not from luck. A maker/judge PAIR (one analyst, one reviewer; one builder,
+score, not from luck. Reasoning effort is chosen per role like model and budget: `effort`
+rides on an alias `config` or a class entry as well as a sheet scope. A maker/judge PAIR (one analyst, one reviewer; one builder,
 one verdict) is not a fan-out: `spread` only separates voices within one alias.
 Cast the pair as two explicit chains in opposite orders, so the same index never
 names the same profile and one unavailable head moves one seat, not both. Never

@@ -173,15 +173,23 @@ The one measured step (2026-11-11, three runs of one small task): on Sonnet,
 `medium` and `high` did not differ, and Haiku showed no usable effect. So
 `max` to `high` is where the saving is known; the lower levels are role advice,
 not yet a measured gain.
-The levels belong to the profile (`cli.command.effort_levels`; `claude-code`:
-`low`, `medium`, `high`, `xhigh`, `max`), so never set `effort` at score scope
-in a score whose sheets or fallbacks reach a profile without the mapping
-(`opencode`, `codex-cli`, `claude-code-ollama`, HTTP profiles, an old user-layer
-copy of `claude-code`): put it on the alias or the movement that owns the
-claude-code seat. A schema sheet on `claude-code` takes `low`, `medium` or
-`high` only. `mzt validate` reports V335 (ERROR) for the key on a profile with
-no mapping or a level it does not accept, naming the accepted levels; dispatch
-refuses the same sheets. A fallback takes `effort` only from its own entry.
+The words are Marianne's, the same for every instrument, lowest first:
+`minimal`, `low`, `medium`, `high`, `xhigh`, `max`; any other word fails at
+load. Each profile maps them to its harness's own through its `effort:` block,
+so write the level, not a flag: `claude-code` and `antigravity` `--effort`,
+`codex-cli` `-c model_reasoning_effort=`, `opencode` `--variant` and `crush`
+`--reasoning-effort` per model. `minimal` is the least the seat offers (`low` on
+Claude Code, Antigravity and Codex). Those mappings were declared from help
+text and local model catalogs; only `claude-code`'s was run, so claim no saving
+elsewhere. `gemini-cli`, `aider`, `goose`, `claude-code-ollama` and HTTP
+`ollama` have no mapping, so never set `effort` at score scope in a score whose
+sheets or fallbacks reach them (or an old user-layer copy of a builtin): put it
+on the alias, class entry or movement that owns the seat. It also rides on a
+class entry in `classes.yaml`; on the primary a score scope wins. A schema
+sheet on `claude-code` takes `minimal` to `high` only, and an interactive sheet
+on `opencode` is refused. `mzt validate` reports V335 (ERROR) naming the
+accepted levels; dispatch refuses the same sheets. A fallback takes `effort`
+only from its own entry.
 `effort: null` at a narrower scope restores the profile default.
 
 For an interactive sheet that needs screen-aware continuation, opt in with

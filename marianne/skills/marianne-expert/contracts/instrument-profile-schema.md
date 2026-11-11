@@ -70,15 +70,29 @@ Details how to construct subprocess execution arrays.
 | `working_dir_flag` | `str \| None` | `None` | Working directory flag. |
 | `extra_flags` | `list[str]` | `[]` | Hardcoded flags appended to all runs. |
 | `schema_extra_flags` | `list[str] \| None` | `None` | Flags used instead of `extra_flags` on a schema sheet. `None` inherits `extra_flags`. |
-| `effort_flag` | `str \| None` | `None` | Reasoning-effort flag (e.g. `--effort`). With `effort_levels` it is the mapping a sheet's `instrument_config.effort` uses; the level replaces this flag's value in the fixed flags. `None` = the key is refused on this profile (V335). |
-| `effort_levels` | `list[str]` | `[]` | Levels accepted for `effort_flag`, lowest first. Required with `effort_flag`; fixed-flag defaults must be members. |
-| `schema_effort_levels` | `list[str] \| None` | `None` | Subset a schema sheet may ask for (`claude-code`: `low`, `medium`, `high`; `max` with `--json-schema` hangs). `None` = all levels. |
 | `env` | `dict[str, str]` | `{}` | Subprocess environment variables (supports `${VAR}` expansion). |
 | `prompt_via_stdin` | `bool` | `True` | Directs prompt to standard input stream rather than command arguments. |
 | `stdin_sentinel` | `str \| None` | `None` | Input placeholder argument (e.g., `-` for Claude Code). |
 | `start_new_session` | `bool` | `False` | Launches subprocess in a separate process group. |
 | `required_env` | `list[str] \| None`| `None` | Pinned env vars list inherited from host (helps credentials scoping). |
 | `json_schema_flag` | `str \| None` | `None` | Flag that makes the CLI enforce a JSON schema (`--json-schema` on Claude Code; the shipped `claude-code` profile declares it). Without it a sheet's `json_schema` `response_format` is refused at dispatch and V311 warns. Needs `output.format: json`. |
+
+---
+
+## EffortConfig (`effort:`, top level)
+
+Maps the Marianne reasoning vocabulary (`minimal < low < medium < high < xhigh < max`, GH #535) that a sheet writes as `instrument_config.effort` to the harness's own word. No block = the key is refused on this profile (V335).
+
+| Field | Type | Default | Description |
+|---|---|---|---|
+| `delivery` | `flag \| config_override \| body_field` | required | `flag`: `<flag> <native>`. `config_override`: `<flag> <key>=<native>`. `body_field`: HTTP request JSON `<key>` = native (HTTP only; CLI uses the other two). |
+| `flag` | `str \| None` | `None` | Effort flag, or the override switch (`-c`). Required by `flag` and `config_override`. |
+| `key` | `str \| None` | `None` | Config key or dotted body path. Required by `config_override` and `body_field`. |
+| `levels` | `dict[str, str]` | `{}` | Marianne level to native word; levels may share a word. `{}` = each model row decides. |
+| `schema_levels` | `list[str] \| None` | `None` | Levels a schema sheet may use (`claude-code`: `minimal`..`high`; `max` with `--json-schema` hangs). `None` = all mapped. |
+| `interactive` | `bool` | `True` | `false` refuses an interactive sheet that sets effort (`opencode`). |
+
+A model row's `effort_levels` (`dict | None`) overrides `levels` for that model; `{}` = no control. Defaults already in `extra_flags`, `schema_extra_flags` or `cli.interactive.extra_args` must be native values the block maps.
 
 ---
 
