@@ -77,6 +77,16 @@ class layer can seat both on one model after the money is spent
 (`examples/engineering/artifact-analysis.yaml`, 2026-11-09: both seats on
 codex-cli; the release gate, which reads both context receipts, refused it).
 
+Cast reasoning effort with the role, on the same alias: `config: {model: …,
+effort: low}` for a recon, inventory or release seat, `medium` for a rubric
+review or synthesis seat, no `effort` for design, build and adversarial seats
+(the profile default). On Claude models reasoning is most of a sheet's output
+tokens; a score that leaves every seat at the default pays build-sheet prices
+for its recon. `effort` exists only on profiles that declare the mapping
+(`claude-code` today); V335 refuses it elsewhere, so in a mixed chain put it on
+the claude-code entry, not on the alias. The saving per level is unmeasured
+until GH #533 lands: record the level in the design's `forces`.
+
 Cast every seat as an alias over a BUILTIN profile with `config: {model, …}`;
 name a user-layer profile only when it changes the executable, output format,
 prompt delivery or error vocabulary, and say which in the design's `forces`. A

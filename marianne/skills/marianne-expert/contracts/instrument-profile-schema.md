@@ -69,6 +69,10 @@ Details how to construct subprocess execution arrays.
 | `timeout_flag` | `str \| None` | `None` | Execution timeout flag. |
 | `working_dir_flag` | `str \| None` | `None` | Working directory flag. |
 | `extra_flags` | `list[str]` | `[]` | Hardcoded flags appended to all runs. |
+| `schema_extra_flags` | `list[str] \| None` | `None` | Flags used instead of `extra_flags` on a schema sheet. `None` inherits `extra_flags`. |
+| `effort_flag` | `str \| None` | `None` | Reasoning-effort flag (e.g. `--effort`). With `effort_levels` it is the mapping a sheet's `instrument_config.effort` uses; the level replaces this flag's value in the fixed flags. `None` = the key is refused on this profile (V335). |
+| `effort_levels` | `list[str]` | `[]` | Levels accepted for `effort_flag`, lowest first. Required with `effort_flag`; fixed-flag defaults must be members. |
+| `schema_effort_levels` | `list[str] \| None` | `None` | Subset a schema sheet may ask for (`claude-code`: `low`, `medium`, `high`; `max` with `--json-schema` hangs). `None` = all levels. |
 | `env` | `dict[str, str]` | `{}` | Subprocess environment variables (supports `${VAR}` expansion). |
 | `prompt_via_stdin` | `bool` | `True` | Directs prompt to standard input stream rather than command arguments. |
 | `stdin_sentinel` | `str \| None` | `None` | Input placeholder argument (e.g., `-` for Claude Code). |

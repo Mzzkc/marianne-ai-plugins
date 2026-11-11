@@ -403,8 +403,10 @@ instrument_config:
 ```
 
 Functional `instrument_config` keys: `model`,
-`timeout_seconds`, `interactive`, `interactive_max_nudges`,
-`interactive_nudge_message`. **Unknown keys are silently ignored** — old
+`timeout_seconds`, `effort`, `interactive`, `interactive_max_nudges`,
+`interactive_nudge_message`. `effort` is a reasoning-effort level the
+resolved profile declares (`claude-code`: `low`, `medium`, `high`, `xhigh`,
+`max`); V335 refuses it on a profile without the mapping. **Unknown keys are silently ignored** — old
 `backend:`-era knobs like `skip_permissions`, `disable_mcp`, and
 `allowed_tools` do nothing here (the built-in profiles already pass
 auto-approve and MCP-disable flags; tool restrictions need a custom

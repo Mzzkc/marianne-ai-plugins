@@ -158,6 +158,27 @@ The sheet timeout still caps execution, and this bound is inert after the first
 stdout or stderr byte. The same four override scopes apply; HTTP and interactive
 backends warn and ignore this CLI-only setting.
 
+`instrument_config.effort: <level>` sets one sheet's reasoning effort (GH #535),
+at the same four scopes and on an alias chain entry's `config`. Reasoning is
+about nine tenths of a Claude sheet's output tokens and the `claude-code`
+builtin runs headless sheets at `max`, so set it by role instead of leaving
+every sheet at the default: keep the default (omit the key) for design,
+architecture, build, debugging and adversarial-review sheets; use `medium` for
+a review or evidence check against a written rubric and for synthesis of
+already-judged inputs; use `low` for recon, inventory, mechanical edits, format
+conversion and release sheets (tag, changelog, publish). When a lowered sheet
+starts failing its validations, raise it one level before touching the prompt.
+The levels belong to the profile (`cli.command.effort_levels`; `claude-code`:
+`low`, `medium`, `high`, `xhigh`, `max`), so never set `effort` at score scope
+in a score whose sheets or fallbacks reach a profile without the mapping
+(`opencode`, `codex-cli`, `claude-code-ollama`, HTTP profiles, an old user-layer
+copy of `claude-code`): put it on the alias or the movement that owns the
+claude-code seat. A schema sheet on `claude-code` takes `low`, `medium` or
+`high` only. `mzt validate` reports V335 (ERROR) for the key on a profile with
+no mapping or a level it does not accept, naming the accepted levels; dispatch
+refuses the same sheets. A fallback takes `effort` only from its own entry.
+`effort: null` at a narrower scope restores the profile default.
+
 For an interactive sheet that needs screen-aware continuation, opt in with
 `instrument_config.interactive_nudge_policy: model` and set
 `instrument_config.interactive_nudge_instrument` to a registered inexpensive
