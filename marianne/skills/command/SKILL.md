@@ -356,6 +356,12 @@ before judging a sheet's token efficiency: a long agentic sheet is mostly cache
 reads, and a change that only lowers `Input tokens` has not touched most of
 what the provider processed.
 
+Interactive (tmux) sheets read their tokens from the harness's own session record, declared
+by `cli.interactive.usage` (claude-code only; subagent lines in the same
+file count, separate subagent files do not). When a profile declares no such block, or the record
+is missing or empty, the sheet is `cost_uncertain` and `mzt status` says its cost is unknown, not
+free; a user-layer claude-code profile needs its own `usage:` block to be measured.
+
 A cost that looks wrong (not zero, wrong) is usually a stale price row, not a
 counting bug: `mzt instruments prices` names the rows that differ from the
 provider's current prices. A `$0.00` on a subscription route is the plan's row,
