@@ -78,15 +78,36 @@ class layer can seat both on one model after the money is spent
 (`examples/engineering/artifact-analysis.yaml`, 2026-11-09: both seats on
 codex-cli; the release gate, which reads both context receipts, refused it).
 
-Cast reasoning effort with the role, on the same alias: `config: {model: …,
-effort: low}` for a recon, inventory or release seat, `medium` for a rubric
-review or synthesis seat, no `effort` for design, build and adversarial seats
-(the profile default). On Claude models reasoning is most of a sheet's output
-tokens; a score that leaves every seat at the default pays build-sheet prices
-for its recon. `effort` exists only on profiles that declare the mapping
-(`claude-code` today); V335 refuses it elsewhere, so in a mixed chain put it on
-the claude-code entry, not on the alias. The saving per level is unmeasured
-until GH #533 lands: record the level in the design's `forces`.
+Right-size every sheet. For each one record four things and the reason: its
+role (recon or inventory, build, review, adversarial review, synthesis,
+gate or release, deterministic command), its model tier (small for recon,
+inventory, formatting and gates; middle for build and rubric review; top only for
+hard design and adversarial review), its effort, and its toolset. Leverage runs
+in that order: toolset first, model tier second, effort third. A sheet that could
+be a `cli` command should be one, with no model.
+
+- Toolset: `instrument_config.tools` on a mapped profile (`claude-code`). Give
+  the narrowest list the task needs. A sheet that reads supplied context and
+  writes one report needs file read and write, not a shell or web tools. `[]`
+  means no tools; absent means the harness default. Measured fixed request
+  preamble on claude-code: 28,549 tokens with no `tools` key, 10,739 with two
+  tools, 8,266 with an empty list. Never narrow below what the sheet's
+  validations require it to produce.
+- Effort: `instrument_config.effort`, or `effort` on an alias `config` or class
+  entry. Leave it absent (profile default) for almost everything. On Claude
+  Sonnet 5.5, `max` produced about 2.3 times the reasoning of `high`, while
+  `low`, `medium` and `high` were indistinguishable; on Haiku effort had no
+  measurable effect. Use `max` only with a stated reason; lowering below `high`
+  is not a proven saving. Claude Code, antigravity, codex-cli, opencode and
+  crush map effort; the others are unmeasured. V335 and V337 refuse a key the
+  profile cannot deliver, so in a mixed chain put `effort` and `tools` on the
+  entry whose profile maps them, and run `mzt validate`. V336 warns when a
+  seat names no model.
+- Independence rules for maker/judge pairs outrank cost. Right-sizing never
+  removes a fallback.
+
+Record the choice per stage in the design's `sizing`. Role table, measurements
+and limits: [instrument selection](references/instrument-selection.md).
 
 Cast every seat as an alias over a BUILTIN profile with `config: {model, …}`;
 name a user-layer profile only when it changes the executable, output format,
@@ -112,6 +133,9 @@ Before YAML, write `composition-design.yaml` with these required sections:
 - `authority`: project root and mutation authority;
 - `forces`: active forces with evidence;
 - `stages`: IDs, dependencies, produced artifacts, actual consumers and join owners;
+  each AI stage also carries `sizing` (`role`, `tier`, `effort`, `tools`,
+  `reason`); the gate refuses a design with several AI stages and any without
+  `sizing`, and `effort: max` without a `reason`;
 - `context_flow`: source, destination, and mechanism for every load-bearing input;
 - `injections`: paths, destinations, and whether required;
 - `proof_obligations`: behavioral checks per artifact and integrated consumer journey,
