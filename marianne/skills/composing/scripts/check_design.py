@@ -25,6 +25,38 @@ REQUIRED = {
     "release",
 }
 
+EFFORT_LEVELS = {"minimal", "low", "medium", "high", "xhigh", "max"}
+
+
+def _is_ai_stage(stage: dict) -> bool:
+    """A stage is deterministic when it runs the cli instrument or says so."""
+    return stage.get("instrument") != "cli" and stage.get("deterministic") is not True
+
+
+def _check_sizing(index: int, sizing: object) -> list[str]:
+    prefix = f"design.stages[{index}].sizing"
+    if not isinstance(sizing, dict):
+        return [f"{prefix}: mapping with role, tier and reason required"]
+    findings = []
+    for key in ("role", "tier"):
+        value = sizing.get(key)
+        if not isinstance(value, str) or not value.strip():
+            findings.append(f"{prefix}.{key}: non-empty string required")
+    effort = sizing.get("effort")
+    if effort is not None and effort not in EFFORT_LEVELS:
+        findings.append(
+            f"{prefix}.effort: absent or one of {', '.join(sorted(EFFORT_LEVELS))}"
+        )
+    tools = sizing.get("tools")
+    if tools is not None and (
+        not isinstance(tools, list) or not all(isinstance(t, str) for t in tools)
+    ):
+        findings.append(f"{prefix}.tools: absent or a list of tool names")
+    reason = sizing.get("reason")
+    if effort == "max" and (not isinstance(reason, str) or not reason.strip()):
+        findings.append(f"{prefix}.reason: required when effort is max")
+    return findings
+
 
 def check_design(path: Path) -> list[str]:
     try:
@@ -52,6 +84,21 @@ def check_design(path: Path) -> list[str]:
         ids.append(stage["id"])
     if len(ids) != len(set(ids)):
         findings.append("design.stages: ids must be unique")
+    ai_stages = [
+        index
+        for index, stage in enumerate(stages)
+        if isinstance(stage, dict) and isinstance(stage.get("id"), str) and _is_ai_stage(stage)
+    ]
+    for index, stage in enumerate(stages):
+        if not isinstance(stage, dict) or not isinstance(stage.get("id"), str):
+            continue
+        if "sizing" in stage:
+            findings.extend(_check_sizing(index, stage["sizing"]))
+        elif len(ai_stages) > 1 and index in ai_stages:
+            findings.append(
+                f"design.stages[{index}].sizing: required when the design has "
+                "more than one AI stage (role, tier, effort, tools, reason)"
+            )
     known = set(ids)
     graph: dict[str, set[str]] = {stage_id: set() for stage_id in ids}
     for index, stage in enumerate(stages):

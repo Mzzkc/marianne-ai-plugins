@@ -393,7 +393,7 @@ line), so prelude and cadenza injection may run to hundreds of KB. The raw
 `cli` profile passes its command in argv by design, and any custom profile with
 `prompt_via_stdin: false` is capped by the kernel's per-argument limit
 (128 KiB) and fails to spawn (`E2BIG`) above it.
-For a design file, supply `goal`, `authority`, `forces`, `stages`, `context_flow`,
+For a design file, supply `goal`, `authority`, `forces`, `stages` (each AI stage with `sizing`), `context_flow`,
 `injections`, `proof_obligations`, `compatibility`, `test_disposition`,
 `verification_context`, `repair_loop` and `release`. Record candidate/import
 provenance, serialized whole tests and yielded-process cleanup in verification;

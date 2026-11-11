@@ -15,9 +15,41 @@ def valid_design() -> dict[str, object]:
         "authority": {"project_root": "/tmp/project", "source_write": False},
         "forces": [{"name": "Exponential Defect Cost", "evidence": "Late failure is costly"}],
         "stages": [
-            {"id": "recon", "produces": ["recon.json"], "depends_on": []},
-            {"id": "verify", "produces": ["verification.json"], "depends_on": ["recon"]},
-            {"id": "release", "produces": ["release.json"], "depends_on": ["verify"]},
+            {
+                "id": "recon",
+                "produces": ["recon.json"],
+                "depends_on": [],
+                "sizing": {
+                    "role": "recon",
+                    "tier": "small",
+                    "effort": None,
+                    "tools": ["Read", "Grep", "Glob", "Write"],
+                    "reason": "reads the tree and writes one inventory",
+                },
+            },
+            {
+                "id": "verify",
+                "produces": ["verification.json"],
+                "depends_on": ["recon"],
+                "sizing": {
+                    "role": "rubric review",
+                    "tier": "middle",
+                    "effort": None,
+                    "tools": ["Read", "Write", "Bash"],
+                    "reason": "runs the suite and writes a verdict",
+                },
+            },
+            {
+                "id": "release",
+                "produces": ["release.json"],
+                "depends_on": ["verify"],
+                "instrument": "cli",
+                "sizing": {
+                    "role": "deterministic command",
+                    "tier": "none",
+                    "reason": "hashes the candidate; no model",
+                },
+            },
         ],
         "context_flow": [{"context": "source", "source": "project_root", "lands_at": ["recon"], "mechanism": "prompt variable"}],
         "injections": [{"path": "/tmp/input.md", "lands_at": ["recon"], "required": True}],
@@ -90,7 +122,14 @@ class CompositionDesignGateTests(unittest.TestCase):
 
     def test_parallel_diamond_is_not_a_cycle(self) -> None:
         data = valid_design()
-        data["stages"].insert(2, {"id": "peer", "depends_on": ["recon"]})
+        data["stages"].insert(
+            2,
+            {
+                "id": "peer",
+                "depends_on": ["recon"],
+                "sizing": {"role": "adversarial review", "tier": "top", "reason": "second voice"},
+            },
+        )
         data["stages"][-1]["depends_on"] = ["verify", "peer"]
         self.assertEqual(self._check(data), [])
 
@@ -159,6 +198,56 @@ class CompositionDesignGateTests(unittest.TestCase):
         self.assertTrue(any("import_probe" in item for item in findings))
         self.assertTrue(any("one_suite_at_a_time" in item for item in findings))
         self.assertTrue(any("yielded_process_cleanup" in item for item in findings))
+
+    def test_single_ai_stage_may_omit_sizing(self) -> None:
+        data = valid_design()
+        data["stages"] = [
+            {"id": "recon", "produces": ["recon.json"], "depends_on": []},
+            {"id": "verify", "depends_on": ["recon"], "instrument": "cli"},
+            {"id": "release", "depends_on": ["verify"], "instrument": "cli"},
+        ]
+        self.assertEqual(self._check(data), [])
+
+    def test_multiple_ai_stages_require_sizing_on_each(self) -> None:
+        data = valid_design()
+        del data["stages"][1]["sizing"]
+        findings = self._check(data)
+        self.assertTrue(any("stages[1].sizing" in item for item in findings))
+
+    def test_deterministic_stage_is_not_an_ai_stage(self) -> None:
+        data = valid_design()
+        data["stages"][2] = {"id": "release", "depends_on": ["verify"], "deterministic": True}
+        self.assertEqual(self._check(data), [])
+
+    def test_sizing_must_name_role_and_tier(self) -> None:
+        data = valid_design()
+        data["stages"][0]["sizing"] = {"role": "recon"}
+        self.assertTrue(any("tier" in item for item in self._check(data)))
+        data["stages"][0]["sizing"] = {"tier": "small"}
+        self.assertTrue(any("role" in item for item in self._check(data)))
+
+    def test_effort_max_requires_reason(self) -> None:
+        for reason in (None, "", "   "):
+            with self.subTest(reason=reason):
+                data = valid_design()
+                data["stages"][1]["sizing"] = {
+                    "role": "adversarial review",
+                    "tier": "top",
+                    "effort": "max",
+                    "reason": reason,
+                }
+                self.assertTrue(any("max" in item for item in self._check(data)))
+        data = valid_design()
+        data["stages"][1]["sizing"].update(effort="max", reason="hard design call")
+        self.assertEqual(self._check(data), [])
+
+    def test_sizing_effort_and_tools_are_validated(self) -> None:
+        data = valid_design()
+        data["stages"][0]["sizing"]["effort"] = "turbo"
+        self.assertTrue(any("effort" in item for item in self._check(data)))
+        data = valid_design()
+        data["stages"][0]["sizing"]["tools"] = "Read"
+        self.assertTrue(any("tools" in item for item in self._check(data)))
 
     def test_composing_skill_requires_executable_release_gates(self) -> None:
         skill = (
