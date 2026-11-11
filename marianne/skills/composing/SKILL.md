@@ -101,8 +101,8 @@ be a `cli` command should be one, with no model.
   is not a proven saving. Claude Code, antigravity, codex-cli, opencode and
   crush map effort; the others are unmeasured. V335 and V337 refuse a key the
   profile cannot deliver, so in a mixed chain put `effort` and `tools` on the
-  entry whose profile maps them, and run `mzt validate`. V336 warns when a
-  seat names no model.
+  entry whose profile maps them, and run `mzt validate`. V336 notes a
+  seat that names no model.
 - Independence rules for maker/judge pairs outrank cost. Right-sizing never
   removes a fallback.
 

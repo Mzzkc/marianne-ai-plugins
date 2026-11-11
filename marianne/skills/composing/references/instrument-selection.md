@@ -97,6 +97,6 @@ command should be one.
 - Never narrow tools below what the sheet's validations require it to produce.
 - V335 (effort) and V337 (tools) refuse a key the profile cannot deliver. In a
   mixed fallback chain put `tools` and `effort` on the entry whose profile maps
-  them, and run `mzt validate`. V336 warns when a seat names no model.
+  them, and run `mzt validate`. V336 notes a seat that names no model.
 - Independence rules for maker/judge pairs outrank cost.
 - Right-sizing never removes a fallback.
