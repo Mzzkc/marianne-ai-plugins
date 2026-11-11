@@ -124,6 +124,14 @@ For each goal stated in the prompts, verify at least one validation directly che
 - [ ] Stale detection timeout >= 1800s for verification/build stages
 - [ ] No `skip_when` expressions that could incorrectly skip stages
 
+### Right-Sizing (per sheet)
+- [ ] The same instrument, model, effort and toolset on sheets with different roles (recon, build, review, synthesis, gate) is a finding; each sheet's role should justify its choice
+- [ ] `effort: max` has a stated reason (a comment or the design's `sizing.reason`); otherwise it is a finding
+- [ ] A sheet on the default toolset whose prompt only reads and writes files is a finding; propose `instrument_config.tools` with the narrowest list its validations allow
+- [ ] A model sheet that only runs a fixed command should be a `cli` sheet
+- [ ] `tools` or `effort` sit on an entry whose profile maps them (`mzt validate` shows V335/V337)
+- [ ] Narrowing never drops a tool the sheet's validations need it to use, and never removes a fallback or breaks maker/judge independence
+
 ### Concert/Chaining (if applicable)
 - [ ] `on_success` job_paths are absolute
 - [ ] Self-chains use `fresh: true`
