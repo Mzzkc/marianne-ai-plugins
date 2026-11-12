@@ -412,6 +412,10 @@ unqualified and the next authorized operation to the caller.
 
 ---
 
+### Memory attachments
+
+`memory:` names attachments (`files` backend, `access: inherit`); each sheet gets the ones active in its phase as MCP servers, so use an instrument with an MCP config flag (not `cli`) or the dispatch is refused with `memory_delivery_unsupported`.
+
 ### Telemetry opt-in
 
 A score may carry `telemetry: {enabled: true, spool_path: …}` (GH #146). It only
