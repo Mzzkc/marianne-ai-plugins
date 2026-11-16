@@ -154,6 +154,9 @@ mzt status my-job -j             # JSON output (`loops` carries each span's pass
 mzt list                         # Every live score run (never paged out)
 mzt list --all                   # Plus terminal history, --limit (20) caps only that part
 mzt list --status running        # Filter by status
+mzt wait my-job --json --max 1800  # Block, don't poll: state done (exit 0) | needs_you (2) | conductor_down (3) | wait_expired (4)
+mzt next --json                  # [{job_id, action, why}]: ESCALATE, UNSTICK, JUDGE, WAIT, DONE; do the first action, then ask again (--mine PREFIX)
+mzt verdict my-job --json        # VERDICT line of the review sheet as PASS | REWORK | BLOCKED | unknown; --accept marks it judged
 mzt logs my-job                  # View conductor-owned log sources
 mzt logs my-job --follow         # Tail score-specific logs
 mzt logs my-job --lines 200      # Last 200 lines
