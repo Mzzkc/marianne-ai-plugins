@@ -2,7 +2,7 @@ schema_version: 2
 generated_at: '2026-11-16'
 generated_by: mzt instruments catalog convert
 source: instrument-catalog.yaml (schema_version 1)
-model_count: 122
+model_count: 128
 families:
   arcee-trinity:
     file: arcee-trinity.yaml
@@ -31,6 +31,12 @@ families:
     - claude-opus-5-5
     - claude-fable-5-1
     - claude-sonnet-5
+    - claude-fable-5-2
+    - claude-sonnet-5-5
+    - claude-haiku-5-5
+    - claude-opus-4-6
+    - claude-sonnet-4-5-20250929
+    - claude-opus-5
   cogvideox:
     file: cogvideox.yaml
     model_ids:
@@ -283,12 +289,6 @@ families:
     - yi-large
     - yi-lightning
 unmatched_routes:
-- profile: claude-code
-  model_id: claude-sonnet-4-5-20250929
-  reason: no v1 musician entry for this model
-- profile: claude-code
-  model_id: claude-opus-4-6
-  reason: no v1 musician entry for this model
 - profile: codex-cli
   model_id: gpt-4.1
   reason: no v1 musician entry for this model
