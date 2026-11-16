@@ -2,7 +2,7 @@ schema_version: 2
 generated_at: '2026-11-16'
 generated_by: mzt instruments catalog convert
 source: instrument-catalog.yaml (schema_version 1)
-model_count: 130
+model_count: 132
 families:
   arcee-trinity:
     file: arcee-trinity.yaml
@@ -92,10 +92,12 @@ families:
     - zai-coding-plan/glm-4.7-flash
     - openrouter/z-ai/glm-4.5-air:free
     - glm-5.3
+    - glm-5.3-flash
     - glm-5.2
     - glm-5.1
     - glm-5
     - glm-5v-turbo
+    - glm-4.7
   gpt:
     file: gpt.yaml
     model_ids:
