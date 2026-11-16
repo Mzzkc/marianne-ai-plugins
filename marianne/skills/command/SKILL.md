@@ -352,6 +352,8 @@ mzt diagnose my-job --include-logs
 
 ### Understanding `mzt status` Output
 
+To see what a sheet's prompt carried, read `prompt_receipt` (`mzt status JOB --json` for the summary, the checkpoint for the per-source list; `mzt diagnose` prints the top three sources by bytes): each injected file's sha256 and bytes, or the `dropped_reason` of an item that never arrived (over `max_bytes`, missing, `raw_prompt`), plus `prompt_sha256`. Token counts there are estimates; the receipt holds no prompt text. Check it before claiming a memory or cadenza reached the model.
+
 The Cost Summary's token counts are summed from every sheet's attempts. `Input
 tokens` is what the harness calls input, which on Anthropic and OpenAI excludes
 tokens served from the prompt cache; a profile with `cache_read_tokens_path`
