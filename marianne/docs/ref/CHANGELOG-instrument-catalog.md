@@ -4,6 +4,23 @@ Append-only log of changes to `instrument-catalog.yaml`.
 
 ---
 
+## 2026-11-16 — Catalog v2 directory (GH #549, MC1a)
+
+**Driven by:** model classes by capability tier and reasoning effort, not price.
+
+### Changes
+
+- Added `catalog/` (schema_version 2): one YAML per model family plus
+  `index.yaml`, generated from this file by `mzt instruments catalog convert`.
+  All 122 v1 musicians appear; every route in `instruments.*.runs_models` and
+  `available_via` is kept; v1 fields with no v2 home are kept under `legacy`.
+- `tier_by_effort` (frontier / balanced / light) is derived from v1 tags and
+  marked `provisional: true` on 63 text models. It is a guess, not evidence.
+- v1 stays in place and is marked superseded in its header; the refresh score
+  still reads it.
+
+---
+
 ## 2026-08-17 — Gemini 3.7 Flash stable catalog refresh
 
 **Driven by:** Google Gemini API model documentation, the official models

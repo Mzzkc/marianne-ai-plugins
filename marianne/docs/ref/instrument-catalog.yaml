@@ -19,6 +19,15 @@
 # ║  Authority: this file is YAML and authoritative. instrument-catalog.md is  ║
 # ║  generated FROM this file for human reading; it has no independent truth.  ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
+#
+# SUPERSEDED 2026-11-16 by catalog/ (schema_version 2, GH #549): one YAML per
+# model family plus catalog/index.yaml, generated from this file by
+# `mzt instruments catalog convert` with tiers by capability and effort instead
+# of price. This v1 file is KEPT, unchanged in content, because the
+# marianne-model-profile-refresh score (refresh_scope.py, refreshctl.py) still
+# reads `musicians:` and `instruments.*.runs_models` from it. Do not hand-edit
+# facts in both places: until the refresh score is ported to catalog/ (follow-up,
+# MC1b/c), v1 stays the file the refresh writes and catalog/ is regenerated.
 
 schema_version: 1
 generated_at: "2026-09-26"

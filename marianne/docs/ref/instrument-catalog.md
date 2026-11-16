@@ -3,6 +3,7 @@
 **Generated:** 2026-04-29 (v1.1 fact-fold) from `instrument-catalog.yaml`; current instrument/model corrections applied through 2026-09-26.
 **Refresh policy:** every 30 days; per-musician staleness flagged at 90 days. Run `scores/instrument-catalog-refresh.yaml`.
 **Changelog:** `CHANGELOG-instrument-catalog.md` records every fact change.
+**v2:** `catalog/` (one YAML per family, tiers by capability and effort) supersedes this view's source; see `catalog/README.md`. This file and the v1 YAML stay until the refresh score is ported.
 
 > **Model-profile refresh 2026-09-26:** broad provider research added 29
 > catalog entries from official-source evidence: Claude Opus 5.5 / Fable 5.1 /

@@ -1,0 +1,324 @@
+schema_version: 2
+generated_at: '2026-11-16'
+generated_by: mzt instruments catalog convert
+source: instrument-catalog.yaml (schema_version 1)
+model_count: 122
+families:
+  arcee-trinity:
+    file: arcee-trinity.yaml
+    model_ids:
+    - arcee-ai/Trinity-Large-Thinking
+  bark:
+    file: bark.yaml
+    model_ids:
+    - bark
+  bge:
+    file: bge.yaml
+    model_ids:
+    - bge-large-en-v1.5
+    - bge-reranker-v2-m3
+    - bge-m3
+  canary:
+    file: canary.yaml
+    model_ids:
+    - nvidia-canary-1b
+  claude:
+    file: claude.yaml
+    model_ids:
+    - claude-opus-4-7
+    - claude-sonnet-4-6
+    - claude-haiku-4-5-20251001
+    - claude-opus-5-5
+    - claude-fable-5-1
+    - claude-sonnet-5
+  cogvideox:
+    file: cogvideox.yaml
+    model_ids:
+    - cogvideox-5b
+  cohere:
+    file: cohere.yaml
+    model_ids:
+    - cohere-rerank-3.5
+    - cohere-embed-v4
+    - cohere-command-r-plus
+    - tiny-aya
+    - command-a-plus-05-2026
+  deepseek:
+    file: deepseek.yaml
+    model_ids:
+    - deepseek-v3
+    - deepseek-r1
+    - deepseek-v4-pro
+    - deepseek-v4-flash
+    - deepseek-v4.1-flash
+  elevenlabs:
+    file: elevenlabs.yaml
+    model_ids:
+    - elevenlabs-v3
+    - eleven_v3_conversational
+  f5-tts:
+    file: f5-tts.yaml
+    model_ids:
+    - f5-tts
+  flux:
+    file: flux.yaml
+    model_ids:
+    - flux-1-pro
+    - flux-1-dev
+    - flux-schnell
+    - flux-2-pro
+  gemini:
+    file: gemini.yaml
+    model_ids:
+    - gemini-3.8-flash
+    - gemini-3.7-flash
+    - gemini-3.1-pro-preview
+    - gemini-3-flash-preview
+    - gemini-2.5-pro
+  gemma:
+    file: gemma.yaml
+    model_ids:
+    - openrouter/google/gemma-4-31b-it:free
+  glm:
+    file: glm.yaml
+    model_ids:
+    - zai-coding-plan/glm-5-turbo
+    - zai-coding-plan/glm-4.7-flash
+    - openrouter/z-ai/glm-4.5-air:free
+    - glm-5.3
+    - glm-5.2
+    - glm-5.1
+    - glm-5
+    - glm-5v-turbo
+  gpt:
+    file: gpt.yaml
+    model_ids:
+    - gpt-6-astra
+    - gpt-6-sol
+    - gpt-6-luna
+    - gpt-5.6-sol
+    - gpt-5.6-terra
+    - gpt-5.6-luna
+    - gpt-5.5
+    - gpt-5
+    - o4-mini
+    - text-embedding-3-large
+  hermes:
+    file: hermes.yaml
+    model_ids:
+    - NousResearch/Hermes-4-405B
+  hidream:
+    file: hidream.yaml
+    model_ids:
+    - hidream-i1-full
+    - hidream-o1-image
+  hunyuanvideo:
+    file: hunyuanvideo.yaml
+    model_ids:
+    - hunyuan-video
+  ideogram:
+    file: ideogram.yaml
+    model_ids:
+    - ideogram-v3
+    - ideogram-4.0
+  imagen:
+    file: imagen.yaml
+    model_ids:
+    - imagen-3
+  jais:
+    file: jais.yaml
+    model_ids:
+    - jais-30b-chat
+    - jais-2
+  jina:
+    file: jina.yaml
+    model_ids:
+    - jina-embeddings-v3
+    - jina-reranker-v2-base-multilingual
+    - jina-embeddings-v5-text-small
+    - jina-reranker-v3.5
+  kokoro:
+    file: kokoro.yaml
+    model_ids:
+    - kokoro-tts
+  llama:
+    file: llama.yaml
+    model_ids:
+    - llama3.3:70b
+    - meta-llama/Llama-4-Maverick-17B-128E-Instruct
+  llava-onevision:
+    file: llava-onevision.yaml
+    model_ids:
+    - llava-onevision-qwen2-72b
+  ltx:
+    file: ltx.yaml
+    model_ids:
+    - ltx-video
+    - ltx-2
+  minicpm:
+    file: minicpm.yaml
+    model_ids:
+    - minicpm-v-2.6
+    - openbmb/MiniCPM-V-4.6
+  minimax:
+    file: minimax.yaml
+    model_ids:
+    - openrouter/minimax/minimax-m2.5:free
+  mistral:
+    file: mistral.yaml
+    model_ids:
+    - codestral:22b
+    - mistral-small-4
+    - mistral-nemo-12b
+    - mistral-large-2
+    - mistral-large-3
+  mixedbread:
+    file: mixedbread.yaml
+    model_ids:
+    - mixedbread-ai/mxbai-embed-large-v1
+  mochi:
+    file: mochi.yaml
+    model_ids:
+    - mochi-1
+  nemotron:
+    file: nemotron.yaml
+    model_ids:
+    - openrouter/nvidia/nemotron-3-super-120b-a12b:free
+    - nemotron-3.5-lightning-30b-a3b
+  nomic:
+    file: nomic.yaml
+    model_ids:
+    - nomic-embed-text-v1.5
+    - nomic-embed-vision-v1.5
+    - nomic-ai/nomic-embed-text-v2-moe
+  openrouter-meta-router:
+    file: openrouter-meta-router.yaml
+    model_ids:
+    - openrouter/free
+  openvoice:
+    file: openvoice.yaml
+    model_ids:
+    - openvoice-v2
+  parakeet:
+    file: parakeet.yaml
+    model_ids:
+    - nvidia-parakeet-tdt-0.6b-v2
+  phi:
+    file: phi.yaml
+    model_ids:
+    - phi-4:14b
+    - phi-4-reasoning
+    - phi-4-multimodal
+  pixart:
+    file: pixart.yaml
+    model_ids:
+    - pixart-sigma
+  qwen:
+    file: qwen.yaml
+    model_ids:
+    - qwen2.5-coder:32b
+    - qwen3-coder-480b-a35b-instruct
+    - qwen3-235b-a22b
+    - qwen3.6-27b
+    - qwen3.6-35b-a3b
+    - qwen3-32b
+    - qwq-32b
+  recraft:
+    file: recraft.yaml
+    model_ids:
+    - recraft-v3
+    - recraft-v4.1
+  seamlessm4t:
+    file: seamlessm4t.yaml
+    model_ids:
+    - facebook/seamless-m4t-v2-large
+  seedream:
+    file: seedream.yaml
+    model_ids:
+    - seedream-5.0-pro
+  sesame-csm:
+    file: sesame-csm.yaml
+    model_ids:
+    - sesame-csm
+  sora:
+    file: sora.yaml
+    model_ids:
+    - sora-2
+  stable-diffusion:
+    file: stable-diffusion.yaml
+    model_ids:
+    - stable-diffusion-3.5-large
+    - sdxl-lightning
+    - stable-video-diffusion-img2vid-xt
+  stella:
+    file: stella.yaml
+    model_ids:
+    - stella-en-1.5b-v5
+  veo:
+    file: veo.yaml
+    model_ids:
+    - veo-3
+  voyage:
+    file: voyage.yaml
+    model_ids:
+    - voyage-3
+    - voyage-4-large
+  wan:
+    file: wan.yaml
+    model_ids:
+    - wan2.1-t2v-14b
+  whisper:
+    file: whisper.yaml
+    model_ids:
+    - whisper-large-v3
+    - distil-whisper-large-v3
+    - distil-whisper/distil-large-v3.5
+  xtts:
+    file: xtts.yaml
+    model_ids:
+    - xtts-v2
+  yi:
+    file: yi.yaml
+    model_ids:
+    - yi-large
+    - yi-lightning
+unmatched_routes:
+- profile: claude-code
+  model_id: claude-sonnet-4-5-20250929
+  reason: no v1 musician entry for this model
+- profile: claude-code
+  model_id: claude-opus-4-6
+  reason: no v1 musician entry for this model
+- profile: codex-cli
+  model_id: gpt-4.1
+  reason: no v1 musician entry for this model
+- profile: codex-cli
+  model_id: o3-mini
+  reason: no v1 musician entry for this model
+- profile: aider
+  model_id: any LiteLLM-supported model
+  reason: placeholder phrase, not a model
+- profile: goose
+  model_id: any provider goose is configured for
+  reason: placeholder phrase, not a model
+- profile: crush
+  model_id: any provider crush is configured for
+  reason: placeholder phrase, not a model
+- profile: ollama
+  model_id: llama3.1:8b
+  reason: no v1 musician entry for this model
+- profile: ollama
+  model_id: qwen2.5-coder:7b
+  reason: no v1 musician entry for this model
+- profile: ollama
+  model_id: qwen3-coder:30b
+  reason: no v1 musician entry for this model
+- profile: ollama
+  model_id: deepseek-coder-v2:16b
+  reason: no v1 musician entry for this model
+- profile: ollama
+  model_id: mistral-large:latest
+  reason: no v1 musician entry for this model
+- profile: ollama
+  model_id: gemma3:27b
+  reason: no v1 musician entry for this model
