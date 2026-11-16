@@ -2,7 +2,7 @@ schema_version: 2
 generated_at: '2026-11-16'
 generated_by: mzt instruments catalog convert
 source: instrument-catalog.yaml (schema_version 1)
-model_count: 141
+model_count: 146
 families:
   arcee-trinity:
     file: arcee-trinity.yaml
@@ -88,6 +88,8 @@ families:
     file: gemma.yaml
     model_ids:
     - openrouter/google/gemma-4-31b-it:free
+    - gemma-4-26b-a4b-it
+    - gemma3:27b
   glm:
     file: glm.yaml
     model_ids:
@@ -196,8 +198,11 @@ families:
   nemotron:
     file: nemotron.yaml
     model_ids:
-    - openrouter/nvidia/nemotron-3-super-120b-a12b:free
     - nemotron-3.5-lightning-30b-a3b
+    - nemotron-3-ultra-550b-a55b
+    - nemotron-3.5-super-vl
+    - openrouter/nvidia/nemotron-3-super-120b-a12b:free
+    - nemotron-3-nano-30b-a3b
   nomic:
     file: nomic.yaml
     model_ids:
@@ -325,7 +330,4 @@ unmatched_routes:
   reason: no v1 musician entry for this model
 - profile: ollama
   model_id: mistral-large:latest
-  reason: no v1 musician entry for this model
-- profile: ollama
-  model_id: gemma3:27b
   reason: no v1 musician entry for this model
