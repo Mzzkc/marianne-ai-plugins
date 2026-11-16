@@ -2,7 +2,7 @@ schema_version: 2
 generated_at: '2026-11-16'
 generated_by: mzt instruments catalog convert
 source: instrument-catalog.yaml (schema_version 1)
-model_count: 132
+model_count: 135
 families:
   arcee-trinity:
     file: arcee-trinity.yaml
@@ -76,6 +76,9 @@ families:
   gemini:
     file: gemini.yaml
     model_ids:
+    - gemini-4-hydrogen
+    - gemini-4-carbon
+    - gemini-4-argon
     - gemini-3.8-flash
     - gemini-3.7-flash
     - gemini-3.1-pro-preview
