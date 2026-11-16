@@ -2,7 +2,7 @@ schema_version: 2
 generated_at: '2026-11-16'
 generated_by: mzt instruments catalog convert
 source: instrument-catalog.yaml (schema_version 1)
-model_count: 128
+model_count: 130
 families:
   arcee-trinity:
     file: arcee-trinity.yaml
@@ -100,6 +100,8 @@ families:
     file: gpt.yaml
     model_ids:
     - gpt-6-astra
+    - gpt-6.1-sol
+    - gpt-6.1-terra
     - gpt-6-sol
     - gpt-6-luna
     - gpt-5.6-sol
