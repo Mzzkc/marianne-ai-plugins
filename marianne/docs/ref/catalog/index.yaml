@@ -2,7 +2,7 @@ schema_version: 2
 generated_at: '2026-11-16'
 generated_by: mzt instruments catalog convert
 source: instrument-catalog.yaml (schema_version 1)
-model_count: 135
+model_count: 141
 families:
   arcee-trinity:
     file: arcee-trinity.yaml
@@ -229,6 +229,10 @@ families:
   qwen:
     file: qwen.yaml
     model_ids:
+    - qwen4-max
+    - qwen3.8-max
+    - qwen3.8-27b
+    - qwen3.8-flash
     - qwen2.5-coder:32b
     - qwen3-coder-480b-a35b-instruct
     - qwen3-235b-a22b
@@ -236,6 +240,8 @@ families:
     - qwen3.6-35b-a3b
     - qwen3-32b
     - qwq-32b
+    - qwen3-coder-30b-a3b
+    - qwen2.5-coder:7b
   recraft:
     file: recraft.yaml
     model_ids:
@@ -313,12 +319,6 @@ unmatched_routes:
   reason: placeholder phrase, not a model
 - profile: ollama
   model_id: llama3.1:8b
-  reason: no v1 musician entry for this model
-- profile: ollama
-  model_id: qwen2.5-coder:7b
-  reason: no v1 musician entry for this model
-- profile: ollama
-  model_id: qwen3-coder:30b
   reason: no v1 musician entry for this model
 - profile: ollama
   model_id: deepseek-coder-v2:16b
