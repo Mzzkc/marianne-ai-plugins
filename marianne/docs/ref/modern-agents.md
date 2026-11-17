@@ -107,6 +107,23 @@ Never merge memory merely because two paths contain the same agent name.
 - `lifecycle-integration.yaml`: processes pending engagements and seed
   conflicts through consolidation, reflection, resurrection, and later recall.
 
+**The inspect report opens with a closed verdict.** The inspect sheet's first
+`VERDICT:` line is exactly `VERDICT: PASS`, `VERDICT: REWORK` or `VERDICT:
+BLOCKED`, upper case, alone on its line, so `mzt verdict` and a small-model
+conductor can act without reading prose. PASS means acceptable as it stands;
+REWORK means the same agent can fix it from the findings; BLOCKED means it needs
+a decision or someone else, including independent verification the agent cannot
+do itself (BLOCKED, with the reason). Nuance goes on the following lines
+(`QUALIFIER: bounded to the runtime branch`), never in the verdict line. The
+report keeps `EVIDENCE:`, `FAILURES:`, `RISKS:` and `REQUIRED FIXES:` and adds
+`FINDINGS:`, the bullet list `mzt verdict --json` returns as `findings`. The
+sheet's validation requires that line (a `content_regex`) and refuses any other
+verdict-shaped line, so a free-prose verdict fails the sheet and the agent
+retries under the normal retry rules. `mzt verdict` itself is unchanged: free
+prose still reads `unknown`. Scores installed before this contract keep the old
+wording until the package is regenerated and reinstalled (see
+`agent-scores/README.md`).
+
 Prefer the full lifecycle. It is the tool default: `marianne-agents engage AGENT
 --purpose SLUG --inventory INVENTORY --runs-dir RUNS` binds the installed
 `full-lifecycle.yaml` to live route evidence, names the job
