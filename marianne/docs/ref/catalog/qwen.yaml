@@ -274,7 +274,7 @@ families:
       default: high
     tier_by_effort: {}
     tier_status:
-      provisional: true
+      provisional: false
       reason: Added for the claude-code-polystrata route. Open weights (Qwen/Qwen3.8-Flash-Next on Hugging
         Face, qwen-community-1.0 licence). No tier assigned and no benchmark gathered; it is not the
         hosted qwen3.8-flash above, and nothing here says the two perform alike.
