@@ -179,8 +179,8 @@ The words are Marianne's, the same for every instrument, lowest first:
 load. Each profile maps them to its harness's own through its `effort:` block,
 so write the level, not a flag: `claude-code` and `antigravity` `--effort`,
 `codex-cli` `-c model_reasoning_effort=`, `opencode` `--variant`, `crush`
-`--reasoning-effort` per model and `claude-code-polystrata` `--effort` (`minimal` to
-`high` only; PolyStrata documents no more). `minimal` is the least the seat offers (`low` on
+`--reasoning-effort` per model, and the `polystrata` endpoint the request body's
+`reasoning_effort` (`minimal` to `high` only; PolyStrata documents no more). `minimal` is the least the seat offers (`low` on
 Claude Code, Antigravity and Codex). Those mappings were declared from help
 text and local model catalogs; only `claude-code`'s was run, so claim no saving
 elsewhere. `gemini-cli`, `aider`, `goose`, `claude-code-ollama` and HTTP
@@ -206,7 +206,7 @@ call a tool it was not given. Measured on Claude Code only: a one-turn probe
 sent 28.8k tokens with 29 tools and 14.0k with four, tool definitions being about
 half the fixed prefix every request pays; one small read-only task cost about 40%
 less with four tools (three runs per arm, so direction, not size). Claim nothing
-for other harnesses. Only `claude-code`, `claude-code-ollama` and `claude-code-polystrata` declare a
+for other harnesses. Only `claude-code` and `claude-code-ollama` declare a
 `tools:` mapping (`--tools`, the flag that removes definitions; `--allowedTools`
 is permission-only and is not used); on any other profile the key is refused,
 so set it on the alias, class entry or movement that owns a Claude Code seat.

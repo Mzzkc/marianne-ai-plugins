@@ -118,7 +118,7 @@ families:
       model_id: gemma4:26b
       access: local
       kind: service
-    - profile: claude-code-polystrata
+    - profile: polystrata
       model_id: gemma-4-26b-a4b
       access: local
       kind: profile
@@ -140,7 +140,7 @@ families:
     - Unmeasured on agentic coding
     quirks:
     - Local route (ollama gemma4:26b) is not probed here; no ollama installed.
-    - 'Local route claude-code-polystrata: PolyStrata (github.com/VecSzn/PolyStrata) runs a quantised build on one consumer GPU; requires fit_max_tokens on the server, one request at a time, and is verified against a mock Anthropic-compatible server only (execution_status: warning). PolyStrata lists Gemma 4 26B-A4B as experimental; the route name there is gemma-4-26b-a4b.'
+    - 'Local route polystrata: PolyStrata (github.com/VecSzn/PolyStrata) runs a quantised build on one consumer GPU, one request at a time, through its OpenAI-compatible endpoint (execution_status: warning until run against a live server). PolyStrata lists Gemma 4 26B-A4B as experimental; the route name there is gemma-4-26b-a4b.'
     last_verified: '2026-11-16'
     verified_via:
     - openrouter_api:/api/v1/models (route, price, context; 2026-11-16)

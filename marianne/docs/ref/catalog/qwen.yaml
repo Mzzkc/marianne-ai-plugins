@@ -261,7 +261,7 @@ families:
     - text
     - vision
     routes:
-    - profile: claude-code-polystrata
+    - profile: polystrata
       model_id: qwen3.8-flash-next
       access: local
       kind: profile
@@ -275,7 +275,7 @@ families:
     tier_by_effort: {}
     tier_status:
       provisional: false
-      reason: Added for the claude-code-polystrata route. Open weights (Qwen/Qwen3.8-Flash-Next on Hugging
+      reason: Added for the polystrata route. Open weights (Qwen/Qwen3.8-Flash-Next on Hugging
         Face, qwen-community-1.0 licence). No tier assigned and no benchmark gathered; it is not the
         hosted qwen3.8-flash above, and nothing here says the two perform alike.
     benchmarks: []
@@ -292,7 +292,7 @@ families:
     verified_via:
     - vendor_docs:github.com/VecSzn/PolyStrata docs (AI_SETUP.md, DETAILS.md, MODELS.md; 2026-11-17)
     - huggingface_api:Qwen/Qwen3.8-Flash-Next (existence, licence; 2026-11-17)
-    - builtin_profile:claude-code-polystrata
+    - builtin_profile:polystrata
     legacy: {}
   - id: qwen2.5-coder:32b
     family: qwen
@@ -593,7 +593,7 @@ families:
       model_id: qwen3.6-35b-a3b
       access: local
       kind: service
-    - profile: claude-code-polystrata
+    - profile: polystrata
       model_id: qwen3.6-35b-a3b
       access: local
       kind: profile
@@ -613,7 +613,7 @@ families:
     - 'OpenRouter has no free Qwen coding route on 2026-11-16 (free list: gemma-4, nemotron, and unrelated
       models); the v1 catalog marked these routes free and the opencode profile still lists qwen/qwen3-coder:free,
       which no longer exists. Every OpenRouter Qwen route is metered.'
-    - 'Local route claude-code-polystrata: PolyStrata (github.com/VecSzn/PolyStrata) runs a quantised build on one consumer GPU; requires fit_max_tokens on the server, one request at a time, and is verified against a mock Anthropic-compatible server only (execution_status: warning). Needs far less memory than GLM (11 to 24 GB download); PolyStrata lists it as experimental.'
+    - 'Local route polystrata: PolyStrata (github.com/VecSzn/PolyStrata) runs a quantised build on one consumer GPU, one request at a time, through its OpenAI-compatible endpoint (execution_status: warning until run against a live server). Needs far less memory than GLM (11 to 24 GB download); PolyStrata lists it as experimental.'
     last_verified: '2026-11-16'
     verified_via:
     - openrouter_api:/api/v1/models (route, price, context; 2026-11-16)
