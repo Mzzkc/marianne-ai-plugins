@@ -108,7 +108,7 @@ Declares how a sheet's `instrument_config.tools` (a list of the harness's own to
 | `known` | `list[str] \| None` | `None` | Accepted names; a name outside it is refused (V337). `None` = any name passes through. |
 | `interactive` | `bool` | `True` | `false` refuses an interactive sheet that sets tools. |
 
-A default already in `extra_flags` or `cli.interactive.extra_args` is replaced, never doubled. Builtins: `claude-code` and `claude-code-ollama` only.
+A default already in `extra_flags` or `cli.interactive.extra_args` is replaced, never doubled. Builtins: `claude-code`, `claude-code-ollama` and `claude-code-polystrata` only.
 
 ---
 

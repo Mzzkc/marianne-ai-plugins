@@ -394,6 +394,10 @@ families:
       model_id: z-ai/glm-5.3-flash
       access: metered
       kind: service
+    - profile: claude-code-polystrata
+      model_id: glm-5.3-flash
+      access: local
+      kind: profile
     reasoning:
       modes:
       - minimal
@@ -451,6 +455,7 @@ families:
     - opencode/glm-5.3-flash-free is an OpenCode-hosted free route listed by `opencode models` on this
       machine; its rate limits and data terms were not checked. GLM-5.3-FlashX is not on the Coding Plan
       (docs.z.ai).
+    - 'Local route claude-code-polystrata: PolyStrata (github.com/VecSzn/PolyStrata) runs a quantised build on one consumer GPU; requires fit_max_tokens on the server, one request at a time, and is verified against a mock Anthropic-compatible server only (execution_status: warning). GLM 5.3 Flash needs Linux, an NVIDIA card with 32 GB and 96 GB of RAM or more (PolyStrata GLM.md, experimental); PolyStrata serves it without images.'
     last_verified: '2026-11-16'
     verified_via:
     - vendor_docs:docs.z.ai/guides/vlm/glm-5.3-flash

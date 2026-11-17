@@ -2,7 +2,7 @@ schema_version: 2
 generated_at: '2026-11-16'
 generated_by: mzt instruments catalog convert
 source: instrument-catalog.yaml (schema_version 1)
-model_count: 146
+model_count: 147
 families:
   arcee-trinity:
     file: arcee-trinity.yaml
@@ -238,6 +238,7 @@ families:
     - qwen3.8-max
     - qwen3.8-27b
     - qwen3.8-flash
+    - qwen3.8-flash-next
     - qwen2.5-coder:32b
     - qwen3-coder-480b-a35b-instruct
     - qwen3-235b-a22b
