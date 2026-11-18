@@ -415,7 +415,7 @@ unqualified and the next authorized operation to the caller.
 
 ### Memory attachments
 
-`memory:` names attachments (`files` backend, `access: inherit`); each sheet gets the ones active in its phase as MCP servers, so use an instrument with an MCP config flag (not `cli`) or the dispatch is refused with `memory_delivery_unsupported`.
+`memory:` names attachments (`system: files` or `system: cam`, `access: inherit`); a `cam` attachment names its key by `api_key_env` or `api_key_file` (never the key itself) and V350 refuses a literal secret; each sheet gets the ones active in its phase as MCP servers, so use an instrument with an MCP config flag (not `cli`) or the dispatch is refused with `memory_delivery_unsupported`.
 
 ### Telemetry opt-in
 
