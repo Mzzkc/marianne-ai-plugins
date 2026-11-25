@@ -51,7 +51,10 @@ For new or changed composition, read:
 2. Each selected pattern's full file, not its name or a summary. Consult its
    `proof_score:` frontmatter pointer alongside the ledger before selecting;
    `unproven.py --usage [DIR]` audits citations in produced score YAML.
-3. `plugins/marianne/docs/ref/instrument-catalog.yaml` and current venue reports
+3. `plugins/marianne/docs/ref/catalog/` (v2, the per-family catalog the tier
+   classes are derived from) and `plugins/marianne/docs/ref/instrument-catalog.yaml`
+   (v1, SUPERSEDED but still what the model-profile refresh score reads and
+   writes) plus current venue reports
    before assigning instruments; the venue owner uses `mzt doctor` when needed.
 4. The relevant `${CLAUDE_PLUGIN_ROOT}/docs/ref/` syntax references before writing
    YAML; score-authoring can assist when a separate syntax specialist is useful.

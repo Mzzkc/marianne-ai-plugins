@@ -106,7 +106,7 @@ unclear how to break a part into sheets, cast a persistent agent's lifecycle
 to loop on it through its cadenza directory (see 4).
 
 Cast in this order: existing persistent agents whose role fits
-(`plugins/marianne/agent-scores/roster.yaml`; `marianne-agents census` shows
+(`plugins/marianne/agent-scores/roster.yaml`; `mzt agents list` shows
 who is installed), then capability classes over existing profiles. Never a
 new profile for a new subject, model or timeout.
 
@@ -184,11 +184,25 @@ sheet is caught within half an hour instead of stalling for hours. Count queue
 time inside any wall clock. A cap copied from an old score is not a budget.
 
 **Agent lifecycles on a part.** Put the part's spec, integration doc and
-acceptance checks in the agent's cadenza directory, then engage:
+acceptance checks in the agent's cadenza directory, then engage. For a
+targeted part, prefer the interim `mzt agents` loop:
 
 ```bash
-marianne-agents engage AGENT --purpose PART --inventory INVENTORY --runs-dir RUNS
+mzt agents list                              # who is castable, and reservations
+mzt agents run AGENT --task PART.md --inventory inv.yaml --class work=strong --json
 ```
+
+`--task/-t` is the required TASK.md (GOAL FILES KIND ACCEPT DO_NOT_TOUCH
+REPORT); `--inventory/-i` (env `MZT_AGENTS_INVENTORY`) is a live-verified
+capability inventory YAML with no default — refused when neither is set;
+`--class PHASE=CLASS` is repeatable. An agent is held while a matching
+conductor job runs and while it is reserved in
+`~/.marianne/agents-reserved.yaml` (env `MZT_AGENTS_RESERVATIONS`). This loop
+is interim until the one-episode score replaces it: each `mzt agents run`
+defers lifecycle and adds pending lifecycle debt, refused at 3. For work that
+needs the full lifecycle, keep `marianne-agents engage` as the preferred
+full-lifecycle path — it picks the installed score, names the job and makes
+the fresh workspace itself.
 
 Their memory and mateship let them pick up loose work beside their peers.
 

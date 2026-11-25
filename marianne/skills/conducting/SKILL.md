@@ -138,13 +138,9 @@ routes is the symptom, and `mzt doctor` names the profiles nothing submitted
 references under "Instrument hygiene"; course-correct the moment you see either,
 mid-engagement.
 
-**A persistent-agent engagement bound by hand.** `marianne-agents engage AGENT
---purpose SLUG --inventory … --runs-dir …` is the whole recipe: it picks the
-installed score (full-lifecycle unless `--shape targeted-work --defer-lifecycle`
-names the debt), names the job, makes the fresh workspace and prints the `mzt
-run` line. A directory of bind-plus-sed copies is the same rung skipped the same
-way; a day of targeted-work engagements each repaid by its own
-lifecycle-integration job is the full lifecycle run twice.
+**A persistent-agent engagement bound by hand.** Use `mzt agents run` with
+`--task`, `--inventory` and `--class PHASE=CLASS`; the full recipe, the
+interim caveat and the reservations file are in `concept-to-completion.md`.
 
 Specialist work at the podium, assurance counted as capability, acknowledgement
 counted as activation, or green jobs rounded into completion require correction.

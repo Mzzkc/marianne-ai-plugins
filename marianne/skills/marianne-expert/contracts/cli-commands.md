@@ -10,9 +10,9 @@ Commands for initializing, composing, and compiling scores.
 *   **`init`**
     *   *Purpose:* Initialize a fresh Marianne project directory with standard folder structures, specs, and config files.
 *   **`compose`**
-    *   *Purpose:* Interactive score generation wizard translating intent into declarative score files.
+    *   *Purpose:* Not yet implemented: the command prints "The compose system is not yet implemented." The authoring path is score YAML.
 *   **`compile`**
-    *   *Purpose:* Compiles modular agent profiles and spec files into unified executable score YAML.
+    *   *Purpose:* Legacy compiler path (agent profiles + spec files into score YAML); the current authoring path is score YAML.
 
 ---
 
@@ -46,6 +46,14 @@ Commands for tracking conductor activity.
     *   *Purpose:* Print a detailed execution progress report of a job.
 *   **`watch <job_id>`**
     *   *Purpose:* Live stream output blocks and validation results as sheets execute.
+*   **`wait`** (`<job_id>`)
+    *   *Purpose:* Block instead of polling: exits on done, needs_you, conductor_down, or wait expired.
+*   **`next`**
+    *   *Purpose:* Ask the conductor what to do next: `[{job_id, action, why}]` (ESCALATE, UNSTICK, JUDGE, WAIT, DONE); do the first action, then ask again.
+*   **`verdict`** (`<job_id>`)
+    *   *Purpose:* Print the review sheet's VERDICT as PASS | REWORK | BLOCKED | unknown; `--accept` marks it judged.
+*   **`agents`** (`list|run`)
+    *   *Purpose:* Persistent agents: `list` shows who is castable; `run` starts one agent on a targeted task. This loop is interim (each `run` defers lifecycle and adds pending lifecycle debt, refused at 3) until the one-episode score replaces it.
 *   **`list`**
     *   *Purpose:* List execution history and status of all jobs registered with the conductor.
 *   **`top`**
@@ -79,7 +87,11 @@ Commands for hosting APIs and dashboards.
 *   **`dashboard`**
     *   *Purpose:* Start the local web-based monitoring dashboard interface.
 *   **`mcp`**
-    *   *Purpose:* Start Marianne conductor as a Model Context Protocol server.
+    *   *Purpose:* Start the Marianne MCP (Model Context Protocol) server exposing job management as tools for external AI agents (default 127.0.0.1:8001).
+*   **`mail`**
+    *   *Purpose:* Conductor mail between scores and agents.
+*   **`corpus`**
+    *   *Purpose:* Build and measure a local composition corpus (internal tooling).
 
 ---
 
@@ -92,6 +104,8 @@ Commands for daemon lifecycle management.
     *   *Purpose:* Stop the running conductor daemon cleanly.
 *   **`restart`**
     *   *Purpose:* Cleanly stop and restart the conductor daemon.
+*   **`conductor`**
+    *   *Purpose:* Daemon lifecycle sub-app: `conductor start|stop|restart|reload|status` and related management commands.
 *   **`conductor-status`**
     *   *Purpose:* Query the daemon status (socket connections, active PID).
 *   **`clear-rate-limits`**

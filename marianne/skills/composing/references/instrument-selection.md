@@ -6,7 +6,9 @@ Current venue evidence still governs availability and fit.
 ## Capability classes in scores
 
 Prefer a configured class such as `strong`, `workhorse`, `fast`, `writing`,
-`vision`, or `local` when the score describes a kind of work instead of a fixed
+`vision`, `local`, or the tier classes `frontier`, `balanced`, `light`
+(`mzt instruments classes tiers` prints the chains this machine resolves from
+the catalog) when the score describes a kind of work instead of a fixed
 route. Marianne expands the class to an ordered profile chain before dispatch,
 then appends declared fallbacks. `mzt instruments classes show --json` reports
 the layers and their digests; `mzt instruments classes check` reports broken

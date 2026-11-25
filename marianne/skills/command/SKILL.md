@@ -251,6 +251,24 @@ mzt clear --older-than 3600      # Clear score runs older than 1 hour
 mzt clear --yes                  # Skip confirmation
 ```
 
+### Persistent Agents (interim SC1c loop)
+
+`mzt agents` is the interim conducting surface for small models: list who is
+castable, run one on a targeted task. Because each run defers lifecycle, every
+run adds pending lifecycle debt, refused at 3 — prefer the full lifecycle
+(`marianne-agents engage`) when the work allows it.
+
+```bash
+mzt agents list                  # [{name, role, owns, free, open_debt, last_outcome}]
+mzt agents list --for TASK.md --free   # Rank by task fit, only unoccupied agents
+mzt agents run forge --task TASK.md --inventory inv.yaml --class work=strong --json
+```
+
+| Command | Key facts |
+|---|---|
+| `mzt agents list` | Who is installed and castable. `free` is false while a conductor job containing `-NAME-` runs, queues, pends or pauses, and while the agent is reserved in `~/.marianne/agents-reserved.yaml` (env `MZT_AGENTS_RESERVATIONS`). Read-only. |
+| `mzt agents run NAME` | `--task/-t PATH` is required: a TASK.md with GOAL FILES KIND ACCEPT DO_NOT_TOUCH REPORT. `--inventory/-i PATH` (env `MZT_AGENTS_INVENTORY`) is a live-verified capability inventory YAML with no default — refused when neither is set. `--class PHASE=CLASS` is repeatable and passes through to engage. Prints `{ok, job_id, workspace, result_path}` or `{ok: false, code, hint}`; codes `TASK_FIELD_MISSING`, `AGENT_BUSY`, `AGENT_UNKNOWN`, `DEBT_REFUSED`, `SUBMIT_REFUSED`. INTERIM: engages with `--defer-lifecycle`, so each run adds pending lifecycle debt (refused at 3). |
+
 ### Other Commands
 
 ```bash
@@ -266,6 +284,12 @@ mzt doctor                       # Environment health; lists user profiles no su
                                  # Musician hooks: user-level Claude Code hooks by event/program name; SessionStart/UserPromptSubmit add to every sheet's context unless the hook exits early on MARIANNE_SHEET (GH #536)
 mzt telemetry status|consent|export|flush # Opt-in community telemetry: off by default, never automatic; see docs/telemetry.md (GH #146)
 #   and names a personal profile whose ambient credentials no longer reach it (GH #335 filters by default)
+mzt config show|set|path|init|check  # Manage conductor configuration (view, update values, locate the file, scaffold, validate)
+mzt mcp                          # Start the Marianne MCP server (default 127.0.0.1:8001) exposing job management as tools for external AI agents
+mzt top                          # Real-time monitor, htop for your conductor: process tree, resource metrics, event timeline, anomaly detection
+mzt instruments classes tiers    # Print the frontier/balanced/light chains this machine resolves from the catalog (read-only; --write-proposal PATH)
+mzt instruments catalog convert  # Convert a v1 instrument catalog to the v2 directory (one YAML per family)
+mzt instruments catalog check    # Validate a v2 catalog directory against the schema
 ```
 
 Skills ship from the plugin tree, and every harness keeps its own copy, so a
