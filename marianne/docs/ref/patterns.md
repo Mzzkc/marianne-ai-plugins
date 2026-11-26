@@ -205,7 +205,7 @@ Define once, use everywhere. When you add a new stage, compose from existing blo
 
 1. **No `{% include %}` or `{% extends %}`** --- templates loaded via `from_string()`, no filesystem loader
 2. **No side effects** --- Jinja2 is rendering-only; the agent reads files and runs commands
-3. **No dynamic fan-out** --- `fan_out:` is YAML config, evaluated before templates render
+3. **Fan-out width is fixed at load** --- a `fan_out:` count may be `'{{ variable }}'` from `prompt.variables`, resolved at load; templates and `--var` cannot change it
 4. **V101 false positives** --- `{% set var = value %}` triggers undefined variable warnings; ignore them
 
 ---

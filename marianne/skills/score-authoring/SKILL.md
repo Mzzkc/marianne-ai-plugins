@@ -294,6 +294,13 @@ strict gate: a validation pass rate above it enters completion mode; a lower
 result spends a normal retry. Older releases ignored the threshold and sent
 any partial pass to completion mode, so review scores that use the default 50%.
 
+A `sheet.fan_out` count may name a variable: `fan_out: {2: '{{ chapter_count }}'}`
+resolves from `prompt.variables` when the score loads, to an integer `1`-`1000`
+(a string of digits is fine). Use it when a width depends on the score's input,
+instead of declaring the maximum and skipping unused voices. It is a bare
+`{{ name }}` — no filters or arithmetic — and `--var` cannot change it. An
+undeclared name, a non-integer, or an out-of-range value is V338.
+
 `sheet.stdout_to` (`{1: design.md}`) makes the musician write a sheet's full stdout to a workspace file before validations run: the way an `http` sheet, which has no filesystem, meets a file validation or hands its reply whole to a later sheet (`stdout_tail` keeps 500 characters). A fanned-out stage gets one file per voice.
 
 `sheet.skip_when` skips one sheet; it does not cascade — the baton lets dependents of an intentional skip run (`[SKIPPED]` in `previous_outputs`). A chain terminator (a marker that says "this iteration does nothing") goes on every sheet, including the one whose trigger chains, or later sheets run and chain again.

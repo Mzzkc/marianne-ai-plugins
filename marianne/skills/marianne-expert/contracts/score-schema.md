@@ -66,7 +66,7 @@ Controls partitioning, parallelization, dependencies, and fan-out parameters.
 | `prompt_extensions` | `dict[int, list[str]]` | `{}` | Inline text or file pathways extending prompts for specific sheet numbers. |
 | `prelude` | `list[InjectionItem]` | `[]` | Shared background materials injected into prompts for all sheets. |
 | `cadenzas` | `dict[int, list[InjectionItem]]` | `{}` | Per-sheet context injection files or directories. |
-| `fan_out` | `dict[int, int]` | `{}` | Parametric stage harmonization count mapping stage numbers to instance counts. |
+| `fan_out` | `dict[int, int \| str]` | `{}` | Parametric stage harmonization count mapping stage numbers to instance counts; a count may be `'{{ variable }}'`, resolved from `prompt.variables` at load to an integer 1-1000 (V338). |
 | `fan_out_stage_map` | `dict[int, dict[str, int]] \| None` | `None` | Recomputed stage/instance mapping metadata. |
 | `per_sheet_instruments` | `dict[int, str]` | `{}` | Single sheet instrument name overrides. |
 | `per_sheet_instrument_config` | `dict[int, dict[str, Any]]` | `{}` | Single sheet parameter override maps. |
