@@ -155,7 +155,7 @@ mzt list                         # Every live score run (never paged out)
 mzt list --all                   # Plus terminal history, --limit (20) caps only that part
 mzt list --status running        # Filter by status
 mzt wait my-job --json --max 1800  # Block, don't poll: state done (exit 0) | needs_you (2) | conductor_down (3) | wait_expired (4)
-mzt next --json                  # [{job_id, action, why}]: ESCALATE, UNSTICK, JUDGE, WAIT, DONE; do the first action, then ask again (--mine PREFIX)
+mzt next --json                  # [{job_id, action, why}]: ESCALATE, UNSTICK, JUDGE, CAST, WAIT, DONE; do the first action, then ask again (--mine PREFIX; --tasks DIR also lists unbound TASK*.md files as CAST rows)
 mzt verdict my-job --json        # VERDICT line of the review sheet as PASS | REWORK | BLOCKED | unknown; --accept marks it judged
 mzt logs my-job                  # View conductor-owned log sources
 mzt logs my-job --follow         # Tail score-specific logs
@@ -259,7 +259,7 @@ run adds pending lifecycle debt, refused at 3 — prefer the full lifecycle
 (`marianne-agents engage`) when the work allows it.
 
 ```bash
-mzt agents list                  # [{name, role, owns, free, open_debt, last_outcome}]
+mzt agents list --json            # [{name, role, owns, free, open_debt, last_outcome}]; without --json the same rows print as text
 mzt agents list --for TASK.md --free   # Rank by task fit, only unoccupied agents
 mzt agents run forge --task TASK.md --inventory inv.yaml --class work=strong --json
 ```

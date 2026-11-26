@@ -49,7 +49,7 @@ Commands for tracking conductor activity.
 *   **`wait`** (`<job_id>`)
     *   *Purpose:* Block instead of polling: exits on done, needs_you, conductor_down, or wait expired.
 *   **`next`**
-    *   *Purpose:* Ask the conductor what to do next: `[{job_id, action, why}]` (ESCALATE, UNSTICK, JUDGE, WAIT, DONE); do the first action, then ask again.
+    *   *Purpose:* Ask the conductor what to do next: `[{job_id, action, why}]` (ESCALATE, UNSTICK, JUDGE, CAST, WAIT, DONE); `--tasks DIR` lists unbound `TASK*.md` files as CAST rows. Do the first action, then ask again.
 *   **`verdict`** (`<job_id>`)
     *   *Purpose:* Print the review sheet's VERDICT as PASS | REWORK | BLOCKED | unknown; `--accept` marks it judged.
 *   **`agents`** (`list|run`)
@@ -104,8 +104,8 @@ Commands for daemon lifecycle management.
     *   *Purpose:* Stop the running conductor daemon cleanly.
 *   **`restart`**
     *   *Purpose:* Cleanly stop and restart the conductor daemon.
-*   **`conductor`**
-    *   *Purpose:* Daemon lifecycle sub-app: `conductor start|stop|restart|reload|status` and related management commands.
+*   **`conductor`** (`reload`)
+    *   *Purpose:* Hot-reload sub-app: `conductor reload` hot-reloads conductor config + instrument profiles without a restart. `reload` is its only subcommand: `start`, `stop`, `restart` and `conductor-status` are top-level commands, not under `conductor`.
 *   **`conductor-status`**
     *   *Purpose:* Query the daemon status (socket connections, active PID).
 *   **`clear-rate-limits`**
