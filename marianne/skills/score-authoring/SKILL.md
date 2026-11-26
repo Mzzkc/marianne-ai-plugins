@@ -318,10 +318,11 @@ movements:
 Two spellings to keep apart: `{{ voice }}` is the template variable that
 renders per voice **inside a path**; `voice:` is the item field that selects
 **which voices get the item** (the fan-out instance, 1-based). On a movement
-with a single voice, `{{ voice }}` renders as the literal text `None` — do not
-template a solo movement's cadenza path on it. A `voice:` on a prelude or
-`sheet.cadenzas` item is unknown there (V010/V011) and is stripped. A stage
-with no sheet, or a voice above the movement's voice count, is V216.
+with a single voice both mean voice 1: `{{ voice }}` resolves to `1`
+(`unit-{{ voice }}.md` reads `unit-1.md`), and `voice: 1` is delivered. A
+`voice:` on a prelude or `sheet.cadenzas` item is unknown there: it is
+stripped and reported as a V010 warning. A stage with no sheet, or a voice
+above the movement's voice count, is V216.
 
 A `sheet.fan_out` count may name a variable: `fan_out: {2: '{{ chapter_count }}'}`
 resolves from `prompt.variables` when the score loads, to an integer `1`-`1000`
