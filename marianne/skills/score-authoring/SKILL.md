@@ -296,7 +296,7 @@ any partial pass to completion mode, so review scores that use the default 50%.
 
 A `sheet.fan_out` count may name a variable: `fan_out: {2: '{{ chapter_count }}'}`
 resolves from `prompt.variables` when the score loads, to an integer `1`-`1000`
-(a string of digits is fine). Use it when a width depends on the score's input,
+(a string of digits is fine; whitespace around it is ignored). Use it when a width depends on the score's input,
 instead of declaring the maximum and skipping unused voices. It is a bare
 `{{ name }}` — no filters or arithmetic — and `--var` cannot change it. An
 undeclared name, a non-integer, or an out-of-range value is V338.
