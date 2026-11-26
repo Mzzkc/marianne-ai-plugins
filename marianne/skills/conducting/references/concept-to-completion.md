@@ -160,7 +160,7 @@ and no technique is a script, not an orchestra:
 |---|---|
 | Repair until good, but bounded | `sheet.loops` span with `until: file(...)` and `max_iterations` from tempo |
 | Independent voices | fan-out with one alias, `select: [spread, balance]` |
-| Skip empty slots or finished work at no cost | `skip_when` per stage |
+| Skip empty slots or finished work at no cost | `skip_when` per stage (command exit 0 or `unchanged: true` for stable inputs) |
 | A human decision mid-score | `triggers: {N: {on_success: [escalate: ...]}}`, then `mzt resolve` |
 | Parts in parallel, integration after | a `type: fleet` with dependent groups |
 | Keep going until done | `triggers` → `concert` self-chain, `concert.max_chain_depth` |

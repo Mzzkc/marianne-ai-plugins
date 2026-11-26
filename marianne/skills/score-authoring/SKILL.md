@@ -303,15 +303,17 @@ undeclared name, a non-integer, or an out-of-range value is V338.
 
 `sheet.stdout_to` (`{1: design.md}`) makes the musician write a sheet's full stdout to a workspace file before validations run: the way an `http` sheet, which has no filesystem, meets a file validation or hands its reply whole to a later sheet (`stdout_tail` keeps 500 characters). A fanned-out stage gets one file per voice.
 
-`sheet.skip_when` skips one sheet; it does not cascade — the baton lets dependents of an intentional skip run (`[SKIPPED]` in `previous_outputs`). A chain terminator (a marker that says "this iteration does nothing") goes on every sheet, including the one whose trigger chains, or later sheets run and chain again.
+`sheet.skip_when` skips one sheet; it does not cascade — the baton lets dependents of an intentional skip run (`[SKIPPED]` in `previous_outputs`, or recorded stdout if skipped as unchanged). It supports two predicates: `command` (shell command, exit 0 = skip) and `unchanged: true` (skip when inputs and products are unchanged since it last passed; fresh runs only). Seen inputs are what Marianne assembles (prompt, dispatch arguments, declared products, dependency gate); sheets reading undeclared files must not use unchanged. A chain terminator (a marker that says "this iteration does nothing") goes on every sheet, including the one whose trigger chains, or later sheets run and chain again.
 
-**The #1 rule**: Jinja `{{ }}` in the **prompt pipeline** (templates, prelude/cadenza paths, capture_files). Python format `{}` in the **validation engine** (validation paths, commands, working_directory, skip_when).
+**The #1 rule**: Jinja `{{ }}` in the **prompt pipeline** (templates, prelude/cadenza paths, capture_files). Python format `{}` in the **validation engine** (validation paths, commands, working_directory, skip_when command).
 
 | Field | Syntax |
 |---|---|
 | `prompt.template` | `{{ workspace }}` |
 | `validations[].path` | `{workspace}` |
 | `validations[].command` | `{workspace}` |
+| `skip_when[].command` | `{workspace}` |
+| `skip_when[].unchanged` | `true` |
 | `capture_files[]` | `{{ workspace }}` |
 
 ### Injection: file vs. directory cadenzas

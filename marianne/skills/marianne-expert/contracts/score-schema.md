@@ -62,7 +62,7 @@ Controls partitioning, parallelization, dependencies, and fan-out parameters.
 | `descriptions` | `dict[int, str]` | `{}` | Sheet description labels shown in progress reports. |
 | `dependencies` | `dict[int, list[int]]` | `{}` | Directed Acyclic Graph (DAG) dependencies mapping sheet to prerequisites. |
 | `spec_tags` | `dict[int, list[str]]` | `{}` | Per-sheet spec tag filters used to prune injected spec corpus passages. |
-| `skip_when` | `dict[int, SkipWhenCommand]` | `{}` | Shell command predicates that bypass sheet execution on exit 0. |
+| `skip_when` | `dict[int, SkipWhenCommand]` | `{}` | Shell command or unchanged predicates that bypass sheet execution (exit 0 or unchanged since last pass). |
 | `prompt_extensions` | `dict[int, list[str]]` | `{}` | Inline text or file pathways extending prompts for specific sheet numbers. |
 | `prelude` | `list[InjectionItem]` | `[]` | Shared background materials injected into prompts for all sheets. |
 | `cadenzas` | `dict[int, list[InjectionItem]]` | `{}` | Per-sheet context injection files or directories. |
