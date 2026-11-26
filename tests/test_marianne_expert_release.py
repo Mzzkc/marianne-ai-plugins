@@ -6,6 +6,7 @@ from pathlib import Path
 
 import yaml
 
+from tests._load import load_script
 
 EXPERT_ROOT = (
     Path(__file__).resolve().parents[1] / "marianne" / "skills" / "marianne-expert"
@@ -28,6 +29,20 @@ class MarianneExpertPackageTests(unittest.TestCase):
         }
         missing = sorted(path for path in required if not (EXPERT_ROOT / path).is_file())
         self.assertEqual(missing, [])
+
+    def test_committed_manifest_matches_the_package(self) -> None:
+        """The committed ``MANIFEST.sha256`` describes the tree as committed.
+
+        ``test_expert_manifest`` proves the verifier works on temporary trees;
+        nothing checked the manifest beside the files it hashes, so a commit
+        that edited a hashed contract without rebuilding the manifest passed
+        every test. Mirrors the at-rest check the conducting release has.
+        """
+        verifier = load_script(
+            "marianne/skills/marianne-expert/scripts/release_manifest.py",
+            "marianne_expert_release_manifest",
+        )
+        self.assertEqual(verifier.verify_manifest(EXPERT_ROOT), [])
 
     def test_router_uses_capability_vector_and_explicit_authority(self) -> None:
         text = (EXPERT_ROOT / "SKILL.md").read_text(encoding="utf-8")
