@@ -71,6 +71,7 @@ prompt:
 | `prompt.template` / `prompt.template_file` | `{{ workspace }}` | Jinja2 |
 | `sheet.prelude[].file` | `{{ workspace }}` | Jinja2 |
 | `sheet.cadenzas[N][].file` | `{{ workspace }}` | Jinja2 |
+| `movements.<N>.cadenzas[].file` | `{{ voice }}` | Jinja2 (renders per voice; see GH #571) |
 | `cross_sheet.capture_files[]` | `{{ workspace }}` | Manual `{{ }}` replacement |
 | `validations[].path` | `{workspace}` | Python `.format()` |
 | `validations[].command` | `{workspace}` | Manual `{}` replacement (shell-quoted) |

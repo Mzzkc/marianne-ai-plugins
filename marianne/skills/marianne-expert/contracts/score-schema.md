@@ -15,7 +15,7 @@ The top-level model representing a complete Marianne score.
 | `instrument_config` | `dict[str, Any]` | `{}` | Flat key-value parameters overriding resolved instrument defaults. |
 | `instrument_fallbacks` | `list[str]` | `[]` | Fallback instrument profiles tried when the primary instrument fails. |
 | `instruments` | `dict[str, InstrumentDef]` | `{}` | Local named instrument definitions referencing registered profiles with overrides. |
-| `movements` | `dict[int, MovementDef]` | `{}` | Sequential execution phase movement overrides (instruments/voices). |
+| `movements` | `dict[int, MovementDef]` | `{}` | Sequential execution phase movement overrides (instruments/voices/cadenzas: `movements.<n>.cadenzas` items reach every voice of the stage, with an optional `voice` per item — GH #571). |
 | `sheet` | `SheetConfig` | *Required* | Sheet division, dependency, and fan-out parameters. |
 | `prompt` | `PromptConfig` | *Required* | Main prompt template, file, and injection configurations. |
 | `spec` | `SpecCorpusConfig` | `SpecCorpusConfig()` | Configuration for locating and loading spec corpus passages. |

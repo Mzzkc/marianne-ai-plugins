@@ -294,6 +294,35 @@ strict gate: a validation pass rate above it enters completion mode; a lower
 result spends a normal retry. Older releases ignored the threshold and sent
 any partial pass to completion mode, so review scores that use the default 50%.
 
+For context shared by every voice of a movement, declare it on the movement:
+`movements.<N>.cadenzas` reaches **every voice** of the stage, however wide
+(GH #571). `sheet.cadenzas` keys are **concrete** sheet numbers, also under
+fan-out — under `fan_out: {2: 3}` a key `5` names the concrete sheet 5, not
+stage 5 — so a stage-keyed cadenza belongs on the movement, not hand-expanded
+per voice:
+
+```yaml
+movements:
+  11:
+    name: Claim check
+    cadenzas:
+      - file: "{{ workspace }}/units/unit-{{ voice }}.md"  # one per voice
+        as: context
+        required: true
+      - voice: 15                                            # this voice only
+        file: "{{ workspace }}/frozen/outline.json"
+        as: context
+        required: true
+```
+
+Two spellings to keep apart: `{{ voice }}` is the template variable that
+renders per voice **inside a path**; `voice:` is the item field that selects
+**which voices get the item** (the fan-out instance, 1-based). On a movement
+with a single voice, `{{ voice }}` renders as the literal text `None` — do not
+template a solo movement's cadenza path on it. A `voice:` on a prelude or
+`sheet.cadenzas` item is unknown there (V010/V011) and is stripped. A stage
+with no sheet, or a voice above the movement's voice count, is V216.
+
 A `sheet.fan_out` count may name a variable: `fan_out: {2: '{{ chapter_count }}'}`
 resolves from `prompt.variables` when the score loads, to an integer `1`-`1000`
 (a string of digits is fine; whitespace around it is ignored). Use it when a width depends on the score's input,
@@ -319,6 +348,9 @@ undeclared name, a non-integer, or an out-of-range value is V338.
 ### Injection: file vs. directory cadenzas
 
 `prelude` and `cadenzas` items take exactly one of `file:` or `directory:`.
+Movement cadenza items (`movements.<N>.cadenzas[]`) take the same shape, plus
+the `voice:` item field; a sheet reads its prelude, then its movement's
+cadenza items, then its own `sheet.cadenzas[sheet_num]` items, in that order.
 
 ```yaml
 sheet:
