@@ -142,7 +142,10 @@ them into concrete sheet ranges during load. `max_iterations` (and `count`)
 may name a `prompt.variables` entry instead of a literal — `max_iterations: '{{ max_passes }}'`
 (dotted paths allowed) — resolved at load to an integer in `1`-`10000`;
 an unresolvable reference is V351, one issue per failing loop and field, and
-`--var` cannot change the resolved cap (while `until`'s `var.x` reads `--var`).
+`--var` cannot change the resolved cap (while `until`'s `var.x` reads `--var`
+as the text it is: `loop.pass_no >= var.max_passes` needs a bare integer in
+the YAML, a `--var` value is a string, and mixing the two ends the loop
+`condition_error`; compare a `--var` value as `var.max_passes == "5"`).
 
 ```yaml
 sheet:

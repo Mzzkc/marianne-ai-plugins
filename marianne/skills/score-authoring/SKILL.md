@@ -397,7 +397,11 @@ name one `prompt.variables` entry instead of a literal — `max_iterations: '{{ 
 (dotted `{{ book.count }}` allowed) — resolved at load to an integer in
 `1`-`10000`; when it cannot be resolved the score refuses to load with V351,
 one issue per failing loop and field. The cap is fixed per run: `--var`
-cannot change it, while `until`'s `var.x` still reads `--var`.
+cannot change it, while `until`'s `var.x` still reads `--var`. An expression
+never compares a number with a string: `loop.pass_no >= var.max_passes` needs
+`max_passes` as a bare integer in the YAML that `--var` does not override (a
+`--var` value is a string), or the loop ends `condition_error` (E999) on its
+first pass. Compare a `--var` value as text: `var.max_passes == "5"`.
 
 For a deterministic `cli` sheet, set an explicit empty replacement chain:
 
