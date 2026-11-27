@@ -392,7 +392,12 @@ route reports at its profile's price; a subscription or local route prices at
 $0, so on such a venue `mzt validate` warns V228 and `max_iterations` is the
 only working cap. Write `max_iterations` as the number of passes the work can
 justify, never the default 50, and treat V228 as "this venue cannot stop on
-money", not as a reason to delete the cap.
+money", not as a reason to delete the cap. `max_iterations` (and `count`) may
+name one `prompt.variables` entry instead of a literal — `max_iterations: '{{ max_passes }}'`
+(dotted `{{ book.count }}` allowed) — resolved at load to an integer in
+`1`-`10000`; when it cannot be resolved the score refuses to load with V351,
+one issue per failing loop and field. The cap is fixed per run: `--var`
+cannot change it, while `until`'s `var.x` still reads `--var`.
 
 For a deterministic `cli` sheet, set an explicit empty replacement chain:
 

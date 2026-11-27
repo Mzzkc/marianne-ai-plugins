@@ -138,7 +138,11 @@ to repeat. Nested spans are allowed, but partially overlapping spans are not.
 The index is available in prompts as `{{ loops.pass_no }}` and
 `{{ pass_no }}`, in scoped validations as `{pass_no}`, and in expressions as
 `loop.pass_no`. Under `fan_out`, author the stage numbers; Marianne expands
-them into concrete sheet ranges during load.
+them into concrete sheet ranges during load. `max_iterations` (and `count`)
+may name a `prompt.variables` entry instead of a literal — `max_iterations: '{{ max_passes }}'`
+(dotted paths allowed) — resolved at load to an integer in `1`-`10000`;
+an unresolvable reference is V351, one issue per failing loop and field, and
+`--var` cannot change the resolved cap (while `until`'s `var.x` reads `--var`).
 
 ```yaml
 sheet:
